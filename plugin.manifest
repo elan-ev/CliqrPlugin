@@ -1,0 +1,10 @@
+# Cliqr v0.1a by Christian Flothmann <cflothma@uos.de>
+pluginname=Cliqr
+pluginclassname=CliqrPlugin
+origin=virtUOS
+version=0.1a
+description=cliqrbeschreibung
+homepage=http://cliqrhomepage.de
+studipMinVersion=2.0
+dbscheme=sql/install.sql
+uninstalldbscheme=sql/uninstall.sql
