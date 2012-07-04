@@ -1,4 +1,6 @@
 <?php
+global $sess;
+require_once "{$GLOBALS["STUDIP_BASE_PATH"]}/lib/vote/vote.config.php";
 require_once "{$GLOBALS["STUDIP_BASE_PATH"]}/lib/vote/Vote.class.php";
 
 class CliqrpluginController extends StudipController
@@ -31,6 +33,24 @@ class CliqrpluginController extends StudipController
     function show_action()
     {
         
+    }
+    
+    function stop_action($voteId)
+    {
+        $db = new DB_Seminar();
+        $sql = sprintf("UPDATE
+                            vote
+                        SET
+                            state = '%s'
+                        WHERE
+                            vote_id = '%s' AND
+                            range_id = '%s'",
+                    VOTE_STOPPED_VISIBLE,
+                    $voteId,
+                    Request::get("cid"));
+        $db->query($sql);
+        $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
+                "cliqrplugin/index"));
     }
     
     function results_action($voteId)
