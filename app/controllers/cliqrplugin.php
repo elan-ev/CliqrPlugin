@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . "/../../phpqrcode/qrlib.php";
+require_once "{$GLOBALS["STUDIP_BASE_PATH"]}/lib/vote/Vote.class.php";
 
 class CliqrpluginController extends StudipController
 {
@@ -15,6 +15,17 @@ class CliqrpluginController extends StudipController
         # set default layout
         $layout = $GLOBALS['template_factory']->open('layouts/base');
         $this->set_layout($layout);
+    }
+    
+    function index_action() {
+        // get a list of all active votes
+        $courseid = Request::get("cid");
+        $voteDb = new VoteDB();
+        $this->votes = array_merge($voteDb->getActiveVotes($courseid),
+                $voteDb->getStoppedVotes($courseid));
+        foreach($this->votes as $index => &$vote) {
+            $this->votes[$index] = new Vote($vote["voteID"]);
+        }
     }
     
     function show_action()
