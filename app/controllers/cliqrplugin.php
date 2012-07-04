@@ -28,6 +28,11 @@ class CliqrpluginController extends StudipController
         foreach($this->votes as $index => &$vote) {
             $this->votes[$index] = new Vote($vote["voteID"]);
         }
+        
+        // order votes by title
+        usort($this->votes, function($a, $b) {
+            return strcasecmp($a->title, $b->title);
+        });
     }
     
     function show_action()
