@@ -2,6 +2,7 @@
 global $sess;
 require_once "{$GLOBALS["STUDIP_BASE_PATH"]}/lib/vote/vote.config.php";
 require_once "{$GLOBALS["STUDIP_BASE_PATH"]}/lib/vote/Vote.class.php";
+require_once __DIR__ . "/../../phpqrcode/qrlib.php";
 
 class CliqrpluginController extends StudipController
 {
@@ -35,9 +36,9 @@ class CliqrpluginController extends StudipController
         });
     }
     
-    function show_action()
+    function show_action($voteId)
     {
-        
+        $this->voteId = $voteId;
     }
     
     function stop_action($voteId)
@@ -60,12 +61,16 @@ class CliqrpluginController extends StudipController
     
     function results_action($voteId)
     {
+        if(Request::isXhr()) {
+            $this->set_layout(null);
+        }
         $this->vote = new Vote($voteId);
     }
     
     function qrcode_action() {
         $this->set_layout(null);
         QRcode::png(Request::get("url"));
+        $this->render_nothing();
     }
 
 }

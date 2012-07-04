@@ -1,1 +1,17 @@
-/* CSS */
+#cliqr_qrcode {
+    width : 49%;
+    margin : 0;
+    padding : 0;
+    float : left;
+}
+
+#cliqr_shorturl {
+    width : 49%;
+    margin : 0;
+    padding : 0;
+    float : left;
+}
+
+#cliqr_vote_results {
+    clear : both;
+}
