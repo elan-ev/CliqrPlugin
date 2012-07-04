@@ -33,6 +33,11 @@ class CliqrpluginController extends StudipController
         
     }
     
+    function results_action($voteId)
+    {
+        $this->vote = new Vote($voteId);
+    }
+    
     function qrcode_action() {
         $this->set_layout(null);
         QRcode::png(Request::get("url"));
