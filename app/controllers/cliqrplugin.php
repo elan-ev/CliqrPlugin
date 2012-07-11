@@ -39,6 +39,19 @@ class CliqrpluginController extends StudipController
     function show_action($voteId)
     {
         $this->voteId = $voteId;
+        
+        $db = new DB_Seminar();
+        $sql = sprintf("UPDATE
+                            vote
+                        SET
+                            state = '%s'
+                        WHERE
+                            vote_id = '%s' AND
+                            range_id = '%s'",
+                    VOTE_ACTIVE,
+                    $voteId,
+                    Request::get("cid"));
+        $db->query($sql);
     }
     
     function stop_action($voteId)
