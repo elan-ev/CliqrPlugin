@@ -67,6 +67,22 @@ class CliqrpluginController extends StudipController
         $this->vote = new Vote($voteId);
     }
     
+    function showpublic_action()
+    {
+        $courseid = Request::get("cid");
+        
+        $voteDb = new VoteDB();
+        $this->votes = $voteDb->getActiveVotes($courseid);
+        foreach($this->votes as $index => &$vote) {
+            $this->votes[$index] = new Vote($vote["voteID"]);
+        }
+        
+        // order votes by title
+        usort($this->votes, function($a, $b) {
+            return strcasecmp($a->title, $b->title);
+        });
+    }
+    
     function qrcode_action() {
         $this->set_layout(null);
         QRcode::png(Request::get("url"));
