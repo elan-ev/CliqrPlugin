@@ -38,8 +38,6 @@ class CliqrpluginController extends StudipController
     
     function show_action($voteId)
     {
-        $this->voteId = $voteId;
-        
         $db = new DB_Seminar();
         $sql = sprintf("UPDATE
                             vote

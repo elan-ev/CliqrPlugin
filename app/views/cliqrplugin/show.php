@@ -5,7 +5,7 @@ require_once(__DIR__ . "/../../../api/urlshortener.php");
 <div id="cliqr_qrcode">
     <?php
     $actionPath = PluginEngine::getUrl($GLOBALS["plugin"], array(),
-            "cliqrplugin/showpublic/{$voteId}");
+            "cliqrplugin/showpublic");
     $publicUrl = sprintf("http://%s%s",
                     $_SERVER["HTTP_HOST"],
                     $actionPath);
