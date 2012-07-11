@@ -40,6 +40,10 @@ class CliqrpluginController extends StudipController
     
     function show_action($voteId)
     {
+    }
+    
+    function start_action($voteId)
+    {
         $db = new DB_Seminar();
         $sql = sprintf("UPDATE
                             vote
@@ -52,6 +56,8 @@ class CliqrpluginController extends StudipController
                     $voteId,
                     Request::get("cid"));
         $db->query($sql);
+        $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
+                "cliqrplugin/index"));
     }
     
     function stop_action($voteId)

@@ -5,6 +5,7 @@
        <th class="steel">Fragen</th>
        <th class="steel">&nbsp;</th>
        <th class="steel">&nbsp;</th>
+       <th class="steel">&nbsp;</th>
     </tr>
     
     <?php
@@ -14,6 +15,8 @@
                 'cliqrplugin/show/' . $vote->getVoteID());
         $resultsUrl = PluginEngine::GetLink($GLOBALS["plugin"], array(),
                 'cliqrplugin/results/' . $vote->getVoteID());
+        $startUrl = PluginEngine::GetLink($GLOBALS["plugin"], array(),
+                'cliqrplugin/start/' . $vote->getVoteID());
         $stopUrl = PluginEngine::GetLink($GLOBALS["plugin"], array(),
                 'cliqrplugin/stop/' . $vote->getVoteID());
     ?>
@@ -25,8 +28,13 @@
         </td>
         <td class="steel1" align="center">
             <?php
+            printf("<a href='%s'>anzeigen</a>", $showUrl);
+            ?>
+        </td>
+        <td class="steel1" align="center">
+            <?php
             if(!$vote->isActive()):
-                printf("<a href='%s'>Start</a>", $showUrl);
+                printf("<a href='%s'>Start</a>", $startUrl);
             else:
                 printf("<a href='%s'>Stop</a>", $stopUrl);
             endif;
