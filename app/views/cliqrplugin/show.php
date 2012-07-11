@@ -18,9 +18,9 @@ require_once(__DIR__ . "/../../../api/urlshortener.php");
 
 <div id="cliqr_shorturl">
     <?php
-    $urlApi = new UrlShortener("apiKey");
+    $config = Config::getInstance();
+    $urlApi = new UrlShortener($config->getValue("CLIQR_URL_SHORTENER_API_KEY"));
     echo $urlApi->shorten($publicUrl);
-    Con
     ?>
 </div>
 
