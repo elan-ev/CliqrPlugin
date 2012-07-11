@@ -1,5 +1,3 @@
-<h1>Umfragen</h1>
-
 <table border="0" cellpadding="2" cellspacing="0" width="99%">
     <tr>
        <th class="steel">&nbsp;</th>

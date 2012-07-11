@@ -16,10 +16,14 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     {
         parent::__construct();
 
-        $navigation = new AutoNavigation(_('Cliqr'));
+        $navigation = new Navigation(_('Cliqr'));
         $navigation->setURL(PluginEngine::GetLink($this, array(), 'cliqrplugin/index'));
         $navigation->setImage(Assets::image_path('blank.gif'));
         Navigation::addItem('/course/cliqr', $navigation);
+        
+        $overview = new Navigation(_("Umfragen"));
+        $overview->setURL(PluginEngine::GetLink($this, array(), 'cliqrplugin/index'));
+        $navigation->addSubNavigation("overview", $overview);
     }
 
     public function initialize ()

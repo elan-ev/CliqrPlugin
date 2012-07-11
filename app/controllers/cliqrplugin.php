@@ -18,6 +18,8 @@ class CliqrpluginController extends StudipController
         # set default layout
         $layout = $GLOBALS['template_factory']->open('layouts/base');
         $this->set_layout($layout);
+        
+        Navigation::activateItem("/course/cliqr/overview");
     }
     
     function index_action() {
