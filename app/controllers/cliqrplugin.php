@@ -98,5 +98,23 @@ class CliqrpluginController extends StudipController
         QRcode::png(Request::get("url"));
         $this->render_nothing();
     }
+    
+    function vote_action($voteId) {
+        $voteDb = new VoteDB();
+        
+        if(isset($_COOKIE["cliqr_anonymous_userid"])) {
+            $userId = $_COOKIE["cliqr_anonymous_userid"];
+        } else {
+            $userId = md5(mt_rand());
+            setcookie("cliqr_anonymous_userid", $userId,
+                    time() + 60 * 60 * 24 * 30, "/");
+        }
+        
+        $voteDb->participate($voteId, $userId, Request::getArray("answer"), true);
+        
+        // get back to the vote view
+        $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
+                "cliqrplugin/showpublic"));
+    }
 
 }
