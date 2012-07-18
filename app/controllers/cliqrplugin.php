@@ -8,6 +8,8 @@ class CliqrpluginController extends StudipController
 {
     public function before_filter(&$action, &$args)
     {
+        global $perm;
+        
         parent::before_filter($action, $args);
 
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
@@ -19,7 +21,11 @@ class CliqrpluginController extends StudipController
         $layout = $GLOBALS['template_factory']->open('layouts/base');
         $this->set_layout($layout);
         
-        Navigation::activateItem("/course/cliqr/overview");
+        // as anonymous access is possible, do not enable the course navigation
+        // when the current user is not signed in
+        if($perm->have_studip_perm("autor")) {
+            Navigation::activateItem("/course/cliqr/overview");
+        }
     }
     
     function index_action() {
