@@ -2,6 +2,8 @@
 global $sess;
 require_once "{$GLOBALS["STUDIP_BASE_PATH"]}/lib/vote/view/vote_show.lib.php";
 
+PageLayout::disableHeader();
+
 foreach($votes as &$vote) {
     // form header
     printf('<form action="%s" method="post">',
