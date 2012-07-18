@@ -46,6 +46,7 @@ class CliqrpluginController extends StudipController
     
     function show_action($voteId)
     {
+        $this->courseId = Request::get("cid");
     }
     
     function start_action($voteId)
@@ -83,10 +84,8 @@ class CliqrpluginController extends StudipController
         $this->vote = new Vote($voteId);
     }
     
-    function showpublic_action()
+    function showpublic_action($courseid)
     {
-        $courseid = Request::get("cid");
-        
         $voteDb = new VoteDB();
         $this->votes = $voteDb->getActiveVotes($courseid);
         foreach($this->votes as $index => &$vote) {

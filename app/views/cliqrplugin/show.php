@@ -4,8 +4,10 @@ require_once(__DIR__ . "/../../../api/urlshortener.php");
 
 <div id="cliqr_qrcode">
     <?php
+    URLHelper::removeLinkParam("cid");
     $actionPath = PluginEngine::getUrl($GLOBALS["plugin"], array(),
-            "cliqrplugin/showpublic");
+            "cliqrplugin/showpublic/" . $courseId);
+    URLHelper::addLinkParam("cid", $courseId);
     $publicUrl = sprintf("http://%s%s",
                     $_SERVER["HTTP_HOST"],
                     $actionPath);
