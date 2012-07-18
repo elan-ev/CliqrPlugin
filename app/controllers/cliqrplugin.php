@@ -44,36 +44,27 @@ class CliqrpluginController extends StudipController
     
     function start_action($voteId)
     {
-        $db = new DB_Seminar();
-        $sql = sprintf("UPDATE
-                            vote
-                        SET
-                            state = '%s'
-                        WHERE
-                            vote_id = '%s' AND
-                            range_id = '%s'",
-                    VOTE_ACTIVE,
-                    $voteId,
-                    Request::get("cid"));
-        $db->query($sql);
+        $voteDb = new VoteDB();
+        $vote = new Vote($voteId);
+        
+        if($vote->getRangeID() == Request::get("cid")) {
+            $voteDb->startVote($voteId, VOTE_ACTIVE, $vote->getStartdate(),
+                    null, null);
+        }
+        
         $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
                 "cliqrplugin/index"));
     }
     
     function stop_action($voteId)
     {
-        $db = new DB_Seminar();
-        $sql = sprintf("UPDATE
-                            vote
-                        SET
-                            state = '%s'
-                        WHERE
-                            vote_id = '%s' AND
-                            range_id = '%s'",
-                    VOTE_STOPPED_VISIBLE,
-                    $voteId,
-                    Request::get("cid"));
-        $db->query($sql);
+        $voteDb = new VoteDB();
+        $vote = new Vote($voteId);
+        
+        if($vote->getRangeID() == Request::get("cid")) {
+            $voteDb->stopVote($voteId, VOTE_STOPPED_VISIBLE, null);
+        }
+        
         $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
                 "cliqrplugin/index"));
     }
