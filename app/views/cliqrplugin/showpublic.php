@@ -8,8 +8,8 @@ foreach($votes as &$vote) {
     
     // form header
     printf('<form action="%s" method="post">',
-            PluginEngine::getLink($GLOBALS["plugin"], array(), "cliqrplugin/vote"));
-    printf('<input type="hidden" name="voteId" value="%s" />', $vote->getVoteId());
+            PluginEngine::getLink($GLOBALS["plugin"], array(),
+                    "cliqrplugin/vote/" . $vote->getVoteID()));
     echo CSRFProtection::tokenTag();
     
     // vote header
