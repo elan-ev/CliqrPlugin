@@ -85,6 +85,15 @@ class CliqrpluginController extends StudipController
         $this->votes = $voteDb->getActiveVotes($courseid);
         foreach($this->votes as $index => &$vote) {
             $this->votes[$index] = new Vote($vote["voteID"]);
+            $voteDb->setVote($this->votes[$index]);
+            
+            // users are not logged in, thus handle votes anonymous
+            $this->votes[$index]->anonymous = true;
+            
+            // do not allow users to vote twice
+            if($voteDb->isAssociated2(CliqrPlugin::getAnonymousUserId())) {
+                unset($this->votes[$index]);
+            }
         }
         
         // order votes by title

@@ -3,9 +3,6 @@ global $sess;
 require_once "{$GLOBALS["STUDIP_BASE_PATH"]}/lib/vote/view/vote_show.lib.php";
 
 foreach($votes as &$vote) {
-    // users are not logged in, thus handle votes anonymous
-    $vote->anonymous = true;
-    
     // form header
     printf('<form action="%s" method="post">',
             PluginEngine::getLink($GLOBALS["plugin"], array(),
