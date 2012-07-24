@@ -115,13 +115,14 @@ class CliqrpluginController extends StudipController
     
     function vote_action($voteId) {
         $voteDb = new VoteDB();
+        $vote = new Vote($voteId);
         
         $voteDb->participate($voteId, CliqrPlugin::getAnonymousUserId(),
                 Request::getArray("answer"), true);
         
         // get back to the vote view
         $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
-                "cliqrplugin/showpublic"));
+                "cliqrplugin/showpublic/" . $vote->getRangeID()));
     }
 
 }

@@ -9,7 +9,7 @@
  * @version 0.1a
  **/
 
-class CliqrPlugin extends StudIPPlugin
+class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 {
 
     public function __construct()
