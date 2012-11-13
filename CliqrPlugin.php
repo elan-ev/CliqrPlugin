@@ -27,12 +27,15 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         // navigation when the current user is not signed in
         if ($perm->have_studip_perm("autor")) {
             $navigation = new Navigation(_('Cliqr'));
-            $navigation->setURL(PluginEngine::getLink($this, array(), 'cliqrplugin/index'));
+            $navigation->setURL(PluginEngine::getURL($this, array(),
+                                                     'cliqrplugin/index'));
             $navigation->setImage(Assets::image_path('blank.gif'));
             Navigation::addItem('/course/cliqr', $navigation);
 
             $overview = new Navigation(_("Umfragen"));
-            $overview->setURL(PluginEngine::GetLink($this, array(), 'cliqrplugin/index'));
+            $overview->setURL(PluginEngine::getURL($this, array(),
+                                                   'cliqrplugin/index'));
+
             $navigation->addSubNavigation("overview", $overview);
         }
     }
