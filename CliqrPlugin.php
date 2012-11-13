@@ -6,7 +6,7 @@
  * cliqrbeschreibung
  *
  * @author  Christian Flothmann <cflothma@uos.de>
- * @version 0.1a
+ * @author  <mlunzena@uos.de>
  **/
 
 class CliqrPlugin extends StudIPPlugin implements StandardPlugin
@@ -27,7 +27,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         // navigation when the current user is not signed in
         if ($perm->have_studip_perm("autor")) {
             $navigation = new Navigation(_('Cliqr'));
-            $navigation->setURL(PluginEngine::GetLink($this, array(), 'cliqrplugin/index'));
+            $navigation->setURL(PluginEngine::getLink($this, array(), 'cliqrplugin/index'));
             $navigation->setImage(Assets::image_path('blank.gif'));
             Navigation::addItem('/course/cliqr', $navigation);
 
