@@ -14,13 +14,18 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 
     public function __construct()
     {
-        global $perm;
-        
         parent::__construct();
-        
-        // as anonymous access is possible, do not enable the course navigation
-        // when the current user is not signed in
-        if($perm->have_studip_perm("autor")) {
+        $this->setupNavigation();
+
+    }
+
+    private function setupNavigation()
+    {
+        global $perm;
+
+        // as anonymous access is possible, do not enable the course
+        // navigation when the current user is not signed in
+        if ($perm->have_studip_perm("autor")) {
             $navigation = new Navigation(_('Cliqr'));
             $navigation->setURL(PluginEngine::GetLink($this, array(), 'cliqrplugin/index'));
             $navigation->setImage(Assets::image_path('blank.gif'));
@@ -60,9 +65,9 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
                 'index');
         $dispatcher->dispatch($unconsumed_path);
     }
-    
+
     public static function getAnonymousUserId()
-    {   
+    {
         if(isset($_COOKIE["cliqr_anonymous_userid"])) {
             $userId = $_COOKIE["cliqr_anonymous_userid"];
         } else {
@@ -70,7 +75,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             setcookie("cliqr_anonymous_userid", $userId,
                     time() + 60 * 60 * 24 * 30, "/");
         }
-        
+
         return $userId;
     }
 }
