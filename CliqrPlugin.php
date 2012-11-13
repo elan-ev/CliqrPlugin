@@ -29,21 +29,18 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             return;
         }
 
-
-        $navigation = new Navigation(_('Cliqr'));
-        $navigation->setURL(PluginEngine::getURL($this, array(),
-                                                 'cliqrplugin/index'));
+        $url = PluginEngine::getURL($this, array(), 'votes');
+        $navigation = new Navigation(_('Cliqr'), $url);
         $navigation->setImage(Assets::image_path('icons/16/white/test.png'));
+        $navigation->setActiveImage(Assets::image_path('icons/16/black/test.png'));
+
+        $url = PluginEngine::getURL($this, array(), 'votes');
+        $navigation->addSubNavigation("overview", new Navigation(_("Umfragen"), $url));
+
         Navigation::addItem('/course/cliqr', $navigation);
-
-        $overview = new Navigation(_("Umfragen"));
-        $overview->setURL(PluginEngine::getURL($this, array(),
-                                               'cliqrplugin/index'));
-
-        $navigation->addSubNavigation("overview", $overview);
     }
 
-    function getContext()
+    private function getContext()
     {
         return Request::option("cid");
     }
@@ -68,7 +65,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         // ...
     }
 
-    public function perform($unconsumed_path)
+    function perform($unconsumed_path)
     {
         $trails_root = $this->getPluginPath() . "/app";
         $dispatcher = new Trails_Dispatcher($trails_root,
