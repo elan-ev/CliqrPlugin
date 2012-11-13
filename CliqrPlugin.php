@@ -40,7 +40,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         Navigation::addItem('/course/cliqr', $navigation);
     }
 
-    private function getContext()
+    function getContext()
     {
         return Request::option("cid");
     }
@@ -71,6 +71,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $dispatcher = new Trails_Dispatcher($trails_root,
                 PluginEngine::getUrl('cliqr'),
                 'index');
+        $dispatcher->plugin = $this;
         $dispatcher->dispatch($unconsumed_path);
     }
 
