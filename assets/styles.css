@@ -1,21 +1,109 @@
 #cliqr_qrcode {
-    text-align : center;
-    width : 49%;
-    margin : 0;
-    padding : 0;
-    float : left;
+  text-align: center;
+  width: 49%;
+  margin: 0;
+  padding: 0;
+  float: left;
 }
-
 #cliqr_shorturl {
-    font-size : 400%;
-    line-height : 150px;
-    font-weight : bold;
-    width : 49%;
-    margin : 0;
-    padding : 0;
-    float : left;
+  font-size: 400%;
+  line-height: 150px;
+  font-weight: bold;
+  width: 49%;
+  margin: 0;
+  padding: 0;
+  float: left;
 }
-
 #cliqr_vote_results {
-    clear : both;
+  clear: both;
+}
+#questions li {
+  list-style: none;
+  float: left;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  width: 140px;
+}
+#questions .question {
+  border: 1px solid #D0CFCB;
+  border-radius: 5px;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+#questions div.question:hover {
+  border-color: #3897CA;
+}
+#questions .title {
+  font-size: smaller;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 40px;
+}
+#questions li a.hover span {
+  background: rgba(0, 0, 0, 0.5);
+  color: #FFFFFF;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  height: 30%;
+  width: 128px;
+  margin: -15% 5px 0 5px;
+  line-height: 2em;
+  display: none;
+}
+#questions li a.hover {
+  z-index: 50;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+#questions a.hover:hover span {
+  display: inline;
+}
+#questions div.question div.control {
+  background-color: #F9F9F9;
+  border-radius: 0px 0px 5px 5px;
+  bottom: 0px;
+  height: 24px;
+  left: 0px;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+#questions div.control a {
+  background-position: 0px 50%;
+  background-repeat: no-repeat;
+  float: left;
+  height: 16px;
+  margin: 0px 4px;
+  padding: 4px 0px;
+  width: 16px;
+}
+#questions div.control a.edit {
+  background-image: url('../../../../assets/images/icons/16/grey/edit.png');
+}
+#questions div.control a.edit:hover {
+  background-image: url('../../../../assets/images/icons/16/black/edit.png');
+}
+#questions div.control a.edit:active {
+  background-image: url('../../../../assets/images/icons/16/blue/edit.png');
+}
+#questions div.control a.delete {
+  float: right;
+}
+#questions div.control a.delete {
+  background-image: url('../../../../assets/images/icons/16/grey/trash.png');
+}
+#questions div.control a.delete:hover {
+  background-image: url('../../../../assets/images/icons/16/black/trash.png');
+}
+#questions div.control a.delete:active {
+  background-image: url('../../../../assets/images/icons/16/blue/trash.png');
 }
