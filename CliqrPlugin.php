@@ -23,21 +23,29 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     {
         global $perm;
 
-        // as anonymous access is possible, do not enable the course
-        // navigation when the current user is not signed in
-        if ($perm->have_studip_perm("autor")) {
-            $navigation = new Navigation(_('Cliqr'));
-            $navigation->setURL(PluginEngine::getURL($this, array(),
-                                                     'cliqrplugin/index'));
-            $navigation->setImage(Assets::image_path('blank.gif'));
-            Navigation::addItem('/course/cliqr', $navigation);
-
-            $overview = new Navigation(_("Umfragen"));
-            $overview->setURL(PluginEngine::getURL($this, array(),
-                                                   'cliqrplugin/index'));
-
-            $navigation->addSubNavigation("overview", $overview);
+        $context = $this->getContext();
+        if (!$this->isActivated($context)
+            || !$perm->have_studip_perm("autor", $context)) {
+            return;
         }
+
+
+        $navigation = new Navigation(_('Cliqr'));
+        $navigation->setURL(PluginEngine::getURL($this, array(),
+                                                 'cliqrplugin/index'));
+        $navigation->setImage(Assets::image_path('icons/16/white/test.png'));
+        Navigation::addItem('/course/cliqr', $navigation);
+
+        $overview = new Navigation(_("Umfragen"));
+        $overview->setURL(PluginEngine::getURL($this, array(),
+                                               'cliqrplugin/index'));
+
+        $navigation->addSubNavigation("overview", $overview);
+    }
+
+    function getContext()
+    {
+        return Request::option("cid");
     }
 
     public function initialize ()
