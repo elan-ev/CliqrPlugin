@@ -29,28 +29,29 @@ class VotesController extends StudipController
         if ($perm->have_studip_perm("autor")) {
             Navigation::activateItem("/course/cliqr/overview");
         }
+
+        $this->cid = Request::get("cid");
     }
 
 
     function index_action() {
         // get a list of all active votes
-        $courseid = Request::get("cid");
         $voteDb = new VoteDB();
-        $this->votes = array_merge($voteDb->getActiveVotes($courseid),
-                $voteDb->getStoppedVotes($courseid));
+        $this->votes = array_merge($voteDb->getActiveVotes($this->cid),
+                                   $voteDb->getStoppedVotes($this->cid));
         foreach($this->votes as $index => &$vote) {
             $this->votes[$index] = new Vote($vote["voteID"]);
         }
 
         // order votes by title
         usort($this->votes, function($a, $b) {
-            return strcasecmp($a->title, $b->title);
-        });
+                return strcasecmp($a->title, $b->title);
+            });
     }
 
     function show_action($voteId)
     {
-        $this->courseId = Request::get("cid");
+        $this->vote = new Vote($voteId);
     }
 
     function start_action($voteId)
@@ -60,11 +61,11 @@ class VotesController extends StudipController
 
         if($vote->getRangeID() == Request::get("cid")) {
             $voteDb->startVote($voteId, VOTE_ACTIVE, $vote->getStartdate(),
-                    null, null);
+                               null, null);
         }
 
         $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
-                "cliqrplugin/index"));
+                                             "cliqrplugin/index"));
     }
 
     function stop_action($voteId)
@@ -77,7 +78,7 @@ class VotesController extends StudipController
         }
 
         $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
-                "cliqrplugin/index"));
+                                             "cliqrplugin/index"));
     }
 
     function results_action($voteId)
@@ -88,7 +89,7 @@ class VotesController extends StudipController
         $this->vote = new Vote($voteId);
     }
 
-    function showpublic_action($courseid)
+    function showpublic_action($cid)
     {
         $voteDb = new VoteDB();
         $this->votes = $voteDb->getActiveVotes($courseid);
@@ -107,8 +108,8 @@ class VotesController extends StudipController
 
         // order votes by title
         usort($this->votes, function($a, $b) {
-            return strcasecmp($a->title, $b->title);
-        });
+                return strcasecmp($a->title, $b->title);
+            });
     }
 
     function qrcode_action() {
@@ -122,11 +123,11 @@ class VotesController extends StudipController
         $vote = new Vote($voteId);
 
         $voteDb->participate($voteId, CliqrPlugin::getAnonymousUserId(),
-                Request::getArray("answer"), true);
+                             Request::getArray("answer"), true);
 
         // get back to the vote view
         $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
-                "cliqrplugin/showpublic/" . $vote->getRangeID()));
+                                             "cliqrplugin/showpublic/" . $vote->getRangeID()));
     }
 
 
