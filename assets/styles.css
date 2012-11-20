@@ -1,22 +1,3 @@
-#cliqr_qrcode {
-  text-align: center;
-  width: 49%;
-  margin: 0;
-  padding: 0;
-  float: left;
-}
-#cliqr_shorturl {
-  font-size: 400%;
-  line-height: 150px;
-  font-weight: bold;
-  width: 49%;
-  margin: 0;
-  padding: 0;
-  float: left;
-}
-#cliqr_vote_results {
-  clear: both;
-}
 #questions li {
   list-style: none;
   float: left;
@@ -106,4 +87,107 @@
 }
 #questions div.control a.delete:active {
   background-image: url('../../../../assets/images/icons/16/blue/trash.png');
+}
+#cliqr-show {
+  /*
+  pre { float: right; }
+  */
+
+}
+#cliqr-show #layout_container {
+  position: relative;
+}
+#cliqr-show .vote-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform-origin: top right;
+  transform: rotate(-90deg) translateY(-100%);
+}
+#cliqr-show .chart {
+  border: 1px solid magenta;
+}
+#cliqr-show h2 {
+  margin-top: 0;
+  font-size: 3em;
+}
+#cliqr-show .appeal {
+  font-size: 5em;
+  background: #c8c9c9;
+  color: #6e7070;
+  position: relative;
+  text-align: center;
+}
+#cliqr-show .appeal a {
+  float: right;
+  width: 64px;
+  height: 64px;
+  background: #ffffff url('qrcode.png') no-repeat 50% 50%;
+  border-radius: 64px;
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-top: -32px;
+  margin-right: 16px;
+}
+#cliqr-show .appeal a:hover {
+  box-shadow: 0 0 0.25em #6e7070;
+}
+.vote-form fieldset {
+  border: none;
+  border-bottom: 1px solid #EEEEEE;
+  margin-left: 0px;
+  padding: 30px 0px 20px 20px;
+}
+.vote-form legend {
+  font-size: 1.75em;
+  color: #899AB9;
+  padding-top: 30px;
+}
+.vote-form label {
+  text-align: left;
+  width: 220px;
+  float: left;
+  padding-top: 5px;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.vote-form .control-group {
+  margin-left: 260px;
+}
+.vote-form .control-group input,
+.vote-form .control-group .choice-new {
+  width: 400px;
+  margin-bottom: 5px;
+  padding: 4px 6px;
+  border: 1px solid #CCCCCC;
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.024);
+}
+.vote-form .control-group .choice-new {
+  cursor: pointer;
+  display: block;
+  vertical-align: middle;
+  background-color: #FCFCFC;
+  color: #999999;
+}
+.vote-form .control-group .choice-input a.close {
+  display: none;
+  vertical-align: middle;
+  padding: 5px;
+  cursor: pointer;
+}
+.vote-form .control-group .choice-input a.close:hover {
+  text-shadow: 0 0 2px #899AB9;
+  color: #666666;
+}
+.vote-form .control-group .choice-input + .choice-input a.close {
+  display: inline;
+}
+.vote-form .form-actions {
+  float: right;
 }

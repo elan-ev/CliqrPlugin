@@ -2,43 +2,45 @@
 global $sess;
 require_once "lib/vote/vote.config.php";
 require_once "lib/vote/Vote.class.php";
-require_once dirname(dirname(dirname(__FILE__))) . "/phpqrcode/qrlib.php";
 
-class VotesController extends StudipController
+require_once 'cliqr_controller.php';
+
+require_once dirname(__FILE__) . '/../models/Vote.php';
+
+class VotesController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)
     {
-        global $perm;
+        global $perm, $template_factory;
 
         parent::before_filter($action, $args);
 
-        $this->flash = Trails_Flash::instance();
-
         # set default layout
-        $layout = $GLOBALS['template_factory']->open('layouts/base');
-        $this->set_layout($layout);
+        $this->set_layout($template_factory->open('layouts/base'));
 
         # set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
         PageLayout::setTitle(_('Cliqr'));
 
+        $this->cid = Request::get("cid");
 
-        // as anonymous access is possible, do not enable the course navigation
-        // when the current user is not signed in
+        // as anonymous access is possible, do not enable the course
+        // navigation when the current user is not signed in
         # TODO
-        if ($perm->have_studip_perm("autor")) {
+        if ($perm->have_studip_perm("autor", $this->cid)) {
             Navigation::activateItem("/course/cliqr/overview");
         }
-
-        $this->cid = Request::get("cid");
     }
 
 
     function index_action() {
         // get a list of all active votes
         $voteDb = new VoteDB();
-        $this->votes = array_merge($voteDb->getActiveVotes($this->cid),
-                                   $voteDb->getStoppedVotes($this->cid));
+        $this->votes = array_merge(
+            $voteDb->getNewVotes($this->cid),
+            $voteDb->getActiveVotes($this->cid),
+            $voteDb->getStoppedVotes($this->cid));
+
         foreach($this->votes as $index => &$vote) {
             $this->votes[$index] = new Vote($vote["voteID"]);
         }
@@ -49,10 +51,53 @@ class VotesController extends StudipController
             });
     }
 
-    function show_action($voteId)
+    function show_action($id)
     {
-        $this->vote = new Vote($voteId);
+        $this->vote = $this->getVote($id);
     }
+
+    # TODO
+    function new_action()
+    {
+    }
+
+    #TODO
+    function create_action()
+    {
+        #var_dump(\Cliqr\Vote::dummy()->save());
+        if (Request::isXhr()) {
+            $this->render_json($_POST);
+        }
+        else {
+        }
+    }
+
+    #TODO
+    function edit_action($id)
+    {
+    }
+
+    #TODO
+    function update_action($id)
+    {
+    }
+
+    function destroy_action($id)
+    {
+        if (!Request::isPost()) {
+            throw new Trails_Exception(405);
+        }
+
+        $vote = $this->getVote($id);
+        $vote->executeRemove();
+        $status = $vote->isError();
+
+        # TODO
+        $this->render_text("done: " . !!$status);
+    }
+
+
+
 
     function start_action($voteId)
     {
@@ -112,12 +157,6 @@ class VotesController extends StudipController
             });
     }
 
-    function qrcode_action() {
-        $this->set_layout(null);
-        QRcode::png(Request::get("url"));
-        $this->render_nothing();
-    }
-
     function vote_action($voteId) {
         $voteDb = new VoteDB();
         $vote = new Vote($voteId);
@@ -130,22 +169,12 @@ class VotesController extends StudipController
                                              "cliqrplugin/showpublic/" . $vote->getRangeID()));
     }
 
-
-    function url_for($to)
+    private function getVote($id)
     {
-        $args = func_get_args();
-
-        # find params
-        $params = array();
-        if (is_array(end($args))) {
-            $params = array_pop($args);
+        $vote = \Cliqr\Vote::find($id);
+        if (!$vote) {
+            throw new Trails_Exception(404); # NOT FOUND
         }
-
-        # urlencode all but the first argument
-        $args = array_map('urlencode', $args);
-        $args[0] = $to;
-
-        return PluginEngine::getURL($this->dispatcher->plugin, $params, join('/', $args));
+        return $vote;
     }
-
 }
