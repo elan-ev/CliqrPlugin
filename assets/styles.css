@@ -1,3 +1,30 @@
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+/*
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: @inputHeight; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+  .box-sizing(border-box); // Makes inputs behave like true block-level elements
+}
+*/
 #questions li {
   list-style: none;
   float: left;
@@ -7,6 +34,8 @@
 }
 #questions .question {
   border: 1px solid #D0CFCB;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
   border-radius: 5px;
   height: 100px;
   overflow: hidden;
@@ -28,6 +57,8 @@
   color: #FFFFFF;
   text-decoration: none;
   white-space: nowrap;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
   border-radius: 5px;
   position: absolute;
   top: 50%;
@@ -50,6 +81,8 @@
 }
 #questions div.question div.control {
   background-color: #F9F9F9;
+  -webkit-border-radius: 0px 0px 5px 5px;
+  -moz-border-radius: 0px 0px 5px 5px;
   border-radius: 0px 0px 5px 5px;
   bottom: 0px;
   height: 24px;
@@ -101,8 +134,21 @@
   position: absolute;
   top: 0;
   right: 0;
+  -webkit-transform-origin: top right;
+  -moz-transform-origin: top right;
+  -ms-transform-origin: top right;
+  -o-transform-origin: top right;
   transform-origin: top right;
+  -webkit-transform: rotate(-90deg) translateY(-100%);
+  -moz-transform: rotate(-90deg) translateY(-100%);
+  -ms-transform: rotate(-90deg) translateY(-100%);
+  -o-transform: rotate(-90deg) translateY(-100%);
   transform: rotate(-90deg) translateY(-100%);
+  white-space: nowrap;
+  width: 100%;
+}
+#cliqr-show .vote-controls .button {
+  float: right !important;
 }
 #cliqr-show .chart {
   border: 1px solid magenta;
