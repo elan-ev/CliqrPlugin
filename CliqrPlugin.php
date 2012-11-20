@@ -48,11 +48,10 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     public function initialize ()
     {
         PageLayout::addStylesheet($this->getPluginURL() . '/assets/styles.css');
+        PageLayout::addScript($this->getPluginURL() . '/assets/validator.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/script.js');
         require_once 'vendor/trails/trails.php';
         require_once 'app/controllers/studip_controller.php';
-        // require_once 'app/controllers/authenticated_controller.php';
-
     }
 
     public function getIconNavigation($course_id, $last_visit)
@@ -65,12 +64,14 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         // ...
     }
 
+    const DEFAULT_CONTROLLER = "votes";
+
     function perform($unconsumed_path)
     {
         $trails_root = $this->getPluginPath() . "/app";
         $dispatcher = new Trails_Dispatcher($trails_root,
-                PluginEngine::getUrl('cliqr'),
-                'index');
+                                            rtrim(PluginEngine::getURL($this, null, ''), '/'),
+                                            self::DEFAULT_CONTROLLER);
         $dispatcher->plugin = $this;
         $dispatcher->dispatch($unconsumed_path);
     }
