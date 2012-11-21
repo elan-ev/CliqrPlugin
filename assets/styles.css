@@ -101,6 +101,9 @@
   width: 16px;
 }
 #questions div.control a.edit {
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-color: transparent;
   background-image: url('../../../../assets/images/icons/16/grey/edit.png');
 }
 #questions div.control a.edit:hover {
@@ -109,16 +112,22 @@
 #questions div.control a.edit:active {
   background-image: url('../../../../assets/images/icons/16/blue/edit.png');
 }
-#questions div.control a.delete {
+#questions div.control button.delete {
   float: right;
+  width: 24px;
+  height: 24px;
+  border: none;
 }
-#questions div.control a.delete {
+#questions div.control button.delete {
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-color: transparent;
   background-image: url('../../../../assets/images/icons/16/grey/trash.png');
 }
-#questions div.control a.delete:hover {
+#questions div.control button.delete:hover {
   background-image: url('../../../../assets/images/icons/16/black/trash.png');
 }
-#questions div.control a.delete:active {
+#questions div.control button.delete:active {
   background-image: url('../../../../assets/images/icons/16/blue/trash.png');
 }
 #cliqr-show {
@@ -222,7 +231,6 @@
   color: #999999;
 }
 .vote-form .control-group .choice-input a.close {
-  display: none;
   vertical-align: middle;
   padding: 5px;
   cursor: pointer;
@@ -230,9 +238,6 @@
 .vote-form .control-group .choice-input a.close:hover {
   text-shadow: 0 0 2px #899AB9;
   color: #666666;
-}
-.vote-form .control-group .choice-input + .choice-input a.close {
-  display: inline;
 }
 .vote-form .form-actions {
   float: right;

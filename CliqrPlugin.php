@@ -35,7 +35,10 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $navigation->setActiveImage(Assets::image_path('icons/16/black/test.png'));
 
         $url = PluginEngine::getURL($this, array(), 'votes');
-        $navigation->addSubNavigation("overview", new Navigation(_("Umfragen"), $url));
+        $navigation->addSubNavigation("index", new Navigation(_("Fragen"), $url));
+
+        $url = PluginEngine::getURL($this, array(), 'votes/new');
+        $navigation->addSubNavigation("new", new Navigation(_("Neue Frage"), $url));
 
         Navigation::addItem('/course/cliqr', $navigation);
     }

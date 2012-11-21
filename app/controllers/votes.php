@@ -5,18 +5,20 @@ require_once "lib/vote/Vote.class.php";
 
 require_once 'cliqr_controller.php';
 
-require_once dirname(__FILE__) . '/../models/Vote.php';
+require_once dirname(__FILE__) . '/../models/Question.php';
 
 class VotesController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)
     {
-        global $perm, $template_factory;
+        global $perm;
 
         parent::before_filter($action, $args);
 
+        $this->flash = Trails_Flash::instance();
+
         # set default layout
-        $this->set_layout($template_factory->open('layouts/base'));
+        $this->set_layout('layout');
 
         # set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
@@ -28,7 +30,14 @@ class VotesController extends CliqrStudipController
         // navigation when the current user is not signed in
         # TODO
         if ($perm->have_studip_perm("autor", $this->cid)) {
-            Navigation::activateItem("/course/cliqr/overview");
+            Navigation::activateItem("/course/cliqr/index");
+        }
+
+        # TODO authorisation
+
+        # needs context
+        if (in_array($action, words("edit update destroy")) && !$this->cid) {
+            throw new Trails_Exception(400);
         }
     }
 
@@ -36,70 +45,161 @@ class VotesController extends CliqrStudipController
     function index_action() {
         // get a list of all active votes
         $voteDb = new VoteDB();
-        $this->votes = array_merge(
+        $this->questions = array_merge(
             $voteDb->getNewVotes($this->cid),
             $voteDb->getActiveVotes($this->cid),
             $voteDb->getStoppedVotes($this->cid));
 
-        foreach($this->votes as $index => &$vote) {
-            $this->votes[$index] = new Vote($vote["voteID"]);
+        foreach($this->questions as $index => &$question) {
+            $this->questions[$index] = new \Cliqr\Question($question["voteID"]);
         }
 
         // order votes by title
-        usort($this->votes, function($a, $b) {
+        usort($this->questions, function($a, $b) {
                 return strcasecmp($a->title, $b->title);
             });
+
+        if (Request::isXhr()) {
+            $this->questions = array_map(function ($q) { return $q->toJSON(); }, $this->questions);
+            $this->render_json($this->questions);
+        }
     }
 
     function show_action($id)
     {
-        $this->vote = $this->getVote($id);
+        $this->question = $this->getQuestion($id);
+
+        if (Request::isXhr()) {
+            $this->render_json($this->question->toJSON());
+        }
     }
 
-    # TODO
     function new_action()
     {
+        # just render template
     }
 
-    #TODO
     function create_action()
     {
-        #var_dump(\Cliqr\Vote::dummy()->save());
+        global $auth;
+
+        # TODO: Validation!? (eingebaut?)
+        $question = new \Cliqr\Question();
+        $question->setRangeID($this->cid);
+        $question->setAuthorID($auth->auth["uid"]);
+
+        $question->setQuestion($q = Request::get("question"));
+
+        $question->setTitle(my_substr($q, 0, 50));
+
+        $choices = \Cliqr\Question::makeChoices(Request::getArray("choices"));
+        $question->setAnswers($choices);
+
+        $question->executeWrite();
+        $error = $question->isError();
+
         if (Request::isXhr()) {
-            $this->render_json($_POST);
+            if ($error) {
+                throw new Trails_Exception(500, "Could not create");
+            } else {
+                $this->response->set_status(201);
+                return $this->render_json($question->toJSON());
+            }
         }
         else {
+            if ($error) {
+                $this->flash['error'] = "TODO: Could not create";
+                return $this->redirect('votes/new');
+            } else {
+                return $this->redirect('votes/index');
+            }
         }
+
     }
 
-    #TODO
     function edit_action($id)
     {
+        $this->question = $this->getQuestion($id);
     }
 
-    #TODO
+    #TODO: mit create_action kombinieren
     function update_action($id)
     {
+        global $auth;
+
+        $question = $this->getQuestion($id);
+
+        # TODO: Validation!? (eingebaut?)
+        $question->setQuestion($q = Request::get("question"));
+        $question->setTitle(my_substr($q, 0, 50));
+
+        # TODO
+        $answers = array();
+        foreach ($question->getAnswers() as $answer) {
+            $answers[$answer['answer_id']] = $answer;
+        }
+
+        $new_answers = array();
+        foreach (Request::getArray("choices") as $id => $choice) {
+            if ($choice !== '') {
+                $new_answers[] = is_int($id)
+                    ? \Cliqr\Question::makeChoice($choice)
+                    : array_merge($answers[$id], array('text' => $choice));
+            }
+        }
+        $question->setAnswers($new_answers);
+
+        $question->executeWrite();
+        $error = $question->isError();
+
+        var_dump($error);
+        exit;
+        if (Request::isXhr()) {
+            if ($error) {
+                throw new Trails_Exception(500, "Could not create");
+            } else {
+                $this->response->set_status(201);
+                return $this->render_json($question->toJSON());
+            }
+        }
+        else {
+            if ($error) {
+                $this->flash['error'] = "TODO: Could not create";
+                return $this->redirect('votes/new');
+            } else {
+                return $this->redirect('votes/index');
+            }
+        }
     }
 
     function destroy_action($id)
     {
-        if (!Request::isPost()) {
-            throw new Trails_Exception(405);
+        $question = $this->getQuestion($id);
+        $question->executeRemove();
+        $error = $question->isError();
+
+        if (Request::isXhr()) {
+            if ($error) {
+                throw new Trails_Exception(500, "Could not delete");
+            } else {
+                $this->response->set_status(204);
+                return $this->render_nothing();
+            }
         }
-
-        $vote = $this->getVote($id);
-        $vote->executeRemove();
-        $status = $vote->isError();
-
-        # TODO
-        $this->render_text("done: " . !!$status);
+        else {
+            if ($error) {
+                $this->flash['error'] = "TODO: Could not delete";
+                return $this->redirect('votes/index');
+            } else {
+                return $this->redirect('votes/index');
+            }
+        }
     }
 
+    /*
 
 
-
-    function start_action($voteId)
+    function start_action($questionId)
     {
         $voteDb = new VoteDB();
         $vote = new Vote($voteId);
@@ -137,7 +237,7 @@ class VotesController extends CliqrStudipController
     function showpublic_action($cid)
     {
         $voteDb = new VoteDB();
-        $this->votes = $voteDb->getActiveVotes($courseid);
+        $this->questions = $voteDb->getActiveVotes($courseid);
         foreach($this->votes as $index => &$vote) {
             $this->votes[$index] = new Vote($vote["voteID"]);
             $voteDb->setVote($this->votes[$index]);
@@ -169,12 +269,20 @@ class VotesController extends CliqrStudipController
                                              "cliqrplugin/showpublic/" . $vote->getRangeID()));
     }
 
-    private function getVote($id)
+    */
+
+
+
+    #############################################################################
+    #  PRIVATE METHODS                                                          #
+    #############################################################################
+
+    private function getQuestion($id)
     {
-        $vote = \Cliqr\Vote::find($id);
-        if (!$vote) {
+        $question = new \Cliqr\Question($id);
+        if ($question->isError()) {
             throw new Trails_Exception(404); # NOT FOUND
         }
-        return $vote;
+        return $question;
     }
 }
