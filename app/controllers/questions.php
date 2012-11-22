@@ -75,6 +75,8 @@ class QuestionsController extends CliqrStudipController
 
     function show_action($id)
     {
+        $this->shortener = $this->plugin->container['shortener'];
+
         if (Request::isXhr()) {
             $this->render_json($this->question->toJSON());
         }

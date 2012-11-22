@@ -66,12 +66,13 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     {
         $container = new Pimple();
 
-        $container['shortener_class'] = 'MockShortener';
+        $container['shortener_file']  = 'lib/MockShortener.php';
+        $container['shortener_class'] = '\Cliqr\MockShortener';
 
         $container['shortener'] = $container->share(
             function ($c) {
-                $class = $c['shortener_class'];
-                require_once dirname(__FILE__) . "/lib/$class.php";
+                require_once dirname(__FILE__) . "/" . $c['shortener_file'];
+                $class = $container['shortener_class'];
                 return new $class();
             }
         );
