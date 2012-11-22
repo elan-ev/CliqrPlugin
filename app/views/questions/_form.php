@@ -1,11 +1,11 @@
 <?
 if ($question) {
-    $form_action = $controller->url_for("votes/update", $question->getVoteId());
+    $form_action = $controller->url_for("questions/update", $question->getVoteId());
     $answers = $question->getAnswers();
 }
 
 else {
-    $form_action = $controller->url_for("votes/create");
+    $form_action = $controller->url_for("questions/create");
     $answers = array(array());
 }
 ?>
@@ -29,7 +29,7 @@ else {
     </label>
     <div class="control-group choices">
       <? foreach ($answers as $answer) { ?>
-          <?= $this->render_partial("votes/_choice", $answer) ?>
+          <?= $this->render_partial("questions/_choice", $answer) ?>
       <? } ?>
       <div class="choice-new">Click here to add option</div>
     </div>
@@ -45,7 +45,7 @@ else {
 </form>
 
 <script id="template-vote-form-choice" type="text/html">
-  <?= $this->render_partial("votes/_choice") ?>
+  <?= $this->render_partial("questions/_choice") ?>
 </script>
 
 <? var_dump($question) ?>

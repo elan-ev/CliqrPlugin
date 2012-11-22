@@ -16,7 +16,7 @@ class QrController extends CliqrStudipController
         global $ABSOLUTE_URI_STUDIP;
 
         URLHelper::setBaseUrl($ABSOLUTE_URI_STUDIP);
-        $url = current(explode('?', $this->url_for('votes/todo', $id)));
+        $url = current(explode('?', $this->url_for('questions/todo', $id)));
         QRcode::png($url);
         $this->render_nothing();
     }

@@ -19,11 +19,11 @@
 </div>
 
 <div class="button-group vote-controls">
-  <?= \STUDIP\LinkButton::create(_("Ändern"), $controller->url_for('votes/edit', $question->getVoteID())) ?>
+  <?= \STUDIP\LinkButton::create(_("Ändern"), $controller->url_for('questions/edit', $question->getVoteID())) ?>
   <?= \STUDIP\LinkButton::create(_("Show/Hide Results")) ?>
   <?= \STUDIP\LinkButton::create(_("Zurücksetzen")) ?>
 
-  <form action="<?= $controller->url_for('votes/destroy', $question->getVoteID()) ?>" method="POST">
+  <form action="<?= $controller->url_for('questions/destroy', $question->getVoteID()) ?>" method="POST">
     <?= \STUDIP\Button::create(_("Löschen")) ?>
   </form>
 </div>

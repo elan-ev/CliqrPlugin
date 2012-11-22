@@ -29,15 +29,15 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             return;
         }
 
-        $url = PluginEngine::getURL($this, array(), 'votes');
+        $url = PluginEngine::getURL($this, array(), 'questions');
         $navigation = new Navigation(_('Cliqr'), $url);
         $navigation->setImage(Assets::image_path('icons/16/white/test.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/test.png'));
 
-        $url = PluginEngine::getURL($this, array(), 'votes');
+        $url = PluginEngine::getURL($this, array(), 'questions');
         $navigation->addSubNavigation("index", new Navigation(_("Fragen"), $url));
 
-        $url = PluginEngine::getURL($this, array(), 'votes/new');
+        $url = PluginEngine::getURL($this, array(), 'questions/new');
         $navigation->addSubNavigation("new", new Navigation(_("Neue Frage"), $url));
 
         Navigation::addItem('/course/cliqr', $navigation);
@@ -67,7 +67,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         // ...
     }
 
-    const DEFAULT_CONTROLLER = "votes";
+    const DEFAULT_CONTROLLER = "questions";
 
     function perform($unconsumed_path)
     {

@@ -7,7 +7,7 @@ require_once 'cliqr_controller.php';
 
 require_once dirname(__FILE__) . '/../models/Question.php';
 
-class VotesController extends CliqrStudipController
+class QuestionsController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)
     {
@@ -51,7 +51,7 @@ class VotesController extends CliqrStudipController
     /***************************************************************************/
 
     function index_action() {
-        // get a list of all active votes
+        // get a list of all active questions
         $voteDb = new VoteDB();
         $this->questions = array_merge(
             $voteDb->getNewVotes($this->cid),
@@ -62,7 +62,7 @@ class VotesController extends CliqrStudipController
             $this->questions[$index] = new \Cliqr\Question($question["voteID"]);
         }
 
-        // order votes by title
+        // order questions by title
         uasort($this->questions, function($a, $b) {
                 return strcasecmp($a->title, $b->title);
             });
@@ -114,10 +114,10 @@ class VotesController extends CliqrStudipController
         else {
             if ($error) {
                 $this->flash['error'] = "Could not create question";
-                return $this->redirect('votes/new');
+                return $this->redirect('questions/new');
             } else {
                 $this->flash['info'] = "Question created";
-                return $this->redirect('votes/show/'.$question->getVoteID());
+                return $this->redirect('questions/show/'.$question->getVoteID());
             }
         }
     }
@@ -165,10 +165,10 @@ class VotesController extends CliqrStudipController
         else {
             if (!$error) {
                 $this->flash['error'] = "Could not update question";
-                return $this->redirect('votes/edit/'.$question->getVoteID());
+                return $this->redirect('questions/edit/'.$question->getVoteID());
             } else {
                 $this->flash['info'] = "Question updated";
-                return $this->redirect('votes/show/'.$question->getVoteID());
+                return $this->redirect('questions/show/'.$question->getVoteID());
             }
         }
     }
@@ -193,7 +193,7 @@ class VotesController extends CliqrStudipController
             } else {
                 $this->flash['info'] = "Question deleted";
             }
-            return $this->redirect('votes/index');
+            return $this->redirect('questions/index');
         }
     }
 

@@ -13,10 +13,10 @@
 <?
 $i = 1;
 foreach ($questions as $question) {
-    $showUrl    = $controller->url_for('votes/show',    $question->getVoteID());
-    $resultsUrl = $controller->url_for('votes/results', $question->getVoteID());
-    $startUrl   = $controller->url_for('votes/start',   $question->getVoteID());
-    $stopUrl    = $controller->url_for('votes/stop',    $question->getVoteID());
+    $showUrl    = $controller->url_for('questions/show',    $question->getVoteID());
+    $resultsUrl = $controller->url_for('questions/results', $question->getVoteID());
+    $startUrl   = $controller->url_for('questions/start',   $question->getVoteID());
+    $stopUrl    = $controller->url_for('questions/stop',    $question->getVoteID());
     ?>
     <tr>
         <td class="steel1"><?= $i++ ?>.</td>
@@ -41,7 +41,7 @@ foreach ($questions as $question) {
 <? } ?>
 </table>
 
-<?= \STUDIP\LinkButton::create(_("Neue Frage anlegen"), $controller->url_for("votes/new")) ?>
+<?= \STUDIP\LinkButton::create(_("Neue Frage anlegen"), $controller->url_for("questions/new")) ?>
 
 <ol id="questions">
   <? foreach ($questions as $question) { $id = $question->getVoteID(); ?>
@@ -51,16 +51,16 @@ foreach ($questions as $question) {
   <li <?= $alt ?>>
     <div class="question">
 
-      <a class="hover" href="<?= $controller->url_for('votes/show', $id) ?>">
+      <a class="hover" href="<?= $controller->url_for('questions/show', $id) ?>">
         <span class="show_audience" <?= $alt ?>>
           Show audience
         </span>
       </a>
 
       <div class="control">
-        <a class="edit"   alt="edit"   title="edit"   href="<?= $controller->url_for('votes/edit', $id) ?>"></a>
+        <a class="edit"   alt="edit"   title="edit"   href="<?= $controller->url_for('questions/edit', $id) ?>"></a>
         <form
-           action="<?= $controller->url_for('votes/destroy', $id) ?>"
+           action="<?= $controller->url_for('questions/destroy', $id) ?>"
            method="POST">
           <button type="submit" class="delete" alt="delete" title="delete"></button>
         </form>
