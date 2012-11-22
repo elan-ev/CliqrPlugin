@@ -5,7 +5,7 @@ require_once "lib/vote/Vote.class.php";
 
 require_once 'cliqr_controller.php';
 
-require_once dirname(__FILE__) . '/../models/Question.php';
+use \Cliqr\Question;
 
 class QuestionsController extends CliqrStudipController
 {
@@ -42,7 +42,7 @@ class QuestionsController extends CliqrStudipController
 
         # set question
         if (in_array($action, words("show edit update destroy"))) {
-            $this->question = $this->getQuestion($args[0]);
+            $this->question = Question::find($args[0]);
         }
     }
 
@@ -59,7 +59,7 @@ class QuestionsController extends CliqrStudipController
             $voteDb->getStoppedVotes($this->cid));
 
         foreach($this->questions as $index => &$question) {
-            $this->questions[$index] = new \Cliqr\Question($question["voteID"]);
+            $this->questions[$index] = new Question($question["voteID"]);
         }
 
         // order questions by title
@@ -90,14 +90,14 @@ class QuestionsController extends CliqrStudipController
         global $auth;
 
         # TODO: Validation!? (eingebaut?)
-        $question = new \Cliqr\Question();
+        $question = new Question();
         $question->setRangeID($this->cid);
         $question->setAuthorID($auth->auth["uid"]);
 
         $question->setQuestion($q = Request::get("question"));
         $question->setTitle(my_substr($q, 0, 50));
 
-        $choices = \Cliqr\Question::makeChoices(Request::getArray("choices"));
+        $choices = Question::makeChoices(Request::getArray("choices"));
         $question->setAnswers($choices);
 
         $question->executeWrite();
@@ -144,7 +144,7 @@ class QuestionsController extends CliqrStudipController
         foreach (Request::getArray("choices") as $id => $choice) {
             if ($choice !== '') {
                 $new_answers[] = is_int($id)
-                    ? \Cliqr\Question::makeChoice($choice)
+                    ? Question::makeChoice($choice)
                     : array_merge($answers[$id], array('text' => $choice));
             }
         }
@@ -175,9 +175,8 @@ class QuestionsController extends CliqrStudipController
 
     function destroy_action($id)
     {
-        $question = $this->getQuestion($id);
-        $question->executeRemove();
-        $error = $question->isError();
+        $this->question->executeRemove();
+        $error = $this->question->isError();
 
         if (Request::isXhr()) {
             if ($error) {
@@ -271,19 +270,4 @@ class QuestionsController extends CliqrStudipController
     }
 
     */
-
-
-
-    #############################################################################
-    #  PRIVATE METHODS                                                          #
-    #############################################################################
-
-    private function getQuestion($id)
-    {
-        $question = new \Cliqr\Question($id);
-        if ($question->isError()) {
-            throw new Trails_Exception(404); # NOT FOUND
-        }
-        return $question;
-    }
 }

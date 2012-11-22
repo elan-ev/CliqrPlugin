@@ -3,6 +3,7 @@
 namespace Cliqr;
 
 require_once "lib/vote/Vote.class.php";
+require_once "errors.php";
 
 class Question extends \Vote{
 
@@ -25,6 +26,15 @@ class Question extends \Vote{
             'text'      => $choice,
             'counter'   => 0,
             'correct'   => 0);
+    }
+
+    static function find($id)
+    {
+        $question = new Question($id);
+        if ($question->isError()) {
+            throw new RecordNotFound();
+        }
+        return $question;
     }
 
     function toJSON()

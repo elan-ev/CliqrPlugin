@@ -2,6 +2,8 @@
 
 require_once 'cliqr_controller.php';
 
+require_once dirname(__FILE__) . '/../models/Question.php';
+
 class CliqrStudipController extends StudipController
 {
     function before_filter(&$action, &$args)
@@ -32,5 +34,20 @@ class CliqrStudipController extends StudipController
         header('Content-Type: application/json');
 
         $this->render_text(json_encode($data));
+    }
+
+    /**
+     * Exception handler called when the performance of an action raises an
+     * exception.
+     *
+     * @param  object     the thrown exception
+     */
+    function rescue($exception)
+    {
+        if ($exception instanceof \Cliqr\RecordNotFound) {
+            return $this->dispatcher->trails_error(new Trails_Exception(404));
+        } else {
+            throw $exception;
+        }
     }
 }
