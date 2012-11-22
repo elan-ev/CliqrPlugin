@@ -53,8 +53,30 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         PageLayout::addStylesheet($this->getPluginURL() . '/assets/styles.css');
         PageLayout::addScript($this->getPluginURL() . '/assets/validator.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/script.js');
+
         require_once 'vendor/trails/trails.php';
         require_once 'app/controllers/studip_controller.php';
+
+        require_once 'lib/Pimple.php';
+
+        $this->container = self::setupDIContainer();
+    }
+
+    private static function setupDIContainer()
+    {
+        $container = new Pimple();
+
+        $container['shortener_class'] = 'MockShortener';
+
+        $container['shortener'] = $container->share(
+            function ($c) {
+                $class = $c['shortener_class'];
+                require_once dirname(__FILE__) . "/lib/$class.php";
+                return new $class();
+            }
+        );
+
+        return $container;
     }
 
     public function getIconNavigation($course_id, $last_visit)
