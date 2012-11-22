@@ -39,8 +39,16 @@ class VotesController extends CliqrStudipController
         if (in_array($action, words("edit update destroy")) && !$this->cid) {
             throw new Trails_Exception(400);
         }
+
+        # set question
+        if (in_array($action, words("show edit update destroy"))) {
+            $this->question = $this->getQuestion($args[0]);
+        }
     }
 
+    /***************************************************************************/
+    /* ACTIONS                                                                 */
+    /***************************************************************************/
 
     function index_action() {
         // get a list of all active votes
@@ -55,20 +63,18 @@ class VotesController extends CliqrStudipController
         }
 
         // order votes by title
-        usort($this->questions, function($a, $b) {
+        uasort($this->questions, function($a, $b) {
                 return strcasecmp($a->title, $b->title);
             });
 
         if (Request::isXhr()) {
-            $this->questions = array_map(function ($q) { return $q->toJSON(); }, $this->questions);
-            $this->render_json($this->questions);
+            $questions = array_map(function ($q) { return $q->toJSON(); }, $this->questions);
+            $this->render_json($questions);
         }
     }
 
     function show_action($id)
     {
-        $this->question = $this->getQuestion($id);
-
         if (Request::isXhr()) {
             $this->render_json($this->question->toJSON());
         }
@@ -89,7 +95,6 @@ class VotesController extends CliqrStudipController
         $question->setAuthorID($auth->auth["uid"]);
 
         $question->setQuestion($q = Request::get("question"));
-
         $question->setTitle(my_substr($q, 0, 50));
 
         $choices = \Cliqr\Question::makeChoices(Request::getArray("choices"));
@@ -102,34 +107,31 @@ class VotesController extends CliqrStudipController
             if ($error) {
                 throw new Trails_Exception(500, "Could not create");
             } else {
-                $this->response->set_status(201);
+                $this->response->set_status(201, "Created");
                 return $this->render_json($question->toJSON());
             }
         }
         else {
             if ($error) {
-                $this->flash['error'] = "TODO: Could not create";
+                $this->flash['error'] = "Could not create question";
                 return $this->redirect('votes/new');
             } else {
-                return $this->redirect('votes/index');
+                $this->flash['info'] = "Question created";
+                return $this->redirect('votes/show/'.$question->getVoteID());
             }
         }
-
     }
 
     function edit_action($id)
     {
-        $this->question = $this->getQuestion($id);
+        # just render template
     }
 
-    #TODO: mit create_action kombinieren
+    # TODO: mit create_action kombinieren
+    # TODO: Validation!? (eingebaut?)
     function update_action($id)
     {
-        global $auth;
-
-        $question = $this->getQuestion($id);
-
-        # TODO: Validation!? (eingebaut?)
+        $question = $this->question;
         $question->setQuestion($q = Request::get("question"));
         $question->setTitle(my_substr($q, 0, 50));
 
@@ -138,7 +140,6 @@ class VotesController extends CliqrStudipController
         foreach ($question->getAnswers() as $answer) {
             $answers[$answer['answer_id']] = $answer;
         }
-
         $new_answers = array();
         foreach (Request::getArray("choices") as $id => $choice) {
             if ($choice !== '') {
@@ -149,25 +150,25 @@ class VotesController extends CliqrStudipController
         }
         $question->setAnswers($new_answers);
 
+
         $question->executeWrite();
         $error = $question->isError();
 
-        var_dump($error);
-        exit;
         if (Request::isXhr()) {
             if ($error) {
-                throw new Trails_Exception(500, "Could not create");
+                throw new Trails_Exception(500, "Could not update");
             } else {
-                $this->response->set_status(201);
+                $this->response->set_status(201, "Updated");
                 return $this->render_json($question->toJSON());
             }
         }
         else {
-            if ($error) {
-                $this->flash['error'] = "TODO: Could not create";
-                return $this->redirect('votes/new');
+            if (!$error) {
+                $this->flash['error'] = "Could not update question";
+                return $this->redirect('votes/edit/'.$question->getVoteID());
             } else {
-                return $this->redirect('votes/index');
+                $this->flash['info'] = "Question updated";
+                return $this->redirect('votes/show/'.$question->getVoteID());
             }
         }
     }
@@ -188,11 +189,11 @@ class VotesController extends CliqrStudipController
         }
         else {
             if ($error) {
-                $this->flash['error'] = "TODO: Could not delete";
-                return $this->redirect('votes/index');
+                $this->flash['error'] = "Could not delete question";
             } else {
-                return $this->redirect('votes/index');
+                $this->flash['info'] = "Question deleted";
             }
+            return $this->redirect('votes/index');
         }
     }
 
