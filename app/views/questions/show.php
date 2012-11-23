@@ -1,4 +1,7 @@
-<? $body_id = "cliqr-show"; ?>
+<?
+$body_id = "cliqr-show";
+$id = $question->getVoteID();
+?>
 
 <h2><?= htmlReady($question->getTitle()) ?></h2>
 
@@ -13,27 +16,21 @@
 <? } ?>
 </table>
 
+<?
+$poll_url = $controller->poll_url($cid);
+$short_url = $shortener->shorten($poll_url);
+?>
 <div class="appeal">
-  Vote at <strong>v.uos.de</strong> using id: <strong>28851</strong>
-  <a href="<?= $controller->url_for('qr', $question->getVoteID()) ?>"></a>
+  Vote at <a href="<?= $poll_url ?>"><?= $short_url ?></a>
+  <a class="qr" href="<?= $controller->url_for('qr', $id) ?>"></a>
 </div>
 
 <div class="button-group vote-controls">
-  <?= \STUDIP\LinkButton::create(_("Ändern"), $controller->url_for('questions/edit', $question->getVoteID())) ?>
+  <?= \STUDIP\LinkButton::create(_("Ändern"), $controller->url_for('questions/edit', $id)) ?>
   <?= \STUDIP\LinkButton::create(_("Show/Hide Results")) ?>
   <?= \STUDIP\LinkButton::create(_("Zurücksetzen")) ?>
 
-  <form action="<?= $controller->url_for('questions/destroy', $question->getVoteID()) ?>" method="POST">
+  <form action="<?= $controller->url_for('questions/destroy', $id) ?>" method="POST">
     <?= \STUDIP\Button::create(_("Löschen")) ?>
   </form>
 </div>
-
-<pre>
-id:        <?= htmlReady($question->getVoteID()) ?>
-
-startdate: <?= date("r", $question->getStartdate()) ?>
-
-stopdate:  <?= date("r", $question->getStopdate()) ?>
-
-<?= var_dump(json_encode($question->toJSON())) ?>
-</pre>

@@ -11,6 +11,15 @@ class CliqrStudipController extends StudipController
         $this->plugin = $this->dispatcher->plugin;
     }
 
+    function poll_url($cid)
+    {
+        global $ABSOLUTE_URI_STUDIP;
+        URLHelper::setBaseUrl($ABSOLUTE_URI_STUDIP);
+        $url = current(explode('?', $this->url_for('poll', $cid)));
+        return $url;
+    }
+
+
     function url_for($to)
     {
         $args = func_get_args();

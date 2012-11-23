@@ -37,6 +37,28 @@ class Question extends \Vote{
         return $question;
     }
 
+    static function findActiveByRangeID($range_id)
+    {
+        # get a list of all active questions
+        $voteDb = new \VoteDB();
+        $questions = $voteDb->getActiveVotes($range_id);
+
+        # inflate
+        $questions = array_map(
+            function ($q) {
+                return new Question($q["voteID"]);
+            },
+            $questions);
+
+        # order by startdate
+        usort($questions, function($a, $b) {
+                if ($a->startdate === $b->startdate) { return 0; }
+                return $a->startdate < $b->startdate ? -1 : +1;
+            });
+
+        return $questions;
+    }
+
     function toJSON()
     {
         $answers = array();

@@ -12,12 +12,9 @@ class QrController extends CliqrStudipController
         $action = "show";
     }
 
-    function show_action($id) {
-        global $ABSOLUTE_URI_STUDIP;
-
-        URLHelper::setBaseUrl($ABSOLUTE_URI_STUDIP);
-        $url = current(explode('?', $this->url_for('questions/todo', $id)));
-        QRcode::png($url);
+    function show_action($cid) {
+        #var_dump($this->poll_url($cid));
+        QRcode::png($this->poll_url($cid));
         $this->render_nothing();
     }
 }

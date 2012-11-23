@@ -14,43 +14,22 @@ class PollController extends CliqrStudipController
 
         parent::before_filter($action, $args);
 
-        /*
-        global $perm;
-        $this->flash = Trails_Flash::instance();
-
-        # set default layout
-        $this->set_layout('layout');
-
-        # set title
-        $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
-        PageLayout::setTitle(_('Cliqr'));
-
-        $this->cid = Request::get("cid");
-
-        // as anonymous access is possible, do not enable the course
-        // navigation when the current user is not signed in
-        # TODO
-        if ($perm->have_studip_perm("autor", $this->cid)) {
-            Navigation::activateItem("/course/cliqr/index");
-        }
-
-        # TODO authorisation
-
-        # needs context
-        if (in_array($action, words("edit update destroy")) && !$this->cid) {
+        if (!preg_match('/^[0-9a-f]{32}$/', $action)) {
             throw new Trails_Exception(400);
         }
 
+        $args = array($range_id = $action);
+        $action = Request::method() === 'POST' ? 'update' : 'show';
+
         # set question
-        if (in_array($action, words("show edit update destroy"))) {
-            $this->question = $this->getQuestion($args[0]);
-        }
-        */
+        $this->question = \Cliqr\Question::findActiveByRangeID($range_id);
+
     }
 
     function show_action($id)
     {
-        $this->question = Question::find($id);
+        var_dump($this->question);
+        $this->render_nothing();
     }
 
     function update_action($id)

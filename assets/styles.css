@@ -173,7 +173,7 @@
   position: relative;
   text-align: center;
 }
-#cliqr-show .appeal a {
+#cliqr-show .appeal a.qr {
   float: right;
   width: 64px;
   height: 64px;
@@ -187,7 +187,7 @@
   margin-top: -32px;
   margin-right: 16px;
 }
-#cliqr-show .appeal a:hover {
+#cliqr-show .appeal a.qr:hover {
   box-shadow: 0 0 0.25em #6e7070;
 }
 .vote-form fieldset {

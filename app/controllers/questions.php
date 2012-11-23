@@ -63,7 +63,7 @@ class QuestionsController extends CliqrStudipController
         }
 
         // order questions by title
-        uasort($this->questions, function($a, $b) {
+        usort($this->questions, function($a, $b) {
                 return strcasecmp($a->title, $b->title);
             });
 
