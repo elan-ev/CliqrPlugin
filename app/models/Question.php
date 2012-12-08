@@ -37,8 +37,10 @@ class Question extends \Vote{
         return $question;
     }
 
-    static function findActiveByRangeID($range_id)
+    static function findAllActive($_range_id)
     {
+        $range_id = self::transformRangeId($_range_id);
+
         # get a list of all active questions
         $voteDb = new \VoteDB();
         $questions = $voteDb->getActiveVotes($range_id);
@@ -59,80 +61,76 @@ class Question extends \Vote{
         return $questions;
     }
 
+    function findAll($_range_id)
+    {
+        $range_id = self::transformRangeId($_range_id);
+
+        // get a list of all active questions
+        $voteDb = new \VoteDB();
+        $questions = array_merge(
+            $voteDb->getNewVotes($range_id),
+            $voteDb->getActiveVotes($range_id),
+            $voteDb->getStoppedVotes($range_id));
+
+        foreach($questions as $index => &$question) {
+            $questions[$index] = new Question($question["voteID"]);
+        }
+
+        // order questions by title
+        usort($questions, function($a, $b) {
+                return strcasecmp($a->title, $b->title);
+            });
+        return $questions;
+    }
+
     function toJSON()
     {
         $answers = array();
         foreach ($this->answerArray as $answer) {
-            $answers[$answer['answer_id']] = array(
-                'text' => studip_utf8encode($answer['text']),
+            $answers[] = array(
+                'id'      => studip_utf8encode($answer['answer_id']),
+                'text'    => studip_utf8encode($answer['text']),
                 'counter' => (int)$answer['counter']);
         }
         return array(
-            'id'       => $this->objectID,
-            'range_id' => studip_utf8encode($this->rangeID),
-            'question' => studip_utf8encode($this->question),
-            'answers'  => $answers
+            'id'        => $this->objectID,
+            'range_id'  => studip_utf8encode($this->rangeID),
+            'question'  => studip_utf8encode($this->question),
+            'startdate' => (int)$this->getStartdate(),
+            'answers'   => $answers
         );
     }
 
-/*
-    function __construct($range_id, $title, $answers, $attrs = array())
+
+    function recordAnswer($answer_id)
     {
-        $now = time();
+        if (!$this->isActive()) {
+            $this->throwError(23, _("Nur aktive Fragen können beantwortet werden."));
+            return false;
+        }
 
-        $answers = array_filter($answers, function ($answer) { return strlen($answer); });
-        $answers = array_map(function ($answer) { return \Cliqr\Question::makeAnswer($answer); }, $answers);
+        $sql = "UPDATE voteanswers SET counter = counter + 1 ".
+               "WHERE vote_id = ? AND answer_id = ?";
+        $stmt = \DBManager::get()->prepare($sql);
+        $stmt->execute(array($this->getVoteID(), $answer_id));
 
-        $defaults = array(
-  x            'vote_id'          => self::generateID()
-  x          , 'range_id'         => $range_id
-  x          , 'title'            => $title
-  x          , 'question'         => $title
-            , 'author_id'        => $GLOBALS['user']->id
-            , 'type'             => 'vote'
-x            , 'state'            => 'new'
- x           , 'startdate'        => $now
- x           , 'stopdate'         => NULL
- x           , 'timespan'         => NULL
- x           , 'mkdate'           => $now
- x           , 'chdate'           => $now
- x           , 'resultvisibility' => 'ever'
- x           , 'multiplechoice'   => 0
- x           , 'anonymous'        => 1
- x           , 'changeable'       => 0
- x           , 'co_visibility'    => NULL
- x           , 'namesvisibility'  => 0
+        if ($stmt->rowCount() !== 1) {
+            $this->throwError(24, _("Antwort wurde nicht gespeichert."));
+            return false;
+        }
 
-            , 'answers'          => $answers
-        );
-        $this->attrs = array_merge($defaults, $attrs);
+        # update locally
+        foreach ($this->answerArray as &$answer) {
+            if ($answer['answer_id'] === $answer_id) {
+                $answer['counter']++;
+            }
+        }
+
+        return true;
     }
 
-    function save()
+    static function transformRangeId($range_id)
     {
-        $questionDB = new \VoteDB();
-        $questionDB->writeVote (
-            $this->attrs['vote_id'],
-            $this->attrs['author_id'],
-            $this->attrs['range_id'],
-            $this->attrs['title'],
-            $this->attrs['question'],
-            $this->attrs['state'],
-            $this->attrs['startdate'],
-            $this->attrs['stopdate'],
-            $this->attrs['timespan'],
-            $this->attrs['mkdate'],
-            $this->attrs['chdate'],
-            $this->attrs['resultvisibility'],
-            $this->attrs['namesvisibility'],
-            $this->attrs['multiplechoice'],
-            $this->attrs['anonymous'],
-            $this->attrs['answers'],
-            $this->attrs['changeable'],
-            $this->attrs['co_visibility'],
-            $this->attrs['type']
-        );
-        return !$questionDB->isError();
+        return md5("cliqr-$range_id");
     }
-*/
 }

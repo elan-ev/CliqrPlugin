@@ -25,7 +25,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 
         $context = $this->getContext();
         if (!$this->isActivated($context)
-            || !$perm->have_studip_perm("autor", $context)) {
+            || !$perm->have_studip_perm("tutor", $context)) {
             return;
         }
 
@@ -51,7 +51,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     public function initialize ()
     {
         PageLayout::addStylesheet($this->getPluginURL() . '/assets/styles.css');
-        PageLayout::addScript($this->getPluginURL() . '/assets/validator.js');
+        PageLayout::addScript($this->getPluginURL() . '/assets/vendor/validator.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/script.js');
 
         require_once 'vendor/trails/trails.php';

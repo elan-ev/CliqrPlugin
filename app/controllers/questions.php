@@ -11,9 +11,19 @@ class QuestionsController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)
     {
-        global $perm;
-
         parent::before_filter($action, $args);
+
+        # needs context
+        $this->cid = Request::get("cid");
+        if (!isset($this->cid)) {
+            throw new Trails_Exception(400);
+        }
+
+        // authorisation
+        if (!$GLOBALS['perm']->have_studip_perm("tutor", $this->cid)) {
+            throw new Trails_Exception(403);
+        }
+
 
         $this->flash = Trails_Flash::instance();
 
@@ -24,24 +34,14 @@ class QuestionsController extends CliqrStudipController
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
         PageLayout::setTitle(_('Cliqr'));
 
-        $this->cid = Request::get("cid");
-
-        // as anonymous access is possible, do not enable the course
-        // navigation when the current user is not signed in
-        # TODO
-        if ($perm->have_studip_perm("autor", $this->cid)) {
+        if ($action === 'new') {
+            Navigation::activateItem("/course/cliqr/new");
+        } else {
             Navigation::activateItem("/course/cliqr/index");
         }
 
-        # TODO authorisation
-
-        # needs context
-        if (in_array($action, words("edit update destroy")) && !$this->cid) {
-            throw new Trails_Exception(400);
-        }
-
         # set question
-        if (in_array($action, words("show edit update destroy"))) {
+        if (in_array($action, words("show edit update destroy start stop"))) {
             $this->question = Question::find($args[0]);
         }
     }
@@ -51,31 +51,20 @@ class QuestionsController extends CliqrStudipController
     /***************************************************************************/
 
     function index_action() {
-        // get a list of all active questions
-        $voteDb = new VoteDB();
-        $this->questions = array_merge(
-            $voteDb->getNewVotes($this->cid),
-            $voteDb->getActiveVotes($this->cid),
-            $voteDb->getStoppedVotes($this->cid));
-
-        foreach($this->questions as $index => &$question) {
-            $this->questions[$index] = new Question($question["voteID"]);
-        }
-
-        // order questions by title
-        usort($this->questions, function($a, $b) {
-                return strcasecmp($a->title, $b->title);
-            });
+        $this->questions = Question::findAll($this->cid);
 
         if (Request::isXhr()) {
-            $questions = array_map(function ($q) { return $q->toJSON(); }, $this->questions);
-            $this->render_json($questions);
+            $this->render_json(
+                array_map(function ($q) {
+                        return $q->toJSON();
+                    }, $this->questions));
         }
     }
 
     function show_action($id)
     {
-        $this->shortener = $this->plugin->container['shortener'];
+        $this->shortener = $this->plugin->config['shortener'];
+        $this->show_results = Request::int("show_results", 1);
 
         if (Request::isXhr()) {
             $this->render_json($this->question->toJSON());
@@ -91,15 +80,21 @@ class QuestionsController extends CliqrStudipController
     {
         global $auth;
 
-        # TODO: Validation!? (eingebaut?)
+        // TODO: Validation!? (eingebaut?)
         $question = new Question();
-        $question->setRangeID($this->cid);
         $question->setAuthorID($auth->auth["uid"]);
 
-        $question->setQuestion($q = Request::get("question"));
+        // TODO: das ist so nicht sauber, das müsste Question machen
+        $question->setRangeID(Question::transformRangeId($this->cid));
+
+        // TODO: woher weiss ich, dass das UTF8 ist?
+        $question->setQuestion($q = studip_utf8decode(Request::get("question")));
         $question->setTitle(my_substr($q, 0, 50));
 
-        $choices = Question::makeChoices(Request::getArray("choices"));
+        // TODO: woher weiss ich, dass das UTF8 ist?
+        $choices = array_map(function ($choice) { return studip_utf8decode($choice); },
+                             Request::getArray("choices"));
+        $choices = Question::makeChoices($choices);
         $question->setAnswers($choices);
 
         $question->executeWrite();
@@ -129,31 +124,50 @@ class QuestionsController extends CliqrStudipController
         # just render template
     }
 
-    # TODO: mit create_action kombinieren
-    # TODO: Validation!? (eingebaut?)
+    // TODO: mit create_action kombinieren
+    // TODO: Validation!? (eingebaut?)
     function update_action($id)
     {
         $question = $this->question;
-        $question->setQuestion($q = Request::get("question"));
-        $question->setTitle(my_substr($q, 0, 50));
+        $dirty = false;
 
-        # TODO
-        $answers = array();
-        foreach ($question->getAnswers() as $answer) {
-            $answers[$answer['answer_id']] = $answer;
+        // UPDATE QUESTION
+        // TODO: woher weiss ich, dass das UTF8 ist?
+        $q = Request::get("question");
+        if (isset($q)) {
+            $question->setQuestion($q = studip_utf8decode());
+            $question->setTitle(my_substr($q, 0, 50));
+            $dirty = true;
         }
-        $new_answers = array();
-        foreach (Request::getArray("choices") as $id => $choice) {
-            if ($choice !== '') {
-                $new_answers[] = is_int($id)
+
+        // UPDATE CHOICES
+        // TODO zuviel in dieser action, besser nur 10 zeilen
+        $choices = Request::getArray("choices");
+        if (isset($choices)) {
+
+            $answers = array();
+            foreach ($question->getAnswers() as $answer) {
+                $answers[$answer['answer_id']] = $answer;
+            }
+            $new_answers = array();
+            foreach ($choices as $id => $choice) {
+                if ($choice !== '') {
+
+                    // TODO: woher weiss ich, dass das UTF8 ist?
+                    $choice = studip_utf8decode($choice);
+
+                    $new_answers[] = is_int($id)
                     ? Question::makeChoice($choice)
                     : array_merge($answers[$id], array('text' => $choice));
+                }
             }
+            $question->setAnswers($new_answers);
+            $dirty = true;
         }
-        $question->setAnswers($new_answers);
 
-
-        $question->executeWrite();
+        if ($dirty) {
+            $question->executeWrite();
+        }
         $error = $question->isError();
 
         if (Request::isXhr()) {
@@ -198,35 +212,65 @@ class QuestionsController extends CliqrStudipController
         }
     }
 
+    const ACTIVE_TIMESPAN = 7200; //60 * 60 * 2 = 2h
+
+    # TODO not restful
+    function start_action($id)
+    {
+        $this->question->setStopdate(time() + self::ACTIVE_TIMESPAN);
+
+        if ($this->question->isNew()) {
+            $this->question->executeStart();
+        } else {
+            $this->question->executeRestart();
+        }
+        $error = $this->question->isError();
+
+        if (Request::isXhr()) {
+            if ($error) {
+                throw new Trails_Exception(400, "Could not start");
+            } else {
+                $this->response->set_status(204);
+                return $this->render_nothing();
+            }
+        }
+        else {
+            if ($error) {
+                $this->flash['error'] = "Could not start question";
+            } else {
+                $this->flash['info'] = "Question started";
+            }
+            return $this->redirect('questions/show/' . $id);
+        }
+    }
+
+
+    # TODO not restful
+    function stop_action($id)
+    {
+        $this->question->executeStop();
+        $error = $this->question->isError();
+
+        if (Request::isXhr()) {
+            if ($error) {
+                throw new Trails_Exception(400, "Could not stop");
+            } else {
+                $this->response->set_status(204);
+                return $this->render_nothing();
+            }
+        }
+        else {
+            if ($error) {
+                $this->flash['error'] = "Could not stop question";
+            } else {
+                $this->flash['info'] = "Question stopped";
+            }
+            return $this->redirect('questions/show/' . $id);
+        }
+    }
+
     /*
 
-
-    function start_action($questionId)
-    {
-        $voteDb = new VoteDB();
-        $vote = new Vote($voteId);
-
-        if($vote->getRangeID() == Request::get("cid")) {
-            $voteDb->startVote($voteId, VOTE_ACTIVE, $vote->getStartdate(),
-                               null, null);
-        }
-
-        $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
-                                             "cliqrplugin/index"));
-    }
-
-    function stop_action($voteId)
-    {
-        $voteDb = new VoteDB();
-        $vote = new Vote($voteId);
-
-        if($vote->getRangeID() == Request::get("cid")) {
-            $voteDb->stopVote($voteId, VOTE_STOPPED_VISIBLE, null);
-        }
-
-        $this->redirect(PluginEngine::getURL($GLOBALS["plugin"], array(),
-                                             "cliqrplugin/index"));
-    }
 
     function results_action($voteId)
     {

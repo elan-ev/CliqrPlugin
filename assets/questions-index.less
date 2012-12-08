@@ -1,0 +1,85 @@
+#cliqr-index {
+
+
+  h3 a.button {
+    font-weight: normal;
+  }
+
+  ol {
+
+    padding-left: 1em;
+
+    li {
+      /* display: inline-block; */
+      position: relative;
+      vertical-align: top;
+      width: 500px;
+      height: 75px;
+      padding: 5px;
+      margin-bottom: 7px;
+      margin-right: 7px;
+      border: solid 3px transparent;
+      overflow: hidden;
+      background-color: #FFF;
+      cursor: pointer;
+
+      &:hover {
+        border: solid 3px #b3b3b3;
+        background-color: #b3b3b3;
+
+        .answer {
+          color: #fff;
+        }
+        .answer + .answer {
+          border-left: 1px solid #fff;
+        }
+      }
+
+      .count, .detail {
+        display: inline-block;
+        vertical-align: top;
+        height: 60px;
+        margin: 5px;
+      }
+
+      .count {
+        width: 60px;
+        font-size: 60px;
+        line-height: 60px;
+      }
+
+      &.state-new .count {
+        visibility: hidden;
+
+        &:before {
+          visibility: visible;
+          vertical-align: top;
+
+          content: "NEW";
+          font-size: 20px;
+        }
+      }
+
+      .detail {
+        width: 400px;
+        overflow: hidden;
+
+        h4 {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          width: 400px;
+          overflow: hidden;
+        }
+      }
+
+      .answer {
+        color: #b3b3b3;
+      }
+
+      .answer + .answer {
+        border-left: 1px solid darken(#b3b3b3, 10%);
+        padding-left: 0.3em;
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div data-role="header">
+  <h1>Stud.IP &ndash; Cliqr</h1>
+</div>
+
+<div data-role="content">
+
+  {{#poll}}
+  <form action="" method="post">
+    <input type="hidden" name="vote_id" value="{{id}}">
+
+    <fieldset class="question" data-role="controlgroup">
+      <legend>{{question}}</legend>
+
+      {{#answers}}
+      <label>
+        <input type="radio" name="choice" value="{{id}}" required="required">
+        <span class="nominal">{{nominal}}:</span>
+        {{text}}
+      </label>
+      {{/answers}}
+    </fieldset>
+
+    <fieldset>
+      <button type="submit" data-theme="a">Submit</button>
+    </fieldset>
+  </form>
+  {{/poll}}
+
+  {{^poll}}
+  <h1>Keine Polls</h1>
+  {{/poll}}
+
+</div>

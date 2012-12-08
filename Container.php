@@ -8,13 +8,13 @@ class Container extends \Pimple {
 
     function __construct()
     {
+        /*
         $this['shortener_file']  = 'lib/MockShortener.php';
         $this['shortener_class'] = '\\Cliqr\\MockShortener';
+        */
 
-        /*
         $this['shortener_file']  = 'lib/GoogleShortener.php';
         $this['shortener_class'] = '\\Cliqr\\GoogleShortener';
-        */
 
         $this['shortener'] = $this->share(
             function ($c) {

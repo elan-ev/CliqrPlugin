@@ -19,7 +19,6 @@ class CliqrStudipController extends StudipController
         return $url;
     }
 
-
     function url_for($to)
     {
         $args = func_get_args();
@@ -57,6 +56,13 @@ class CliqrStudipController extends StudipController
             return $this->dispatcher->trails_error(new Trails_Exception(404));
         } else {
             throw $exception;
+        }
+    }
+
+    protected static function ensureMD5($id)
+    {
+        if (!preg_match('/^[0-9a-f]{32}$/', $id)) {
+            throw new Trails_Exception(400);
         }
     }
 }

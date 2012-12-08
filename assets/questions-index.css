@@ -1,0 +1,69 @@
+#cliqr-index h3 a.button {
+  font-weight: normal;
+}
+#cliqr-index ol {
+  padding-left: 1em;
+}
+#cliqr-index ol li {
+  /* display: inline-block; */
+
+  position: relative;
+  vertical-align: top;
+  width: 500px;
+  height: 75px;
+  padding: 5px;
+  margin-bottom: 7px;
+  margin-right: 7px;
+  border: solid 3px transparent;
+  overflow: hidden;
+  background-color: #FFF;
+  cursor: pointer;
+}
+#cliqr-index ol li:hover {
+  border: solid 3px #b3b3b3;
+  background-color: #b3b3b3;
+}
+#cliqr-index ol li:hover .answer {
+  color: #fff;
+}
+#cliqr-index ol li:hover .answer + .answer {
+  border-left: 1px solid #fff;
+}
+#cliqr-index ol li .count,
+#cliqr-index ol li .detail {
+  display: inline-block;
+  vertical-align: top;
+  height: 60px;
+  margin: 5px;
+}
+#cliqr-index ol li .count {
+  width: 60px;
+  font-size: 60px;
+  line-height: 60px;
+}
+#cliqr-index ol li.state-new .count {
+  visibility: hidden;
+}
+#cliqr-index ol li.state-new .count:before {
+  visibility: visible;
+  vertical-align: top;
+  content: "NEW";
+  font-size: 20px;
+}
+#cliqr-index ol li .detail {
+  width: 400px;
+  overflow: hidden;
+}
+#cliqr-index ol li .detail h4 {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 400px;
+  overflow: hidden;
+}
+#cliqr-index ol li .answer {
+  color: #b3b3b3;
+}
+#cliqr-index ol li .answer + .answer {
+  border-left: 1px solid #9a9a9a;
+  padding-left: 0.3em;
+}

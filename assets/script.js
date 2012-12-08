@@ -64,6 +64,9 @@
           return event.preventDefault();
         }
       });
+      $("li.count").each(function() {
+        return console.log(this);
+      });
     }
     if ($("#cliqr-show").length) {
       width = 600;

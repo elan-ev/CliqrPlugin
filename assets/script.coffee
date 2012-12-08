@@ -34,6 +34,7 @@ jQuery ($) ->
 
   # vote form
   $("form.vote-form")
+
     .on "click", "a.close", (event) ->
       choice_input = $(event.target).closest(".choice-input")
       if choice_input.siblings(".choice-input").length
@@ -43,6 +44,7 @@ jQuery ($) ->
 
     .on "click", ".choice-new", (event) ->
       addNewChoice(event)
+
     .on "keydown", "input.choice", (event) ->
 
       if event.which == 13 \    # enter
@@ -91,6 +93,8 @@ jQuery ($) ->
       .on "click", "button.delete", (event) ->
         unless window.confirm "Wirklich loeschen?"
           event.preventDefault()
+    $("li.count").each ->
+      console.log this
 
   # charts
   if $("#cliqr-show").length

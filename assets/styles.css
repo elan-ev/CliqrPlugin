@@ -25,110 +25,131 @@
   .box-sizing(border-box); // Makes inputs behave like true block-level elements
 }
 */
-#questions li {
-  list-style: none;
-  float: left;
-  margin-bottom: 20px;
-  margin-left: 20px;
-  width: 140px;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 10px 0;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 20px;
+  color: inherit;
+  text-rendering: optimizelegibility;
 }
-#questions .question {
-  border: 1px solid #D0CFCB;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  height: 100px;
-  overflow: hidden;
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  font-weight: normal;
+  line-height: 1;
+}
+h1,
+h2,
+h3 {
+  line-height: 40px;
+}
+h1 {
+  font-size: 38.5px;
+}
+h2 {
+  font-size: 31.5px;
+}
+h3 {
+  font-size: 24.5px;
+}
+h4 {
+  font-size: 17.5px;
+}
+h5 {
+  font-size: 14px;
+}
+h6 {
+  font-size: 11.9px;
+}
+h1 small {
+  font-size: 24.5px;
+}
+h2 small {
+  font-size: 17.5px;
+}
+h3 small {
+  font-size: 14px;
+}
+h4 small {
+  font-size: 14px;
+}
+#cliqr-index h3 a.button {
+  font-weight: normal;
+}
+#cliqr-index ol {
+  padding-left: 1em;
+}
+#cliqr-index ol li {
+  /* display: inline-block; */
+
   position: relative;
-  text-align: center;
+  vertical-align: top;
+  width: 500px;
+  height: 75px;
+  padding: 5px;
+  margin-bottom: 7px;
+  margin-right: 7px;
+  border: solid 3px transparent;
+  overflow: hidden;
+  background-color: #FFF;
+  cursor: pointer;
 }
-#questions div.question:hover {
-  border-color: #3897CA;
+#cliqr-index ol li:hover {
+  border: solid 3px #b3b3b3;
+  background-color: #b3b3b3;
 }
-#questions .title {
-  font-size: smaller;
+#cliqr-index ol li:hover .answer {
+  color: #fff;
+}
+#cliqr-index ol li:hover .answer + .answer {
+  border-left: 1px solid #fff;
+}
+#cliqr-index ol li .count,
+#cliqr-index ol li .detail {
+  display: inline-block;
+  vertical-align: top;
+  height: 60px;
+  margin: 5px;
+}
+#cliqr-index ol li .count {
+  width: 60px;
+  font-size: 60px;
+  line-height: 60px;
+}
+#cliqr-index ol li.state-new .count {
+  visibility: hidden;
+}
+#cliqr-index ol li.state-new .count:before {
+  visibility: visible;
+  vertical-align: top;
+  content: "NEW";
+  font-size: 20px;
+}
+#cliqr-index ol li .detail {
+  width: 400px;
+  overflow: hidden;
+}
+#cliqr-index ol li .detail h4 {
   white-space: nowrap;
   text-overflow: ellipsis;
+  width: 400px;
   overflow: hidden;
-  height: 40px;
 }
-#questions li a.hover span {
-  background: rgba(0, 0, 0, 0.5);
-  color: #FFFFFF;
-  text-decoration: none;
-  white-space: nowrap;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  position: absolute;
-  top: 50%;
-  height: 30%;
-  width: 128px;
-  margin: -15% 5px 0 5px;
-  line-height: 2em;
-  display: none;
+#cliqr-index ol li .answer {
+  color: #b3b3b3;
 }
-#questions li a.hover {
-  z-index: 50;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-#questions a.hover:hover span {
-  display: inline;
-}
-#questions div.question div.control {
-  background-color: #F9F9F9;
-  -webkit-border-radius: 0px 0px 5px 5px;
-  -moz-border-radius: 0px 0px 5px 5px;
-  border-radius: 0px 0px 5px 5px;
-  bottom: 0px;
-  height: 24px;
-  left: 0px;
-  position: absolute;
-  width: 100%;
-  z-index: 1000;
-}
-#questions div.control a {
-  background-position: 0px 50%;
-  background-repeat: no-repeat;
-  float: left;
-  height: 16px;
-  margin: 0px 4px;
-  padding: 4px 0px;
-  width: 16px;
-}
-#questions div.control a.edit {
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-color: transparent;
-  background-image: url('../../../../assets/images/icons/16/grey/edit.png');
-}
-#questions div.control a.edit:hover {
-  background-image: url('../../../../assets/images/icons/16/black/edit.png');
-}
-#questions div.control a.edit:active {
-  background-image: url('../../../../assets/images/icons/16/blue/edit.png');
-}
-#questions div.control button.delete {
-  float: right;
-  width: 24px;
-  height: 24px;
-  border: none;
-}
-#questions div.control button.delete {
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-color: transparent;
-  background-image: url('../../../../assets/images/icons/16/grey/trash.png');
-}
-#questions div.control button.delete:hover {
-  background-image: url('../../../../assets/images/icons/16/black/trash.png');
-}
-#questions div.control button.delete:active {
-  background-image: url('../../../../assets/images/icons/16/blue/trash.png');
+#cliqr-index ol li .answer + .answer {
+  border-left: 1px solid #9a9a9a;
+  padding-left: 0.3em;
 }
 #cliqr-show {
   /*
@@ -139,25 +160,27 @@
 #cliqr-show #layout_container {
   position: relative;
 }
+#cliqr-show .results.hide td {
+  visibility: hidden;
+}
 #cliqr-show .vote-controls {
-  position: absolute;
-  top: 0;
-  right: 0;
-  -webkit-transform-origin: top right;
-  -moz-transform-origin: top right;
-  -ms-transform-origin: top right;
-  -o-transform-origin: top right;
-  transform-origin: top right;
-  -webkit-transform: rotate(-90deg) translateY(-100%);
-  -moz-transform: rotate(-90deg) translateY(-100%);
-  -ms-transform: rotate(-90deg) translateY(-100%);
-  -o-transform: rotate(-90deg) translateY(-100%);
-  transform: rotate(-90deg) translateY(-100%);
+  /*
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    .transform-origin(top right);
+    -webkit-transform: rotate(-90deg) translateY(-100%);
+    -moz-transform: rotate(-90deg) translateY(-100%);
+    -ms-transform: rotate(-90deg) translateY(-100%);
+    -o-transform: rotate(-90deg) translateY(-100%);
+    transform: rotate(-90deg) translateY(-100%);
+    */
+
   white-space: nowrap;
   width: 100%;
-}
-#cliqr-show .vote-controls .button {
-  float: right !important;
+  position: relative;
+  right: 0;
 }
 #cliqr-show .chart {
   border: 1px solid magenta;
@@ -172,6 +195,7 @@
   color: #6e7070;
   position: relative;
   text-align: center;
+  display: none;
 }
 #cliqr-show .appeal a.qr {
   float: right;
@@ -189,6 +213,9 @@
 }
 #cliqr-show .appeal a.qr:hover {
   box-shadow: 0 0 0.25em #6e7070;
+}
+#cliqr-show .question.state-active .appeal {
+  display: block;
 }
 .vote-form fieldset {
   border: none;

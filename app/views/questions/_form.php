@@ -17,8 +17,8 @@ else {
     <div class="control-group">
       <input autocomplete="off" id="question-text" name="question"
              type="text"
-             value="<?= $question ? htmlReady($question->getTitle()) : ''?>"
-             required>
+             value="<?= $question ? htmlReady($question->getQuestion()) : ''?>"
+             required="required">
     </div>
   </fieldset>
 
@@ -47,5 +47,3 @@ else {
 <script id="template-vote-form-choice" type="text/html">
   <?= $this->render_partial("questions/_choice") ?>
 </script>
-
-<? var_dump($question) ?>

@@ -1,115 +1,10 @@
 @import "mixins.less";
+@import "typo.less";
 
 @box-size:  140px;
 @title-size: 40px;
 
-#questions li {
-  list-style: none;
-  float: left;
-  margin-bottom: floor(@title-size * 0.5);
-  margin-left:   floor(@title-size * 0.5);
-  width:  @box-size;
-}
-
-#questions .question {
-  border: 1px solid #D0CFCB;
-  .border-radius(5px);
-  height: (@box-size - @title-size);
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-}
-
-#questions div.question:hover {
-  border-color:#3897CA;
-}
-
-#questions .title {
-  font-size: smaller;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  height: @title-size;
-}
-
-#questions li a.hover span {
-  background: rgba(0, 0, 0, 0.5);
-  color: #FFFFFF;
-  text-decoration: none;
-  white-space: nowrap;
-  .border-radius(5px);
-  position: absolute;
-  top: 50%;
-  height: 30%;
-  width: (@box-size - 2 * 5px - 2px);
-  margin: -15% 5px 0 5px;
-  line-height: 2em;
-  display: none;
-}
-
-#questions li a.hover {
-  z-index: 50;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-#questions a.hover:hover span {
-  display: inline;
-}
-
-#questions div.question div.control {
-  background-color: #F9F9F9;
-  .border-radius(0px 0px 5px 5px);
-  bottom: 0px;
-  height: 24px;
-  left: 0px;
-  position: absolute;
-  width: 100%;
-  z-index: 1000;
-}
-
-#questions div.control a {
-  background-position: 0px 50%;
-  background-repeat: no-repeat;
-  float: left;
-  height: 16px;
-  margin: 0px 4px;
-  padding: 4px 0px;
-  width: 16px;
-}
-
-.control-icon(@img) {
-  & {
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-color: transparent;
-    background-image: url('../../../../assets/images/icons/16/grey/@{img}.png');
-
-    &:hover {
-      background-image: url('../../../../assets/images/icons/16/black/@{img}.png');
-    }
-
-    &:active {
-      background-image: url('../../../../assets/images/icons/16/blue/@{img}.png');
-    }
-  }
-}
-
-
-#questions div.control a.edit {
-  .control-icon("edit");
-}
-
-#questions div.control button.delete {
-  float: right;
-  width: 24px;
-  height: 24px;
-  border: none;
-  .control-icon("trash");
-}
+@import "questions-index.less";
 
 @color-appeal: #C8C9C9;
 
@@ -129,7 +24,12 @@
 
   #layout_container { position: relative; }
 
+  .results.hide td {
+    visibility: hidden;
+  }
+
   .vote-controls {
+    /*
     position: absolute;
     top: 0;
     right: 0;
@@ -140,12 +40,13 @@
     -ms-transform: rotate(-90deg) translateY(-100%);
     -o-transform: rotate(-90deg) translateY(-100%);
     transform: rotate(-90deg) translateY(-100%);
+    */
     white-space: nowrap;
     width: 100%;
 
-    .button {
-      float: right !important;
-    }
+    position: relative;
+    right: 0;
+
   }
 
   .chart { border: 1px solid magenta; }
@@ -181,6 +82,12 @@
         box-shadow: 0 0 0.25em darken(@color-appeal, 35%);
       }
     }
+
+    display: none;
+  }
+
+  .question.state-active .appeal {
+    display: block;
   }
 }
 
