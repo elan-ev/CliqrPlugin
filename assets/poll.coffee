@@ -20,6 +20,18 @@ $(document).ready () ->
   cliqr.$Polls = new cliqr.model.PollCollection cliqr.config.POLLS || []
 
   ###
+  connect it to Pusher
+  TODO vllt ein bisschen auslagern
+  ###
+
+  pusher  = new Pusher cliqr.config.PUSHER_APP_KEY
+  channel = pusher.subscribe cliqr.config.PUSHER_CHANNEL
+
+  bp = new BackPusher channel
+  bp.pushTo cliqr.$Polls
+
+
+  ###
   Declare the global $App object (the initial $ indicates a global
   variable). We need it to dynamically navigate between routes etc.
   ###
@@ -27,6 +39,32 @@ $(document).ready () ->
 
   Backbone.history.start()
   return
+
+
+
+###
+TODO
+###
+class BackPusher
+  constructor: (@channel) ->
+
+  events:
+    started: "add"
+    stopped: "remove"
+
+  pushTo: (collection) ->
+    @channel.bind(event, _.bind @[method], @, collection) for event, method of @events
+
+  add: (collection, question) ->
+    console.log 'add question:', question, 'to:', collection
+
+    collection.add question, merge: true
+
+  remove: (collection, id) ->
+    console.log 'remove question:', id, 'from:', collection
+
+    collection.remove model  if model = collection.get id
+
 
 ###
 We use Mustache as template engine. This function makes it a lot
@@ -70,6 +108,10 @@ class cliqr.ui.PollView extends cliqr.ui.PageView
 
   events:
     "submit form": "recordAnswer"
+
+  initialize: (options) ->
+    super options
+    @collection.on "all", @render, @
 
   render: ->
 
@@ -117,7 +159,7 @@ cliqr.model.PollCollection = Backbone.Collection.extend
     console.log "initialized a PollCollection", arguments
 
   url: ->
-    cliqr.config.PLUGIN_URL + "poll/" + cliqr.config.RANGE_ID
+    cliqr.config.PLUGIN_URL + "poll/" + cliqr.config.CID
 
   comparator: (poll) ->
     poll.get 'startdate'
@@ -134,18 +176,18 @@ cliqr.model.id_list = do ->
   KEY = "cliqr.model.IDList"
 
   # stale after a single day
-  #DECAY_TIME = 60 * 60 * 24
-  DECAY_TIME = 15
+  DECAY_TIME = 60 * 60 * 24
+
+  # stale after 15s
+  #DECAY_TIME = 15
 
   time = ->
     Math.floor(Date.now() / 1000)
 
   fetch = ->
-    console.log "fetch"
     JSON.parse(window.localStorage.getItem(KEY)) ? {}
 
   save = (ids) ->
-    console.log "saved: ", JSON.stringify ids
     window.localStorage.setItem KEY, JSON.stringify ids
     ids
 
@@ -156,32 +198,27 @@ cliqr.model.id_list = do ->
       ids[id] = timestamp
     ids
 
-  fetchClean = _.compose save, removeStaleIDs, fetch
+  removeStaleIDs = _.compose save, removeStaleIDs, fetch
+  do removeStaleIDs
 
-
-  ids = fetchClean()
-
-  $(window).on "storage", -> ids = fetch()
-
-
-  # refresh: ->
-  #   ids = fetchClean()
-  #   @
+  # TODO possibly deprecated
+  # ids = fetch()
+  # $(window).on "storage", -> ids = fetch()
 
   add: (id) ->
-    console.log "add: ", JSON.stringify id
+    ids = fetch()
     ids[id] = time()
-    console.log ids
     save ids
     @
 
   remove: (id) ->
-    unset ids[id]
+    ids = fetch()
+    delete ids[id]
     save ids
     @
 
   test: (id) ->
-    ids[id]?
+    fetch()[id]?
 
 
 ###

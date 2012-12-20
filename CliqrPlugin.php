@@ -1,5 +1,8 @@
 <?php
 
+// require composer autoloader
+require dirname(__FILE__) . '/vendor/autoload.php';
+
 /**
  * CliqrPlugin.class.php
  *
@@ -11,17 +14,31 @@
 
 class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 {
-
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
-        $this->setupNavigation();
 
+        $this->setupNavigation();
+    }
+
+    function initialize ()
+    {
+
+        require_once 'vendor/trails/trails.php';
+        require_once 'app/controllers/studip_controller.php';
+
+        $this->config = self::setupConfig();
+
+        $this->observeQuestions();
     }
 
     private function setupNavigation()
     {
         global $perm;
+
+        if (Request::isXhr()) {
+            return;
+        }
 
         $context = $this->getContext();
         if (!$this->isActivated($context)
@@ -48,23 +65,13 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         return Request::option("cid");
     }
 
-    public function initialize ()
-    {
-        PageLayout::addStylesheet($this->getPluginURL() . '/assets/styles.css');
-        PageLayout::addScript($this->getPluginURL() . '/assets/vendor/validator.js');
-        PageLayout::addScript($this->getPluginURL() . '/assets/script.js');
-
-        require_once 'vendor/trails/trails.php';
-        require_once 'app/controllers/studip_controller.php';
-
-        $this->config = self::setupConfig();
-    }
 
     private static function setupConfig()
     {
         require_once 'Container.php';
         return new \Cliqr\Container();
     }
+
 
     public function getIconNavigation($course_id, $last_visit)
     {
@@ -88,16 +95,11 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $dispatcher->dispatch($unconsumed_path);
     }
 
-    public static function getAnonymousUserId()
+    function observeQuestions()
     {
-        if(isset($_COOKIE["cliqr_anonymous_userid"])) {
-            $userId = $_COOKIE["cliqr_anonymous_userid"];
-        } else {
-            $userId = md5(mt_rand());
-            setcookie("cliqr_anonymous_userid", $userId,
-                    time() + 60 * 60 * 24 * 30, "/");
-        }
+        require_once 'lib/QuestionPusher.php';
 
-        return $userId;
+        $pusher = new \Cliqr\QuestionPusher($this->config, $this->getContext());
+        $pusher->observeNotifications();
     }
 }

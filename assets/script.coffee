@@ -72,8 +72,9 @@ jQuery ($) ->
 
         # arrow_up
         if event.which is 38
-          form_inputs = $(event.target).closest("form").find("input")
-          form_inputs.eq(form_inputs.index(event.target) - 1).focus()
+          form_inputs = $(event.target).closest(".choices").find("input")
+          index = Math.max 0, form_inputs.index(event.target) - 1
+          form_inputs.eq(index).focus()
           event.preventDefault()
 
     .on "submit", (event) ->
@@ -81,28 +82,16 @@ jQuery ($) ->
 
       form = $ @
       if form.data("validator").checkValidity()
-        $.post(form.attr("action"), form.serialize())
+        url = form.attr("action")
+        $.ajax
+            type: "POST"
+            url:  url
+            data: form.serialize()
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
           .done (msg) ->
-            console.log "done", arguments
+
+            re = /(?!questions\/)(create|update\/[a-fA-F0-9]{32})/
+            document.location = url.replace re, "show/#{msg.id}"
+
           .fail () ->
             console.log "fail", arguments
-
-  # index
-  if $("#cliqr-index").length
-    $("ol#questions")
-      .on "click", "button.delete", (event) ->
-        unless window.confirm "Wirklich loeschen?"
-          event.preventDefault()
-    $("li.count").each ->
-      console.log this
-
-  # charts
-  if $("#cliqr-show").length
-    width   = 600
-    answers = $ "table.results td"
-    data    = answers.map (index, el) -> parseInt $(el).attr("data-count"), 10
-    max     = _.max data
-    widths  = _.map data, (d) -> if max > 0 then d / max * width else 0
-
-    answers.append (index) ->
-      $('<div class="chart"></div>').css width: widths[index]

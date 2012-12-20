@@ -5,28 +5,7 @@ namespace Cliqr;
 require_once "lib/vote/Vote.class.php";
 require_once "errors.php";
 
-class Question extends \Vote{
-
-    static function makeChoices($choices)
-    {
-        # reject empty
-        $choices = array_filter($choices, function ($choice) { return strlen($choice); });
-
-        foreach ($choices as &$choice) {
-            $choice = self::makeChoice($choice);
-        }
-
-        return $choices;
-    }
-
-    static function makeChoice($choice)
-    {
-        return array(
-            'answer_id' => md5(uniqid(rand())),
-            'text'      => $choice,
-            'counter'   => 0,
-            'correct'   => 0);
-    }
+class Question extends \Vote {
 
     static function find($id)
     {
@@ -35,6 +14,28 @@ class Question extends \Vote{
             throw new RecordNotFound();
         }
         return $question;
+    }
+
+    static function findAll($_range_id)
+    {
+        $range_id = self::transformRangeId($_range_id);
+
+        // get a list of all active questions
+        $voteDb = new \VoteDB();
+        $questions = array_merge(
+            $voteDb->getNewVotes($range_id),
+            $voteDb->getActiveVotes($range_id),
+            $voteDb->getStoppedVotes($range_id));
+
+        foreach($questions as $index => &$question) {
+            $questions[$index] = new Question($question["voteID"]);
+        }
+
+        // order questions by title
+        usort($questions, function($a, $b) {
+                return strcasecmp($a->title, $b->title);
+            });
+        return $questions;
     }
 
     static function findAllActive($_range_id)
@@ -61,46 +62,44 @@ class Question extends \Vote{
         return $questions;
     }
 
-    function findAll($_range_id)
+    static function consolidateState($_range_id)
     {
         $range_id = self::transformRangeId($_range_id);
 
-        // get a list of all active questions
         $voteDb = new \VoteDB();
-        $questions = array_merge(
-            $voteDb->getNewVotes($range_id),
-            $voteDb->getActiveVotes($range_id),
-            $voteDb->getStoppedVotes($range_id));
-
-        foreach($questions as $index => &$question) {
-            $questions[$index] = new Question($question["voteID"]);
-        }
-
-        // order questions by title
-        usort($questions, function($a, $b) {
-                return strcasecmp($a->title, $b->title);
-            });
-        return $questions;
+        $voteDb->startWaitingVotes($range_id);
     }
 
-    function toJSON()
+    static function transformRangeId($range_id)
     {
-        $answers = array();
-        foreach ($this->answerArray as $answer) {
-            $answers[] = array(
-                'id'      => studip_utf8encode($answer['answer_id']),
-                'text'    => studip_utf8encode($answer['text']),
-                'counter' => (int)$answer['counter']);
-        }
-        return array(
-            'id'        => $this->objectID,
-            'range_id'  => studip_utf8encode($this->rangeID),
-            'question'  => studip_utf8encode($this->question),
-            'startdate' => (int)$this->getStartdate(),
-            'answers'   => $answers
-        );
+        return md5("cliqr-$range_id");
     }
 
+
+    static function makeChoices($choices)
+    {
+        # reject empty
+        $choices = array_filter($choices, function ($choice) { return strlen($choice); });
+
+        foreach ($choices as &$choice) {
+            $choice = self::makeChoice($choice);
+        }
+
+        return $choices;
+    }
+
+    static function makeChoice($choice)
+    {
+        return array(
+            'answer_id' => md5(uniqid(rand())),
+            'text'      => $choice,
+            'counter'   => 0,
+            'correct'   => 0);
+    }
+
+    /********************/
+    /* INSTANCE METHODS */
+    /********************/
 
     function recordAnswer($answer_id)
     {
@@ -129,8 +128,63 @@ class Question extends \Vote{
         return true;
     }
 
-    static function transformRangeId($range_id)
+    const ACTIVE_TIMESPAN = 7200; //60 * 60 * 2 = 2h
+
+    /**
+     * TODO
+     */
+    function start()
     {
-        return md5("cliqr-$range_id");
+        $this->setStopdate(time() + self::ACTIVE_TIMESPAN);
+
+        if ($this->isNew()) {
+            $this->executeStart();
+        } else {
+            $this->executeContinue();
+        }
+        $ok = !$this->isError();
+
+        if ($ok) {
+            \NotificationCenter::postNotification('QuestionDidStart', $this);
+        }
+
+        return $ok;
+    }
+
+    /**
+     * TODO
+     */
+    function stop()
+    {
+        $this->executeStop();
+        $ok = !$this->isError();
+
+        if ($ok) {
+            \NotificationCenter::postNotification('QuestionDidStop', $this);
+        }
+
+        return $ok;
+    }
+
+
+    function toJSON($with_counter = true)
+    {
+        $answers = array();
+        foreach ($this->answerArray as $answer) {
+            $ary = array(
+                'id'      => studip_utf8encode($answer['answer_id']),
+                'text'    => studip_utf8encode($answer['text']));
+            if ($with_counter) {
+                $ary['counter'] = (int)$answer['counter'];
+            }
+            $answers[] = $ary;
+        }
+        return array(
+            'id'        => $this->objectID,
+            'range_id'  => studip_utf8encode($this->rangeID),
+            'question'  => studip_utf8encode($this->question),
+            'startdate' => (int)$this->getStartdate(),
+            'answers'   => $answers
+        );
     }
 }

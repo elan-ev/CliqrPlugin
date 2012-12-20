@@ -5,7 +5,7 @@ Provide top-level namespaces for our javascript.
 
 
 (function() {
-  var compileTemplate, nominal,
+  var BackPusher, compileTemplate, nominal,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -28,7 +28,18 @@ Provide top-level namespaces for our javascript.
       $Polls (the initial $ indicates a global variable) with these. This
       way we spare us an initial AJAX call.
     */
+
+    var bp, channel, pusher;
     cliqr.$Polls = new cliqr.model.PollCollection(cliqr.config.POLLS || []);
+    /*
+      connect it to Pusher
+      TODO vllt ein bisschen auslagern
+    */
+
+    pusher = new Pusher(cliqr.config.PUSHER_APP_KEY);
+    channel = pusher.subscribe(cliqr.config.PUSHER_CHANNEL);
+    bp = new BackPusher(channel);
+    bp.pushTo(cliqr.$Polls);
     /*
       Declare the global $App object (the initial $ indicates a global
       variable). We need it to dynamically navigate between routes etc.
@@ -37,6 +48,52 @@ Provide top-level namespaces for our javascript.
     cliqr.$App = new cliqr.router.AppRouter();
     Backbone.history.start();
   });
+
+  /*
+  TODO
+  */
+
+
+  BackPusher = (function() {
+
+    function BackPusher(channel) {
+      this.channel = channel;
+    }
+
+    BackPusher.prototype.events = {
+      started: "add",
+      stopped: "remove"
+    };
+
+    BackPusher.prototype.pushTo = function(collection) {
+      var event, method, _ref, _results;
+      _ref = this.events;
+      _results = [];
+      for (event in _ref) {
+        method = _ref[event];
+        _results.push(this.channel.bind(event, _.bind(this[method], this, collection)));
+      }
+      return _results;
+    };
+
+    BackPusher.prototype.add = function(collection, question) {
+      console.log('add question:', question, 'to:', collection);
+      return collection.add(question, {
+        merge: true
+      });
+    };
+
+    BackPusher.prototype.remove = function(collection, id) {
+      var model;
+      console.log('remove question:', id, 'from:', collection);
+      if (model = collection.get(id)) {
+        return collection.remove(model);
+      }
+    };
+
+    return BackPusher;
+
+  })();
 
   /*
   We use Mustache as template engine. This function makes it a lot
@@ -105,6 +162,11 @@ Provide top-level namespaces for our javascript.
       "submit form": "recordAnswer"
     };
 
+    PollView.prototype.initialize = function(options) {
+      PollView.__super__.initialize.call(this, options);
+      return this.collection.on("all", this.render, this);
+    };
+
     PollView.prototype.render = function() {
       var answer, index, poll, _i, _len, _ref;
       poll = this.collection.firstFresh();
@@ -164,7 +226,7 @@ Provide top-level namespaces for our javascript.
       return console.log("initialized a PollCollection", arguments);
     },
     url: function() {
-      return cliqr.config.PLUGIN_URL + "poll/" + cliqr.config.RANGE_ID;
+      return cliqr.config.PLUGIN_URL + "poll/" + cliqr.config.CID;
     },
     comparator: function(poll) {
       return poll.get('startdate');
@@ -182,19 +244,17 @@ Provide top-level namespaces for our javascript.
 
 
   cliqr.model.id_list = (function() {
-    var DECAY_TIME, KEY, fetch, fetchClean, ids, removeStaleIDs, save, time;
+    var DECAY_TIME, KEY, fetch, removeStaleIDs, save, time;
     KEY = "cliqr.model.IDList";
-    DECAY_TIME = 15;
+    DECAY_TIME = 60 * 60 * 24;
     time = function() {
       return Math.floor(Date.now() / 1000);
     };
     fetch = function() {
       var _ref;
-      console.log("fetch");
       return (_ref = JSON.parse(window.localStorage.getItem(KEY))) != null ? _ref : {};
     };
     save = function(ids) {
-      console.log("saved: ", JSON.stringify(ids));
       window.localStorage.setItem(KEY, JSON.stringify(ids));
       return ids;
     };
@@ -210,26 +270,25 @@ Provide top-level namespaces for our javascript.
       }
       return ids;
     };
-    fetchClean = _.compose(save, removeStaleIDs, fetch);
-    ids = fetchClean();
-    $(window).on("storage", function() {
-      return ids = fetch();
-    });
+    removeStaleIDs = _.compose(save, removeStaleIDs, fetch);
+    removeStaleIDs();
     return {
       add: function(id) {
-        console.log("add: ", JSON.stringify(id));
+        var ids;
+        ids = fetch();
         ids[id] = time();
-        console.log(ids);
         save(ids);
         return this;
       },
       remove: function(id) {
-        unset(ids[id]);
+        var ids;
+        ids = fetch();
+        delete ids[id];
         save(ids);
         return this;
       },
       test: function(id) {
-        return ids[id] != null;
+        return fetch()[id] != null;
       }
     };
   })();

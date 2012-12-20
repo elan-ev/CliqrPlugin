@@ -13,13 +13,14 @@ class QuestionsController extends CliqrStudipController
     {
         parent::before_filter($action, $args);
 
+
         # needs context
         $this->cid = Request::get("cid");
         if (!isset($this->cid)) {
             throw new Trails_Exception(400);
         }
 
-        // authorisation
+        # authorisation
         if (!$GLOBALS['perm']->have_studip_perm("tutor", $this->cid)) {
             throw new Trails_Exception(403);
         }
@@ -27,21 +28,27 @@ class QuestionsController extends CliqrStudipController
 
         $this->flash = Trails_Flash::instance();
 
-        # set default layout
-        $this->set_layout('layout');
+        if (!Request::isXhr()) {
+            # set default layout
+            $this->set_layout('layout');
 
-        # set title
-        $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
-        PageLayout::setTitle(_('Cliqr'));
+            # set title
+            $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
+            PageLayout::setTitle(_('Cliqr'));
 
-        if ($action === 'new') {
-            Navigation::activateItem("/course/cliqr/new");
-        } else {
-            Navigation::activateItem("/course/cliqr/index");
+            if ($action === 'new') {
+                Navigation::activateItem("/course/cliqr/new");
+            } else {
+                Navigation::activateItem("/course/cliqr/index");
+            }
         }
+
+        // TODO: anders sicherstellen, dass sich #state und #start/stopdate nicht widersprechen
+        Question::consolidateState($this->cid);
 
         # set question
         if (in_array($action, words("show edit update destroy start stop"))) {
+            self::ensureMD5($args[0]);
             $this->question = Question::find($args[0]);
         }
     }
@@ -63,11 +70,11 @@ class QuestionsController extends CliqrStudipController
 
     function show_action($id)
     {
-        $this->shortener = $this->plugin->config['shortener'];
-        $this->show_results = Request::int("show_results", 1);
-
         if (Request::isXhr()) {
             $this->render_json($this->question->toJSON());
+        } else {
+            $this->shortener = $this->plugin->config['shortener'];
+            $this->show_results = Request::int("show_results", 1);
         }
     }
 
@@ -102,7 +109,7 @@ class QuestionsController extends CliqrStudipController
 
         if (Request::isXhr()) {
             if ($error) {
-                throw new Trails_Exception(500, "Could not create");
+                throw new Trails_Exception(500, "Could not create".json_encode($question));
             } else {
                 $this->response->set_status(201, "Created");
                 return $this->render_json($question->toJSON());
@@ -110,7 +117,7 @@ class QuestionsController extends CliqrStudipController
         }
         else {
             if ($error) {
-                $this->flash['error'] = "Could not create question";
+                $this->flash['error'] = "Could not create question".json_encode($question->errorArray).Request::isXhr();
                 return $this->redirect('questions/new');
             } else {
                 $this->flash['info'] = "Question created";
@@ -135,7 +142,7 @@ class QuestionsController extends CliqrStudipController
         // TODO: woher weiss ich, dass das UTF8 ist?
         $q = Request::get("question");
         if (isset($q)) {
-            $question->setQuestion($q = studip_utf8decode());
+            $question->setQuestion($q = studip_utf8decode($q));
             $question->setTitle(my_substr($q, 0, 50));
             $dirty = true;
         }
@@ -172,7 +179,7 @@ class QuestionsController extends CliqrStudipController
 
         if (Request::isXhr()) {
             if ($error) {
-                throw new Trails_Exception(500, "Could not update");
+                throw new Trails_Exception(500, "Could not update".json_encode($question->errorArray));
             } else {
                 $this->response->set_status(201, "Updated");
                 return $this->render_json($question->toJSON());
@@ -212,33 +219,24 @@ class QuestionsController extends CliqrStudipController
         }
     }
 
-    const ACTIVE_TIMESPAN = 7200; //60 * 60 * 2 = 2h
-
     # TODO not restful
     function start_action($id)
     {
-        $this->question->setStopdate(time() + self::ACTIVE_TIMESPAN);
-
-        if ($this->question->isNew()) {
-            $this->question->executeStart();
-        } else {
-            $this->question->executeRestart();
-        }
-        $error = $this->question->isError();
+        $ok = $this->question->start();
 
         if (Request::isXhr()) {
-            if ($error) {
-                throw new Trails_Exception(400, "Could not start");
-            } else {
+            if ($ok) {
                 $this->response->set_status(204);
                 return $this->render_nothing();
+            } else {
+                throw new Trails_Exception(400, "Could not start");
             }
         }
         else {
-            if ($error) {
-                $this->flash['error'] = "Could not start question";
-            } else {
+            if ($ok) {
                 $this->flash['info'] = "Question started";
+            } else {
+                $this->flash['error'] = "Could not start question";
             }
             return $this->redirect('questions/show/' . $id);
         }
@@ -248,22 +246,21 @@ class QuestionsController extends CliqrStudipController
     # TODO not restful
     function stop_action($id)
     {
-        $this->question->executeStop();
-        $error = $this->question->isError();
+        $ok = $this->question->stop();
 
         if (Request::isXhr()) {
-            if ($error) {
-                throw new Trails_Exception(400, "Could not stop");
-            } else {
+            if ($ok) {
                 $this->response->set_status(204);
                 return $this->render_nothing();
+            } else {
+                throw new Trails_Exception(400, "Could not stop");
             }
         }
         else {
-            if ($error) {
-                $this->flash['error'] = "Could not stop question";
-            } else {
+            if ($ok) {
                 $this->flash['info'] = "Question stopped";
+            } else {
+                $this->flash['error'] = "Could not stop question";
             }
             return $this->redirect('questions/show/' . $id);
         }

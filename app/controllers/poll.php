@@ -25,14 +25,8 @@ class PollController extends CliqrStudipController
 
         if (Request::isXhr()) {
             $this->render_json(
-                array_map(function ($q) {
-                        $json = $q->toJSON();
-                        // remove counter from JSON
-                        foreach ($json['answers'] as &$answer) {
-                            unset($answer['counter']);
-                        }
-                        return $json;
-                    }, $this->questions));
+                array_map(function ($q) { return $q->toJSON(false); },
+                          $this->questions));
         }
     }
 

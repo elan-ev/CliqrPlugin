@@ -15,6 +15,8 @@
     <script src="<?= $assets_url ?>vendor/mustache.js"></script>
     <script src="<?= $assets_url ?>vendor/backbone.js"></script>
 
+    <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
+
     <script src="<?= $assets_url ?>jqm-config.js"></script>
     <script src="<?= $assets_url ?>vendor/jquery.mobile-1.2.0.min.js"></script>
 
@@ -31,13 +33,19 @@ $polls = array_map(function ($q) {
 ?>
 
     <script>
-      cliqr.config.PLUGIN_URL = "<?= htmlReady(current(explode('?', $controller->url_for("")))) ?>";
-      cliqr.config.RANGE_ID   = "<?= htmlReady($range_id) ?>";
-      cliqr.config.POLLS      = <?= json_encode($polls) ?>;
+      cliqr.config.PLUGIN_URL     = "<?= htmlReady(current(explode('?', $controller->url_for("")))) ?>";
+      cliqr.config.CID            = "<?= htmlReady($range_id) ?>";
+      cliqr.config.POLLS          = <?= json_encode($polls) ?>;
+      cliqr.config.PUSHER_APP_KEY = "<?= htmlReady($plugin->config['ini']['pusher']['key']) ?>";
+      cliqr.config.PUSHER_CHANNEL = "<?= htmlReady($plugin->config['pusher_channel']($range_id)) ?>";
     </script>
 
   </head>
   <body>
-    <noscript>Kein JS :-( </noscript>
+    <noscript>
+      <h1>
+      <?= _("Sie können Cliqr nur verwenden, wenn Sie in Ihrem Browser JavaScript aktiviert haben.") ?>
+      </h1>
+    </noscript>
   </body>
 </html>
