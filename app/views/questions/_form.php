@@ -10,7 +10,7 @@ else {
 }
 ?>
 
-<form class="vote-form" action="<?= $form_action ?>" method="post">
+<form class="vote-form" action="<?= $form_action ?>" method="post" accept-char="UTF-8">
   <fieldset>
     <legend><?= _("Frage") ?></legend>
     <label for="question"><?= _("Was möchten Sie fragen?") ?></label>
