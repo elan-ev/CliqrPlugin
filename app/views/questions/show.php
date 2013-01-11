@@ -46,5 +46,6 @@ $id = $question->getVoteID();
 </div>
 
 <script>
-  cliqr.model.$currentQuestion = <?= json_encode($question->toJSON()) ?>;
+// bootstrap shown question
+cliqr.model.$currentQuestion = <?= json_encode($question->toJSON()) ?>;
 </script>
