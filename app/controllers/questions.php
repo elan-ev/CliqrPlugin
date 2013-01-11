@@ -94,11 +94,9 @@ class QuestionsController extends CliqrStudipController
         // TODO: das ist so nicht sauber, das müsste Question machen
         $question->setRangeID(Question::transformRangeId($this->cid));
 
-        // TODO: woher weiss ich, dass das UTF8 ist?
         $question->setQuestion($q = studip_utf8decode(Request::get("question")));
         $question->setTitle(my_substr($q, 0, 50));
 
-        // TODO: woher weiss ich, dass das UTF8 ist?
         $choices = array_map(function ($choice) { return studip_utf8decode($choice); },
                              Request::getArray("choices"));
         $choices = Question::makeChoices($choices);
@@ -139,7 +137,6 @@ class QuestionsController extends CliqrStudipController
         $dirty = false;
 
         // UPDATE QUESTION
-        // TODO: woher weiss ich, dass das UTF8 ist?
         $q = Request::get("question");
         if (isset($q)) {
             $question->setQuestion($q = studip_utf8decode($q));
@@ -160,7 +157,6 @@ class QuestionsController extends CliqrStudipController
             foreach ($choices as $id => $choice) {
                 if ($choice !== '') {
 
-                    // TODO: woher weiss ich, dass das UTF8 ist?
                     $choice = studip_utf8decode($choice);
 
                     $new_answers[] = is_int($id)
