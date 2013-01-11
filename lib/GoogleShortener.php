@@ -28,7 +28,7 @@ class GoogleShortener implements Shortener {
 
     function __construct($container)
     {
-        $this->config = $container['google'];
+        $this->config = $container['ini']['google'];
     }
 
     public function shorten($url)

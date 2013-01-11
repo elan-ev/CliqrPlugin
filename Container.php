@@ -16,7 +16,7 @@ class Container extends \Pimple {
             function ($c) {
                 require_once dirname(__FILE__) . "/" . $c['ini']['shortener']['file'];
                 $class = $c['ini']['shortener']['class'];
-                return new $class();
+                return new $class($c);
             }
         );
 
