@@ -32,8 +32,10 @@ class cliqr.ui.QuestionsIndexView extends Backbone.View
 
   events:
     "click button.delete":   "confirmDelete"
-    #"click a.questions-new": "fsshow"
-    #"click a.questions-new": "showCreateForm"
+    "click a.questions-new": "showCreateForm"
+
+  initialize: ->
+    @sortOptions = new cliqr.ui.SortOptionsView el: @$ "#stopped-questions"
 
   confirmDelete: (event) ->
     unless window.confirm "Wirklich l\xf6schen?"
@@ -45,13 +47,41 @@ class cliqr.ui.QuestionsIndexView extends Backbone.View
     @$('.page').html form.render().el
 
 
+class cliqr.ui.SortOptionsView extends Backbone.View
+
+  initialize: ->
+    @ol = @$ "ol"
+    @ol.isotope
+      itemSelector: 'li'
+      getSortData:
+        question:   (elem) -> elem.attr('data-question').toLocaleLowerCase()
+        counter:    (elem) -> - parseInt elem.attr('data-counter'), 10
+        startdate:  (elem) -> parseInt elem.attr('data-startdate'), 10
+
+  events:
+    "click .sort-by span": "sortBy"
+
+  sortBy: (event) =>
+    target = $ event.target
+
+    if target.hasClass "selected"
+      target.toggleClass "reversed"
+    else
+      @$(".sort-by .selected").removeClass("selected reversed")
+      target.addClass "selected"
+
+    @ol.isotope
+      sortBy: target.attr("data-attribute")
+      sortAscending: ! target.hasClass "reversed"
+
+
 class cliqr.ui.QuestionView extends Backbone.View
 
   el: '#cliqr-show'
 
   events:
     "click .fullscreen": "showFS"
-    "click .appeal.start a":   "startQuestion"
+    "click .appeal.start button":   "startQuestion"
 
   showFS: ->
     container = @$("#layout_page")[0]
@@ -100,12 +130,17 @@ class cliqr.ui.QuestionView extends Backbone.View
   startQuestion: (event) ->
     @$(".appeal.start").addClass("busy")
 
+
+
+########
+# TODO #
+########
+
 addNewChoice = (event) ->
   new_choice = $(event.target).closest(".choices").find(".choice-new")
   template = compileTemplate 'questions-choice'
   empty_question = answer_id: '', text: ''
   $(template empty_question).insertBefore(new_choice).find("input").focus()
-
 
 class cliqr.ui.QuestionForm extends cliqr.ui.TemplateView
 
@@ -165,29 +200,16 @@ class cliqr.ui.QuestionForm extends cliqr.ui.TemplateView
           form_inputs.eq(index).focus()
           event.preventDefault()
 
-
+  # TODO
   submitForm: (event) ->
       event.preventDefault()
-
-      url_re = /^(.*cliqrplugin\/questions).*cid=([a-fA-F0-9]{32})/
-      [everything, url, cid] = document.location.href.match(url_re)
-
-      alert \
-        if @model
-          "#{url}/update/#{@model.id}?cid=#{cid}"
-        else
-          "#{url}/create?cid=#{cid}"
-
-      return
-
       form = @$ "form"
-      if form.data("validator").checkValidity()
-        url = form.attr("action")
-        $.post(url, form.serialize())
-          .done (msg) ->
-            re = /(?!questions\/)(create|update\/[a-fA-F0-9]{32})/
-            # document.location = url.replace re, "show/#{msg.id}"
-            alert url.replace re, "show/#{msg.id}"
 
-          .fail () ->
-            console.log "fail", arguments
+      return unless form.data("validator").checkValidity()
+
+      url = "questions/" + if @model then "update/#{@model.id}" else "create"
+      $.post("#{cliqr.config.PLUGIN_URL}#{url}?cid=#{cliqr.config.CID}", form.serialize())
+        .done (msg) ->
+          document.location = cliqr.config.PLUGIN_URL + "questions/show/#{msg.id}?cid=" + cliqr.config.CID
+        .fail () ->
+          console.log "fail", arguments

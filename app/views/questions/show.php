@@ -17,7 +17,7 @@ $id = $question->getVoteID();
         <?= htmlReady($answer['text']) ?>
       </span>
       <span class="count" data-count="<?= intval($answer['counter']) ?>"><?= intval($answer['counter']) ?></span>
-    </li>
+     </li>
   <? } ?>
   </ol>
 
@@ -35,12 +35,7 @@ $id = $question->getVoteID();
     <a class="qr" href="<?= $controller->url_for('qr', $id) ?>"></a>
   </div>
   <div class="appeal start">
-    <a href="<?= $controller->url_for('questions/start', $id) ?>">
-      <?= _("Frage starten") ?>
-    </a>
-    <span class="loader">
-      loading&hellip;
-    </span>
+    <?= $this->render_partial('questions/_appeal_start', compact('id')) ?>
   </div>
 
 </div>

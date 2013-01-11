@@ -218,6 +218,9 @@ class QuestionsController extends CliqrStudipController
     # TODO not restful
     function start_action($id)
     {
+
+        CSRFProtection::verifyUnsafeRequest();
+
         $ok = $this->question->start();
 
         if (Request::isXhr()) {
@@ -242,6 +245,8 @@ class QuestionsController extends CliqrStudipController
     # TODO not restful
     function stop_action($id)
     {
+        CSRFProtection::verifyUnsafeRequest();
+
         $ok = $this->question->stop();
 
         if (Request::isXhr()) {

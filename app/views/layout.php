@@ -25,10 +25,13 @@ $plugin_url = $plugin->getPluginURL();
 
 PageLayout::addStylesheet($plugin_url . '/assets/styles.css');
 
+
+PageLayout::addScript($plugin_url . '/assets/vendor/jquery.isotope.min.js');
 PageLayout::addScript($plugin_url . '/assets/vendor/validator.js');
 PageLayout::addScript($plugin_url . '/assets/vendor/mustache.js');
 PageLayout::addScript($plugin_url . '/assets/vendor/underscore.js');
 PageLayout::addScript($plugin_url . '/assets/vendor/backbone.js');
+
 
 
 PageLayout::addScript($plugin_url . '/assets/bootstrap.js');

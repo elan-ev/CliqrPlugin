@@ -68,7 +68,14 @@
     QuestionsIndexView.prototype.el = '#cliqr-index';
 
     QuestionsIndexView.prototype.events = {
-      "click button.delete": "confirmDelete"
+      "click button.delete": "confirmDelete",
+      "click a.questions-new": "showCreateForm"
+    };
+
+    QuestionsIndexView.prototype.initialize = function() {
+      return this.sortOptions = new cliqr.ui.SortOptionsView({
+        el: this.$("#stopped-questions")
+      });
     };
 
     QuestionsIndexView.prototype.confirmDelete = function(event) {
@@ -88,6 +95,56 @@
 
   })(Backbone.View);
 
+  cliqr.ui.SortOptionsView = (function(_super) {
+
+    __extends(SortOptionsView, _super);
+
+    function SortOptionsView() {
+      this.sortBy = __bind(this.sortBy, this);
+      return SortOptionsView.__super__.constructor.apply(this, arguments);
+    }
+
+    SortOptionsView.prototype.initialize = function() {
+      this.ol = this.$("ol");
+      return this.ol.isotope({
+        itemSelector: 'li',
+        getSortData: {
+          question: function(elem) {
+            return elem.attr('data-question').toLocaleLowerCase();
+          },
+          counter: function(elem) {
+            return -parseInt(elem.attr('data-counter'), 10);
+          },
+          startdate: function(elem) {
+            return parseInt(elem.attr('data-startdate'), 10);
+          }
+        }
+      });
+    };
+
+    SortOptionsView.prototype.events = {
+      "click .sort-by span": "sortBy"
+    };
+
+    SortOptionsView.prototype.sortBy = function(event) {
+      var target;
+      target = $(event.target);
+      if (target.hasClass("selected")) {
+        target.toggleClass("reversed");
+      } else {
+        this.$(".sort-by .selected").removeClass("selected reversed");
+        target.addClass("selected");
+      }
+      return this.ol.isotope({
+        sortBy: target.attr("data-attribute"),
+        sortAscending: !target.hasClass("reversed")
+      });
+    };
+
+    return SortOptionsView;
+
+  })(Backbone.View);
+
   cliqr.ui.QuestionView = (function(_super) {
 
     __extends(QuestionView, _super);
@@ -101,7 +158,7 @@
 
     QuestionView.prototype.events = {
       "click .fullscreen": "showFS",
-      "click .appeal.start a": "startQuestion"
+      "click .appeal.start button": "startQuestion"
     };
 
     QuestionView.prototype.showFS = function() {
@@ -257,23 +314,18 @@
     };
 
     QuestionForm.prototype.submitForm = function(event) {
-      var cid, everything, form, url, url_re, _ref;
+      var form, url;
       event.preventDefault();
-      url_re = /^(.*cliqrplugin\/questions).*cid=([a-fA-F0-9]{32})/;
-      _ref = document.location.href.match(url_re), everything = _ref[0], url = _ref[1], cid = _ref[2];
-      alert(this.model ? "" + url + "/update/" + this.model.id + "?cid=" + cid : "" + url + "/create?cid=" + cid);
-      return;
       form = this.$("form");
-      if (form.data("validator").checkValidity()) {
-        url = form.attr("action");
-        return $.post(url, form.serialize()).done(function(msg) {
-          var re;
-          re = /(?!questions\/)(create|update\/[a-fA-F0-9]{32})/;
-          return alert(url.replace(re, "show/" + msg.id));
-        }).fail(function() {
-          return console.log("fail", arguments);
-        });
+      if (!form.data("validator").checkValidity()) {
+        return;
       }
+      url = "questions/" + (this.model ? "update/" + this.model.id : "create");
+      return $.post("" + cliqr.config.PLUGIN_URL + url + "?cid=" + cliqr.config.CID, form.serialize()).done(function(msg) {
+        return document.location = cliqr.config.PLUGIN_URL + ("questions/show/" + msg.id + "?cid=") + cliqr.config.CID;
+      }).fail(function() {
+        return console.log("fail", arguments);
+      });
     };
 
     return QuestionForm;

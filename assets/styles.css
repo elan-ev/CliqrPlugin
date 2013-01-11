@@ -82,6 +82,47 @@ h3 small {
 h4 small {
   font-size: 14px;
 }
+/**** Isotope Filtering ****/
+.isotope-item {
+  z-index: 2;
+}
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+/**** Isotope CSS3 transitions ****/
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+  -moz-transition-duration: 0.8s;
+  -ms-transition-duration: 0.8s;
+  -o-transition-duration: 0.8s;
+  transition-duration: 0.8s;
+}
+.isotope {
+  -webkit-transition-property: height, width;
+  -moz-transition-property: height, width;
+  -ms-transition-property: height, width;
+  -o-transition-property: height, width;
+  transition-property: height, width;
+}
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+  -moz-transition-property: -moz-transform, opacity;
+  -ms-transition-property: -ms-transform, opacity;
+  -o-transition-property: -o-transform, opacity;
+  transition-property: transform, opacity;
+}
+/**** disabling Isotope CSS3 transitions ****/
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+  -moz-transition-duration: 0s;
+  -ms-transition-duration: 0s;
+  -o-transition-duration: 0s;
+  transition-duration: 0s;
+}
 .xdebug-var-dump {
   height: 1em;
   overflow: hidden;
@@ -102,10 +143,11 @@ h4 small {
 #cliqr-index h3 a.button {
   font-weight: normal;
 }
-#cliqr-index ol {
+#cliqr-index .questions ol {
+  clear: both;
   padding-left: 1em;
 }
-#cliqr-index ol li {
+#cliqr-index .questions ol li {
   display: inline-block;
   position: relative;
   vertical-align: top;
@@ -118,24 +160,24 @@ h4 small {
   background-color: #FFF;
   cursor: pointer;
 }
-#cliqr-index ol li a:hover {
+#cliqr-index .questions ol li a:hover {
   color: #24437C;
 }
-#cliqr-index ol li .control {
+#cliqr-index .questions ol li .control {
   -webkit-transition: 0.2s ease-in-out;
   -moz-transition: 0.2s ease-in-out;
   -o-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
   right: -32px;
 }
-#cliqr-index ol li:hover .control {
+#cliqr-index .questions ol li:hover .control {
   right: 0px;
 }
-#cliqr-index ol li .control {
+#cliqr-index .questions ol li .control {
   position: absolute;
   top: 0;
 }
-#cliqr-index ol li .control a {
+#cliqr-index .questions ol li .control a {
   background-position: 0px 50%;
   background-repeat: no-repeat;
   float: left;
@@ -144,84 +186,146 @@ h4 small {
   padding: 4px 0px;
   width: 16px;
 }
-#cliqr-index ol li .control a.edit {
+#cliqr-index .questions ol li .control a.edit {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-color: transparent;
   background-image: url('../../../../assets/images/icons/16/white/edit.png');
 }
-#cliqr-index ol li .control a.edit:hover {
+#cliqr-index .questions ol li .control a.edit:hover {
   background-image: url('../../../../assets/images/icons/16/black/edit.png');
 }
-#cliqr-index ol li .control a.edit:active {
+#cliqr-index .questions ol li .control a.edit:active {
   background-image: url('../../../../assets/images/icons/16/blue/edit.png');
 }
-#cliqr-index ol li .control button.delete {
+#cliqr-index .questions ol li .control button.delete {
   width: 24px;
   height: 24px;
   border: none;
 }
-#cliqr-index ol li .control button.delete {
+#cliqr-index .questions ol li .control button.delete {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-color: transparent;
   background-image: url('../../../../assets/images/icons/16/white/trash.png');
 }
-#cliqr-index ol li .control button.delete:hover {
+#cliqr-index .questions ol li .control button.delete:hover {
   background-image: url('../../../../assets/images/icons/16/black/trash.png');
 }
-#cliqr-index ol li .control button.delete:active {
+#cliqr-index .questions ol li .control button.delete:active {
   background-image: url('../../../../assets/images/icons/16/blue/trash.png');
 }
-#cliqr-index ol li:hover {
+#cliqr-index .questions ol li:hover {
   border: solid 3px #b3b3b3;
   background-color: #b3b3b3;
 }
-#cliqr-index ol li:hover .count,
-#cliqr-index ol li:hover .answer {
+#cliqr-index .questions ol li:hover .count,
+#cliqr-index .questions ol li:hover .answer {
   color: #fff;
 }
-#cliqr-index ol li:hover .answer + .answer {
+#cliqr-index .questions ol li:hover .answer + .answer {
   border-left: 1px solid #fff;
 }
-#cliqr-index ol li .count,
-#cliqr-index ol li .detail {
+#cliqr-index .questions ol li .count,
+#cliqr-index .questions ol li .detail {
   display: inline-block;
   vertical-align: top;
   height: 60px;
   margin: 5px;
 }
-#cliqr-index ol li .count {
+#cliqr-index .questions ol li .count {
   width: 60px;
   font-size: 60px;
   line-height: 60px;
   color: #b3b3b3;
 }
-#cliqr-index ol li.state-new .count {
+#cliqr-index .questions ol li.state-new .count {
   visibility: hidden;
 }
-#cliqr-index ol li.state-new .count:before {
+#cliqr-index .questions ol li.state-new .count:before {
   visibility: visible;
   vertical-align: top;
   content: "NEW";
   font-size: 20px;
 }
-#cliqr-index ol li .detail {
+#cliqr-index .questions ol li .detail {
   width: 400px;
   overflow: hidden;
 }
-#cliqr-index ol li .detail h4 {
+#cliqr-index .questions ol li .detail h4 {
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 400px;
   overflow: hidden;
 }
-#cliqr-index ol li .answer {
+#cliqr-index .questions ol li .answer {
   color: #b3b3b3;
 }
-#cliqr-index ol li .answer + .answer {
+#cliqr-index .questions ol li .answer + .answer {
   border-left: 1px solid #9a9a9a;
   padding-left: 0.3em;
+}
+#cliqr-index .questions ol li .startdate {
+  position: absolute;
+  bottom: -1em;
+  right: 0;
+  visibility: hidden;
+  color: #b3b3b3;
+  -webkit-transition: 0.2s ease-in-out;
+  -moz-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+#cliqr-index .questions ol li:hover .startdate {
+  visibility: visible;
+  color: #fff;
+  bottom: 0;
+}
+#cliqr-index .sort-by {
+  margin: 0;
+  padding: 0 0 0 1em;
+  list-style: none;
+}
+#cliqr-index .sort-by li {
+  float: left;
+  margin-bottom: 0.2em;
+}
+#cliqr-index .sort-by li span {
+  display: block;
+  padding: 0.4em 0.5em;
+  background-color: #DDD;
+  color: #222;
+  font-weight: bold;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  background-image: linear-gradient(top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#cliqr-index .sort-by li span:hover {
+  background-color: #b3b3b3;
+}
+#cliqr-index .sort-by li span:active {
+  background-color: #9a9a9a;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+  -o-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+#cliqr-index .sort-by li:first-child span {
+  border-radius: 7px 0 0 7px;
+  border-left: none;
+}
+#cliqr-index .sort-by li:last-child span {
+  border-radius: 0 7px 7px 0;
+}
+#cliqr-index .sort-by li span.selected {
+  background-color: #808080;
+  text-shadow: none;
+  color: white;
 }
 #cliqr-show #layout_container {
   padding: 5px 0 0 0;
@@ -311,17 +415,22 @@ h4 small {
   color: #a1a3a3;
   display: none;
 }
-#cliqr-show .appeal.busy a {
+#cliqr-show .appeal.busy button {
   display: none !important;
 }
 #cliqr-show .appeal.busy span.loader {
   display: block;
 }
-#cliqr-show .appeal.start a {
-  width: 100%;
-  display: block;
-  padding: 0.4em;
+#cliqr-show .appeal.start form {
+  padding: 0;
   margin: -0.4em;
+}
+#cliqr-show .appeal.start button {
+  width: 100%;
+  font-size: 1em;
+  display: block;
+  padding: 0;
+  margin: 0;
 }
 #cliqr-show .appeal.vote a.short {
   white-space: nowrap;

@@ -1,6 +1,14 @@
-<div class="questions">
+<div class="questions" id="<?= htmlReady($key) ?>-questions">
+  <? if ($key === "stopped") { ?>
+    <ul class="sort-by">
+      <li><span data-attribute="question" class="selected"><?= _("alphabetisch") ?></span></li>
+      <li><span data-attribute="counter"><?= _("nach Aktivität") ?></span></li>
+      <li><span data-attribute="startdate"><?= _("nach Startdatum") ?></span></li>
+    </ul>
+  <? } ?>
+
   <? if (sizeof($qs[$key])) { ?>
-    <ol id="<?= htmlReady($key) ?>-questions">
+    <ol>
       <? foreach ($qs[$key] as $question) { ?>
         <?= $this->render_partial('questions/_list_item', compact('question')) ?>
       <? } ?>
