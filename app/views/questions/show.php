@@ -1,13 +1,20 @@
 <?
 $body_id = "cliqr-show";
 $id = $question->getVoteID();
+$state_text =
+  $question->isNew()
+    ? _("neu")
+    : ($question->isActive()
+      ? _("läuft")
+      : _("alt"));
+
 ?>
 
 
 <div class="question state-<?= htmlReady($question->getState()) ?><?= $show_results ? '' : ' hide-results' ?>">
 
 
-  <h2><?= htmlReady($question->getQuestion()) ?></h2>
+  <h2><span class="state"><?= $state_text ?></span> <?= htmlReady($question->getQuestion()) ?></h2>
 
   <ol class="results">
   <? foreach ($question->getAnswers() as $i => $answer) { ?>
