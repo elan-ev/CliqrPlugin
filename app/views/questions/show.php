@@ -29,7 +29,7 @@ $id = $question->getVoteID();
   ?>
   <div class="appeal vote">
     <a class="short" alt="Vote at" href="<?= $poll_url ?>"><?= $short_url ?></a>
-    <a class="qr" href="<?= $controller->url_for('qr', $id) ?>"></a>
+    <a class="qr" href="<?= $controller->url_for('qr', $cid) ?>"></a>
   </div>
   <div class="appeal start">
     <?= $this->render_partial('questions/_appeal_start', compact('id')) ?>
