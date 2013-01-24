@@ -281,6 +281,9 @@ h4 small {
   color: #fff;
   bottom: 0;
 }
+#cliqr-index .questions ol li.state-new .startdate {
+  display: none;
+}
 #cliqr-index .sort-by {
   margin: 0;
   padding: 0 0 0 1em;
