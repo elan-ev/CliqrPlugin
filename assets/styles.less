@@ -430,6 +430,12 @@
       }
     }
 
+    &.state-new, &.state-stopvis {
+      .appeal.start {
+        display: block;
+      }
+    }
+
     &.state-active {
       .appeal.vote {
         display: block;
@@ -437,10 +443,6 @@
     }
 
     &.state-new {
-      .appeal.start {
-        display: block;
-      }
-
       .results {
         .count, .chart {
           display: none;

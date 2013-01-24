@@ -466,10 +466,11 @@ h4 small {
 #cliqr-show .question.hide-results .count {
   visibility: hidden;
 }
-#cliqr-show .question.state-active .appeal.vote {
+#cliqr-show .question.state-new .appeal.start,
+#cliqr-show .question.state-stopvis .appeal.start {
   display: block;
 }
-#cliqr-show .question.state-new .appeal.start {
+#cliqr-show .question.state-active .appeal.vote {
   display: block;
 }
 #cliqr-show .question.state-new .results .count,
