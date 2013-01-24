@@ -17,7 +17,7 @@ else {
     <div class="control-group">
       <input autocomplete="off" id="question-text" name="question"
              type="text"
-             value="<?= $question ? htmlReady($question->getQuestion()) : ''?>"
+             value="<?= $question ? htmlReady($question->getQuestion()) : '' ?>"
              required="required">
     </div>
   </fieldset>
