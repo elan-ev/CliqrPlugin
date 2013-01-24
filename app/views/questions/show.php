@@ -23,9 +23,6 @@ $id = $question->getVoteID();
 
   <?= $this->render_partial('questions/_show_controls', compact('id')) ?>
 
-<?  var_dump(date("r", $question->startdate), date("r", $question->stopdate), $question); ?>
-
-
   <?
   $poll_url = $controller->poll_url($cid);
   $short_url = $shortener->shorten($poll_url);
