@@ -7,7 +7,7 @@ $id = $question->getVoteID();
   data-counter="<?= $counter ?>"
   data-startdate="<?= (int) $question->getStartdate() ?>"
 >
-  <a href="<?= $controller->url_for('questions/show', $id) ?>#layout_page">
+  <a href="<?= $controller->url_for('questions/show', $id) ?>">
     <div class="count" title="<?= sprintf(_('%d Teilnehmer'), $counter) ?>"><?= intval($counter) ?></div>
     <div class="detail">
       <h4><?= htmlReady($question->getQuestion()) ?></h4>
