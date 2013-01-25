@@ -12,8 +12,17 @@ class QrController extends CliqrStudipController
         $action = "show";
     }
 
-    function show_action($cid) {
-        QRcode::png($this->poll_url($cid));
+    function show_action($cid)
+    {
+        $url = $this->generateURL($cid);
+        QRcode::png($url);
         $this->render_nothing();
+    }
+
+    private function generateURL($cid)
+    {
+        $poll_url = $this->poll_url($cid);
+        $short_url = $this->plugin->config['shortener']->shorten($poll_url);
+        return $short_url;
     }
 }
