@@ -140,6 +140,7 @@ class Question extends \Vote {
         if ($this->isNew()) {
             $this->executeStart();
         } else {
+            $this->executeRestart();
             $this->executeContinue();
         }
         $ok = !$this->isError();
