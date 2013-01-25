@@ -100,13 +100,12 @@ class cliqr.ui.QuestionView extends Backbone.View
     console.log "initialized a QuestionView", @
 
     @resultsView = new cliqr.ui.ResultsView
-      el: @$ "ol.results"
       model: @model.toJSON().answers
 
     @model.on "change:answers", @updateAnswers
 
   render: ->
-    @resultsView.render()
+    @$(".question").append @resultsView.render().el
     @
 
   updateAnswers: (model, answers, options) =>

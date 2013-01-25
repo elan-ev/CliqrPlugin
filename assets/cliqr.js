@@ -177,14 +177,13 @@
     QuestionView.prototype.initialize = function() {
       console.log("initialized a QuestionView", this);
       this.resultsView = new cliqr.ui.ResultsView({
-        el: this.$("ol.results"),
         model: this.model.toJSON().answers
       });
       return this.model.on("change:answers", this.updateAnswers);
     };
 
     QuestionView.prototype.render = function() {
-      this.resultsView.render();
+      this.$(".question").append(this.resultsView.render().el);
       return this;
     };
 
