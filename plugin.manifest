@@ -2,7 +2,7 @@
 pluginname=Cliqr
 pluginclassname=CliqrPlugin
 origin=elan-ev
-version=0.2
+version=0.3
 description=cliqrbeschreibung
 homepage=http://cliqrhomepage.de
 studipMinVersion=2.0
