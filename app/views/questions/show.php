@@ -12,7 +12,6 @@ $poll_url = $controller->poll_url($cid);
 $short_url = $shortener->shorten($poll_url);
 ?>
 
-
 <div class="question state-<?= htmlReady($question->getState()) ?><?= $show_results ? '' : ' hide-results' ?>">
 
   <h2><span class="state"><?= $state_text ?></span> <?= htmlReady($question->getQuestion()) ?></h2>
@@ -26,7 +25,7 @@ $short_url = $shortener->shorten($poll_url);
   <div class="appeal start">
     <form action="<?= $controller->url_for('questions/start', $id) ?>" method="POST">
       <?= CSRFProtection::tokenTag() ?>
-    <?= \STUDIP\Button::create($question->isNew() ? _("Frage starten") : _("Frage erneut starten"), '') ?>
+      <?= \STUDIP\Button::create($question->isNew() ? _("Frage starten") : _("Frage erneut starten"), '') ?>
     </form>
     <span class="loader">
       loading&hellip;
