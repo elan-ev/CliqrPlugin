@@ -74,7 +74,7 @@ class QuestionsController extends CliqrStudipController
             $this->render_json($this->question->toJSON());
         } else {
             $this->shortener = $this->plugin->config['shortener'];
-            $this->show_results = Request::int("show_results", 1);
+            $this->show_results = Request::int("show_results", 0);
         }
     }
 
