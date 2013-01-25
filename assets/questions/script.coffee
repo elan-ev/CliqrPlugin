@@ -94,4 +94,4 @@ jQuery ($) ->
             document.location = url.replace re, "show/#{msg.id}"
 
           .fail () ->
-            console.log "fail", arguments
+            console.log "TODO fail", arguments

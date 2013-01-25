@@ -56,13 +56,9 @@ class BackPusher
     @channel.bind(event, _.bind @[method], @, collection) for event, method of @events
 
   add: (collection, question) ->
-    console.log 'add question:', question, 'to:', collection
-
     collection.add question, merge: true
 
   remove: (collection, id) ->
-    console.log 'remove question:', id, 'from:', collection
-
     collection.remove model  if model = collection.get id
 
 
@@ -135,7 +131,6 @@ class cliqr.ui.PollView extends cliqr.ui.PageView
       $.post(cliqr.$Polls.url(), @$("form").serialize())
         .always () ->
           cliqr.model.id_list.add id
-          console.log "always", arguments, id
         .done (msg) =>
           @render()
         .fail (jqXHR, textStatus) ->
@@ -145,8 +140,6 @@ class cliqr.ui.PollView extends cliqr.ui.PageView
 TODO: docs für Poll
 ###
 cliqr.model.Poll = Backbone.Model.extend
-  initialize: ->
-    console.log "initialized a Poll", arguments
 
 ###
 TODO: docs für PollCollection
@@ -154,9 +147,6 @@ TODO: docs für PollCollection
 cliqr.model.PollCollection = Backbone.Collection.extend
 
   model: cliqr.model.Poll
-
-  initialize: ->
-    console.log "initialized a PollCollection", arguments
 
   url: ->
     cliqr.config.PLUGIN_URL + "poll/" + cliqr.config.CID

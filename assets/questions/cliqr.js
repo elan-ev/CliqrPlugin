@@ -12,10 +12,6 @@
       return Question.__super__.constructor.apply(this, arguments);
     }
 
-    Question.prototype.initialize = function() {
-      return console.log("initialized a Question model", arguments);
-    };
-
     Question.prototype.url = function() {
       return cliqr.config.PLUGIN_URL + ("questions/show/" + (this.get('id')) + "?cid=") + cliqr.config.CID;
     };
@@ -175,7 +171,6 @@
     };
 
     QuestionView.prototype.initialize = function() {
-      console.log("initialized a QuestionView", this);
       this.resultsView = new cliqr.ui.ResultsView({
         model: this.model.toJSON().answers
       });
@@ -353,7 +348,7 @@
       return $.post("" + cliqr.config.PLUGIN_URL + url + "?cid=" + cliqr.config.CID, form.serialize()).done(function(msg) {
         return document.location = cliqr.config.PLUGIN_URL + ("questions/show/" + msg.id + "?cid=") + cliqr.config.CID;
       }).fail(function() {
-        return console.log("fail", arguments);
+        return console.log("TODO fail", arguments);
       });
     };
 

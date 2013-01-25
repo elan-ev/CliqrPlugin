@@ -63,7 +63,7 @@
           re = /(?!questions\/)(create|update\/[a-fA-F0-9]{32})/;
           return document.location = url.replace(re, "show/" + msg.id);
         }).fail(function() {
-          return console.log("fail", arguments);
+          return console.log("TODO fail", arguments);
         });
       }
     });

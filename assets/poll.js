@@ -77,7 +77,6 @@ Provide top-level namespaces for our javascript.
     };
 
     BackPusher.prototype.add = function(collection, question) {
-      console.log('add question:', question, 'to:', collection);
       return collection.add(question, {
         merge: true
       });
@@ -85,7 +84,6 @@ Provide top-level namespaces for our javascript.
 
     BackPusher.prototype.remove = function(collection, id) {
       var model;
-      console.log('remove question:', id, 'from:', collection);
       if (model = collection.get(id)) {
         return collection.remove(model);
       }
@@ -192,8 +190,7 @@ Provide top-level namespaces for our javascript.
         return alert("ha!");
       } else {
         return $.post(cliqr.$Polls.url(), this.$("form").serialize()).always(function() {
-          cliqr.model.id_list.add(id);
-          return console.log("always", arguments, id);
+          return cliqr.model.id_list.add(id);
         }).done(function(msg) {
           return _this.render();
         }).fail(function(jqXHR, textStatus) {});
@@ -209,11 +206,7 @@ Provide top-level namespaces for our javascript.
   */
 
 
-  cliqr.model.Poll = Backbone.Model.extend({
-    initialize: function() {
-      return console.log("initialized a Poll", arguments);
-    }
-  });
+  cliqr.model.Poll = Backbone.Model.extend;
 
   /*
   TODO: docs für PollCollection
@@ -222,9 +215,6 @@ Provide top-level namespaces for our javascript.
 
   cliqr.model.PollCollection = Backbone.Collection.extend({
     model: cliqr.model.Poll,
-    initialize: function() {
-      return console.log("initialized a PollCollection", arguments);
-    },
     url: function() {
       return cliqr.config.PLUGIN_URL + "poll/" + cliqr.config.CID;
     },

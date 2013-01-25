@@ -2,9 +2,6 @@
 
 class cliqr.model.Question extends Backbone.Model
 
-  initialize: ->
-    console.log "initialized a Question model", arguments
-
   url: ->
     cliqr.config.PLUGIN_URL + "questions/show/#{@get 'id'}?cid=" + cliqr.config.CID
 
@@ -97,8 +94,6 @@ class cliqr.ui.QuestionView extends Backbone.View
 
 
   initialize: ->
-    console.log "initialized a QuestionView", @
-
     @resultsView = new cliqr.ui.ResultsView
       model: @model.toJSON().answers
 
@@ -229,4 +224,4 @@ class cliqr.ui.QuestionForm extends cliqr.ui.TemplateView
         .done (msg) ->
           document.location = cliqr.config.PLUGIN_URL + "questions/show/#{msg.id}?cid=" + cliqr.config.CID
         .fail () ->
-          console.log "fail", arguments
+          console.log "TODO fail", arguments
