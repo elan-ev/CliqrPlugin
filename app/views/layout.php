@@ -23,7 +23,7 @@ echo $this->render_partial('mustaches/_include_js_templates', array('prefix' => 
 
 $plugin_url = $plugin->getPluginURL();
 
-PageLayout::addStylesheet($plugin_url . '/assets/styles.css');
+PageLayout::addStylesheet($plugin_url . '/assets/questions/styles.css');
 
 
 PageLayout::addScript($plugin_url . '/assets/vendor/jquery.isotope.min.js');
@@ -34,7 +34,7 @@ PageLayout::addScript($plugin_url . '/assets/vendor/backbone.js');
 
 
 
-PageLayout::addScript($plugin_url . '/assets/bootstrap.js');
+PageLayout::addScript($plugin_url . '/assets/questions/bootstrap.js');
 
 $PLUGIN_URL = htmlReady(current(explode('?', $controller->url_for(""))));
 PageLayout::addHeadElement('script', array(), '
@@ -43,7 +43,7 @@ cliqr.config.CID        = "' . htmlReady($cid) . '";
 ');
 
 
-PageLayout::addScript($plugin_url . '/assets/cliqr.js');
+PageLayout::addScript($plugin_url . '/assets/questions/cliqr.js');
 
 # TODO deprecate this
-PageLayout::addScript($plugin_url . '/assets/script.js');
+PageLayout::addScript($plugin_url . '/assets/questions/script.js');
