@@ -17,6 +17,7 @@ $state_text =
   <h2><span class="state"><?= $state_text ?></span> <?= htmlReady($question->getQuestion()) ?></h2>
 
   <ol class="results">
+<!--
   <? foreach ($question->getAnswers() as $i => $answer) { ?>
     <li>
       <span class="text">
@@ -26,6 +27,7 @@ $state_text =
       <span class="count" data-count="<?= intval($answer['counter']) ?>"><?= intval($answer['counter']) ?></span>
      </li>
   <? } ?>
+-->
   </ol>
 
   <?= $this->render_partial('questions/_show_controls', compact('id')) ?>

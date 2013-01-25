@@ -176,57 +176,20 @@
 
     QuestionView.prototype.initialize = function() {
       console.log("initialized a QuestionView", this);
+      this.resultsView = new cliqr.ui.ResultsView({
+        el: this.$("ol.results"),
+        model: this.model.toJSON().answers
+      });
       return this.model.on("change:answers", this.updateAnswers);
     };
 
     QuestionView.prototype.render = function() {
-      this.enhanceChart();
+      this.resultsView.render();
       return this;
     };
 
-    QuestionView.prototype.enhanceChart = function() {
-      var answers, data, max, width, widths;
-      this.$('.chart').remove();
-      width = 300;
-      answers = this.$(".results .count");
-      data = _.pluck(this.model.get("answers"), "counter");
-      max = _.max(data);
-      widths = _.map(data, function(d) {
-        if (max > 0) {
-          return d / max * width;
-        } else {
-          return 0;
-        }
-      });
-      console.log("enhance charts", data);
-      return answers.after(function(index) {
-        return $('<span class="chart"></div>').css({
-          width: widths[index]
-        }).attr({
-          "data-count": data[index]
-        });
-      });
-    };
-
     QuestionView.prototype.updateAnswers = function(model, answers, options) {
-      var attrs, e, i, template;
-      attrs = {
-        answers: (function() {
-          var _i, _len, _results;
-          _results = [];
-          for (i = _i = 0, _len = answers.length; _i < _len; i = ++_i) {
-            e = answers[i];
-            _results.push(_.extend({}, e, {
-              nominal: nominal(i)
-            }));
-          }
-          return _results;
-        })()
-      };
-      console.log(attrs);
-      template = compileTemplate("questions-results");
-      this.$(".results").replaceWith(template(attrs));
-      return this.render();
+      return this.resultsView.update(answers);
     };
 
     QuestionView.prototype.startQuestion = function(event) {
@@ -236,6 +199,73 @@
     return QuestionView;
 
   })(Backbone.View);
+
+  cliqr.ui.ResultsView = (function(_super) {
+
+    __extends(ResultsView, _super);
+
+    function ResultsView() {
+      return ResultsView.__super__.constructor.apply(this, arguments);
+    }
+
+    ResultsView.prototype.template_id = 'questions-results';
+
+    ResultsView.prototype.enhanceChart = function() {
+      var counts, data, max, width, widths;
+      this.$('.chart').remove();
+      width = 300;
+      counts = this.$(".results .count");
+      data = _.pluck(this.model, "counter");
+      max = _.max(data);
+      widths = _.map(data, function(d) {
+        if (max > 0) {
+          return d / max * width;
+        } else {
+          return 0;
+        }
+      });
+      return counts.before(function(index) {
+        return $('<span class="chart"></div>').css({
+          width: widths[index]
+        }).attr({
+          "data-count": data[index]
+        });
+      });
+    };
+
+    ResultsView.prototype.enrichedModel = function() {
+      var answer, i, sum, _i, _len, _ref, _results;
+      sum = _.reduce(this.model, (function(memo, answer) {
+        return memo + answer.counter;
+      }), 0);
+      _ref = this.model;
+      _results = [];
+      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+        answer = _ref[i];
+        _results.push(_.extend({}, answer, {
+          nominal: nominal(i),
+          percent: Math.floor(100 * answer.counter / sum)
+        }));
+      }
+      return _results;
+    };
+
+    ResultsView.prototype.render = function() {
+      this.$el.html(this.template({
+        answers: this.enrichedModel()
+      }));
+      this.enhanceChart();
+      return this;
+    };
+
+    ResultsView.prototype.update = function(answers) {
+      this.model = answers;
+      return this.render();
+    };
+
+    return ResultsView;
+
+  })(cliqr.ui.TemplateView);
 
   addNewChoice = function(event) {
     var empty_question, new_choice, template;

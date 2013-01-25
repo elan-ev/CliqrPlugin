@@ -1,3 +1,5 @@
+# This file is used by the question/* views.
+
 class cliqr.model.Question extends Backbone.Model
 
   initialize: ->
@@ -96,40 +98,56 @@ class cliqr.ui.QuestionView extends Backbone.View
 
   initialize: ->
     console.log "initialized a QuestionView", @
+
+    @resultsView = new cliqr.ui.ResultsView
+      el: @$ "ol.results"
+      model: @model.toJSON().answers
+
     @model.on "change:answers", @updateAnswers
 
   render: ->
-    @enhanceChart()
+    @resultsView.render()
     @
 
-  enhanceChart: ->
-    @$('.chart').remove()
-
-    width   = 300
-    answers = @$ ".results .count"
-    data    = _.pluck @model.get("answers"), "counter"
-    max     = _.max data
-    widths  = _.map data, (d) -> if max > 0 then d / max * width else 0
-
-    console.log "enhance charts", data
-
-    answers.after (index) ->
-      $('<span class="chart"></div>').css(width: widths[index]).attr("data-count": data[index])
-
   updateAnswers: (model, answers, options) =>
-
-    attrs =
-      answers: (_.extend {}, e, nominal: nominal i for e, i in answers)
-
-    console.log attrs
-
-    template = compileTemplate "questions-results"
-    @$(".results").replaceWith template attrs
-    @render()
+    @resultsView.update answers
 
   startQuestion: (event) ->
     @$(".appeal.start").addClass("busy")
 
+
+class cliqr.ui.ResultsView extends cliqr.ui.TemplateView
+  template_id: 'questions-results'
+
+  enhanceChart: ->
+    @$('.chart').remove()
+
+    width  = 300
+    counts = @$ ".results .count"
+    data   = _.pluck @model, "counter"
+    max    = _.max data
+    widths = _.map data, (d) -> if max > 0 then d / max * width else 0
+
+    counts.before (index) ->
+      $('<span class="chart"></div>').css(width: widths[index]).attr("data-count": data[index])
+
+
+  enrichedModel: () ->
+    sum = _.reduce @model, ((memo, answer) -> memo + answer.counter), 0
+
+    for answer, i in @model
+      _.extend {}, answer,
+        nominal: nominal i
+        percent: Math.floor 100 * answer.counter / sum
+
+  render: ->
+    @$el.html @template answers: @enrichedModel()
+    @enhanceChart()
+    @
+
+  update: (answers) ->
+    @model = answers
+    @render()
 
 
 ########
