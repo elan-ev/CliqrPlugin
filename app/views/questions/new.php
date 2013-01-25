@@ -1,2 +1,2 @@
-<h2><?= _("Neue Frage anlegen") ?></h2>
+<h2><?= _("Frage erstellen") ?></h2>
 <?= $this->render_partial("questions/_form") ?>

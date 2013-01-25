@@ -38,7 +38,7 @@ else {
   <fieldset>
     <div class="button-group">
       <?= \STUDIP\Button::create("Speichern") ?>
-<?= \STUDIP\Button::create("Speichern und eine weitere Frage anlegen", array("disabled"=>"disabled")) ?>
+<?= \STUDIP\Button::create("Speichern und eine weitere Frage erstellen", array("disabled"=>"disabled")) ?>
 <?= \STUDIP\Button::create("Frage direkt starten", array("disabled"=>"disabled")) ?>
     </div>
   </fieldset>

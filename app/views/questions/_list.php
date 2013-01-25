@@ -16,7 +16,7 @@
   <? } else { ?>
   <div class="empty">
   <? switch ($key) {
-    case 'new':     echo _("keine neuen Fragen"); break;
+    case 'new':     echo _("keine geplanten Fragen"); break;
     case 'active':  echo _("keine laufenden Fragen"); break;
     case 'stopped': echo _("keine gestoppten Fragen"); break;
   } ?>

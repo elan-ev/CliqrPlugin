@@ -55,7 +55,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $navigation->addSubNavigation("index", new Navigation(_("Fragen"), $url));
 
         $url = PluginEngine::getURL($this, array(), 'questions/new');
-        $navigation->addSubNavigation("new", new Navigation(_("Neue Frage"), $url));
+        $navigation->addSubNavigation("new", new Navigation(_("Frage erstellen"), $url));
 
         Navigation::addItem('/course/cliqr', $navigation);
     }

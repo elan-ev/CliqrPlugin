@@ -20,7 +20,7 @@ foreach ($questions as $question) {
 <div class="page">
 
   <h3>
-    <?= _('Neue Fragen') ?>
+    <?= _('Geplante Fragen') ?>
     <?= $this->render_partial('questions/_quick_new') ?>
   </h3>
   <?= $this->render_partial('questions/_list', array('key' => 'new', 'qs' => $qs)) ?>
