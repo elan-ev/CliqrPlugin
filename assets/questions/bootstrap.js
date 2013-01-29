@@ -23,6 +23,7 @@ Provide top-level namespaces for our javascript.
       question = new cliqr.ui.QuestionView({
         model: model
       });
+      question.render();
       setInterval(function() {
         return model.fetch();
       }, 2000);

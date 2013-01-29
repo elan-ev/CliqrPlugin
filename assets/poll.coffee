@@ -139,7 +139,7 @@ class cliqr.ui.PollView extends cliqr.ui.PageView
 ###
 TODO: docs für Poll
 ###
-cliqr.model.Poll = Backbone.Model.extend
+cliqr.model.Poll = Backbone.Model.extend()
 
 ###
 TODO: docs für PollCollection

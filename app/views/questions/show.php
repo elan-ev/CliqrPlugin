@@ -12,7 +12,7 @@ $poll_url = $controller->poll_url($cid);
 $short_url = $shortener->shorten($poll_url);
 ?>
 
-<div class="question state-<?= htmlReady($question->getState()) ?><?= $show_results ? '' : ' hide-results' ?>">
+<div class="question state-<?= htmlReady($question->getState()) ?>">
 
   <h2><span class="state"><?= $state_text ?></span> <?= htmlReady($question->getQuestion()) ?></h2>
 

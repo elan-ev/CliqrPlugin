@@ -14,13 +14,6 @@
       </form>
     <? endif ?>
 
-  <!-- SHOW/HIDE RESULTS -->
-
-    <form action="<?= $controller->url_for('questions/show', $id) ?>" method="GET">
-      <input type="hidden" name="show_results" value="<?= $show_results ? 0 : 1 ?>">
-      <input type="hidden" name="cid" value="<?= $cid ?>">
-      <?= \STUDIP\Button::create($show_results ? _("Ergebnisse verstecken") : _("Ergebnisse zeigen"), '') ?>
-    </form>
 
   <!-- EDIT -->
 

@@ -190,13 +190,13 @@ h4 small {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-color: transparent;
-  background-image: url('../../../../assets/images/icons/16/white/edit.png');
+  background-image: url('../../../../../assets/images/icons/16/white/edit.png');
 }
 #cliqr-index .questions ol li .control a.edit:hover {
-  background-image: url('../../../../assets/images/icons/16/black/edit.png');
+  background-image: url('../../../../../assets/images/icons/16/black/edit.png');
 }
 #cliqr-index .questions ol li .control a.edit:active {
-  background-image: url('../../../../assets/images/icons/16/blue/edit.png');
+  background-image: url('../../../../../assets/images/icons/16/blue/edit.png');
 }
 #cliqr-index .questions ol li .control button.delete {
   width: 24px;
@@ -207,13 +207,13 @@ h4 small {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-color: transparent;
-  background-image: url('../../../../assets/images/icons/16/white/trash.png');
+  background-image: url('../../../../../assets/images/icons/16/white/trash.png');
 }
 #cliqr-index .questions ol li .control button.delete:hover {
-  background-image: url('../../../../assets/images/icons/16/black/trash.png');
+  background-image: url('../../../../../assets/images/icons/16/black/trash.png');
 }
 #cliqr-index .questions ol li .control button.delete:active {
-  background-image: url('../../../../assets/images/icons/16/blue/trash.png');
+  background-image: url('../../../../../assets/images/icons/16/blue/trash.png');
 }
 #cliqr-index .questions ol li:hover {
   border: solid 3px #b3b3b3;
@@ -394,8 +394,9 @@ h4 small {
   vertical-align: text-top;
   border: 1px solid #232323;
 }
-#cliqr-show .results .chart[data-count="0"] {
-  border: none;
+#cliqr-show .results li[data-count="0"] .chart,
+#cliqr-show .results li[data-count="0"] .percent {
+  display: none;
 }
 #cliqr-show .controls {
   position: absolute;
@@ -469,9 +470,12 @@ h4 small {
 #cliqr-show .appeal.vote a.qr:hover {
   box-shadow: 0 0 0.25em #6e7070;
 }
-#cliqr-show .question.hide-results .chart,
-#cliqr-show .question.hide-results .count,
-#cliqr-show .question.hide-results .percent {
+#cliqr-show .question.state-new .chart,
+#cliqr-show .question.state-active .chart,
+#cliqr-show .question.state-new .count,
+#cliqr-show .question.state-active .count,
+#cliqr-show .question.state-new .percent,
+#cliqr-show .question.state-active .percent {
   visibility: hidden;
 }
 #cliqr-show .question.state-new .appeal.start,
@@ -480,10 +484,6 @@ h4 small {
 }
 #cliqr-show .question.state-active .appeal.vote {
   display: block;
-}
-#cliqr-show .question.state-new .results .count,
-#cliqr-show .question.state-new .results .chart {
-  display: none;
 }
 .vote-form fieldset {
   border: none;

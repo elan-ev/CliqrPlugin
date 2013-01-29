@@ -228,7 +228,7 @@
     };
 
     ResultsView.prototype.enrichedModel = function() {
-      var answer, i, sum, _i, _len, _ref, _results;
+      var answer, i, percent, sum, _i, _len, _ref, _results;
       sum = _.reduce(this.model, (function(memo, answer) {
         return memo + answer.counter;
       }), 0);
@@ -236,9 +236,10 @@
       _results = [];
       for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
         answer = _ref[i];
+        percent = sum === 0 ? 0 : Math.floor(100 * answer.counter / sum);
         _results.push(_.extend({}, answer, {
           nominal: nominal(i),
-          percent: Math.floor(100 * answer.counter / sum)
+          percent: percent
         }));
       }
       return _results;

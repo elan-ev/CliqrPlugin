@@ -130,9 +130,10 @@ class cliqr.ui.ResultsView extends cliqr.ui.TemplateView
     sum = _.reduce @model, ((memo, answer) -> memo + answer.counter), 0
 
     for answer, i in @model
+      percent = if sum is 0 then 0 else Math.floor 100 * answer.counter / sum
       _.extend {}, answer,
         nominal: nominal i
-        percent: Math.floor 100 * answer.counter / sum
+        percent: percent
 
   render: ->
     @$el.html @template answers: @enrichedModel()

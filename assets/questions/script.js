@@ -24,14 +24,10 @@
       return addNewChoice(event);
     }).on("keydown", "input.choice", function(event) {
       var form_inputs, index, inputs, last;
-      if (event.which === 13 || event.which === 38 || event.which === 40 || event.which === 9 && !event.shiftKey) {
+      if (event.which === 13 || event.which === 38 || event.which === 40) {
         inputs = $(event.target).closest(".choices").find("input");
         last = inputs.length - 1;
         index = inputs.index(event.target);
-        if (event.which === 9 && last === index) {
-          event.preventDefault();
-          addNewChoice(event);
-        }
         if (event.which === 13 || event.which === 40) {
           if (last === index) {
             addNewChoice(event);

@@ -206,7 +206,7 @@ Provide top-level namespaces for our javascript.
   */
 
 
-  cliqr.model.Poll = Backbone.Model.extend;
+  cliqr.model.Poll = Backbone.Model.extend();
 
   /*
   TODO: docs für PollCollection

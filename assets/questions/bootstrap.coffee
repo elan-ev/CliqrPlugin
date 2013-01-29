@@ -14,6 +14,7 @@ jQuery ($) ->
   if $('#cliqr-show').length
     model = new cliqr.model.Question cliqr.model.$currentQuestion
     question = new cliqr.ui.QuestionView model: model
+    question.render()
     setInterval ->
         model.fetch()
       , 2000
