@@ -1,0 +1,207 @@
+#cliqr-show {
+
+  @chartColor1: #3389b7;
+  @chartColor2: #96c7e1;
+
+  #layout_container {
+    padding: 5px 0 0 0;
+  }
+
+  .question {
+    min-height: 500px;
+    position: relative;
+    padding: 1em 2em;
+  }
+
+  h2 {
+    font-size: 4em;
+    line-height: 1.5;
+
+    span.state {
+      color: @color-detail;
+      font-size: 0.4em;
+    }
+  }
+
+  .results {
+
+    padding: 0;
+    margin: 0;
+
+    li {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 3em;
+      line-height: 1.5em;
+    }
+
+    .count {
+      display: inline-block;
+      color: @chartColor1;
+      padding-left: 0.5em;
+    }
+
+    .percent {
+      font-size: 0.66em;
+      color: @color-detail;
+    }
+
+
+    .text {
+      width: 35%;
+      .box-sizing(border-box);
+
+      display: inline-block;
+      text-align: right;
+
+      .nominal {
+        color: #999;
+        font-size: 0.7em;
+      }
+    }
+
+    .chart {
+      background-color: @chartColor1;
+      #gradient > .horizontal(@chartColor1, @chartColor2);
+      height: 1em;
+      margin-left: 0.5em;
+      display: inline-block;
+      vertical-align: text-top;
+      border: 1px solid #232323;
+    }
+
+    li[data-count="0"] {
+
+      .chart, .percent {
+        display: none;
+      }
+    }
+  }
+
+  .question {
+    //position: relative;
+    //border: 1px solid blue;
+  }
+
+  .controls {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    text-align: right;
+
+    .button {
+      display: inline-block;
+    }
+  }
+
+
+  .appeal {
+    font-size: 5em;
+    background: @color-appeal;
+    color: darken(@color-appeal, 35%);
+    text-align: center;
+
+    padding: 0.4em;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    overflow: hidden;
+
+    display: none;
+  }
+
+  span.loader {
+    font-style: italic;
+    color: darken(@color-appeal, 15%);
+    display: none;
+  }
+
+  .appeal.busy {
+    button {
+      display: none !important;
+    }
+    span.loader {
+      display: block;
+    }
+  }
+
+  .appeal.start {
+    form {
+      padding: 0;
+      margin: -0.4em;
+
+    }
+    button {
+      width: 100%;
+      font-size: 1em;
+      display: block;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .appeal.vote {
+
+    a.short {
+
+      &:before {
+        content: attr(alt);
+        font-size: 0.6666em;
+        padding-right: 0.3333em;
+        color: darken(@color-appeal, 35%);
+      }
+
+      white-space: nowrap;
+    }
+
+    a.qr {
+      float: right;
+      width: 64px;
+      height: 64px;
+      background: white url('qrcode.png') no-repeat 50% 50%;
+      border-radius: 64px;
+      display: inline-block;
+      vertical-align: middle;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin-top: -32px;
+      margin-right: 16px;
+      z-index: -1;
+
+      &:hover {
+        box-shadow: 0 0 0.25em darken(@color-appeal, 35%);
+      }
+    }
+
+  }
+
+  .question  {
+
+    // do not show results on new and active questions
+    &.state-new, &.state-active {
+      .chart, .count, .percent {
+        visibility: hidden;
+      }
+    }
+
+    // "start question" only on non-active questions
+    &.state-new, &.state-stopvis {
+      .appeal.start {
+        display: block;
+      }
+    }
+
+    // "vote" only on active questions
+    &.state-active {
+      .appeal.vote {
+        display: block;
+      }
+    }
+  }
+
+}
