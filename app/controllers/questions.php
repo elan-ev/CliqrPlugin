@@ -128,7 +128,7 @@ class QuestionsController extends CliqrStudipController
         # just render template
     }
 
-    // TODO: mit create_action kombinieren
+    // TODO: mit create_action kombinieren?
     // TODO: Validation!? (eingebaut?)
     function update_action($id)
     {

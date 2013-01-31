@@ -1,31 +1,34 @@
 # This file is used by the question/* views.
 
+# Model representing a Question
 class cliqr.model.Question extends Backbone.Model
-
   url: ->
     cliqr.config.PLUGIN_URL + "questions/show/#{@get 'id'}?cid=" + cliqr.config.CID
 
+
 # TODO reuse in polls.coffee
+# returns the nth uppercase roman literal
 nominal =
   do (A = "A".charCodeAt 0) ->
     (index) ->
       String.fromCharCode A + index % 26
 
 
-###
-We use Mustache as template engine. This function makes it a lot
-easier to get a pre-compiled Mustache template.
-###
+# We use Mustache as template engine. This function makes it a lot
+# easier to get a pre-compiled Mustache template.
 compileTemplate = _.memoize (name) ->
   Mustache.compile $("#cliqr-template-#{name}").html()
 
+
+# Extend this class to have access to the specified template
+# which is lazily retrieved on first access
 class cliqr.ui.TemplateView extends Backbone.View
   template: ->
     @template = compileTemplate @template_id
     @template.apply @, arguments
 
 
-
+# TODO docs
 class cliqr.ui.QuestionsIndexView extends Backbone.View
   el: '#cliqr-index'
 
@@ -46,8 +49,8 @@ class cliqr.ui.QuestionsIndexView extends Backbone.View
     @$('.page').html form.render().el
 
 
+# TODO docs
 class cliqr.ui.SortOptionsView extends Backbone.View
-
   initialize: ->
     @ol = @$ "ol"
     @ol.isotope
@@ -74,8 +77,8 @@ class cliqr.ui.SortOptionsView extends Backbone.View
       sortAscending: ! target.hasClass "reversed"
 
 
+# TODO docs
 class cliqr.ui.QuestionView extends Backbone.View
-
   el: '#cliqr-show'
 
   events:
@@ -91,7 +94,6 @@ class cliqr.ui.QuestionView extends Backbone.View
     else if container.webkitRequestFullscreen
       container.webkitRequestFullscreen()
     false
-
 
   initialize: ->
     @resultsView = new cliqr.ui.ResultsView
@@ -125,7 +127,6 @@ class cliqr.ui.ResultsView extends cliqr.ui.TemplateView
     counts.before (index) ->
       $('<span class="chart"></div>').css(width: widths[index]).attr("data-count": data[index])
 
-
   enrichedModel: () ->
     sum = _.reduce @model, ((memo, answer) -> memo + answer.counter), 0
 
@@ -145,18 +146,15 @@ class cliqr.ui.ResultsView extends cliqr.ui.TemplateView
     @render()
 
 
-########
-# TODO #
-########
-
+# TODO
 addNewChoice = (event) ->
   new_choice = $(event.target).closest(".choices").find(".choice-new")
   template = compileTemplate 'questions-choice'
   empty_question = answer_id: '', text: ''
   $(template empty_question).insertBefore(new_choice).find("input").focus()
 
-class cliqr.ui.QuestionForm extends cliqr.ui.TemplateView
 
+class cliqr.ui.QuestionForm extends cliqr.ui.TemplateView
   template_id: 'questions-form'
 
   events:

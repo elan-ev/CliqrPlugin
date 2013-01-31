@@ -26,12 +26,6 @@
     };
   })("A".charCodeAt(0));
 
-  /*
-  We use Mustache as template engine. This function makes it a lot
-  easier to get a pre-compiled Mustache template.
-  */
-
-
   compileTemplate = _.memoize(function(name) {
     return Mustache.compile($("#cliqr-template-" + name).html());
   });
