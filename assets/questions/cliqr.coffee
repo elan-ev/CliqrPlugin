@@ -121,7 +121,7 @@ class cliqr.ui.ResultsView extends cliqr.ui.TemplateView
     @$('.chart').remove()
 
     width  = 300
-    counts = @$ ".results .count"
+    counts = @$ "ol .count"
     data   = _.pluck @model, "counter"
     max    = _.max data
     widths = _.map data, (d) -> if max > 0 then d / max * width else 0

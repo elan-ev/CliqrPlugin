@@ -204,7 +204,7 @@
       var counts, data, max, width, widths;
       this.$('.chart').remove();
       width = 300;
-      counts = this.$(".results .count");
+      counts = this.$("ol .count");
       data = _.pluck(this.model, "counter");
       max = _.max(data);
       widths = _.map(data, function(d) {
