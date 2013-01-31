@@ -185,19 +185,13 @@ class cliqr.ui.QuestionForm extends cliqr.ui.TemplateView
       choice_input.effect "shake", 50
 
   enhanceChoiceInput: (event) ->
-      if event.which == 13 \    # enter
+      if    event.which == 13 \ # enter
          or event.which == 38 \ # arrow_up
-         or event.which == 40 \ # arrow_down
-         or event.which == 9 and !event.shiftKey # tab
+         or event.which == 40   # arrow_down
 
         inputs = @$ ".choices input"
         last   = inputs.length - 1
         index  = inputs.index(event.target)
-
-        # tabs
-        if event.which is 9 and last is index
-          event.preventDefault()
-          addNewChoice event
 
         # enter or arrow_down
         if event.which is 13 or event.which is 40
