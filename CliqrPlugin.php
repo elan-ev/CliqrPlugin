@@ -68,7 +68,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 
     private static function setupConfig()
     {
-        require_once 'Container.php';
+        require_once 'lib/Container.php';
         return new \Cliqr\Container();
     }
 

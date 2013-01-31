@@ -9,7 +9,7 @@ class Container extends \Pimple {
 
         $ini = array();
 
-        $this['ini'] = parse_ini_file(dirname(__FILE__) . '/config.php', true, INI_SCANNER_RAW);
+        $this['ini'] = parse_ini_file(dirname(dirname(__FILE__)) . '/config.php', true, INI_SCANNER_RAW);
 
 
         $this['shortener'] = $this->share(
