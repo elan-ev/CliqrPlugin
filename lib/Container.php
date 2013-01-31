@@ -7,14 +7,16 @@ class Container extends \Pimple {
     function __construct()
     {
 
+        $base_path = dirname(dirname(__FILE__)) . '/';
+
         $ini = array();
 
-        $this['ini'] = parse_ini_file(dirname(dirname(__FILE__)) . '/config.php', true, INI_SCANNER_RAW);
+        $this['ini'] = parse_ini_file($base_path . 'config.php', true, INI_SCANNER_RAW);
 
 
         $this['shortener'] = $this->share(
-            function ($c) {
-                require_once dirname(__FILE__) . "/" . $c['ini']['shortener']['file'];
+            function ($c) use ($base_path) {
+                require_once $base_path . $c['ini']['shortener']['file'];
                 $class = $c['ini']['shortener']['class'];
                 return new $class($c);
             }
