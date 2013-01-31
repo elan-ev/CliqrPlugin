@@ -198,6 +198,9 @@ h4 small {
 #cliqr-index .questions ol li .control a.edit:active {
   background-image: url('../../../../../assets/images/icons/16/blue/edit.png');
 }
+#cliqr-index .questions ol li .control form {
+  width: 24px;
+}
 #cliqr-index .questions ol li .control button.delete {
   width: 24px;
   height: 24px;
