@@ -152,13 +152,15 @@ h4 small {
   position: relative;
   vertical-align: top;
   width: 500px;
-  height: 75px;
-  padding: 5px;
   margin-right: 7px;
+  margin-bottom: 7px;
   border: solid 3px transparent;
   overflow: hidden;
   background-color: #FFF;
   cursor: pointer;
+}
+#cliqr-index .questions ol li a {
+  display: block;
 }
 #cliqr-index .questions ol li a:hover {
   color: #24437C;
@@ -349,7 +351,7 @@ h4 small {
   color: #b3b3b3;
   font-size: 0.4em;
 }
-#cliqr-show .results {
+#cliqr-show .results ol {
   padding: 0;
   margin: 0;
 }
@@ -400,6 +402,14 @@ h4 small {
 #cliqr-show .results li[data-count="0"] .chart,
 #cliqr-show .results li[data-count="0"] .percent {
   display: none;
+}
+#cliqr-show .results .sample-size {
+  color: #CCC;
+  display: block;
+  font-size: 2em;
+  margin-left: 35%;
+  padding-left: 1em;
+  padding-top: 1em;
 }
 #cliqr-show .controls {
   position: absolute;
@@ -487,6 +497,9 @@ h4 small {
 }
 #cliqr-show .question.state-active .appeal.vote {
   display: block;
+}
+#cliqr-show .question.state-new .sample-size {
+  display: none;
 }
 .vote-form fieldset {
   border: none;
