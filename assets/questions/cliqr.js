@@ -198,6 +198,8 @@
 
     ResultsView.prototype.template_id = 'questions-results';
 
+    ResultsView.prototype.className = 'results';
+
     ResultsView.prototype.enhanceChart = function() {
       var counts, data, max, width, widths;
       this.$('.chart').remove();
@@ -222,27 +224,31 @@
     };
 
     ResultsView.prototype.enrichedModel = function() {
-      var answer, i, percent, sum, _i, _len, _ref, _results;
-      sum = _.reduce(this.model, (function(memo, answer) {
+      var answer, i, percent, size;
+      size = _.reduce(this.model, (function(memo, answer) {
         return memo + answer.counter;
       }), 0);
-      _ref = this.model;
-      _results = [];
-      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-        answer = _ref[i];
-        percent = sum === 0 ? 0 : Math.floor(100 * answer.counter / sum);
-        _results.push(_.extend({}, answer, {
-          nominal: nominal(i),
-          percent: percent
-        }));
-      }
-      return _results;
+      return {
+        size: size,
+        answers: (function() {
+          var _i, _len, _ref, _results;
+          _ref = this.model;
+          _results = [];
+          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+            answer = _ref[i];
+            percent = size === 0 ? 0 : Math.floor(100 * answer.counter / size);
+            _results.push(_.extend({}, answer, {
+              nominal: nominal(i),
+              percent: percent
+            }));
+          }
+          return _results;
+        }).call(this)
+      };
     };
 
     ResultsView.prototype.render = function() {
-      this.$el.html(this.template({
-        answers: this.enrichedModel()
-      }));
+      this.$el.html(this.template(this.enrichedModel()));
       this.enhanceChart();
       return this;
     };

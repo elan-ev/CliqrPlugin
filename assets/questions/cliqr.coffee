@@ -115,6 +115,8 @@ class cliqr.ui.QuestionView extends Backbone.View
 class cliqr.ui.ResultsView extends cliqr.ui.TemplateView
   template_id: 'questions-results'
 
+  className: 'results'
+
   enhanceChart: ->
     @$('.chart').remove()
 
@@ -128,16 +130,18 @@ class cliqr.ui.ResultsView extends cliqr.ui.TemplateView
       $('<span class="chart"></div>').css(width: widths[index]).attr("data-count": data[index])
 
   enrichedModel: () ->
-    sum = _.reduce @model, ((memo, answer) -> memo + answer.counter), 0
+    size = _.reduce @model, ((memo, answer) -> memo + answer.counter), 0
 
-    for answer, i in @model
-      percent = if sum is 0 then 0 else Math.floor 100 * answer.counter / sum
-      _.extend {}, answer,
-        nominal: nominal i
-        percent: percent
+    size: size
+    answers:
+      for answer, i in @model
+        percent = if size is 0 then 0 else Math.floor 100 * answer.counter / size
+        _.extend {}, answer,
+          nominal: nominal i
+          percent: percent
 
   render: ->
-    @$el.html @template answers: @enrichedModel()
+    @$el.html @template @enrichedModel()
     @enhanceChart()
     @
 
