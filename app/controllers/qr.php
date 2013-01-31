@@ -1,5 +1,4 @@
 <?
-require_once dirname(dirname(dirname(__FILE__))) . "/phpqrcode/qrlib.php";
 
 require_once 'cliqr_controller.php';
 
@@ -15,7 +14,7 @@ class QrController extends CliqrStudipController
     function show_action($cid)
     {
         $url = $this->generateURL($cid);
-        QRcode::png($url);
+        $this->renderQRCode($url);
         $this->render_nothing();
     }
 
@@ -24,5 +23,13 @@ class QrController extends CliqrStudipController
         $poll_url = $this->poll_url($cid);
         $short_url = $this->plugin->config['shortener']->shorten($poll_url);
         return $short_url;
+    }
+
+    private function renderQRCode($url)
+    {
+        $enc = \PHPQRCode\QRencode::factory();
+        $enc->size = 5;
+        $enc->margin = 2;
+        $enc->encodePNG($url);
     }
 }

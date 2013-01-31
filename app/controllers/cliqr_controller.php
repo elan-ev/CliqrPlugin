@@ -38,9 +38,7 @@ class CliqrStudipController extends StudipController
 
     function render_json($data)
     {
-        # TODO besser mit trails
-        header('Content-Type: application/json');
-
+        $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(json_encode($data));
     }
 
