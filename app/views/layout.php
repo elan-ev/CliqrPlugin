@@ -27,28 +27,61 @@ if ($flash['info']) {
 echo $this->render_partial('mustaches/_include_js_templates', array('prefix' => 'questions-'));
 
 $plugin_url = $plugin->getPluginURL();
+$assets = $plugin_url . '/assets/';
 
-PageLayout::addStylesheet($plugin_url . '/assets/questions/styles.css');
+PageLayout::addStylesheet($assets . 'questions/styles.css');
 
+PageLayout::addScript($assets . 'vendor/jquery.isotope.min.js');
+PageLayout::addScript($assets . 'vendor/validator.js');
 
-PageLayout::addScript($plugin_url . '/assets/vendor/jquery.isotope.min.js');
-PageLayout::addScript($plugin_url . '/assets/vendor/validator.js');
-PageLayout::addScript($plugin_url . '/assets/vendor/mustache.js');
-PageLayout::addScript($plugin_url . '/assets/vendor/underscore.js');
-PageLayout::addScript($plugin_url . '/assets/vendor/backbone.js');
+# TODO deprecate this
+PageLayout::addScript($assets . 'questions/script.js');
 
-
-
-PageLayout::addScript($plugin_url . '/assets/questions/bootstrap.js');
 
 $PLUGIN_URL = htmlReady(current(explode('?', $controller->url_for(""))));
 PageLayout::addHeadElement('script', array(), '
+// TODO refine this
+var cliqr = {config: {}, model: {}};
 cliqr.config.PLUGIN_URL = "' . htmlReady($PLUGIN_URL) . '";
 cliqr.config.CID        = "' . htmlReady($cid) . '";
 ');
 
+echo Assets::script($assets . 'js/vendor/require.js');
 
-PageLayout::addScript($plugin_url . '/assets/questions/cliqr.js');
+?>
+<script>
 
-# TODO deprecate this
-PageLayout::addScript($plugin_url . '/assets/questions/script.js');
+
+// Configure the AMD module loader
+requirejs.config({
+  // The path where your JavaScripts are located
+  baseUrl: '<?= $assets ?>js/',
+  // Specify the paths of vendor libraries
+  paths: {
+      // jquery:     'vendor/jquery-1.8.2',
+      underscore: 'vendor/underscore-1.4.2',
+      backbone:   'vendor/backbone-0.9.2',
+      mustache:   'vendor/mustache',
+  },
+  // Underscore and Backbone are not AMD-capable per default,
+  // so we need to use the AMD wrapping of RequireJS
+  shim: {
+    underscore: {
+      exports: '_'
+    },
+    backbone: {
+      deps: ['underscore'],
+      exports: 'Backbone'
+    },
+  }
+  // For easier development, disable browser caching
+  // Of course, this should be removed in a production environment
+  //, urlArgs: 'bust=' +  (new Date()).getTime()
+});
+
+// Bootstrap the application
+require(['questions_app'], function (QuestionsApp) {
+  var app = new QuestionsApp();
+  app.initialize();
+});
+</script>
