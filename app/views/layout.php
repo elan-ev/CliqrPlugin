@@ -17,7 +17,12 @@ if ($flash['info']) {
     echo SelfDestroyingMessageBox::info($flash["info"]);
 }
 
-echo $content_for_layout;
+?>
+<div class="page">
+<?= $content_for_layout ?>
+</div>
+
+<?
 
 echo $this->render_partial('mustaches/_include_js_templates', array('prefix' => 'questions-'));
 

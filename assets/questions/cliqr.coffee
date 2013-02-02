@@ -30,14 +30,15 @@ class cliqr.ui.TemplateView extends Backbone.View
 
 # TODO docs
 class cliqr.ui.QuestionsIndexView extends Backbone.View
-  el: '#cliqr-index'
-
   events:
     "click button.delete":   "confirmDelete"
     "click a.questions-new": "showCreateForm"
 
   initialize: ->
     @sortOptions = new cliqr.ui.SortOptionsView el: @$ "#stopped-questions"
+
+  render: ->
+    @
 
   confirmDelete: (event) ->
     unless window.confirm "Wirklich l\xf6schen?"
@@ -46,7 +47,7 @@ class cliqr.ui.QuestionsIndexView extends Backbone.View
   showCreateForm: (event) ->
     event.preventDefault()
     form = new cliqr.ui.QuestionForm()
-    @$('.page').html form.render().el
+    cliqr.router.changeToPage form
 
 
 # TODO docs
@@ -79,11 +80,10 @@ class cliqr.ui.SortOptionsView extends Backbone.View
 
 # TODO docs
 class cliqr.ui.QuestionView extends Backbone.View
-  el: '#cliqr-show'
-
   events:
     "click .fullscreen": "showFS"
     "click .appeal.start button":   "startQuestion"
+    "click a.qr": "showQRCode"
 
   showFS: ->
     container = @$("#layout_page")[0]
@@ -111,7 +111,15 @@ class cliqr.ui.QuestionView extends Backbone.View
   startQuestion: (event) ->
     @$(".appeal.start").addClass("busy")
 
+  showQRCode: (event) ->
+    # do not show code, handle this on your own
+    event.preventDefault()
 
+    cliqr.router.changeToPage new cliqr.ui.QRView @model
+
+
+
+# TODO docs
 class cliqr.ui.ResultsView extends cliqr.ui.TemplateView
   template_id: 'questions-results'
 
@@ -160,6 +168,8 @@ addNewChoice = (event) ->
 
 class cliqr.ui.QuestionForm extends cliqr.ui.TemplateView
   template_id: 'questions-form'
+
+  className: "page"
 
   events:
     "click .choice-new":    "addChoice"

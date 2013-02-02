@@ -34,6 +34,8 @@ $short_url = $shortener->shorten($poll_url);
 
 </div>
 
+
+
 <script>
 // bootstrap shown question
 cliqr.model.$currentQuestion = <?= json_encode($question->toJSON()) ?>;

@@ -55,8 +55,6 @@
       return QuestionsIndexView.__super__.constructor.apply(this, arguments);
     }
 
-    QuestionsIndexView.prototype.el = '#cliqr-index';
-
     QuestionsIndexView.prototype.events = {
       "click button.delete": "confirmDelete",
       "click a.questions-new": "showCreateForm"
@@ -66,6 +64,10 @@
       return this.sortOptions = new cliqr.ui.SortOptionsView({
         el: this.$("#stopped-questions")
       });
+    };
+
+    QuestionsIndexView.prototype.render = function() {
+      return this;
     };
 
     QuestionsIndexView.prototype.confirmDelete = function(event) {
@@ -78,7 +80,7 @@
       var form;
       event.preventDefault();
       form = new cliqr.ui.QuestionForm();
-      return this.$('.page').html(form.render().el);
+      return cliqr.router.changeToPage(form);
     };
 
     return QuestionsIndexView;
@@ -144,11 +146,10 @@
       return QuestionView.__super__.constructor.apply(this, arguments);
     }
 
-    QuestionView.prototype.el = '#cliqr-show';
-
     QuestionView.prototype.events = {
       "click .fullscreen": "showFS",
-      "click .appeal.start button": "startQuestion"
+      "click .appeal.start button": "startQuestion",
+      "click a.qr": "showQRCode"
     };
 
     QuestionView.prototype.showFS = function() {
@@ -182,6 +183,11 @@
 
     QuestionView.prototype.startQuestion = function(event) {
       return this.$(".appeal.start").addClass("busy");
+    };
+
+    QuestionView.prototype.showQRCode = function(event) {
+      event.preventDefault();
+      return cliqr.router.changeToPage(new cliqr.ui.QRView(this.model));
     };
 
     return QuestionView;
@@ -282,6 +288,8 @@
     }
 
     QuestionForm.prototype.template_id = 'questions-form';
+
+    QuestionForm.prototype.className = "page";
 
     QuestionForm.prototype.events = {
       "click .choice-new": "addChoice",
