@@ -1,10 +1,9 @@
 define [
-  'backbone'
   'utils'
   'models/question'
   'views/questions_index'
   'views/questions_show'
-], (Backbone, utils, Question, QuestionsIndexView, QuestionView) ->
+], (utils, Question, QuestionsIndexView, QuestionView) ->
 
   # The application object
   # Choose a meaningful name for your application

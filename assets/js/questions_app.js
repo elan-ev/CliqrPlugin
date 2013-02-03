@@ -1,6 +1,6 @@
 (function() {
 
-  define(['backbone', 'utils', 'models/question', 'views/questions_index', 'views/questions_show'], function(Backbone, utils, Question, QuestionsIndexView, QuestionView) {
+  define(['utils', 'models/question', 'views/questions_index', 'views/questions_show'], function(utils, Question, QuestionsIndexView, QuestionView) {
     var QuestionsApp;
     return QuestionsApp = (function() {
 
