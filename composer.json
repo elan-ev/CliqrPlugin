@@ -2,6 +2,6 @@
     "require": {
         "pimple/pimple": "v1.0.1",
         "pusher/pusher-php-server": "2.1.*",
-        "aferrandini/phpqrcode": "dev-master"
+        "kairos/phpqrcode": "dev-master"
     }
 }

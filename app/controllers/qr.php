@@ -27,9 +27,9 @@ class QrController extends CliqrStudipController
 
     private function renderQRCode($url)
     {
-        $enc = \PHPQRCode\QRencode::factory();
+        $enc = QRencode::factory();
         $enc->size = 5;
         $enc->margin = 2;
-        $enc->encodePNG($url);
+        echo $enc->encodeSVG($url);
     }
 }
