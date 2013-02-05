@@ -39,17 +39,17 @@ define [
     # ids = fetch()
     # $(window).on "storage", -> ids = fetch()
 
-    add: (id) ->
+    add: (poll) ->
       ids = fetch()
-      ids[id] = time()
+      ids[poll.id] = poll.get "startdate"
       save ids
       @
 
-    remove: (id) ->
+    remove: (poll) ->
       ids = fetch()
-      delete ids[id]
+      delete ids[poll.id]
       save ids
       @
 
-    test: (id) ->
-      fetch()[id]?
+    test: (poll) ->
+      fetch()[poll.id] is poll.get "startdate"

@@ -30,34 +30,32 @@
       };
 
       PollView.prototype.render = function() {
-        var answer, index, poll, _i, _len, _ref;
-        poll = this.collection.firstFresh();
-        if (poll) {
-          _ref = poll.get('answers');
+        var answer, index, _i, _len, _ref, _ref1;
+        this.poll = this.collection.firstFresh();
+        if (this.poll) {
+          _ref = this.poll.get('answers');
           for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
             answer = _ref[index];
             answer.nominal = helpers.nominal(index);
           }
         }
         this.$el.html(this.template({
-          poll: poll != null ? poll.toJSON() : void 0
+          poll: (_ref1 = this.poll) != null ? _ref1.toJSON() : void 0
         }));
         return this;
       };
 
       PollView.prototype.recordAnswer = function(event) {
-        var id,
-          _this = this;
+        var _this = this;
         event.preventDefault();
-        id = this.$("input[name=vote_id]", event.target).val();
-        if (id_list.test(id)) {
-          return alert("ha!");
-        } else {
+        if (!id_list.test(this.poll)) {
           return $.post(cliqr.$Polls.url(), this.$("form").serialize()).always(function() {
-            return id_list.add(id);
+            return id_list.add(_this.poll);
           }).done(function(msg) {
             return _this.render();
           }).fail(function(jqXHR, textStatus) {});
+        } else {
+          return alert("TODO poll was answered already");
         }
       };
 

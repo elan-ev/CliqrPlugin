@@ -28,7 +28,7 @@
 
       PollCollection.prototype.firstFresh = function() {
         return this.find(function(model) {
-          return !id_list.test(model.id);
+          return !id_list.test(model);
         });
       };
 

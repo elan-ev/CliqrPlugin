@@ -36,22 +36,22 @@
       removeStaleIDs = _.compose(save, removeStaleIDs, fetch);
       removeStaleIDs();
       return {
-        add: function(id) {
+        add: function(poll) {
           var ids;
           ids = fetch();
-          ids[id] = time();
+          ids[poll.id] = poll.get("startdate");
           save(ids);
           return this;
         },
-        remove: function(id) {
+        remove: function(poll) {
           var ids;
           ids = fetch();
-          delete ids[id];
+          delete ids[poll.id];
           save(ids);
           return this;
         },
-        test: function(id) {
-          return fetch()[id] != null;
+        test: function(poll) {
+          return fetch()[poll.id] === poll.get("startdate");
         }
       };
     })();

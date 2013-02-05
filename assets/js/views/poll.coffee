@@ -23,27 +23,27 @@ define [
 
     render: ->
 
-      poll = @collection.firstFresh()
+      @poll = @collection.firstFresh()
 
-      if poll
-        for answer, index in poll.get('answers')
+      if @poll
+        for answer, index in @poll.get('answers')
           answer.nominal = helpers.nominal index
 
-      @$el.html @template poll: poll?.toJSON()
+      @$el.html @template poll: @poll?.toJSON()
       @
+
 
     recordAnswer: (event) =>
       event.preventDefault()
 
-      id = @$("input[name=vote_id]", event.target).val()
-
-      if id_list.test id
-        alert "ha!"
-      else
+      # @poll should be unanswered
+      unless id_list.test @poll
         $.post(cliqr.$Polls.url(), @$("form").serialize())
-          .always () ->
-            id_list.add id
+          .always () =>
+            id_list.add @poll
           .done (msg) =>
             @render()
           .fail (jqXHR, textStatus) ->
             return
+      else
+        alert "TODO poll was answered already"

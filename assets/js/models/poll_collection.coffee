@@ -17,5 +17,4 @@ define [
       poll.get 'startdate'
 
     firstFresh: ->
-      @find (model) ->
-        not id_list.test model.id
+      @find (model) -> not id_list.test model
