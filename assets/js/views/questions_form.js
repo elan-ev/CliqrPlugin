@@ -30,7 +30,8 @@
         "click .choice-new": "addChoice",
         "click .close": "removeChoice",
         "keydown input.choice": "enhanceChoiceInput",
-        "submit form": "submitForm"
+        "submit form": "submitForm",
+        "click [name=cancel]": "cancelForm"
       };
 
       QuestionsForm.prototype.render = function() {
@@ -90,6 +91,11 @@
         }).fail(function() {
           return console.log("TODO fail", arguments);
         });
+      };
+
+      QuestionsForm.prototype.cancelForm = function(event) {
+        event.preventDefault();
+        return utils.changeToPreviousPage();
       };
 
       return QuestionsForm;

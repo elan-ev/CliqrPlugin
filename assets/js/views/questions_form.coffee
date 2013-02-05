@@ -22,6 +22,7 @@ define [
       "click .close":         "removeChoice"
       "keydown input.choice": "enhanceChoiceInput"
       "submit form":          "submitForm"
+      "click [name=cancel]":  "cancelForm"
 
     render: ->
       Mustache.compilePartial 'choice', $("#cliqr-template-questions-choice").html()
@@ -78,3 +79,7 @@ define [
             document.location = cliqr.config.PLUGIN_URL + "questions/show/#{msg.id}?cid=" + cliqr.config.CID
           .fail () ->
             console.log "TODO fail", arguments
+
+    cancelForm: (event) ->
+      event.preventDefault()
+      utils.changeToPreviousPage()
