@@ -5,21 +5,42 @@ define [
 
   # TODO: $ has to be defined
 
-  previousPage = false
+  previousPages = []
 
   changeToPage: (view) ->
-
-    previousPage.trigger('page-hide') if previousPage
 
     el = $ view.render().el
     container = $("#layout_container")
     pages = container.children(".page")
 
-    pages.not(el).hide 'slide', {duration: 200, direction: 'left'}, ->
-      el.show 'slide', {duration: 200, direction: 'right'}
+    # get current then add new page to stack
+    current = _.last previousPages
+    previousPages.push view
 
-    container.append el unless pages.is(el)
-    previousPage = view
+    # append new unless already in DOM
+    unless el[0].parentNode
+      container.prepend el.hide()
+
+    # trigger page-hide event on current page
+    current.trigger('page-hide').$el.hide()  if current
+
+    el.show()
+
+    return
+
+
+  # TODO
+  changeToPreviousPage: () ->
+    if previousPages.length < 2
+      throw new Error 'There is no previous page'
+
+    current = previousPages.pop()
+    previous = _.last previousPages
+
+    current.$el.hide()
+    previous.$el.show()
+    current.remove()
+
 
   # We use Mustache as template engine. This function makes it a lot
   # easier to get a pre-compiled Mustache template.
