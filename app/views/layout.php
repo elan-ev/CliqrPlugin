@@ -41,5 +41,5 @@ var cliqr = {model: {}, config: {
 
 <?= $this->render_partial('mustaches/_include_js_templates', array('prefix' => 'questions-')) ?>
 
-<script data-main="<?= $ASSETS ?>js/require_main.js"
+<script data-main="<?= $ASSETS ?>js/require/questions.js"
         src="<?= $ASSETS ?>js/vendor/require.js"></script>
