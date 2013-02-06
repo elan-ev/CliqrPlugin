@@ -216,6 +216,8 @@ class Question extends \Vote {
             'range_id'  => studip_utf8encode($this->rangeID),
             'question'  => studip_utf8encode($this->question),
             'startdate' => (int)$this->getStartdate(),
+            'stopdate'  => (int)$this->getStopdate(),
+            'state'     => $this->getState(),
             'answers'   => $answers
         );
     }
