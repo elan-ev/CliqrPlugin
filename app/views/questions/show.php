@@ -1,12 +1,6 @@
 <?
 $body_id = "cliqr-show";
 $id = $question->getVoteID();
-$state_text =
-  $question->isNew()
-    ? _("neu")
-    : ($question->isActive()
-      ? _("läuft")
-      : _("alt"));
 
 $poll_url = $controller->poll_url($cid);
 $short_url = $shortener->shorten($poll_url);
