@@ -16,16 +16,16 @@ class Question extends \Vote {
         return $question;
     }
 
-    static function findAll($_range_id)
+    static function findAll($range_id)
     {
-        $range_id = self::transformRangeId($_range_id);
+        $_range_id = self::transformRangeId($range_id);
 
         // get a list of all active questions
         $voteDb = new \VoteDB();
         $questions = array_merge(
-            $voteDb->getNewVotes($range_id),
-            $voteDb->getActiveVotes($range_id),
-            $voteDb->getStoppedVotes($range_id));
+            $voteDb->getNewVotes($_range_id),
+            $voteDb->getActiveVotes($_range_id),
+            $voteDb->getStoppedVotes($_range_id));
 
         foreach($questions as $index => &$question) {
             $questions[$index] = new Question($question["voteID"]);
@@ -38,13 +38,16 @@ class Question extends \Vote {
         return $questions;
     }
 
-    static function findAllActive($_range_id)
+    static function findAllActive($range_id)
     {
-        $range_id = self::transformRangeId($_range_id);
+        return self::_findAllActive(self::transformRangeId($range_id));
+    }
 
+    static private function _findAllActive($_range_id)
+    {
         # get a list of all active questions
         $voteDb = new \VoteDB();
-        $questions = $voteDb->getActiveVotes($range_id);
+        $questions = $voteDb->getActiveVotes($_range_id);
 
         # inflate
         $questions = array_map(
@@ -62,12 +65,12 @@ class Question extends \Vote {
         return $questions;
     }
 
-    static function consolidateState($_range_id)
+    static function consolidateState($range_id)
     {
-        $range_id = self::transformRangeId($_range_id);
+        $_range_id = self::transformRangeId($range_id);
 
         $voteDb = new \VoteDB();
-        $voteDb->startWaitingVotes($range_id);
+        $voteDb->startWaitingVotes($_range_id);
     }
 
     static function transformRangeId($range_id)
@@ -133,8 +136,16 @@ class Question extends \Vote {
     /**
      * TODO
      */
-    function start()
+    function start($single_question = TRUE)
     {
+
+        # stop all questions
+        if ($single_question) {
+            $_range_id = $this->rangeID;
+            self::stopAll($_range_id);
+        }
+
+        # then start this one
         $this->setStopdate(time() + self::ACTIVE_TIMESPAN);
 
         if ($this->isNew()) {
@@ -168,6 +179,26 @@ class Question extends \Vote {
     }
 
 
+    /**
+     * Stop all questions of a specific range_id.
+     *
+     * TODO potential performance problems
+     *
+     * @param string $range_id  the id of the course/institute
+     */
+    static private function stopAll($_range_id)
+    {
+        $questions = self::_findAllActive($_range_id);
+        foreach ($questions as $question) {
+            # TODO what about status?
+            $status = $question->stop();
+        }
+    }
+
+
+    /**
+     * TODO
+     */
     function toJSON($with_counter = true)
     {
         $answers = array();

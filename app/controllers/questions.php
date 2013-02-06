@@ -220,7 +220,7 @@ class QuestionsController extends CliqrStudipController
 
         CSRFProtection::verifyUnsafeRequest();
 
-        $ok = $this->question->start();
+        $ok = $this->question->start(true);
 
         if (Request::isXhr()) {
             if ($ok) {
