@@ -1,15 +1,10 @@
   <div class="controls">
 
-  <!-- START/STOP -->
+  <!-- STOP -->
     <? if ($question->isActive()) : ?>
       <form action="<?= $controller->url_for('questions/stop', $id) ?>" method="POST">
         <?= CSRFProtection::tokenTag() ?>
         <?= \STUDIP\Button::create(_("Stoppen"), '') ?>
-      </form>
-    <? else : ?>
-      <form action="<?= $controller->url_for('questions/start', $id) ?>" method="POST">
-        <?= CSRFProtection::tokenTag() ?>
-        <?= \STUDIP\Button::create(_("Starten"), '') ?>
       </form>
     <? endif ?>
 
