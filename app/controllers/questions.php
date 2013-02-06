@@ -206,7 +206,7 @@ class QuestionsController extends CliqrStudipController
         }
         else {
             if ($error) {
-                $this->flash['error'] = "Could not delete question";
+                $this->flash['error'] = "Could not delete question. Already deleted?";
             } else {
                 $this->flash['info'] = "Question deleted";
             }
@@ -234,7 +234,7 @@ class QuestionsController extends CliqrStudipController
             if ($ok) {
                 $this->flash['info'] = "Question started";
             } else {
-                $this->flash['error'] = "Could not start question";
+                $this->flash['error'] = "Could not start question. Already started?";
             }
             return $this->redirect('questions/show/' . $id);
         }
@@ -260,7 +260,7 @@ class QuestionsController extends CliqrStudipController
             if ($ok) {
                 $this->flash['info'] = "Question stopped";
             } else {
-                $this->flash['error'] = "Could not stop question";
+                $this->flash['error'] = "Could not stop question. Already stopped?";
             }
             return $this->redirect('questions/show/' . $id);
         }
