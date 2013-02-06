@@ -28,6 +28,7 @@ define [
         model: @model.toJSON().answers
 
       @model.on "change:answers", @updateAnswers
+      @model.on "change:state", @updateState
 
     render: ->
       @$(".question").append @resultsView.render().el
@@ -35,6 +36,11 @@ define [
 
     updateAnswers: (model, answers, options) =>
       @resultsView.update answers
+
+    updateState: (model, state, options) =>
+      # TODO currently we reload the page on state change
+      #      this should not be necessary
+      do document.location.reload
 
     startQuestion: (event) ->
       @$(".appeal.start").addClass("busy")

@@ -10,6 +10,8 @@
       __extends(QuestionView, _super);
 
       function QuestionView() {
+        this.updateState = __bind(this.updateState, this);
+
         this.updateAnswers = __bind(this.updateAnswers, this);
         return QuestionView.__super__.constructor.apply(this, arguments);
       }
@@ -36,7 +38,8 @@
         this.resultsView = new ResultsView({
           model: this.model.toJSON().answers
         });
-        return this.model.on("change:answers", this.updateAnswers);
+        this.model.on("change:answers", this.updateAnswers);
+        return this.model.on("change:state", this.updateState);
       };
 
       QuestionView.prototype.render = function() {
@@ -46,6 +49,10 @@
 
       QuestionView.prototype.updateAnswers = function(model, answers, options) {
         return this.resultsView.update(answers);
+      };
+
+      QuestionView.prototype.updateState = function(model, state, options) {
+        return document.location.reload();
       };
 
       QuestionView.prototype.startQuestion = function(event) {
