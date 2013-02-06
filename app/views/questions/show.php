@@ -8,12 +8,14 @@ $short_url = $shortener->shorten($poll_url);
 
 <div class="question state-<?= htmlReady($question->getState()) ?>">
 
-  <h2><span class="state"><?= $state_text ?></span> <?= htmlReady($question->getQuestion()) ?></h2>
+  <h2><?= htmlReady($question->getQuestion()) ?></h2>
 
   <?= $this->render_partial('questions/_show_controls', compact('id')) ?>
 
+  <img class="qr" src="<?= $controller->url_for('qr', $cid) ?>">
+
   <div class="appeal vote">
-    <a class="short" alt="Vote at" href="<?= $poll_url ?>"><?= $short_url ?></a>
+    <a class="short" alt="Vote:" href="<?= $poll_url ?>"><?= $short_url ?></a>
     <a class="qr" href="<?= $controller->url_for('qr', $cid) ?>"></a>
   </div>
   <div class="appeal start">

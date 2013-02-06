@@ -42,5 +42,4 @@ define [
     showQRCode: (event) ->
       # do not show code, handle this on your own
       event.preventDefault()
-
-      utils.changeToPage new QRView @model
+      @$(".question").toggleClass "qr-visible"

@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['backbone', 'underscore', 'views/template_view', 'views/helpers'], function(Backbone, _, TemplateView, helpers) {
+  define(['underscore', 'views/template_view', 'views/helpers'], function(_, TemplateView, helpers) {
     var ResultsView;
     return ResultsView = (function(_super) {
 

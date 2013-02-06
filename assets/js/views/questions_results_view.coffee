@@ -1,9 +1,8 @@
 define [
-  'backbone'
   'underscore'
   'views/template_view'
   'views/helpers'
-], (Backbone, _, TemplateView, helpers) ->
+], (_, TemplateView, helpers) ->
 
   class ResultsView extends TemplateView
     template_id: 'questions-results'

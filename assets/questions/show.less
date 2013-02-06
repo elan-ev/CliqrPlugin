@@ -14,14 +14,9 @@
   }
 
   h2 {
-    font-size: 4em;
+    font-size: 3em;
     line-height: 1.5;
     margin-top: 0;
-
-    span.state {
-      color: @color-detail;
-      font-size: 0.4em;
-    }
   }
 
   .results {
@@ -35,8 +30,36 @@
       list-style: none;
       padding: 0;
       margin: 0;
-      font-size: 3em;
-      line-height: 1.5em;
+      font-size: 2.5em;
+      line-height: 1.5;
+    }
+
+    .text {
+      width: 20%;
+      .box-sizing(border-box);
+
+      margin-left: 1.5em;
+      display: inline-block;
+
+      .nominal {
+        color: #999;
+        font-size: 0.7em;
+      }
+    }
+
+
+    .chart, .count, .percent {
+      visibility: hidden;
+    }
+
+    .chart {
+      background-color: @chartColor1;
+      #gradient > .horizontal(@chartColor1, @chartColor2);
+      height: 1em;
+      margin-left: 0.5em;
+      display: inline-block;
+      vertical-align: text-top;
+      border: 1px solid #232323;
     }
 
     .count {
@@ -50,46 +73,19 @@
       color: @color-detail;
     }
 
-
-    .text {
-      width: 35%;
-      .box-sizing(border-box);
-
-      display: inline-block;
-      text-align: right;
-
-      .nominal {
-        color: #999;
-        font-size: 0.7em;
-      }
-    }
-
-    .chart {
-      background-color: @chartColor1;
-      #gradient > .horizontal(@chartColor1, @chartColor2);
-      height: 1em;
-      margin-left: 0.5em;
-      display: inline-block;
-      vertical-align: text-top;
-      border: 1px solid #232323;
-    }
-
     li[data-count="0"] {
-
       .chart, .percent {
         display: none;
       }
     }
 
     .sample-size {
-      color: #CCC; // TODO
-      display: block;
       font-size: 2em;
-      margin-left: 35%;
-      padding-left: 1em;
-      padding-top: 1em;
+      color: #666; // TODO
+      position: absolute;
+      right: 1em;
+      bottom: 4em;
     }
-
   }
 
 
@@ -100,8 +96,8 @@
 
   .controls {
     position: absolute;
-    top: 2em;
-    right: 2em;
+    top: 4em;
+    right: 1em;
     text-align: right;
 
     .button {
@@ -109,14 +105,23 @@
     }
   }
 
+  img.qr {
+    height: 350px;
+    position: absolute;
+    right: 120px;
+    top: 4.5em;
+    visibility: hidden;
+  }
+
+  .question.qr-visible img.qr {
+    visibility: visible;
+  }
 
   .appeal {
-    font-size: 5em;
+    font-size: 4em;
     background: @color-appeal;
     color: darken(@color-appeal, 35%);
     text-align: center;
-
-    padding: 0.4em;
 
     position: absolute;
     bottom: 0;
@@ -144,11 +149,6 @@
   }
 
   .appeal.start {
-    form {
-      padding: 0;
-      margin: -0.4em;
-
-    }
     button {
       width: 100%;
       font-size: 1em;
@@ -159,6 +159,8 @@
   }
 
   .appeal.vote {
+
+    padding: 0.4em;
 
     a.short {
 
@@ -193,12 +195,18 @@
     }
   }
 
+
   .question  {
 
-    // do not show results on new and active questions
-    &.state-new, &.state-active {
+
+    // show results on stopped questions
+    &.state-stopvis {
       .chart, .count, .percent {
-        visibility: hidden;
+        visibility: visible;
+      }
+
+      .text {
+        text-align: right;
       }
     }
 

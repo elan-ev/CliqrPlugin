@@ -54,7 +54,7 @@
 
       QuestionView.prototype.showQRCode = function(event) {
         event.preventDefault();
-        return utils.changeToPage(new QRView(this.model));
+        return this.$(".question").toggleClass("qr-visible");
       };
 
       return QuestionView;
