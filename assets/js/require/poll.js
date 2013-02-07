@@ -14,7 +14,7 @@
         exports: '_'
       },
       backbone: {
-        deps: ['underscore'],
+        deps: ['jquery', 'underscore'],
         exports: 'Backbone'
       },
       jqm: {
