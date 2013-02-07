@@ -55,7 +55,7 @@ class GoogleShortener implements Shortener {
 
         $result = unserialize($cache->read($cache_key));
         if ($result === false) {
-            $result = $this->_performRequest($result, $shorten);
+            $result = $this->_performRequest($url, $shorten);
             $cache->write($cache_key, serialize($result));
         }
 
