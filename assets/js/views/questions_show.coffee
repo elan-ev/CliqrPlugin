@@ -7,9 +7,10 @@ define [
 
   class QuestionView extends Backbone.View
     events:
-      #"click .fullscreen": "showFS"
-      "click .appeal.start button":   "startQuestion"
-      "click a.qr": "showQRCode"
+      # "click .fullscreen":             "showFS"
+      "click .appeal.start button":    "startQuestion"
+      "click a.qr":                    "showQRCode"
+      "submit form.questions-destroy": "confirmDestroy"
 
     ###
     showFS: ->
@@ -49,3 +50,7 @@ define [
       # do not show code, handle this on your own
       event.preventDefault()
       @$(".question").toggleClass "qr-visible"
+
+    confirmDestroy: (event) ->
+      unless confirm $(event.target).data "confirm"
+        event.preventDefault()

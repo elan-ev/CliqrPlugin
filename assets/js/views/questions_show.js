@@ -18,7 +18,8 @@
 
       QuestionView.prototype.events = {
         "click .appeal.start button": "startQuestion",
-        "click a.qr": "showQRCode"
+        "click a.qr": "showQRCode",
+        "submit form.questions-destroy": "confirmDestroy"
       };
 
       /*
@@ -62,6 +63,12 @@
       QuestionView.prototype.showQRCode = function(event) {
         event.preventDefault();
         return this.$(".question").toggleClass("qr-visible");
+      };
+
+      QuestionView.prototype.confirmDestroy = function(event) {
+        if (!confirm($(event.target).data("confirm"))) {
+          return event.preventDefault();
+        }
       };
 
       return QuestionView;
