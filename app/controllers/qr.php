@@ -15,7 +15,6 @@ class QrController extends CliqrStudipController
     {
         $url = $this->generateURL($cid);
         $this->renderQRCode($url);
-        $this->render_nothing();
     }
 
     private function generateURL($cid)
@@ -27,12 +26,28 @@ class QrController extends CliqrStudipController
 
     private function renderQRCode($url)
     {
+        $filename = $this->generateFilename($url);
+
+        if (!file_exists($filename)) {
+            $this->createQRCode($url, $filename);
+        }
+
+        $this->response->add_header('Content-Type', 'image/svg+xml');
+        $this->render_text(file_get_contents($filename));
+    }
+
+    private function createQRCode($url, $filename)
+    {
         $enc = QRencode::factory();
         $enc->size = 5;
         $enc->margin = 2;
         # bug!
         $enc->fore_color = 0x101010;
-        echo $enc->encodeSVG($url);
+        return $enc->encodeSVG($url, $filename);
+    }
 
+    private function generateFilename($url)
+    {
+        return $GLOBALS['TMP_PATH'] . '/cliqr-' . md5($url) . '.svg';
     }
 }
