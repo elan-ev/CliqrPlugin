@@ -43,7 +43,26 @@ class GoogleShortener implements Shortener {
         return $response->longUrl;
     }
 
+
+    /**
+     * Wrapper around the actual #_performRequest memoizing its
+     * results to prevent calling Google on each invocation.
+     */
     private function performRequest($url, $shorten)
+    {
+        $cache = \StudipCacheFactory::getCache();
+        $cache_key = 'cliqr/google/' . md5($url) . '/' . (int)$shorten;
+
+        $result = unserialize($cache->read($cache_key));
+        if ($result === false) {
+            $result = $this->_performRequest($result, $shorten);
+            $cache->write($cache_key, serialize($result));
+        }
+
+        return $result;
+    }
+
+    private function _performRequest($url, $shorten)
     {
         $apiUrl = $this->config['api_url'] . '?' . $this->config['api_key'];
 
