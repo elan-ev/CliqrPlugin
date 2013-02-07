@@ -5,7 +5,7 @@
     paths: {
       underscore: 'vendor/underscore-1.4.2',
       backbone: 'vendor/backbone-0.9.2',
-      mustache: 'vendor/mustache'
+      handlebars: 'vendor/handlebars-1.0.rc.1'
     },
     shim: {
       underscore: {
@@ -14,6 +14,9 @@
       backbone: {
         deps: ['underscore'],
         exports: 'Backbone'
+      },
+      handlebars: {
+        exports: 'Handlebars'
       }
     }
   });

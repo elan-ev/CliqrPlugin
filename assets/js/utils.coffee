@@ -1,7 +1,7 @@
 define [
-  'mustache'
+  'handlebars'
   'underscore'
-], (Mustache, _) ->
+], (Handlebars, _) ->
 
   # TODO: $ has to be defined
 
@@ -42,7 +42,7 @@ define [
     current.remove()
 
 
-  # We use Mustache as template engine. This function makes it a lot
-  # easier to get a pre-compiled Mustache template.
+  # We use Handlebars as template engine. This function makes it a lot
+  # easier to get a pre-compiled Handlebars template.
   compileTemplate: _.memoize (name) ->
-    Mustache.compile $("#cliqr-template-#{name}").html()
+    Handlebars.compile $("#cliqr-template-#{name}").html()

@@ -1,6 +1,6 @@
 (function() {
 
-  define(['mustache', 'underscore'], function(Mustache, _) {
+  define(['handlebars', 'underscore'], function(Handlebars, _) {
     var previousPages;
     previousPages = [];
     return {
@@ -31,7 +31,7 @@
         return current.remove();
       },
       compileTemplate: _.memoize(function(name) {
-        return Mustache.compile($("#cliqr-template-" + name).html());
+        return Handlebars.compile($("#cliqr-template-" + name).html());
       })
     };
   });

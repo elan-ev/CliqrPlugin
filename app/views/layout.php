@@ -39,7 +39,7 @@ var cliqr = {model: {}, config: {
 </div>
 <!-- END CLIQR PAGE -->
 
-<?= $this->render_partial('mustaches/_include_js_templates', array('prefix' => 'questions-')) ?>
+<?= $this->render_partial('hbs/_include_js_templates', array('prefix' => 'questions-')) ?>
 
 <script data-main="<?= $ASSETS ?>js/require/questions.js"
         src="<?= $ASSETS ?>js/vendor/require.js"></script>

@@ -1,0 +1,45 @@
+<div class="questions" id="{{state}}-questions">
+  {{#TODO}}
+  <ul class="sort-by">
+    <li><span data-attribute="question" class="selected">Frage</span></li>
+    <li><span data-attribute="counter">Aktivität</span></li>
+    <li><span data-attribute="startdate">Startdatum</span></li>
+  </ul>
+  {{/TODO}}
+
+  <ol>
+  {{#questions}}
+    <li class="question state-{{state}}"
+      data-question="{{question}}"
+      data-counter="{{counter}}"
+      data-startdate="{{startdate}}">
+
+      <a href="TODO/questions/show/{{id}}">
+      <div class="count" title="{{counter}} Teilnehmer">{{counter}}</div>
+      <div class="detail">
+        <h4>{{question}}</h4>
+        {{#answers}}
+        <span class="answer">{{short_text}}</span>
+        {{/answers}}
+      </div>
+      </a>
+
+      <div class="control">
+        <a class="edit" alt="edit" title="edit" href="TODO/questions/edit/{{id}}"></a>
+        <form action="TODO/questions/destroy/{{id}}" method="POST">
+          <button type="submit" class="delete" alt="delete" title="delete"></button>
+        </form>
+      </div>
+
+      <span class="startdate" title="Startdatum">{{formatted_startdate}}</span>
+
+    </li>
+  {{/questions}}
+  </ol>
+
+  {{^questions}}
+  <div class="empty">
+    keine Fragen
+  </div>
+  {{/questions}}
+</div>

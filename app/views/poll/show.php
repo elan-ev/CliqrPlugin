@@ -30,7 +30,7 @@ $polls = array_map(function ($q) {
       }};
     </script>
 
-    <?= $this->render_partial('mustaches/_include_js_templates', array('prefix' => 'poll')) ?>
+    <?= $this->render_partial('hbs/_include_js_templates', array('prefix' => 'poll')) ?>
 
   </head>
   <body>

@@ -1,9 +1,9 @@
 define [
   'backbone'
   'utils'
-  'mustache'
+  'handlebars'
   'views/template_view'
-], (Backbone, utils, Mustache, TemplateView) ->
+], (Backbone, utils, Handlebars, TemplateView) ->
 
   addNewChoice = (event) ->
     new_choice = $(event.target).closest(".choices").find(".choice-new")
@@ -25,7 +25,7 @@ define [
       "click [name=cancel]":  "cancelForm"
 
     render: ->
-      Mustache.compilePartial 'choice', $("#cliqr-template-questions-choice").html()
+      Handlebars.registerPartial 'choice', $("#cliqr-template-questions-choice").html()
 
       @$el.html @template if @model then @model.toJSON() else {}
       @$("form").validator()
