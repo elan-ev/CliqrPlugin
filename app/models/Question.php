@@ -213,7 +213,7 @@ class Question extends \Vote {
         }
         return array(
             'id'        => $this->objectID,
-            'range_id'  => studip_utf8encode($this->rangeID),
+            //'range_id'  => studip_utf8encode($this->rangeID),
             'question'  => studip_utf8encode($this->question),
             'startdate' => (int)$this->getStartdate(),
             'stopdate'  => (int)$this->getStopdate(),
