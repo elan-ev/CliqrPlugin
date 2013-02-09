@@ -19,7 +19,7 @@ define [
 
     initialize: (options) ->
       super options
-      @collection.on "all", @render, @
+      @listenTo @collection, "all", @render
 
     render: ->
 

@@ -26,7 +26,7 @@
 
       PollView.prototype.initialize = function(options) {
         PollView.__super__.initialize.call(this, options);
-        return this.collection.on("all", this.render, this);
+        return this.listenTo(this.collection, "all", this.render);
       };
 
       PollView.prototype.render = function() {

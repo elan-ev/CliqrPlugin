@@ -39,8 +39,8 @@
         this.resultsView = new ResultsView({
           model: this.model.toJSON().answers
         });
-        this.model.on("change:answers", this.updateAnswers);
-        return this.model.on("change:state", this.updateState);
+        this.listenTo(this.model, "change:answers", this.updateAnswers);
+        return this.listenTo(this.model, "change:state", this.updateState);
       };
 
       QuestionView.prototype.render = function() {

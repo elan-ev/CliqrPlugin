@@ -28,8 +28,8 @@ define [
       @resultsView = new ResultsView
         model: @model.toJSON().answers
 
-      @model.on "change:answers", @updateAnswers
-      @model.on "change:state", @updateState
+      @listenTo @model, "change:answers", @updateAnswers
+      @listenTo @model, "change:state",   @updateState
 
     render: ->
       @$(".question").append @resultsView.render().el
