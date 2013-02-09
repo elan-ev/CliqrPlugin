@@ -3,8 +3,8 @@
   requirejs.config({
     baseUrl: cliqr.config.ASSETS + 'js/',
     paths: {
-      underscore: 'vendor/underscore-1.4.2',
-      backbone: 'vendor/backbone-0.9.2',
+      underscore: 'vendor/underscore-1.4.4',
+      backbone: 'vendor/backbone-0.9.10',
       handlebars: 'vendor/handlebars-1.0.rc.2'
     },
     shim: {
