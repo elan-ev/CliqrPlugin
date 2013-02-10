@@ -14,7 +14,7 @@
       data-counter="{{sampleSize}}"
       data-startdate="{{startdate}}">
 
-      <a href="TODO/questions/show/{{id}}">
+      <a href="#show-{{id}}">
       <div class="count" title="{{sampleSize}} Teilnehmer">{{sampleSize}}</div>
       <div class="detail">
         <h4>{{question}}</h4>
@@ -28,8 +28,8 @@
       </a>
 
       <div class="control">
-        <a class="edit" alt="edit" title="edit" href="TODO/questions/edit/{{id}}"></a>
-        <form action="TODO/questions/destroy/{{id}}" method="POST">
+        <a class="edit" alt="edit" title="edit" href="#edit-{{id}}"></a>
+        <form action="#destroy-{{id}}" method="POST">
           <button type="submit" class="delete" alt="delete" title="delete"></button>
         </form>
       </div>
