@@ -66,7 +66,7 @@
       };
 
       QuestionView.prototype.confirmDestroy = function(event) {
-        if (!confirm($(event.target).data("confirm"))) {
+        if (!window.confirm($(event.target).data("confirm"))) {
           return event.preventDefault();
         }
       };

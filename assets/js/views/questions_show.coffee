@@ -52,5 +52,5 @@ define [
       @$(".question").toggleClass "qr-visible"
 
     confirmDestroy: (event) ->
-      unless confirm $(event.target).data "confirm"
+      unless window.confirm $(event.target).data "confirm"
         event.preventDefault()
