@@ -18,7 +18,8 @@
       handlebars: {
         exports: 'Handlebars'
       }
-    }
+    },
+    urlArgs: 'bust=' + (new Date()).getTime()
   });
 
   require(['questions_app'], function(QuestionsApp) {

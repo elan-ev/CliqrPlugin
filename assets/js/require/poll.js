@@ -24,7 +24,8 @@
       handlebars: {
         exports: 'Handlebars'
       }
-    }
+    },
+    urlArgs: 'bust=' + (new Date()).getTime()
   });
 
   require(['poll_app'], function(PollApp) {
