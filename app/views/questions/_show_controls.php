@@ -9,7 +9,9 @@
     <? endif ?>
 
   <!-- EDIT -->
+    <? if (!$question->isActive()) : ?>
     <?= \STUDIP\LinkButton::create(_("Ändern"),  $controller->url_for('questions/edit', $id)) ?>
+    <? endif ?>
 
   <!-- DELETE -->
     <form class="questions-destroy"

@@ -21,7 +21,9 @@
 
       QuestionsApp.prototype.initRouters = function() {
         var router;
-        return router = new QuestionsRouter;
+        if ($('#cliqr-index').length) {
+          return router = new QuestionsRouter;
+        }
       };
 
       QuestionsApp.prototype.initPseudoRouter = function() {

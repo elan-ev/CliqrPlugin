@@ -26,7 +26,8 @@ define [
 
 
     initRouters: ->
-      router = new QuestionsRouter
+      if $('#cliqr-index').length
+        router = new QuestionsRouter
 
 
     initPseudoRouter: ->
