@@ -7,16 +7,19 @@
     data-startdate="{{startdate}}">
 
     <a href="{{questions_path 'show'}}">
-    <div class="count" title="{{sampleSize}} Teilnehmer">{{sampleSize}}</div>
-    <div class="detail">
-      <h4>{{question}}</h4>
-      {{! TODO remove inner class }}
-      <div class="answers">
-      {{#answers}}
-      <span class="answer">{{shorten text}}</span>
-      {{/answers}}
+      <div class="count" title="{{sampleSize}} Teilnehmer">{{sampleSize}}</div>
+      <div class="detail">
+        <h4>
+          {{question}}
+        </h4>
+
+        {{! TODO remove inner class }}
+        <div class="answers">
+          {{#answers}}
+            <span class="answer">{{shorten text}}</span>
+          {{/answers}}
+        </div>
       </div>
-    </div>
     </a>
 
     <div class="control">

@@ -34,6 +34,18 @@
       }
       return cliqr.config.PLUGIN_URL + ("questions/" + path + "?cid=") + cliqr.config.CID;
     });
+    Handlebars.registerHelper('if_state', function(context, options) {
+      if (this.state === context) {
+        return options.fn(this);
+      } else {
+        return options.inverse(this);
+      }
+    });
+    Handlebars.registerHelper('unless_state', function(context, options) {
+      var _ref;
+      _ref = [options.inverse, options.fn], options.fn = _ref[0], options.inverse = _ref[1];
+      return Handlebars.helpers['if_state'].call(this, context, options);
+    });
     return Handlebars;
   });
 

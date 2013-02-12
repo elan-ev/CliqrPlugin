@@ -1,0 +1,54 @@
+<div class="question state-{{state}}">
+
+  <h2>{{question}}</h2>
+
+    <div class="controls">
+
+      <!-- STOP -->
+      {{#if_state 'active'}}
+      <form action="{{questions_path 'stop'}}" method="POST">
+        <button class="button" type="submit">Stoppen</button>
+      </form>
+      {{/if_state}}
+
+      <!-- EDIT -->
+      {{#unless_state 'active'}}
+      <a class="button"
+         href="{{questions_path 'edit'}}"
+        tabindex="0">Ändern</a>
+      {{/unless_state}}
+
+      <!-- DELETE -->
+      <form class="questions-destroy"
+            action="{{questions_path 'destroy'}}"
+            method="POST"
+            data-confirm="Wollen Sie die Frage wirklich löschen?">
+          <button class="button" type="submit">Löschen</button>
+      </form>
+
+      <!-- FULLSCREEN -->
+      <button class="button fullscreen">Vollbild</button>
+
+  </div>
+
+  <img class="qr" src="{{qr_code}}">
+
+  <div class="appeal vote">
+    <a class="short" alt="Vote:" href="{{short_url}}">{{short_url}}</a>
+    <a class="qr" href="{{qr_code}}"></a>
+  </div>
+
+  <div class="appeal start">
+    <form action="{{questions_path 'start'}}" method="POST">
+      {{#if_state 'new'}}
+        <button type="submit">Frage starten</button>
+      {{else}}
+        <button type="submit">Frage erneut starten</button>
+      {{/if_state}}
+    </form>
+    <span class="loader">
+      loading&hellip;
+    </span>
+  </div>
+
+</div>

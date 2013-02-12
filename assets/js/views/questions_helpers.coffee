@@ -26,4 +26,16 @@ define [
       path += "/#{@id}"
     cliqr.config.PLUGIN_URL + "questions/#{path}?cid=" + cliqr.config.CID
 
+  # {{#if_state arg}} is a block helper triggering on a certain state
+  Handlebars.registerHelper 'if_state', (context, options) ->
+    if @state is context
+      options.fn @
+    else
+      options.inverse @
+
+  # {{#unless_state arg}} is a block helper triggering unless on a certain state
+  Handlebars.registerHelper 'unless_state', (context, options) ->
+    [options.fn, options.inverse] = [options.inverse, options.fn]
+    Handlebars.helpers['if_state'].call @, context, options
+
   Handlebars
