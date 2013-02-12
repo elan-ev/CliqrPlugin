@@ -334,6 +334,9 @@ h4 small {
   text-shadow: none;
   color: white;
 }
+#cliqr-index div.empty {
+  padding: 1em 0;
+}
 #cliqr-show #layout_container {
   padding: 5px 0 0 0;
 }

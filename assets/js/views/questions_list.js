@@ -26,15 +26,16 @@
       };
 
       QuestionsListView.prototype.render = function() {
-        var context;
+        var context, filtered;
+        filtered = this.collection.where({
+          state: this.state
+        });
         context = {
-          questions: _.invoke(this.collection.where({
-            state: this.state
-          }), "toJSON")
+          questions: _.invoke(filtered, "toJSON")
         };
         this.$el.html(this.template(context));
         this.$el.addClass("state-" + this.state);
-        if (this.sortOptions) {
+        if (this.sortOptions && filtered.length) {
           this.$el.prepend(this.sortOptions.render().el);
         }
         return this;

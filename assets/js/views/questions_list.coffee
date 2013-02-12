@@ -15,13 +15,14 @@ define [
         @sortOptions = new SortOptionsView list: @$el
 
     render: ->
+      filtered = @collection.where(state: @state)
       context =
-        questions: _.invoke @collection.where(state: @state), "toJSON"
+        questions: _.invoke filtered, "toJSON"
       @$el.html(@template(context))
 
       @$el.addClass "state-#{@state}"
 
-      if @sortOptions
+      if @sortOptions and filtered.length
         @$el.prepend @sortOptions.render().el
 
       @
