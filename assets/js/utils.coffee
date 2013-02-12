@@ -9,7 +9,6 @@ define [
 
   changeToPage: (view) ->
 
-    el = $ view.render().el
     container = $("#layout_container")
     pages = container.children(".page")
 
@@ -17,16 +16,22 @@ define [
     current = _.last previousPages
     previousPages.push view
 
+    # trigger page-after-hide event on current page
+    if current
+      Backbone.trigger 'page-after-hide', current
+      current.$el.hide()
+
+    # render that view
+    view.render()
+
     # append new unless already in DOM
-    unless el[0].parentNode
-      container.prepend el.hide()
+    unless view.el.parentNode
+      container.prepend view.$el.hide()
 
-    # trigger page-hide event on current page
-    current.trigger('page-hide').$el.hide()  if current
-
-    el.show()
-
-    return
+    # trigger page-before-show
+    Backbone.trigger 'page-before-show', view
+    view.$el.show()
+    Backbone.trigger 'page-after-show', view
 
 
   # TODO

@@ -1,34 +1,5 @@
-<?php
+<? $body_id = "cliqr-index"; ?>
 
-$body_id = "cliqr-index";
-
-$qs = array(
-    'new' => array(),
-    'active' => array(),
-    'stopped' => array(),
-);
-
-foreach ($questions as $question) {
-    if ($question->isNew()) {
-        $qs['new'][] = $question;
-    } elseif ($question->isActive()) {
-        $qs['active'][] = $question;
-    } elseif ($question->isStopped()) {
-        $qs['stopped'][] = $question;
-    }
-}
-?>
-
-<h3>
-  <?= _('Geplante Fragen') ?>
-  <?= $this->render_partial('questions/_quick_new') ?>
-</h3>
-<?= $this->render_partial('questions/_list', array('key' => 'new', 'qs' => $qs)) ?>
-
-
-<h3><?= _('Laufende Fragen') ?></h3>
-<?= $this->render_partial('questions/_list', array('key' => 'active', 'qs' => $qs)) ?>
-
-
-<h3><?= _('Gestoppte Fragen') ?></h3>
-<?= $this->render_partial('questions/_list', array('key' => 'stopped', 'qs' => $qs)) ?>
+<script>
+cliqr.config.POLLS = <?= json_encode(array_map(function ($q) { return $q->toJSON(); }, $questions)) ?>;
+</script>

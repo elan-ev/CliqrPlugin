@@ -26,6 +26,14 @@
       d = new Date(n * 1000);
       return pad(d.getFullYear()) + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
     });
+    Handlebars.registerHelper('questions_path', function(action) {
+      var path;
+      path = action;
+      if (!(action === 'index' || action === 'new')) {
+        path += "/" + this.id;
+      }
+      return cliqr.config.PLUGIN_URL + ("questions/" + path + "?cid=") + cliqr.config.CID;
+    });
     return Handlebars;
   });
 

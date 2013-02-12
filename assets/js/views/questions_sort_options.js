@@ -3,7 +3,7 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['backbone'], function(Backbone) {
+  define(['views/template_view'], function(TemplateView) {
     var SortOptionsView;
     return SortOptionsView = (function(_super) {
 
@@ -14,9 +14,28 @@
         return SortOptionsView.__super__.constructor.apply(this, arguments);
       }
 
-      SortOptionsView.prototype.initialize = function() {
-        this.ol = this.$("ol");
-        return this.ol.isotope({
+      SortOptionsView.prototype.template_id = 'questions-sort-options';
+
+      SortOptionsView.prototype.events = {
+        "click .sort-by li": "sortBy"
+      };
+
+      SortOptionsView.prototype.initialize = function(options) {
+        this.list = options.list;
+        return this.listenTo(Backbone, "page-after-show", this.onShow);
+      };
+
+      SortOptionsView.prototype.getList = function() {
+        return this.list.find('ol').first();
+      };
+
+      SortOptionsView.prototype.render = function() {
+        this.$el.html(this.template());
+        return this;
+      };
+
+      SortOptionsView.prototype.onShow = function() {
+        return this.getList().isotope({
           itemSelector: 'li',
           getSortData: {
             question: function(elem) {
@@ -32,10 +51,6 @@
         });
       };
 
-      SortOptionsView.prototype.events = {
-        "click .sort-by span": "sortBy"
-      };
-
       SortOptionsView.prototype.sortBy = function(event) {
         var target;
         target = $(event.target);
@@ -45,7 +60,7 @@
           this.$(".sort-by .selected").removeClass("selected reversed");
           target.addClass("selected");
         }
-        return this.ol.isotope({
+        return this.getList().isotope({
           sortBy: target.attr("data-attribute"),
           sortAscending: !target.hasClass("reversed")
         });
@@ -53,7 +68,7 @@
 
       return SortOptionsView;
 
-    })(Backbone.View);
+    })(TemplateView);
   });
 
 }).call(this);

@@ -1,20 +1,31 @@
 define [
   'backbone'
   'utils'
-  'views/questions_index'
-  'views/questions_sort_options'
+  'underscore'
   'views/questions_form'
-], (Backbone, utils, QuestionsIndexView, SortOptionsView, QuestionsForm) ->
+  'views/questions_list'
+  'views/questions_helpers'
+], (Backbone, utils, _, QuestionsForm, QuestionsListView, _helpers) ->
 
   class QuestionsIndexView extends Backbone.View
+    className: "page"
+
     events:
       "click button.delete":   "confirmDelete"
       "click a.questions-new": "showCreateForm"
 
     initialize: ->
-      @sortOptions = new SortOptionsView el: @$ "#stopped-questions"
+      @listViews =
+        'new':     new QuestionsListView(collection: @collection, state: 'new')
+        'active':  new QuestionsListView(collection: @collection, state: 'active')
+        'stopped': new QuestionsListView(collection: @collection, state: 'stopvis', sortable: true)
 
     render: ->
+      template = utils.compileTemplate 'questions-index'
+      @$el.html template()
+
+      for key, view of @listViews
+        @$('#' + key + '-questions').replaceWith view.render().el
       @
 
     confirmDelete: (event) ->

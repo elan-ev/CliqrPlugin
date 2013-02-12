@@ -1,9 +1,11 @@
 define [
   'utils'
   'models/question'
+  'models/questions'
   'views/questions_index'
   'views/questions_show'
-], (utils, Question, QuestionsIndexView, QuestionView) ->
+  'routers/questions'
+], (utils, Question, QuestionCollection, QuestionsIndexView, QuestionView, QuestionsRouter) ->
 
   # The application object
   # Choose a meaningful name for your application
@@ -11,7 +13,10 @@ define [
 
     initialize: ->
       @initStuff()
+      @initRouters()
       @initPseudoRouter()
+
+      do Backbone.history.start
 
 
     # TODO clean this up!
@@ -20,11 +25,11 @@ define [
       setTimeout (-> $(".self-destroy").remove()), 5000
 
 
-    initPseudoRouter: ->
+    initRouters: ->
+      router = new QuestionsRouter
 
-      # Route: questions/index
-      if $('#cliqr-index').length
-        utils.changeToPage new QuestionsIndexView el: $ '#cliqr-index .page'
+
+    initPseudoRouter: ->
 
       # Route: questions/show
       if $('#cliqr-show').length

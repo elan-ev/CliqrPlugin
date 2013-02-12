@@ -19,4 +19,11 @@ define [
     d = new Date n * 1000
     pad(d.getFullYear()) + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate())
 
+  # {{questions_path args}} creates a link URL to questions/<action>
+  Handlebars.registerHelper 'questions_path', (action) ->
+    path = action
+    unless action is 'index' or action is 'new'
+      path += "/#{@id}"
+    cliqr.config.PLUGIN_URL + "questions/#{path}?cid=" + cliqr.config.CID
+
   Handlebars

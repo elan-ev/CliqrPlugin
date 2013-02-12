@@ -1,2 +1,4 @@
-<h2><?= _("Frage editieren") ?></h2>
-<?= $this->render_partial("questions/_form") ?>
+<div class="page">
+  <h2><?= _("Frage editieren") ?></h2>
+  <?= $this->render_partial("questions/_form") ?>
+</div>

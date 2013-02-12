@@ -1,48 +1,40 @@
-<div class="questions" id="{{state}}-questions">
-  {{#TODO}}
-  <ul class="sort-by">
-    <li><span data-attribute="question" class="selected">Frage</span></li>
-    <li><span data-attribute="counter">Aktivität</span></li>
-    <li><span data-attribute="startdate">Startdatum</span></li>
-  </ul>
-  {{/TODO}}
+{{#if questions}}
+<ol>
+{{#questions}}
+  <li class="question state-{{state}}"
+    data-question="{{question}}"
+    data-counter="{{sampleSize}}"
+    data-startdate="{{startdate}}">
 
-  <ol>
-  {{#questions}}
-    <li class="question state-{{state}}"
-      data-question="{{question}}"
-      data-counter="{{sampleSize}}"
-      data-startdate="{{startdate}}">
-
-      <a href="#show-{{id}}">
-      <div class="count" title="{{sampleSize}} Teilnehmer">{{sampleSize}}</div>
-      <div class="detail">
-        <h4>{{question}}</h4>
-        {{! TODO remove inner class }}
-        <div class="answers">
-        {{#answers}}
-        <span class="answer">{{shorten text}}</span>
-        {{/answers}}
-        </div>
+    <a href="{{questions_path 'show'}}">
+    <div class="count" title="{{sampleSize}} Teilnehmer">{{sampleSize}}</div>
+    <div class="detail">
+      <h4>{{question}}</h4>
+      {{! TODO remove inner class }}
+      <div class="answers">
+      {{#answers}}
+      <span class="answer">{{shorten text}}</span>
+      {{/answers}}
       </div>
-      </a>
+    </div>
+    </a>
 
-      <div class="control">
-        <a class="edit" alt="edit" title="edit" href="#edit-{{id}}"></a>
-        <form action="#destroy-{{id}}" method="POST">
-          <button type="submit" class="delete" alt="delete" title="delete"></button>
-        </form>
-      </div>
+    <div class="control">
+      <a class="edit" alt="edit" title="edit" href="{{questions_path 'edit'}}"></a>
+      <form action="{{questions_path 'destroy'}}" method="POST">
+        <button type="submit" class="delete" alt="delete" title="delete"></button>
+      </form>
+    </div>
 
-      <span class="startdate" title="Startdatum">{{date startdate}}</span>
+    <span class="startdate" title="Startdatum">{{date startdate}}</span>
 
-    </li>
-  {{/questions}}
-  </ol>
+  </li>
+{{/questions}}
+</ol>
+{{/if}}
 
-  {{^questions}}
-  <div class="empty">
-    keine Fragen
-  </div>
-  {{/questions}}
+{{^questions}}
+<div class="empty">
+  keine solche Fragen
 </div>
+{{/questions}}

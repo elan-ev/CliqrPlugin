@@ -295,12 +295,9 @@ h4 small {
   list-style: none;
 }
 #cliqr-index .sort-by li {
-  float: left;
+  display: inline;
   margin-bottom: 0.2em;
-}
-#cliqr-index .sort-by li span {
-  display: block;
-  padding: 0.4em 0.5em;
+  padding: 0.5em 0.3em;
   background-color: #DDD;
   color: #222;
   font-weight: bold;
@@ -313,24 +310,26 @@ h4 small {
   border-left: 1px solid rgba(255, 255, 255, 0.3);
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
-#cliqr-index .sort-by li span:hover {
+#cliqr-index .sort-by li:hover {
   background-color: #b3b3b3;
 }
-#cliqr-index .sort-by li span:active {
+#cliqr-index .sort-by li:active {
   background-color: #9a9a9a;
   -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
   -o-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
 }
-#cliqr-index .sort-by li:first-child span {
+#cliqr-index .sort-by li:first-child {
   border-radius: 7px 0 0 7px;
   border-left: none;
+  padding-left: 0.7em;
 }
-#cliqr-index .sort-by li:last-child span {
+#cliqr-index .sort-by li:last-child {
   border-radius: 0 7px 7px 0;
+  padding-right: 0.7em;
 }
-#cliqr-index .sort-by li span.selected {
+#cliqr-index .sort-by li.selected {
   background-color: #808080;
   text-shadow: none;
   color: white;

@@ -5,19 +5,22 @@
     previousPages = [];
     return {
       changeToPage: function(view) {
-        var container, current, el, pages;
-        el = $(view.render().el);
+        var container, current, pages;
         container = $("#layout_container");
         pages = container.children(".page");
         current = _.last(previousPages);
         previousPages.push(view);
-        if (!el[0].parentNode) {
-          container.prepend(el.hide());
-        }
         if (current) {
-          current.trigger('page-hide').$el.hide();
+          Backbone.trigger('page-after-hide', current);
+          current.$el.hide();
         }
-        el.show();
+        view.render();
+        if (!view.el.parentNode) {
+          container.prepend(view.$el.hide());
+        }
+        Backbone.trigger('page-before-show', view);
+        view.$el.show();
+        return Backbone.trigger('page-after-show', view);
       },
       changeToPreviousPage: function() {
         var current, previous;

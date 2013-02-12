@@ -1,6 +1,6 @@
 (function() {
 
-  define(['utils', 'models/question', 'views/questions_index', 'views/questions_show'], function(utils, Question, QuestionsIndexView, QuestionView) {
+  define(['utils', 'models/question', 'models/questions', 'views/questions_index', 'views/questions_show', 'routers/questions'], function(utils, Question, QuestionCollection, QuestionsIndexView, QuestionView, QuestionsRouter) {
     var QuestionsApp;
     return QuestionsApp = (function() {
 
@@ -8,7 +8,9 @@
 
       QuestionsApp.prototype.initialize = function() {
         this.initStuff();
-        return this.initPseudoRouter();
+        this.initRouters();
+        this.initPseudoRouter();
+        return Backbone.history.start();
       };
 
       QuestionsApp.prototype.initStuff = function() {
@@ -17,13 +19,13 @@
         }), 5000);
       };
 
+      QuestionsApp.prototype.initRouters = function() {
+        var router;
+        return router = new QuestionsRouter;
+      };
+
       QuestionsApp.prototype.initPseudoRouter = function() {
         var model;
-        if ($('#cliqr-index').length) {
-          utils.changeToPage(new QuestionsIndexView({
-            el: $('#cliqr-index .page')
-          }));
-        }
         if ($('#cliqr-show').length) {
           model = new Question(cliqr.model.$currentQuestion);
           setInterval((function() {

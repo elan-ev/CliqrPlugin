@@ -29,14 +29,12 @@ var cliqr = {model: {}, config: {
     PLUGIN_URL : "' . htmlReady(current(explode('?', $controller->url_for("")))) . '"
   , CID        : "' . htmlReady($cid) . '"
   , ASSETS     : "' . htmlReady($ASSETS) . '"
-}}
+}};
 ');
 ?>
 
 <!-- BEGIN CLIQR PAGE -->
-<div class="page">
 <?= $content_for_layout ?>
-</div>
 <!-- END CLIQR PAGE -->
 
 <?= $this->render_partial('hbs/_include_js_templates', array('prefix' => 'questions-')) ?>
