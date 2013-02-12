@@ -520,6 +520,30 @@ h4 small {
 #cliqr-show .question.state-new .sample-size {
   display: none;
 }
+#cliqr-show .question:fullscreen {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #000;
+}
+#cliqr-show .question:-webkit-full-screen {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #000;
+}
+#cliqr-show .question:-moz-full-screen {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #000;
+}
 .vote-form fieldset {
   border: none;
   border-bottom: 1px solid #EEEEEE;

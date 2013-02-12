@@ -7,14 +7,13 @@ define [
 
   class QuestionView extends Backbone.View
     events:
-      # "click .fullscreen":             "showFS"
+      "click .fullscreen":             "showFS"
       "click .appeal.start button":    "startQuestion"
       "click a.qr":                    "showQRCode"
       "submit form.questions-destroy": "confirmDestroy"
 
-    ###
     showFS: ->
-      container = @$("#layout_page")[0]
+      container = $(".question")[0]
       if container.requestFullscreen
         container.requestFullscreen()
       else if container.mozRequestFullScreen
@@ -22,7 +21,6 @@ define [
       else if container.webkitRequestFullscreen
         container.webkitRequestFullscreen()
       false
-    ###
 
     initialize: ->
       @resultsView = new ResultsView
@@ -32,6 +30,7 @@ define [
       @listenTo @model, "change:state",   @updateState
 
     render: ->
+      @$el.prepend $("<button/>").html("fs").addClass "fullscreen"
       @$(".question").append @resultsView.render().el
       @
 

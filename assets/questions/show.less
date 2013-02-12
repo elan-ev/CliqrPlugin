@@ -238,4 +238,19 @@
     }
   }
 
+
+  .fullscreen() {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #000;
+  }
+
+  .question {
+    &:fullscreen { .fullscreen(); }
+    &:-webkit-full-screen { .fullscreen(); }
+    &:-moz-full-screen { .fullscreen(); }
+  }
 }
