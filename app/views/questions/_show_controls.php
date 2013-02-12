@@ -21,4 +21,8 @@
       <?= \STUDIP\Button::create(_("Löschen")) ?>
     </form>
 
+  <!-- FULLSCREEN -->
+    <?= \STUDIP\Button::create(_("Vollbild"), 'fullscreen', array('class' => 'fullscreen')) ?>
+
+
   </div>

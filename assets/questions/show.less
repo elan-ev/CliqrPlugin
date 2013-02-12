@@ -246,11 +246,25 @@
     padding: 0;
     background: #fff;
     color: #000;
+
+    h2 {
+      margin-left: 0.5em;
+      padding-top: 0.5em;
+    }
+
+    button.fullscreen {
+      display: none;
+    }
   }
 
   .question {
-    &:fullscreen { .fullscreen(); }
-    &:-webkit-full-screen { .fullscreen(); }
-    &:-moz-full-screen { .fullscreen(); }
+    &:fullscreen {
+      .fullscreen(); }
+
+    &:-webkit-full-screen {
+      .fullscreen(); }
+
+    &:-moz-full-screen {
+      .fullscreen(); }
   }
 }

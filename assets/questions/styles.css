@@ -528,6 +528,13 @@ h4 small {
   background: #fff;
   color: #000;
 }
+#cliqr-show .question:fullscreen h2 {
+  margin-left: 0.5em;
+  padding-top: 0.5em;
+}
+#cliqr-show .question:fullscreen button.fullscreen {
+  display: none;
+}
 #cliqr-show .question:-webkit-full-screen {
   height: 100%;
   width: 100%;
@@ -536,6 +543,13 @@ h4 small {
   background: #fff;
   color: #000;
 }
+#cliqr-show .question:-webkit-full-screen h2 {
+  margin-left: 0.5em;
+  padding-top: 0.5em;
+}
+#cliqr-show .question:-webkit-full-screen button.fullscreen {
+  display: none;
+}
 #cliqr-show .question:-moz-full-screen {
   height: 100%;
   width: 100%;
@@ -543,6 +557,13 @@ h4 small {
   padding: 0;
   background: #fff;
   color: #000;
+}
+#cliqr-show .question:-moz-full-screen h2 {
+  margin-left: 0.5em;
+  padding-top: 0.5em;
+}
+#cliqr-show .question:-moz-full-screen button.fullscreen {
+  display: none;
 }
 .vote-form fieldset {
   border: none;

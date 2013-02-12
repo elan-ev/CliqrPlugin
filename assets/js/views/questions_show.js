@@ -17,21 +17,23 @@
       }
 
       QuestionView.prototype.events = {
-        "click .fullscreen": "showFS",
         "click .appeal.start button": "startQuestion",
         "click a.qr": "showQRCode",
-        "submit form.questions-destroy": "confirmDestroy"
+        "submit form.questions-destroy": "confirmDestroy",
+        "click .fullscreen": "showFS"
       };
 
       QuestionView.prototype.showFS = function() {
-        var container;
+        var container, method, methods, _i, _len;
         container = $(".question")[0];
-        if (container.requestFullscreen) {
-          container.requestFullscreen();
-        } else if (container.mozRequestFullScreen) {
-          container.mozRequestFullScreen();
-        } else if (container.webkitRequestFullscreen) {
-          container.webkitRequestFullscreen();
+        methods = ["requestFullscreen", "mozRequestFullScreen", "webkitRequestFullscreen"];
+        for (_i = 0, _len = methods.length; _i < _len; _i++) {
+          method = methods[_i];
+          if (!container[method]) {
+            continue;
+          }
+          container[method]();
+          break;
         }
         return false;
       };
@@ -45,7 +47,6 @@
       };
 
       QuestionView.prototype.render = function() {
-        this.$el.prepend($("<button/>").html("fs").addClass("fullscreen"));
         this.$(".question").append(this.resultsView.render().el);
         return this;
       };
