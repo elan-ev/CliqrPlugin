@@ -3,17 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(['backbone', 'utils', 'handlebars', 'views/template_view'], function(Backbone, utils, Handlebars, TemplateView) {
-    var QuestionsForm, addNewChoice;
-    addNewChoice = function(event) {
-      var empty_question, new_choice, template;
-      new_choice = $(event.target).closest(".choices").find(".choice-new");
-      template = utils.compileTemplate('questions-choice');
-      empty_question = {
-        answer_id: '',
-        text: ''
-      };
-      return $(template(empty_question)).insertBefore(new_choice).find("input").focus();
-    };
+    var QuestionsForm;
     return QuestionsForm = (function(_super) {
 
       __extends(QuestionsForm, _super);
@@ -34,15 +24,22 @@
         "click [name=cancel]": "cancelForm"
       };
 
+      QuestionsForm.prototype.initialize = function() {
+        if (!Handlebars.partials['choice']) {
+          return Handlebars.registerPartial('choice', utils.compileTemplate('questions-choice'));
+        }
+      };
+
       QuestionsForm.prototype.render = function() {
-        Handlebars.registerPartial('choice', $("#cliqr-template-questions-choice").html());
         this.$el.html(this.template(this.model ? this.model.toJSON() : {}));
         this.$("form").validator();
         return this;
       };
 
       QuestionsForm.prototype.addChoice = function(event) {
-        return addNewChoice(event);
+        var choice;
+        choice = Handlebars.partials['choice']({});
+        return $(choice).insertBefore(this.$('.choice-new')).find("input").focus();
       };
 
       QuestionsForm.prototype.removeChoice = function(event) {
@@ -63,7 +60,7 @@
           index = inputs.index(event.target);
           if (event.which === 13 || event.which === 40) {
             if (last === index) {
-              addNewChoice(event);
+              this.addChoice();
             } else {
               inputs[index + 1].focus();
             }

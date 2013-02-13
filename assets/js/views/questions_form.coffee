@@ -5,13 +5,6 @@ define [
   'views/template_view'
 ], (Backbone, utils, Handlebars, TemplateView) ->
 
-  addNewChoice = (event) ->
-    new_choice = $(event.target).closest(".choices").find(".choice-new")
-    template = utils.compileTemplate 'questions-choice'
-    empty_question = answer_id: '', text: ''
-    $(template empty_question).insertBefore(new_choice).find("input").focus()
-
-
   class QuestionsForm extends TemplateView
     template_id: 'questions-form'
 
@@ -24,15 +17,18 @@ define [
       "submit form":          "submitForm"
       "click [name=cancel]":  "cancelForm"
 
-    render: ->
-      Handlebars.registerPartial 'choice', $("#cliqr-template-questions-choice").html()
+    initialize: ->
+      unless Handlebars.partials['choice']
+        Handlebars.registerPartial 'choice', utils.compileTemplate 'questions-choice'
 
+    render: ->
       @$el.html @template if @model then @model.toJSON() else {}
       @$("form").validator()
       @
 
     addChoice: (event) ->
-      addNewChoice(event)
+      choice = Handlebars.partials['choice'] {}
+      $(choice).insertBefore(@$ '.choice-new').find("input").focus()
 
     removeChoice: (event) ->
       choice_input = $(event.target).closest(".choice-input")
@@ -54,9 +50,10 @@ define [
           if event.which is 13 or event.which is 40
 
             if last is index
-              addNewChoice event
+              @addChoice()
             else
               inputs[index + 1].focus()
+
             event.preventDefault()
 
           # arrow_up

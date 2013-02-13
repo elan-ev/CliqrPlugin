@@ -11,8 +11,8 @@
         current = _.last(previousPages);
         previousPages.push(view);
         if (current) {
-          Backbone.trigger('page-after-hide', current);
           current.$el.hide();
+          Backbone.trigger('page-after-hide', current);
         }
         view.render();
         if (!view.el.parentNode) {
@@ -30,7 +30,10 @@
         current = previousPages.pop();
         previous = _.last(previousPages);
         current.$el.hide();
+        Backbone.trigger('page-after-hide', current);
+        Backbone.trigger('page-before-show', previous);
         previous.$el.show();
+        Backbone.trigger('page-after-show', previous);
         return current.remove();
       },
       compileTemplate: _.memoize(function(name) {

@@ -18,8 +18,8 @@ define [
 
     # trigger page-after-hide event on current page
     if current
-      Backbone.trigger 'page-after-hide', current
       current.$el.hide()
+      Backbone.trigger 'page-after-hide', current
 
     # render that view
     view.render()
@@ -43,7 +43,10 @@ define [
     previous = _.last previousPages
 
     current.$el.hide()
+    Backbone.trigger 'page-after-hide', current
+    Backbone.trigger 'page-before-show', previous
     previous.$el.show()
+    Backbone.trigger 'page-after-show', previous
     current.remove()
 
 
