@@ -22,16 +22,36 @@ class Container extends \Pimple {
             }
         );
 
+        /*
+        $this['logger'] = $this->share(
+            function ($c) {
+                $log = new \Monolog\Logger('name');
+                $log->pushHandler(new \Monolog\Handler\StreamHandler('/tmp/your.log'));
+                return $log;
+            });
+        */
+
         //$this['pusher_debug'] = true;
         //$this['pusher_host'] = 'localhost';
         //$this['pusher_port'] = '4567';
 
+        $this['pusher_configured'] = function ($c) {
+            return isset($c['ini']['pusher']['key']);
+        };
+
         $this['pusher'] = $this->share(
             function ($c) {
+
+                # no pusher w/o config
+                if ($c['pusher_configured'] == false) {
+                    return null;
+                }
+
                 //$pusher = new Pusher($c['pusher_key'], $c['pusher_secret'], $c['pusher_app_id'], $debug, $host, $port);
                 $pusher = new \Pusher($c['ini']['pusher']['key'],
                                       $c['ini']['pusher']['secret'],
                                       $c['ini']['pusher']['app_id']);
+                // $pusher->set_logger($c['logger']);
                 return $pusher;
             }
         );

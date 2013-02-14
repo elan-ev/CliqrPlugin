@@ -11,8 +11,8 @@ define [
 
     initialize: ->
       @prepopulatePolls()
-      @connectPusher()
       @initRouter()
+      @connectPusher()
 
       do Backbone.history.start
 
@@ -26,21 +26,23 @@ define [
       cliqr.$Polls = new PollCollection cliqr.config.POLLS || []
 
     ###
-    connect it to Pusher
-    TODO vllt ein bisschen auslagern
-    ###
-    connectPusher: ->
-      pusher  = new Pusher cliqr.config.PUSHER_APP_KEY
-      channel = pusher.subscribe cliqr.config.PUSHER_CHANNEL
-
-      bp = new BackPusher channel
-      bp.pushTo cliqr.$Polls
-
-
-    ###
     Declare the global $App object (the initial $ indicates a global
     variable). We need it to dynamically navigate between routes etc.
     ###
     initRouter: ->
       # TODO rename this to $Router
       cliqr.$App = new PollRouter()
+
+    ###
+    connect it to Pusher
+    TODO vllt ein bisschen auslagern
+    ###
+    connectPusher: ->
+
+      if cliqr.$App.pusherEnabled()
+
+        pusher  = new Pusher cliqr.config.PUSHER_APP_KEY
+        channel = pusher.subscribe cliqr.config.PUSHER_CHANNEL
+
+        bp = new BackPusher channel
+        bp.pushTo cliqr.$Polls

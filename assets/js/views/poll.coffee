@@ -29,7 +29,11 @@ define [
         for answer, index in @poll.get('answers')
           answer.nominal = helpers.nominal index
 
-      @$el.html @template poll: @poll?.toJSON()
+      context =
+        poll: @poll?.toJSON()
+        pusher_enabled: cliqr.$App.pusherEnabled()
+
+      @$el.html @template context
       @
 
 

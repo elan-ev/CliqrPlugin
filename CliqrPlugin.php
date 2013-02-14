@@ -97,9 +97,10 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 
     function observeQuestions()
     {
-        require_once 'lib/QuestionPusher.php';
-
-        $pusher = new \Cliqr\QuestionPusher($this->config, $this->getContext());
-        $pusher->observeNotifications();
+        if ($this->config['pusher_configured']) {
+            require_once 'lib/QuestionPusher.php';
+            $pusher = new \Cliqr\QuestionPusher($this->config, $this->getContext());
+            $pusher->observeNotifications();
+        }
     }
 }

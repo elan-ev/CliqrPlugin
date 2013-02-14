@@ -25,8 +25,12 @@ $polls = array_map(function ($q) {
         , CID            : "<?= htmlReady($range_id) ?>"
         , ASSETS         : "<?= htmlReady($ASSETS) ?>"
         , POLLS          : <?= json_encode($polls) ?>
+
+        <? if ($plugin->config['pusher_configured']) : ?>
         , PUSHER_APP_KEY : "<?= htmlReady($plugin->config['ini']['pusher']['key']) ?>"
         , PUSHER_CHANNEL : "<?= htmlReady($plugin->config['pusher_channel']($range_id)) ?>"
+        <? endif ?>
+
       }};
     </script>
 

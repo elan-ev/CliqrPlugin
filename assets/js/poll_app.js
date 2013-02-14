@@ -8,8 +8,8 @@
 
       PollApp.prototype.initialize = function() {
         this.prepopulatePolls();
-        this.connectPusher();
         this.initRouter();
+        this.connectPusher();
         return Backbone.history.start();
       };
 
@@ -25,20 +25,6 @@
       };
 
       /*
-          connect it to Pusher
-          TODO vllt ein bisschen auslagern
-      */
-
-
-      PollApp.prototype.connectPusher = function() {
-        var bp, channel, pusher;
-        pusher = new Pusher(cliqr.config.PUSHER_APP_KEY);
-        channel = pusher.subscribe(cliqr.config.PUSHER_CHANNEL);
-        bp = new BackPusher(channel);
-        return bp.pushTo(cliqr.$Polls);
-      };
-
-      /*
           Declare the global $App object (the initial $ indicates a global
           variable). We need it to dynamically navigate between routes etc.
       */
@@ -46,6 +32,22 @@
 
       PollApp.prototype.initRouter = function() {
         return cliqr.$App = new PollRouter();
+      };
+
+      /*
+          connect it to Pusher
+          TODO vllt ein bisschen auslagern
+      */
+
+
+      PollApp.prototype.connectPusher = function() {
+        var bp, channel, pusher;
+        if (cliqr.$App.pusherEnabled()) {
+          pusher = new Pusher(cliqr.config.PUSHER_APP_KEY);
+          channel = pusher.subscribe(cliqr.config.PUSHER_CHANNEL);
+          bp = new BackPusher(channel);
+          return bp.pushTo(cliqr.$Polls);
+        }
       };
 
       return PollApp;

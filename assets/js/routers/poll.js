@@ -26,6 +26,10 @@
         }));
       };
 
+      PollRouter.prototype.pusherEnabled = function() {
+        return cliqr.config.PUSHER_APP_KEY != null;
+      };
+
       return PollRouter;
 
     })(PageRouter);

@@ -30,7 +30,7 @@
       };
 
       PollView.prototype.render = function() {
-        var answer, index, _i, _len, _ref, _ref1;
+        var answer, context, index, _i, _len, _ref, _ref1;
         this.poll = this.collection.firstFresh();
         if (this.poll) {
           _ref = this.poll.get('answers');
@@ -39,9 +39,11 @@
             answer.nominal = helpers.nominal(index);
           }
         }
-        this.$el.html(this.template({
-          poll: (_ref1 = this.poll) != null ? _ref1.toJSON() : void 0
-        }));
+        context = {
+          poll: (_ref1 = this.poll) != null ? _ref1.toJSON() : void 0,
+          pusher_enabled: cliqr.$App.pusherEnabled()
+        };
+        this.$el.html(this.template(context));
         return this;
       };
 
