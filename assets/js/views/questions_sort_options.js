@@ -36,6 +36,7 @@
 
       SortOptionsView.prototype.onShow = function() {
         return this.getList().isotope({
+          animationEngine: 'jquery',
           itemSelector: 'li',
           getSortData: {
             question: function(elem) {

@@ -23,12 +23,12 @@ define [
 
     onShow: ->
       @getList().isotope
+        animationEngine: 'jquery'
         itemSelector: 'li'
         getSortData:
           question:   (elem) -> elem.attr('data-question').toLocaleLowerCase()
           counter:    (elem) -> - parseInt elem.attr('data-counter'), 10
           startdate:  (elem) -> parseInt elem.attr('data-startdate'), 10
-
 
     sortBy: (event) =>
 

@@ -1,3 +1,4 @@
+/* Start: Recommended Isotope styles */
 /**** Isotope Filtering ****/
 .isotope-item {
   z-index: 2;
@@ -39,3 +40,4 @@
   -o-transition-duration: 0s;
   transition-duration: 0s;
 }
+/* End: Recommended Isotope styles */
