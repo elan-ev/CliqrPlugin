@@ -31,10 +31,6 @@ class Container extends \Pimple {
             });
         */
 
-        //$this['pusher_debug'] = true;
-        //$this['pusher_host'] = 'localhost';
-        //$this['pusher_port'] = '4567';
-
         $this['pusher_configured'] = function ($c) {
             return isset($c['ini']['pusher']['key']);
         };
@@ -47,11 +43,23 @@ class Container extends \Pimple {
                     return null;
                 }
 
-                //$pusher = new Pusher($c['pusher_key'], $c['pusher_secret'], $c['pusher_app_id'], $debug, $host, $port);
-                $pusher = new \Pusher($c['ini']['pusher']['key'],
-                                      $c['ini']['pusher']['secret'],
-                                      $c['ini']['pusher']['app_id']);
-                // $pusher->set_logger($c['logger']);
+                if (isset($c['ini']['pusher']['host']) && isset($c['ini']['pusher']['port'])) {
+                    $pusher = new \Pusher($c['ini']['pusher']['key'],
+                                          $c['ini']['pusher']['secret'],
+                                          $c['ini']['pusher']['app_id'],
+                                          true,
+                                          $c['ini']['pusher']['host'],
+                                          $c['ini']['pusher']['port']);
+
+                }
+                else {
+                    $pusher = new \Pusher($c['ini']['pusher']['key'],
+                                          $c['ini']['pusher']['secret'],
+                                          $c['ini']['pusher']['app_id']);
+                                          // 'http://api.pusherapp.com',
+                                          // '80'
+                }
+                //$pusher->set_logger($c['logger']);
                 return $pusher;
             }
         );
