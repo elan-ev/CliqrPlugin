@@ -6,8 +6,6 @@ $ASSETS = $plugin->getPluginURL() . '/assets/';
 PageLayout::addStylesheet($ASSETS . 'questions/styles.css');
 PageLayout::addScript($ASSETS . 'vendor/jquery.isotope.min.js');
 PageLayout::addScript($ASSETS . 'vendor/validator.js');
-PageLayout::addScript($ASSETS . 'questions/script.js'); # TODO deprecate this
-
 
 PageLayout::addHeadElement('script', array(),
 '// TODO refine this
