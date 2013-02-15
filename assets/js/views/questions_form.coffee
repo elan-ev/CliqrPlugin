@@ -7,15 +7,13 @@ define [
 
   class QuestionsForm extends TemplateView
     template_id: 'questions-form'
-
-    className: "page"
+    className:   'questions-form'
 
     events:
       "click .choice-new":    "addChoice"
       "click .close":         "removeChoice"
       "keydown input.choice": "enhanceChoiceInput"
       "submit form":          "submitForm"
-      "click [name=cancel]":  "cancelForm"
 
     initialize: ->
       unless Handlebars.partials['choice']
@@ -73,10 +71,7 @@ define [
         url = "questions/" + if @model then "update/#{@model.id}" else "create"
         $.post("#{cliqr.config.PLUGIN_URL}#{url}?cid=#{cliqr.config.CID}", form.serialize())
           .done (msg) ->
-            document.location = cliqr.config.PLUGIN_URL + "questions/show/#{msg.id}?cid=" + cliqr.config.CID
+            location = cliqr.config.PLUGIN_URL + "questions/show/#{msg.id}?cid=" + cliqr.config.CID
+            document.location = location
           .fail () ->
             console.log "TODO fail", arguments
-
-    cancelForm: (event) ->
-      event.preventDefault()
-      utils.changeToPreviousPage()

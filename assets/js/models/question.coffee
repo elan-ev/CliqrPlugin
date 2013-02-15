@@ -2,7 +2,20 @@ define [
   'backbone'
 ], (Backbone) ->
 
+  # TODO please fix the sync
+  actionMap =
+    create: 'create'
+    update: 'update'
+    delete: 'destroy'
+    read:   'show'
+
   # Model representing a Question
   class Question extends Backbone.Model
-    url: ->
-      cliqr.config.PLUGIN_URL + "questions/show/#{@get 'id'}?cid=" + cliqr.config.CID
+
+    sync: (method, model, options) ->
+      _.extend options, url: model.url?(actionMap[method])
+      Backbone.sync method, model, options
+
+    url: (action) ->
+      id = if @id? then "/#{@id}" else ""
+      cliqr.config.PLUGIN_URL + "questions/#{action}#{id}?cid=" + cliqr.config.CID

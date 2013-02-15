@@ -14,14 +14,13 @@
 
       QuestionsForm.prototype.template_id = 'questions-form';
 
-      QuestionsForm.prototype.className = "page";
+      QuestionsForm.prototype.className = 'questions-form';
 
       QuestionsForm.prototype.events = {
         "click .choice-new": "addChoice",
         "click .close": "removeChoice",
         "keydown input.choice": "enhanceChoiceInput",
-        "submit form": "submitForm",
-        "click [name=cancel]": "cancelForm"
+        "submit form": "submitForm"
       };
 
       QuestionsForm.prototype.initialize = function() {
@@ -84,15 +83,12 @@
         }
         url = "questions/" + (this.model ? "update/" + this.model.id : "create");
         return $.post("" + cliqr.config.PLUGIN_URL + url + "?cid=" + cliqr.config.CID, form.serialize()).done(function(msg) {
-          return document.location = cliqr.config.PLUGIN_URL + ("questions/show/" + msg.id + "?cid=") + cliqr.config.CID;
+          var location;
+          location = cliqr.config.PLUGIN_URL + ("questions/show/" + msg.id + "?cid=") + cliqr.config.CID;
+          return document.location = location;
         }).fail(function() {
           return console.log("TODO fail", arguments);
         });
-      };
-
-      QuestionsForm.prototype.cancelForm = function(event) {
-        event.preventDefault();
-        return utils.changeToPreviousPage();
       };
 
       return QuestionsForm;

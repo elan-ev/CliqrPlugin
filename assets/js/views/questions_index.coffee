@@ -12,7 +12,6 @@ define [
 
     events:
       "click button.delete":   "confirmDelete"
-      "click a.questions-new": "showCreateForm"
 
     initialize: ->
       @listViews =
@@ -31,8 +30,3 @@ define [
     confirmDelete: (event) ->
       unless window.confirm "Wirklich l\xf6schen?"
         event.preventDefault()
-
-    showCreateForm: (event) ->
-      event.preventDefault()
-      form = new QuestionsForm()
-      utils.changeToPage form

@@ -18,6 +18,10 @@
 
       QuestionCollection.prototype.model = Question;
 
+      QuestionCollection.prototype.url = function() {
+        return cliqr.config.PLUGIN_URL + "questions/index?cid=" + cliqr.config.CID;
+      };
+
       QuestionCollection.prototype.comparator = function(question) {
         return question.get('startdate');
       };

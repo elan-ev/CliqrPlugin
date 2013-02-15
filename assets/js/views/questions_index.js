@@ -15,8 +15,7 @@
       QuestionsIndexView.prototype.className = "page";
 
       QuestionsIndexView.prototype.events = {
-        "click button.delete": "confirmDelete",
-        "click a.questions-new": "showCreateForm"
+        "click button.delete": "confirmDelete"
       };
 
       QuestionsIndexView.prototype.initialize = function() {
@@ -53,13 +52,6 @@
         if (!window.confirm("Wirklich l\xf6schen?")) {
           return event.preventDefault();
         }
-      };
-
-      QuestionsIndexView.prototype.showCreateForm = function(event) {
-        var form;
-        event.preventDefault();
-        form = new QuestionsForm();
-        return utils.changeToPage(form);
       };
 
       return QuestionsIndexView;

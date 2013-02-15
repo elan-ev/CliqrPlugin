@@ -82,6 +82,7 @@ h3 small {
 h4 small {
   font-size: 14px;
 }
+/* Start: Recommended Isotope styles */
 /**** Isotope Filtering ****/
 .isotope-item {
   z-index: 2;
@@ -123,6 +124,7 @@ h4 small {
   -o-transition-duration: 0s;
   transition-duration: 0s;
 }
+/* End: Recommended Isotope styles */
 .xdebug-var-dump {
   height: 1em;
   overflow: hidden;
@@ -139,6 +141,21 @@ h4 small {
   -moz-transition: 0s;
   -o-transition: 0s;
   transition: 0s;
+}
+.cliqr-loader {
+  line-height: 1.5em;
+  color: #444;
+  background: url('../../../../../assets/images/ajax_indicator_small.gif') 95% center no-repeat;
+  padding: 0.5em 20px 0.5em 0.5em;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  position: absolute;
+  top: -0.25em;
+}
+#layout_container {
+  position: relative;
 }
 #cliqr-index h3 a.button {
   font-weight: normal;

@@ -61,10 +61,8 @@ class QuestionsController extends CliqrStudipController
         $this->questions = Question::findAll($this->cid);
 
         if (Request::isXhr()) {
-            $this->render_json(
-                array_map(function ($q) {
-                        return $q->toJSON();
-                    }, $this->questions));
+            $this->render_json(array_map(function ($q) { return $q->toJSON(); },
+                                         $this->questions));
         }
     }
 
@@ -77,117 +75,34 @@ class QuestionsController extends CliqrStudipController
         }
     }
 
-    function new_action()
-    {
-        # just render template
-    }
-
     function create_action()
     {
-        global $auth;
-
-        // TODO: Validation!? (eingebaut?)
-        $question = new Question();
-        $question->setAuthorID($auth->auth["uid"]);
-
-        // TODO: das ist so nicht sauber, das müsste Question machen
-        $question->setRangeID(Question::transformRangeId($this->cid));
-
-        $question->setQuestion($q = studip_utf8decode(Request::get("question")));
-        $question->setTitle(my_substr($q, 0, 50));
-
-        $choices = array_map(function ($choice) { return studip_utf8decode($choice); },
-                             Request::getArray("choices"));
-        $choices = Question::makeChoices($choices);
-        $question->setAnswers($choices);
+        $params = $this->getQuestionParams();
+        $question = $this->createNewQuestion($params);
 
         $question->executeWrite();
         $error = $question->isError();
 
-        if (Request::isXhr()) {
-            if ($error) {
-                throw new Trails_Exception(500, "Could not create".json_encode($question));
-            } else {
-                $this->response->set_status(201, "Created");
-                return $this->render_json($question->toJSON());
-            }
+        if ($error) {
+            throw new Trails_Exception(500, "Could not create".json_encode($question));
+        } else {
+            $this->response->set_status(201, "Created");
+            return $this->render_json($question->toJSON());
         }
-        else {
-            if ($error) {
-                $this->flash['error'] = "Could not create question".json_encode($question->errorArray).Request::isXhr();
-                return $this->redirect('questions/new');
-            } else {
-                $this->flash['info'] = "Question created";
-                return $this->redirect('questions/show/'.$question->getVoteID());
-            }
-        }
-    }
-
-    function edit_action($id)
-    {
-        # just render template
     }
 
     // TODO: mit create_action kombinieren?
     // TODO: Validation!? (eingebaut?)
     function update_action($id)
     {
-        $question = $this->question;
-        $dirty = false;
+        $params = $this->getQuestionParams();
+        $error = $this->updateQuestion($this->question, $params);
 
-        // UPDATE QUESTION
-        $q = Request::get("question");
-        if (isset($q)) {
-            $question->setQuestion($q = studip_utf8decode($q));
-            $question->setTitle(my_substr($q, 0, 50));
-            $dirty = true;
-        }
-
-        // UPDATE CHOICES
-        // TODO zuviel in dieser action, besser nur 10 zeilen
-        $choices = Request::getArray("choices");
-        if (isset($choices)) {
-
-            $answers = array();
-            foreach ($question->getAnswers() as $answer) {
-                $answers[$answer['answer_id']] = $answer;
-            }
-            $new_answers = array();
-            foreach ($choices as $id => $choice) {
-                if ($choice !== '') {
-
-                    $choice = studip_utf8decode($choice);
-
-                    $new_answers[] = is_int($id)
-                    ? Question::makeChoice($choice)
-                    : array_merge($answers[$id], array('text' => $choice));
-                }
-            }
-            $question->setAnswers($new_answers);
-            $dirty = true;
-        }
-
-        if ($dirty) {
-            $question->executeWrite();
-        }
-        $error = $question->isError();
-
-        if (Request::isXhr()) {
-            if ($error) {
-                throw new Trails_Exception(500, "Could not update".json_encode($question->errorArray));
-            } else {
-                $this->response->set_status(201, "Updated");
-                return $this->render_json($question->toJSON());
-            }
-        }
-        else {
-            if (!$error) {
-                $this->flash['error'] = "Could not update question";
-                return $this->redirect('questions/edit/'.$question->getVoteID());
-            } else {
-                $this->flash['info'] = "Question updated";
-                return $this->redirect('questions/show/'.$question->getVoteID());
-            }
+        if ($error) {
+            throw new Trails_Exception(500, "Could not update".json_encode($this->question->errorArray));
+        } else {
+            $this->response->set_status(201, "Updated");
+            return $this->render_json($this->question->toJSON());
         }
     }
 
@@ -264,5 +179,81 @@ class QuestionsController extends CliqrStudipController
             }
             return $this->redirect('questions/show/' . $id);
         }
+    }
+
+
+
+    private function getQuestionParams()
+    {
+        if ($this->hasJSONContentType()) {
+            $params = $this->parseJSONBody();
+        }
+        else {
+            $params = self::utf8decode(
+                array(
+                    'question' => Request::get('question')
+                  , 'choices'  => Request::getArray('choices')
+                ));
+        }
+
+        return $params;
+    }
+
+
+    private function createNewQuestion($params)
+    {
+        global $auth;
+
+        // TODO: Validation!? (eingebaut?)
+        $question = new Question();
+        $question->setAuthorID($auth->auth["uid"]);
+
+        // TODO: das ist so nicht sauber, das müsste Question machen
+        $question->setRangeID(Question::transformRangeId($this->cid));
+
+        $question->setQuestion($q = $params['question']);
+        $question->setTitle(my_substr($q, 0, 50));
+
+        $choices = Question::makeChoices($params['choices']);
+        $question->setAnswers($choices);
+
+        return $question;
+    }
+
+    private function updateQuestion($question, $params)
+    {
+        $dirty = false;
+
+        // UPDATE QUESTION
+        if (isset($params['question'])) {
+            $question->setQuestion($q = $params['question']);
+            $question->setTitle(my_substr($q, 0, 50));
+            $dirty = true;
+        }
+
+        // UPDATE CHOICES
+        // TODO zuviel in dieser action, besser nur 10 zeilen pro function
+        if (isset($params['choices'])) {
+
+            $answers = array();
+            foreach ($question->getAnswers() as $answer) {
+                $answers[$answer['answer_id']] = $answer;
+            }
+            $new_answers = array();
+            foreach ($params['choices'] as $id => $choice) {
+                if ($choice !== '') {
+                    $new_answers[] = is_int($id)
+                      ? Question::makeChoice($choice)
+                      : array_merge($answers[$id], array('text' => $choice));
+                }
+            }
+            $question->setAnswers($new_answers);
+            $dirty = true;
+        }
+
+        if ($dirty) {
+            $question->executeWrite();
+        }
+        return $question->isError();
     }
 }

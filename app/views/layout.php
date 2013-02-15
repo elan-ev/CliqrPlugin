@@ -2,20 +2,6 @@
 global $template_factory;
 $this->set_layout($template_factory->open('layouts/base_without_infobox'));
 
-class SelfDestroyingMessageBox extends MessageBox {
-    public static function info($message, $details = array(), $close_details = false)
-    {
-        return new MessageBox('info self-destroy', $message, $details, $close_details);
-    }
-}
-
-if ($flash['error']) {
-    echo MessageBox::error('Fehler', array($flash["error"]));
-}
-if ($flash['info']) {
-    echo SelfDestroyingMessageBox::info($flash["info"]);
-}
-
 $ASSETS = $plugin->getPluginURL() . '/assets/';
 PageLayout::addStylesheet($ASSETS . 'questions/styles.css');
 PageLayout::addScript($ASSETS . 'vendor/jquery.isotope.min.js');

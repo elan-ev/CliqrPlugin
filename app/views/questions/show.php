@@ -7,6 +7,8 @@ $short_url = $shortener->shorten($poll_url);
 ?>
 
 <div class="page">
+  <?= $this->render_partial('_messages') ?>
+
   <div class="question state-<?= htmlReady($question->getState()) ?>">
 
     <h2><?= htmlReady($question->getQuestion()) ?></h2>
