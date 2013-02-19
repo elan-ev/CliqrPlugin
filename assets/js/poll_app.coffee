@@ -41,6 +41,13 @@ define [
 
       if cliqr.$App.pusherEnabled()
 
+        if cliqr.config.PUSHER_HOST?
+          Pusher.host = cliqr.config.PUSHER_HOST
+
+        if cliqr.config.PUSHER_PORT?
+          Pusher.ws_port  = cliqr.config.PUSHER_PORT
+          Pusher.wss_port = cliqr.config.PUSHER_PORT
+
         pusher  = new Pusher cliqr.config.PUSHER_APP_KEY
         channel = pusher.subscribe cliqr.config.PUSHER_CHANNEL
 

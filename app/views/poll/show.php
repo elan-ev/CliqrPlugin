@@ -29,6 +29,15 @@ $polls = array_map(function ($q) {
         <? if ($plugin->config['pusher_configured']) : ?>
         , PUSHER_APP_KEY : "<?= htmlReady($plugin->config['ini']['pusher']['key']) ?>"
         , PUSHER_CHANNEL : "<?= htmlReady($plugin->config['pusher_channel']($range_id)) ?>"
+
+        <? if ($plugin->config['ini']['pusher']['host']) : ?>
+        , PUSHER_HOST : "<?= htmlReady($plugin->config['ini']['pusher']['host']) ?>"
+        <? endif ?>
+
+        <? if ($plugin->config['ini']['pusher']['port']) : ?>
+        , PUSHER_PORT : <?= intval($plugin->config['ini']['pusher']['port']) ?>
+        <? endif ?>
+
         <? endif ?>
 
       }};
