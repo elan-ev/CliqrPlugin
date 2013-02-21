@@ -22,7 +22,7 @@
 
 
       PollApp.prototype.prepopulatePolls = function() {
-        return cliqr.$Polls = new PollCollection(cliqr.config.POLLS || []);
+        return cliqr.$Polls = new PollCollection(cliqr.bootstrap.POLLS || []);
       };
 
       /*

@@ -20,27 +20,32 @@ $polls = array_map(function ($q) {
 ?>
 
     <script>
-      var cliqr = { config: {
-          PLUGIN_URL     : "<?= htmlReady(current(explode('?', $controller->url_for("")))) ?>"
-        , CID            : "<?= htmlReady($range_id) ?>"
-        , ASSETS         : "<?= htmlReady($ASSETS) ?>"
-        , POLLS          : <?= json_encode($polls) ?>
+      var cliqr = {
+        config: {
+            PLUGIN_URL : "<?= htmlReady(current(explode('?', $controller->url_for("")))) ?>"
+          , CID : "<?= htmlReady($range_id) ?>"
+          , ASSETS : "<?= htmlReady($ASSETS) ?>"
 
-        <? if ($plugin->config['pusher_configured']) : ?>
-        , PUSHER_APP_KEY : "<?= htmlReady($plugin->config['ini']['pusher']['key']) ?>"
-        , PUSHER_CHANNEL : "<?= htmlReady($plugin->config['pusher_channel']($range_id)) ?>"
+          <? if ($plugin->config['pusher_configured']) : ?>
+          , PUSHER_APP_KEY : "<?= htmlReady($plugin->config['ini']['pusher']['key']) ?>"
+          , PUSHER_CHANNEL : "<?= htmlReady($plugin->config['pusher_channel']($range_id)) ?>"
 
-        <? if ($plugin->config['ini']['pusher']['host']) : ?>
-        , PUSHER_HOST : "<?= htmlReady($plugin->config['ini']['pusher']['host']) ?>"
-        <? endif ?>
+          <? if ($plugin->config['ini']['pusher']['host']) : ?>
+          , PUSHER_HOST : "<?= htmlReady($plugin->config['ini']['pusher']['host']) ?>"
+          <? endif ?>
 
-        <? if ($plugin->config['ini']['pusher']['port']) : ?>
-        , PUSHER_PORT : <?= intval($plugin->config['ini']['pusher']['port']) ?>
-        <? endif ?>
+          <? if ($plugin->config['ini']['pusher']['port']) : ?>
+          , PUSHER_PORT : <?= intval($plugin->config['ini']['pusher']['port']) ?>
+          <? endif ?>
 
-        <? endif ?>
+          <? endif ?>
 
-      }};
+        },
+
+        bootstrap: {
+          POLLS : <?= json_encode($polls) ?>
+        }
+      };
     </script>
 
     <?= $this->render_partial('hbs/_include_js_templates', array('prefix' => 'poll')) ?>

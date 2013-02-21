@@ -23,7 +23,7 @@ define [
     ###
     prepopulatePolls: ->
       # TODO globale Variable
-      cliqr.$Polls = new PollCollection cliqr.config.POLLS || []
+      cliqr.$Polls = new PollCollection cliqr.bootstrap.POLLS || []
 
     ###
     Declare the global $App object (the initial $ indicates a global

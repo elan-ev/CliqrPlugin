@@ -19,3 +19,11 @@ define [
     url: (action) ->
       id = if @id? then "/#{@id}" else ""
       cliqr.config.PLUGIN_URL + "questions/#{action}#{id}?cid=" + cliqr.config.CID
+
+    start: ->
+      url = cliqr.config.PLUGIN_URL + "questions/start/#{@id}?cid=" + cliqr.config.CID
+      promise = $.post url
+
+    stop: ->
+      url = cliqr.config.PLUGIN_URL + "questions/stop/#{@id}?cid=" + cliqr.config.CID
+      promise = $.post url

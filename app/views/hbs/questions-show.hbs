@@ -7,14 +7,14 @@
       <!-- STOP -->
       {{#if_state 'active'}}
       <form action="{{questions_path 'stop'}}" method="POST">
-        <button class="button" type="submit">Stoppen</button>
+        <button class="button stop" type="submit">Stoppen</button>
       </form>
       {{/if_state}}
 
       <!-- EDIT -->
       {{#unless_state 'active'}}
-      <a class="button"
-         href="{{questions_path 'edit'}}"
+      <a class="button edit"
+         href="#edit-{{id}}"
         tabindex="0">Ändern</a>
       {{/unless_state}}
 
@@ -23,7 +23,7 @@
             action="{{questions_path 'destroy'}}"
             method="POST"
             data-confirm="Wollen Sie die Frage wirklich löschen?">
-          <button class="button" type="submit">Löschen</button>
+          <button class="button destroy" type="submit">Löschen</button>
       </form>
 
       <!-- FULLSCREEN -->
@@ -41,9 +41,9 @@
   <div class="appeal start">
     <form action="{{questions_path 'start'}}" method="POST">
       {{#if_state 'new'}}
-        <button type="submit">Frage starten</button>
+        <button class="start" type="submit">Frage starten</button>
       {{else}}
-        <button type="submit">Frage erneut starten</button>
+        <button class="start" type="submit">Frage erneut starten</button>
       {{/if_state}}
     </form>
     <span class="loader">
