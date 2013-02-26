@@ -34,8 +34,8 @@ $polls = array_map(function ($q) {
           , PUSHER_HOST : "<?= htmlReady($plugin->config['ini']['pusher']['host']) ?>"
           <? endif ?>
 
-          <? if ($plugin->config['ini']['pusher']['port']) : ?>
-          , PUSHER_PORT : <?= intval($plugin->config['ini']['pusher']['port']) ?>
+          <? if ($plugin->config['ini']['pusher']['ws_port']) : ?>
+          , PUSHER_PORT : <?= intval($plugin->config['ini']['pusher']['ws_port']) ?>
           <? endif ?>
 
           <? endif ?>
@@ -58,7 +58,7 @@ $polls = array_map(function ($q) {
       </h1>
     </noscript>
 
-    <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
+    <script src="http://js.pusher.com/1.12.5/pusher.min.js"></script>
 
     <script data-main="<?= $ASSETS ?>js/require/poll.js"
             src="<?= $ASSETS ?>js/vendor/require.js"></script>
