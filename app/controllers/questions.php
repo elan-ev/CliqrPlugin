@@ -144,7 +144,7 @@ class QuestionsController extends CliqrStudipController
             $params = self::utf8decode(
                 array(
                     'question' => Request::get('question')
-                  , 'choices'  => Request::getArray('choices')
+                  , 'answers'  => Request::getArray('answers')
                 ));
         }
 
@@ -166,8 +166,8 @@ class QuestionsController extends CliqrStudipController
         $question->setQuestion($q = $params['question']);
         $question->setTitle(my_substr($q, 0, 50));
 
-        $choices = Question::makeChoices($params['choices']);
-        $question->setAnswers($choices);
+        $answers = Question::makeChoices($params['answers']);
+        $question->setAnswers($answers);
 
         return $question;
     }
@@ -185,14 +185,14 @@ class QuestionsController extends CliqrStudipController
 
         // UPDATE CHOICES
         // TODO zuviel in dieser action, besser nur 10 zeilen pro function
-        if (isset($params['choices'])) {
+        if (isset($params['answers'])) {
 
             $answers = array();
             foreach ($question->getAnswers() as $answer) {
                 $answers[$answer['answer_id']] = $answer;
             }
             $new_answers = array();
-            foreach ($params['choices'] as $id => $choice) {
+            foreach ($params['answers'] as $id => $choice) {
                 if ($choice !== '') {
                     $new_answers[] = is_int($id)
                       ? Question::makeChoice($choice)
