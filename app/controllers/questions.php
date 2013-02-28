@@ -26,10 +26,11 @@ class QuestionsController extends CliqrStudipController
         Question::consolidateState($this->cid);
 
         # set question
-        if (in_array($action, words("show edit update destroy start stop"))) {
+        if (in_array($action, words("show update destroy start stop"))) {
             self::ensureMD5($args[0]);
             $this->question = Question::find($args[0]);
         }
+        # else: index create
     }
 
     /***************************************************************************/
