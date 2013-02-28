@@ -83,10 +83,11 @@
           return;
         }
         url = "questions/" + (this.model ? "update/" + this.model.id : "create");
-        return $.post("" + cliqr.config.PLUGIN_URL + url + "?cid=" + cliqr.config.CID, form.serialize()).done(function(msg) {
-          var location;
-          location = cliqr.config.PLUGIN_URL + "questions?cid=" + cliqr.config.CID + ("#show-" + msg.id);
-          return document.location = location;
+        url = "" + cliqr.config.PLUGIN_URL + url + "?cid=" + cliqr.config.CID;
+        return $.post(url, form.serialize()).done(function(msg) {
+          return Backbone.history.navigate("show-" + msg.id, {
+            trigger: true
+          });
         }).fail(function() {
           return console.log("TODO fail", arguments);
         });

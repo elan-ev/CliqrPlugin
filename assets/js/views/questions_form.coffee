@@ -68,10 +68,12 @@ define [
 
         return unless form.data("validator").checkValidity()
 
+        # TODO knopf disabled machen
+
         url = "questions/" + if @model then "update/#{@model.id}" else "create"
-        $.post("#{cliqr.config.PLUGIN_URL}#{url}?cid=#{cliqr.config.CID}", form.serialize())
+        url = "#{cliqr.config.PLUGIN_URL}#{url}?cid=#{cliqr.config.CID}"
+        $.post(url, form.serialize())
           .done (msg) ->
-            location = cliqr.config.PLUGIN_URL + "questions?cid=" + cliqr.config.CID + "#show-#{msg.id}"
-            document.location = location
+            Backbone.history.navigate "show-#{msg.id}", trigger: true
           .fail () ->
             console.log "TODO fail", arguments
