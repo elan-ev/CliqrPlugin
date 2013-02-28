@@ -6,6 +6,7 @@
   define(['backbone', 'utils', 'handlebars', 'views/template_view'], function(Backbone, utils, Handlebars, TemplateView) {
     var QuestionsForm;
     return QuestionsForm = (function(_super) {
+      var disableSaveButton;
 
       __extends(QuestionsForm, _super);
 
@@ -75,15 +76,24 @@
         }
       };
 
+      disableSaveButton = function() {
+        var button;
+        button = this.$("button[name=save]");
+        if (button.length) {
+          return button.prop("disabled", true).showAjaxNotification();
+        }
+      };
+
       QuestionsForm.prototype.submitForm = function(event) {
-        var form, url;
+        var action, form, url;
         event.preventDefault();
         form = this.$("form");
         if (!form.data("validator").checkValidity()) {
           return;
         }
-        url = "questions/" + (this.model ? "update/" + this.model.id : "create");
-        url = "" + cliqr.config.PLUGIN_URL + url + "?cid=" + cliqr.config.CID;
+        disableSaveButton();
+        action = "questions/" + (this.model ? "update/" + this.model.id : "create");
+        url = "" + cliqr.config.PLUGIN_URL + action + "?cid=" + cliqr.config.CID;
         return $.post(url, form.serialize()).done(function(msg) {
           return Backbone.history.navigate("show-" + msg.id, {
             trigger: true
