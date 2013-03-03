@@ -24,11 +24,18 @@
       QuestionsListView.prototype.initialize = function(options) {
         this.state = options.state;
         if (options.sortable) {
-          this.sortOptions = new SortOptionsView({
-            list: this.$el
+          return this.sortOptions = new SortOptionsView({
+            list: this
           });
         }
-        return this.listenTo(this.collection, "add remove", this.onCollectionChange);
+      };
+
+      QuestionsListView.prototype.remove = function() {
+        var _ref;
+        if ((_ref = this.sortOptions) != null) {
+          _ref.remove();
+        }
+        return QuestionsListView.__super__.remove.call(this);
       };
 
       QuestionsListView.prototype.render = function() {
@@ -47,18 +54,23 @@
         return this;
       };
 
-      QuestionsListView.prototype.deleteQuestion = function(event) {
-        var id;
-        event.preventDefault();
-        if (window.confirm("Wirklich l\xf6schen?")) {
-          id = $(event.target).closest("li").data("id");
-          return this.collection.get(id).destroy();
-        }
+      QuestionsListView.prototype.postRender = function() {
+        var _ref;
+        return (_ref = this.sortOptions) != null ? _ref.postRender() : void 0;
       };
 
-      QuestionsListView.prototype.onCollectionChange = function(model, collection) {
-        if (this.state === model.get("state")) {
-          return this.render();
+      QuestionsListView.prototype.deleteQuestion = function(event) {
+        var id, li,
+          _this = this;
+        event.preventDefault();
+        if (window.confirm("Wirklich l\xf6schen?")) {
+          li = $(event.target).closest("li");
+          id = li.data("id");
+          return li.fadeOut().promise().done(function() {
+            _this.collection.get(id).destroy();
+            li.remove();
+            return _this.postRender();
+          });
         }
       };
 

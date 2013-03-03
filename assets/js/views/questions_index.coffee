@@ -16,6 +16,13 @@ define [
         'active':  new QuestionsListView(collection: @collection, state: 'active')
         'stopped': new QuestionsListView(collection: @collection, state: 'stopvis', sortable: true)
 
+      # TODO Ob das so eine gute Idee ist?
+      @listenTo Backbone, "page-after-show", @postRender
+
+    remove: ->
+      view.remove() for key, view of @listViews
+      super()
+
     render: ->
       template = utils.compileTemplate 'questions-index'
       @$el.html template()
@@ -23,3 +30,6 @@ define [
       for key, view of @listViews
         @$('#' + key + '-questions').replaceWith view.render().el
       @
+
+    postRender: ->
+      view.postRender() for key, view of @listViews

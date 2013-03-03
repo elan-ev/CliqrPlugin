@@ -16,7 +16,7 @@
       QuestionsIndexView.prototype.className = "page";
 
       QuestionsIndexView.prototype.initialize = function() {
-        return this.listViews = {
+        this.listViews = {
           'new': new QuestionsListView({
             collection: this.collection,
             state: 'new'
@@ -31,6 +31,17 @@
             sortable: true
           })
         };
+        return this.listenTo(Backbone, "page-after-show", this.postRender);
+      };
+
+      QuestionsIndexView.prototype.remove = function() {
+        var key, view, _ref;
+        _ref = this.listViews;
+        for (key in _ref) {
+          view = _ref[key];
+          view.remove();
+        }
+        return QuestionsIndexView.__super__.remove.call(this);
       };
 
       QuestionsIndexView.prototype.render = function() {
@@ -43,6 +54,17 @@
           this.$('#' + key + '-questions').replaceWith(view.render().el);
         }
         return this;
+      };
+
+      QuestionsIndexView.prototype.postRender = function() {
+        var key, view, _ref, _results;
+        _ref = this.listViews;
+        _results = [];
+        for (key in _ref) {
+          view = _ref[key];
+          _results.push(view.postRender());
+        }
+        return _results;
       };
 
       return QuestionsIndexView;

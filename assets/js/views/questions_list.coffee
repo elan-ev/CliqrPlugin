@@ -16,9 +16,12 @@ define [
       @state = options.state
 
       if options.sortable
-        @sortOptions = new SortOptionsView list: @$el
+        @sortOptions = new SortOptionsView list: @
 
-      @listenTo @collection, "add remove", @onCollectionChange
+
+    remove: ->
+      @sortOptions?.remove()
+      super()
 
 
     render: ->
@@ -34,13 +37,17 @@ define [
       @
 
 
+    postRender: ->
+      @sortOptions?.postRender()
+
+
     deleteQuestion: (event) ->
       event.preventDefault()
 
       if window.confirm "Wirklich l\xf6schen?"
-        id = $(event.target).closest("li").data("id")
-        @collection.get(id).destroy()
-
-
-    onCollectionChange: (model, collection) ->
-      do @render  if @state is model.get "state"
+        li = $(event.target).closest("li")
+        id = li.data("id")
+        li.fadeOut().promise().done =>
+          @collection.get(id).destroy()
+          li.remove()
+          @postRender()

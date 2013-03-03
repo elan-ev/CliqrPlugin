@@ -11,24 +11,31 @@ define [
     initialize: (options) ->
       @list = options.list
 
-      # TODO Ob das so eine gute Idee ist?
-      @listenTo Backbone, "page-after-show", @onShow
+    remove: ->
+      @getList().isotope 'destroy'
+      super()
 
     getList: ->
-      @list.find('ol').first()
+      @list.$('ol').first()
 
     render: ->
       @$el.html @template()
       @
 
-    onShow: ->
-      @getList().isotope
-        animationEngine: 'jquery'
-        itemSelector: 'li'
-        getSortData:
-          question:   (elem) -> elem.attr('data-question').toLocaleLowerCase()
-          counter:    (elem) -> - parseInt elem.attr('data-counter'), 10
-          startdate:  (elem) -> parseInt elem.attr('data-startdate'), 10
+    postRender: ->
+      list = @getList()
+
+      unless list.data "isotope"
+        list.isotope
+          animationEngine: 'jquery'
+          itemSelector: 'li'
+          getSortData:
+            question:   (elem) -> elem.attr('data-question').toLocaleLowerCase()
+            counter:    (elem) -> - parseInt elem.attr('data-counter'), 10
+            startdate:  (elem) -> parseInt elem.attr('data-startdate'), 10
+      else
+        list.isotope("reloadItems").isotope("reLayout")
+
 
     sortBy: (event) =>
 
