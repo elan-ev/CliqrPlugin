@@ -23,7 +23,6 @@ define [
 
       @listenTo @model, "change:answers", @updateAnswers
       @listenTo @model, "change:state",   @updateState
-      @listenTo @model, "all", -> console.log arguments
 
       @interval = setInterval (=> do @model.fetch), 2000
 

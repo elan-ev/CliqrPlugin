@@ -10,9 +10,6 @@ define [
   class QuestionsIndexView extends Backbone.View
     className: "page"
 
-    events:
-      "click button.delete":   "confirmDelete"
-
     initialize: ->
       @listViews =
         'new':     new QuestionsListView(collection: @collection, state: 'new')
@@ -26,7 +23,3 @@ define [
       for key, view of @listViews
         @$('#' + key + '-questions').replaceWith view.render().el
       @
-
-    confirmDelete: (event) ->
-      unless window.confirm "Wirklich l\xf6schen?"
-        event.preventDefault()

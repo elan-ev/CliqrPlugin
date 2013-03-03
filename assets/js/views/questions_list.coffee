@@ -6,13 +6,20 @@ define [
   class QuestionsListView extends TemplateView
     template_id: 'questions-index-list'
 
+    events:
+      "click button.delete": "deleteQuestion"
+
     className: 'questions'
+
 
     initialize: (options) ->
       @state = options.state
 
       if options.sortable
         @sortOptions = new SortOptionsView list: @$el
+
+      @listenTo @collection, "add remove", @onCollectionChange
+
 
     render: ->
       filtered = @collection.where(state: @state)
@@ -24,5 +31,16 @@ define [
 
       if @sortOptions and filtered.length
         @$el.prepend @sortOptions.render().el
-
       @
+
+
+    deleteQuestion: (event) ->
+      event.preventDefault()
+
+      if window.confirm "Wirklich l\xf6schen?"
+        id = $(event.target).closest("li").data("id")
+        @collection.get(id).destroy()
+
+
+    onCollectionChange: (model, collection) ->
+      do @render  if @state is model.get "state"

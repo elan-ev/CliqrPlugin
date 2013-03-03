@@ -192,6 +192,9 @@ h4 small {
 #cliqr-index .questions ol li:hover .control {
   right: 0px;
 }
+#cliqr-index .questions ol li.state-active .control {
+  display: none;
+}
 #cliqr-index .questions ol li .control {
   position: absolute;
   top: 0;
