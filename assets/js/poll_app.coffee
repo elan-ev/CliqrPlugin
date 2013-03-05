@@ -48,7 +48,11 @@ define [
           Pusher.ws_port  = cliqr.config.PUSHER_PORT
           Pusher.wss_port = cliqr.config.PUSHER_PORT
 
-        pusher  = new Pusher cliqr.config.PUSHER_APP_KEY
+        pusher = new Pusher cliqr.config.PUSHER_APP_KEY
+
+        pusher.connection.bind 'failed', ->
+          alert "You're missing out on some cool stuff. Try a better browser."
+
         channel = pusher.subscribe cliqr.config.PUSHER_CHANNEL
 
         bp = new BackPusher channel
