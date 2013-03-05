@@ -50,4 +50,4 @@ define [
           .fail (jqXHR, textStatus) ->
             return
       else
-        alert "TODO poll was answered already"
+        alert "TODO poll was already answered"

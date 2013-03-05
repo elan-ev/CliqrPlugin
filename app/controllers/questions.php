@@ -13,22 +13,17 @@ class QuestionsController extends CliqrStudipController
     {
         parent::before_filter($action, $args);
 
-        $this->cid = $this->requireContext();
-        $this->requireAuthorisation();
-
-        $this->flash = Trails_Flash::instance();
-
-        if (!Request::isXhr()) {
-            $this->setupStudipLayout();
-        }
+        $this->cid = self::requireContext();
+        self::requireAuthorisation($this->cid);
 
         // TODO: anders sicherstellen, dass sich #state und #start/stopdate nicht widersprechen
         Question::consolidateState($this->cid);
 
-        # set question
+        # find and set question
+        # URL: /cliqr/questions/(show|update|destroy|start|stop)/:question_id
         if (in_array($action, words("show update destroy start stop"))) {
-            self::ensureMD5($args[0]);
-            $this->question = Question::find($args[0]);
+            $question_id = self::ensureMD5($args[0]);
+            $this->question = Question::find($question_id);
         }
         # else: index create
     }
@@ -38,11 +33,19 @@ class QuestionsController extends CliqrStudipController
     /***************************************************************************/
 
     function index_action() {
+
+
         $this->questions = Question::findAll($this->cid);
 
         if (Request::isXhr()) {
             $this->render_json(array_map(function ($q) { return $q->toJSON(); },
                                          $this->questions));
+        }
+
+        else {
+            $this->setupStudipLayout();
+
+            # render template implicitly
         }
     }
 
@@ -63,7 +66,7 @@ class QuestionsController extends CliqrStudipController
             throw new Trails_Exception(500, "Could not create");
         } else {
             $this->response->set_status(201, "Created");
-            return $this->render_json($question->toJSON());
+            $this->render_json($question->toJSON());
         }
     }
 
@@ -78,7 +81,7 @@ class QuestionsController extends CliqrStudipController
             throw new Trails_Exception(500, "Could not update");
         } else {
             $this->response->set_status(201, "Updated");
-            return $this->render_json($this->question->toJSON());
+            $this->render_json($this->question->toJSON());
         }
     }
 
@@ -87,21 +90,11 @@ class QuestionsController extends CliqrStudipController
         $this->question->executeRemove();
         $error = $this->question->isError();
 
-        if (Request::isXhr()) {
-            if ($error) {
-                throw new Trails_Exception(500, "Could not delete");
-            } else {
-                $this->response->set_status(204);
-                return $this->render_nothing();
-            }
-        }
-        else {
-            if ($error) {
-                $this->flash['error'] = "Could not delete question. Already deleted?";
-            } else {
-                $this->flash['info'] = "Question deleted";
-            }
-            return $this->redirect('questions/index');
+        if ($error) {
+            throw new Trails_Exception(500, "Could not delete");
+        } else {
+            $this->response->set_status(204);
+            $this->render_nothing();
         }
     }
 
@@ -110,10 +103,10 @@ class QuestionsController extends CliqrStudipController
     {
         CSRFProtection::verifyUnsafeRequest();
 
-        $ok = $this->question->start(true);
+        $ok = $this->question->start($stop_others = true);
         if ($ok) {
             $this->response->set_status(204);
-            return $this->render_nothing();
+            $this->render_nothing();
         } else {
             throw new Trails_Exception(400, "Could not start");
         }
@@ -128,7 +121,7 @@ class QuestionsController extends CliqrStudipController
         $ok = $this->question->stop();
         if ($ok) {
             $this->response->set_status(204);
-            return $this->render_nothing();
+            $this->render_nothing();
         } else {
             throw new Trails_Exception(400, "Could not stop");
         }
@@ -210,19 +203,16 @@ class QuestionsController extends CliqrStudipController
     }
 
     # require a cid; throw a 400 otherwise
-    private function requireContext()
+    static private function requireContext()
     {
-        $cid = Request::get("cid");
-        if (!isset($cid)) {
-            throw new Trails_Exception(400);
-        }
+        $cid = self::ensureMD5(Request::option("cid"));
         return $cid;
     }
 
     # require ´tutor´ permission; throw a 403 otherwise
-    private function requireAuthorisation()
+    static private function requireAuthorisation($cid)
     {
-        if (!$GLOBALS['perm']->have_studip_perm("tutor", $this->cid)) {
+        if (!$GLOBALS['perm']->have_studip_perm("tutor", $cid)) {
             throw new Trails_Exception(403);
         }
     }

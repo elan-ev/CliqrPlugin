@@ -69,12 +69,12 @@ class CliqrStudipController extends StudipController
 
     /**
      * Decode the request body using json_decode and utf8decode.
-     * @ return mixed the decoded request body.
+     * @return mixed the decoded request body.
      */
     function parseJSONBody()
     {
         $body = file_get_contents('php://input');
-        # TODO should utf8decode be optional?
+        # TODO should utf8decode be optional using a func param for this?
         $body = self::utf8decode($body);
         return json_decode($body, true);
     }
@@ -89,7 +89,8 @@ class CliqrStudipController extends StudipController
     function rescue($exception)
     {
         if ($exception instanceof \Cliqr\RecordNotFound) {
-            return $this->dispatcher->trails_error(new Trails_Exception(404));
+            return $this->dispatcher->trails_error(
+                new Trails_Exception(404, "Record not found"));
         } else {
             throw $exception;
         }
@@ -100,6 +101,7 @@ class CliqrStudipController extends StudipController
         if (!preg_match('/^[0-9a-f]{32}$/', $id)) {
             throw new Trails_Exception(400);
         }
+        return $id;
     }
 
 

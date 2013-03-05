@@ -10,7 +10,7 @@ PageLayout::addScript($ASSETS . 'vendor/validator.js');
 $short_url = $plugin->config['shortener']->shorten($controller->poll_url($cid));
 
 PageLayout::addHeadElement('script', array(),
-'// TODO refine this
+'
 var cliqr = {bootstrap: {}, config: {
     PLUGIN_URL : "' . htmlReady(current(explode('?', $controller->url_for("")))) . '"
   , CID        : "' . htmlReady($cid) . '"

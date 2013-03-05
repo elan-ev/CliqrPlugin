@@ -58,7 +58,7 @@ $polls = array_map(function ($q) {
       </h1>
     </noscript>
 
-    <script src="http://js.pusher.com/1.12.5/pusher.min.js"></script>
+    <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
 
     <script data-main="<?= $ASSETS ?>js/require/poll.js"
             src="<?= $ASSETS ?>js/vendor/require.js"></script>
