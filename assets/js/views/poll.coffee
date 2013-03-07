@@ -19,10 +19,13 @@ define [
 
     initialize: (options) ->
       super options
+
       @listenTo @collection, "all", @render
+      @listenTo Backbone, "pusher_connected", @onPusherConnected
+
+    timeout = null
 
     render: ->
-
       @poll = @collection.firstFresh()
 
       if @poll
@@ -31,11 +34,16 @@ define [
 
       context =
         poll: @poll?.toJSON()
-        pusher_enabled: cliqr.$App.pusherEnabled()
+        pusher_connected: !!cliqr.config.pusherConnected
+
+      @$el.addClass "pusher-mode"
 
       @$el.html @template context
       @
 
+    postRender: ->
+      switchToReloadMode = => @$el.removeClass "pusher-mode"
+      timeout = setTimeout switchToReloadMode, 500
 
     recordAnswer: (event) =>
       event.preventDefault()
@@ -51,3 +59,8 @@ define [
             return
       else
         alert "TODO poll was already answered"
+
+    onPusherConnected: ->
+      cliqr.config.pusherConnected = true
+      clearTimeout timeout
+      @render()

@@ -1,5 +1,10 @@
 <div data-role="header">
-  <h1>Stud.IP &ndash; Cliqr</h1>
+  <h1>
+    Stud.IP &ndash; Cliqr
+  </h1>
+  {{^pusher_connected}}
+    <a class="reload-interactable ui-btn-right" href="?" data-icon="refresh" data-theme="a" data-iconpos="notext"></a>
+  {{/pusher_connected}}
 </div>
 
 <div data-role="content">
@@ -29,9 +34,9 @@
   {{^poll}}
   <h1>Keine weiteren Fragen</h1>
 
-    {{#unless pusher_enabled}}
-    <a href="" data-role="button" data-icon="refresh" data-theme="e">Aktualisieren</a>
-    {{/unless}}
+    {{^pusher_connected}}
+    <a class="reload-interactable" href="" data-role="button" data-icon="refresh" data-theme="e">Aktualisieren</a>
+    {{/pusher_connected}}
 
   {{/poll}}
 

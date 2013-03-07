@@ -27,6 +27,7 @@ define [
       $(page.el).attr('data-role', 'page')
       page.render()
       $('body').append $ page.el
+      page.postRender?()
 
       ###
       do not use transition for first page

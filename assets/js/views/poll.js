@@ -11,6 +11,7 @@
 
     var PollView;
     return PollView = (function(_super) {
+      var timeout;
 
       __extends(PollView, _super);
 
@@ -27,8 +28,11 @@
 
       PollView.prototype.initialize = function(options) {
         PollView.__super__.initialize.call(this, options);
-        return this.listenTo(this.collection, "all", this.render);
+        this.listenTo(this.collection, "all", this.render);
+        return this.listenTo(Backbone, "pusher_connected", this.onPusherConnected);
       };
+
+      timeout = null;
 
       PollView.prototype.render = function() {
         var answer, context, index, _i, _len, _ref, _ref1;
@@ -42,10 +46,20 @@
         }
         context = {
           poll: (_ref1 = this.poll) != null ? _ref1.toJSON() : void 0,
-          pusher_enabled: cliqr.$App.pusherEnabled()
+          pusher_connected: !!cliqr.config.pusherConnected
         };
+        this.$el.addClass("pusher-mode");
         this.$el.html(this.template(context));
         return this;
+      };
+
+      PollView.prototype.postRender = function() {
+        var switchToReloadMode,
+          _this = this;
+        switchToReloadMode = function() {
+          return _this.$el.removeClass("pusher-mode");
+        };
+        return timeout = setTimeout(switchToReloadMode, 500);
       };
 
       PollView.prototype.recordAnswer = function(event) {
@@ -60,6 +74,12 @@
         } else {
           return alert("TODO poll was already answered");
         }
+      };
+
+      PollView.prototype.onPusherConnected = function() {
+        cliqr.config.pusherConnected = true;
+        clearTimeout(timeout);
+        return this.render();
       };
 
       return PollView;
