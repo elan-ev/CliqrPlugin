@@ -28,8 +28,13 @@
 
       PollView.prototype.initialize = function(options) {
         PollView.__super__.initialize.call(this, options);
-        this.listenTo(this.collection, "all", this.render);
+        this.listenTo(this.collection, "all", this.update);
         return this.listenTo(Backbone, "pusher_connected", this.onPusherConnected);
+      };
+
+      PollView.prototype.update = function() {
+        this.render();
+        return this.postRender();
       };
 
       timeout = null;
@@ -54,12 +59,12 @@
       };
 
       PollView.prototype.postRender = function() {
-        var switchToReloadMode,
-          _this = this;
-        switchToReloadMode = function() {
-          return _this.$el.removeClass("pusher-mode");
-        };
-        return timeout = setTimeout(switchToReloadMode, 500);
+        var _this = this;
+        if (!cliqr.config.pusherConnected) {
+          return timeout = setTimeout(function() {
+            return _this.$el.removeClass("pusher-mode");
+          }, 500);
+        }
       };
 
       PollView.prototype.recordAnswer = function(event) {
@@ -69,7 +74,7 @@
           return $.post(cliqr.$Polls.url(), this.$("form").serialize()).always(function() {
             return id_list.add(_this.poll);
           }).done(function(msg) {
-            return _this.render();
+            return _this.update();
           }).fail(function(jqXHR, textStatus) {});
         } else {
           return alert("TODO poll was already answered");
@@ -79,7 +84,7 @@
       PollView.prototype.onPusherConnected = function() {
         cliqr.config.pusherConnected = true;
         clearTimeout(timeout);
-        return this.render();
+        return this.update();
       };
 
       return PollView;

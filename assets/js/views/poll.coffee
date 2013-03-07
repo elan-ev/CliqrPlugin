@@ -20,8 +20,12 @@ define [
     initialize: (options) ->
       super options
 
-      @listenTo @collection, "all", @render
+      @listenTo @collection, "all", @update
       @listenTo Backbone, "pusher_connected", @onPusherConnected
+
+    update: ->
+      do @render
+      do @postRender
 
     timeout = null
 
@@ -42,8 +46,10 @@ define [
       @
 
     postRender: ->
-      switchToReloadMode = => @$el.removeClass "pusher-mode"
-      timeout = setTimeout switchToReloadMode, 500
+      unless cliqr.config.pusherConnected
+        timeout = setTimeout =>
+          @$el.removeClass "pusher-mode"
+        , 500
 
     recordAnswer: (event) =>
       event.preventDefault()
@@ -54,7 +60,7 @@ define [
           .always () =>
             id_list.add @poll
           .done (msg) =>
-            @render()
+            @update()
           .fail (jqXHR, textStatus) ->
             return
       else
@@ -63,4 +69,4 @@ define [
     onPusherConnected: ->
       cliqr.config.pusherConnected = true
       clearTimeout timeout
-      @render()
+      @update()
