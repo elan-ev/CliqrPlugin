@@ -14,6 +14,8 @@ define [
     # TODO combinable with TemplateView?
     template: utils.compileTemplate("poll")
 
+    className: "page"
+
     events:
       "submit form": "recordAnswer"
 
@@ -36,11 +38,9 @@ define [
         for answer, index in @poll.get('answers')
           answer.nominal = helpers.nominal index
 
-      context =
-        poll: @poll?.toJSON()
-        pusher_connected: !!cliqr.config.pusherConnected
+      context = poll: @poll?.toJSON()
 
-      @$el.addClass "pusher-mode"
+      @setMode "pusher"  if cliqr.config.pusherConnected
 
       @$el.html @template context
       @
@@ -48,8 +48,11 @@ define [
     postRender: ->
       unless cliqr.config.pusherConnected
         timeout = setTimeout =>
-          @$el.removeClass "pusher-mode"
+          @setMode "reload"
         , 500
+
+    setMode: (mode) ->
+      @$el.attr "data-mode", mode
 
     recordAnswer: (event) =>
       event.preventDefault()
@@ -69,4 +72,4 @@ define [
     onPusherConnected: ->
       cliqr.config.pusherConnected = true
       clearTimeout timeout
-      @update()
+      @setMode "pusher"

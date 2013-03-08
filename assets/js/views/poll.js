@@ -22,6 +22,8 @@
 
       PollView.prototype.template = utils.compileTemplate("poll");
 
+      PollView.prototype.className = "page";
+
       PollView.prototype.events = {
         "submit form": "recordAnswer"
       };
@@ -50,10 +52,11 @@
           }
         }
         context = {
-          poll: (_ref1 = this.poll) != null ? _ref1.toJSON() : void 0,
-          pusher_connected: !!cliqr.config.pusherConnected
+          poll: (_ref1 = this.poll) != null ? _ref1.toJSON() : void 0
         };
-        this.$el.addClass("pusher-mode");
+        if (cliqr.config.pusherConnected) {
+          this.setMode("pusher");
+        }
         this.$el.html(this.template(context));
         return this;
       };
@@ -62,9 +65,13 @@
         var _this = this;
         if (!cliqr.config.pusherConnected) {
           return timeout = setTimeout(function() {
-            return _this.$el.removeClass("pusher-mode");
+            return _this.setMode("reload");
           }, 500);
         }
+      };
+
+      PollView.prototype.setMode = function(mode) {
+        return this.$el.attr("data-mode", mode);
       };
 
       PollView.prototype.recordAnswer = function(event) {
@@ -84,7 +91,7 @@
       PollView.prototype.onPusherConnected = function() {
         cliqr.config.pusherConnected = true;
         clearTimeout(timeout);
-        return this.update();
+        return this.setMode("pusher");
       };
 
       return PollView;
