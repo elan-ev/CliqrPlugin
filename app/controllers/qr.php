@@ -7,8 +7,12 @@ class QrController extends CliqrStudipController
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
-        $args = func_get_args();
+
+        # URL: /cliqr/qr/:id
+        $cid = self::ensureMD5($action);
+
         $action = "show";
+        $args = array($cid);
     }
 
     function show_action($cid)

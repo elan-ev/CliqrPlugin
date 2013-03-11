@@ -1,13 +1,15 @@
-#cliqr-show {
+#cliqr-show, .page.questions-show {
 
   @chartColor1: #3389b7;
   @chartColor2: #96c7e1;
 
   @appeal-height: 75px;
 
+  /*
   #layout_container {
     padding: 5px 0 0 0;
   }
+  */
 
   .question {
     min-height: 500px;
@@ -123,6 +125,8 @@
   }
 
   .appeal {
+    margin: 0 -20px -20px -20px;
+
     font-size: 4em;
     background: @color-appeal;
     color: darken(@color-appeal, 35%);
@@ -192,7 +196,7 @@
       right: 0;
       margin-top: -32px;
       margin-right: 16px;
-      z-index: -1;
+      z-index: 1;
 
       &:hover {
         box-shadow: 0 0 0.25em darken(@color-appeal, 35%);
@@ -254,6 +258,10 @@
 
     button.fullscreen {
       display: none;
+    }
+
+    .appeal {
+      margin: 0;
     }
   }
 

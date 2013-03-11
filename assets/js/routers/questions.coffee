@@ -8,9 +8,10 @@ define [
   'views/questions_index'
   'views/questions_new'
   'views/questions_edit'
+  'views/questions/show'
 ], (Backbone, utils,
     Question, QuestionCollection,
-    QuestionsIndexView, QuestionsNewView, QuestionsEditView) ->
+    QuestionsIndexView, QuestionsNewView, QuestionsEditView, QuestionView) ->
 
   class QuestionsRouter extends Backbone.Router
 
@@ -19,11 +20,12 @@ define [
       "index":    "index"
       "new":      "newQuestion"
       "edit-:id": "editQuestion"
+      "show-:id": "showQuestion"
 
     # ROUTE: "#index"
     index: ->
       @showLoading()
-      @fetchQuestions (questions) =>
+      @fetchQuestions().done (questions) =>
         @hideLoading()
         utils.changeToPage new QuestionsIndexView collection: questions
 
@@ -34,35 +36,46 @@ define [
     # ROUTE: "#edit-:id"
     editQuestion: (id) ->
       @showLoading()
-      @fetchQuestion id, (question) =>
-        utils.changeToPage new QuestionsEditView model: question
+      @fetchQuestion(id).done (question) =>
         @hideLoading()
+        utils.changeToPage new QuestionsEditView model: question
 
+    # ROUTE: "#show-:id"
+    showQuestion: (id) ->
+      @showLoading()
+      @fetchQuestion(id).done (question) =>
+        @hideLoading()
+        utils.changeToPage new QuestionView model: question
+
+
+    # instantiate then remove bootstrapped
+    bootstrapQuestions = ->
+      questions = new QuestionCollection cliqr.bootstrap.POLLS
+      delete cliqr.bootstrap.POLLS
+      questions
 
 
     # TODO should return a promise instead
     fetchQuestions: (callback) ->
-      if cliqr.config.POLLS
-        questions = new QuestionCollection cliqr.config.POLLS
-        delete cliqr.config.POLLS
-        callback questions
+      if cliqr.bootstrap.POLLS
+        $.Deferred()
+         .resolve(bootstrapQuestions())
+         .promise()
 
       else
         questions = new QuestionCollection
-        questions.fetch().done ->
-          callback questions
+        questions.fetch().pipe -> questions # TODO (mlunzena) pipe should be then
 
     # TODO should return a promise instead
     fetchQuestion: (id, callback) ->
-      if cliqr.config.POLLS
-        questions = new QuestionCollection cliqr.config.POLLS
-        delete cliqr.config.POLLS
-        callback questions.get id
+      if cliqr.bootstrap.POLLS
+        $.Deferred()
+         .resolve(bootstrapQuestions().get(id))
+         .promise()
 
       else
         question = new Question id: id
-        question.fetch().done =>
-          callback question
+        question.fetch().pipe -> question # TODO (mlunzena) pipe should be then
 
 
     # Loader stuff - TODO should not be here, AppView?

@@ -43,13 +43,13 @@ class Container extends \Pimple {
                     return null;
                 }
 
-                if (isset($c['ini']['pusher']['host']) && isset($c['ini']['pusher']['port'])) {
+                if (isset($c['ini']['pusher']['host']) && isset($c['ini']['pusher']['api_port'])) {
                     $pusher = new \Pusher($c['ini']['pusher']['key'],
                                           $c['ini']['pusher']['secret'],
                                           $c['ini']['pusher']['app_id'],
                                           true,
                                           $c['ini']['pusher']['host'],
-                                          $c['ini']['pusher']['port']);
+                                          $c['ini']['pusher']['api_port']);
 
                 }
                 else {

@@ -10,14 +10,18 @@ define [
   class QuestionsIndexView extends Backbone.View
     className: "page"
 
-    events:
-      "click button.delete":   "confirmDelete"
-
     initialize: ->
       @listViews =
         'new':     new QuestionsListView(collection: @collection, state: 'new')
         'active':  new QuestionsListView(collection: @collection, state: 'active')
         'stopped': new QuestionsListView(collection: @collection, state: 'stopvis', sortable: true)
+
+      # TODO Ob das so eine gute Idee ist?
+      @listenTo Backbone, "page-after-show", @postRender
+
+    remove: ->
+      view.remove() for key, view of @listViews
+      super()
 
     render: ->
       template = utils.compileTemplate 'questions-index'
@@ -27,6 +31,5 @@ define [
         @$('#' + key + '-questions').replaceWith view.render().el
       @
 
-    confirmDelete: (event) ->
-      unless window.confirm "Wirklich l\xf6schen?"
-        event.preventDefault()
+    postRender: ->
+      view.postRender() for key, view of @listViews

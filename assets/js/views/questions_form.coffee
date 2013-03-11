@@ -61,6 +61,10 @@ define [
             form_inputs.eq(index).focus()
             event.preventDefault()
 
+    disableSaveButton = ->
+      button = @$ "button[name=save]"
+      button.prop("disabled", true).showAjaxNotification() if button.length
+
     # TODO
     submitForm: (event) ->
         event.preventDefault()
@@ -68,10 +72,13 @@ define [
 
         return unless form.data("validator").checkValidity()
 
-        url = "questions/" + if @model then "update/#{@model.id}" else "create"
-        $.post("#{cliqr.config.PLUGIN_URL}#{url}?cid=#{cliqr.config.CID}", form.serialize())
+        disableSaveButton()
+
+        action = "questions/" + if @model then "update/#{@model.id}" else "create"
+        url = "#{cliqr.config.PLUGIN_URL}#{action}?cid=#{cliqr.config.CID}"
+
+        $.post(url, form.serialize())
           .done (msg) ->
-            location = cliqr.config.PLUGIN_URL + "questions/show/#{msg.id}?cid=" + cliqr.config.CID
-            document.location = location
+            Backbone.history.navigate "show-#{msg.id}", trigger: true
           .fail () ->
             console.log "TODO fail", arguments

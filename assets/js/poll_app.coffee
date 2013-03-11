@@ -1,9 +1,10 @@
 define [
   'jqm'
+  'pusher'
   'models/poll_collection'
   'models/back_pusher'
   'routers/poll'
-], (jqm, PollCollection, BackPusher, PollRouter) ->
+], (jqm, Pusher, PollCollection, BackPusher, PollRouter) ->
 
   # The application object
   # Choose a meaningful name for your application
@@ -23,7 +24,7 @@ define [
     ###
     prepopulatePolls: ->
       # TODO globale Variable
-      cliqr.$Polls = new PollCollection cliqr.config.POLLS || []
+      cliqr.$Polls = new PollCollection cliqr.bootstrap.POLLS || []
 
     ###
     Declare the global $App object (the initial $ indicates a global
@@ -33,23 +34,37 @@ define [
       # TODO rename this to $Router
       cliqr.$App = new PollRouter()
 
+
+    pusherPromise = (pusher) ->
+      deferred = $.Deferred()
+
+      pusher.connection.bind "connected", ->
+        deferred.resolve(pusher)
+
+      if pusher.connection.state is "connected"
+        deferred.resolve(pusher)
+
+      deferred.promise()
+
     ###
     connect it to Pusher
-    TODO vllt ein bisschen auslagern
     ###
     connectPusher: ->
 
-      if cliqr.$App.pusherEnabled()
+      return unless cliqr.$App.pusherEnabled()
 
-        if cliqr.config.PUSHER_HOST?
-          Pusher.host = cliqr.config.PUSHER_HOST
+      # setup global config
+      if cliqr.config.PUSHER_HOST?
+        Pusher.host = cliqr.config.PUSHER_HOST
+      if cliqr.config.PUSHER_PORT?
+        Pusher.ws_port  = Pusher.wss_port = cliqr.config.PUSHER_PORT
 
-        if cliqr.config.PUSHER_PORT?
-          Pusher.ws_port  = cliqr.config.PUSHER_PORT
-          Pusher.wss_port = cliqr.config.PUSHER_PORT
+      #instantiate
+      pusher = new Pusher cliqr.config.PUSHER_APP_KEY
+      pusherPromise(pusher).then -> Backbone.trigger "pusher_connected"
 
-        pusher  = new Pusher cliqr.config.PUSHER_APP_KEY
-        channel = pusher.subscribe cliqr.config.PUSHER_CHANNEL
+      #subscribe and push to collection
+      channel = pusher.subscribe cliqr.config.PUSHER_CHANNEL
 
-        bp = new BackPusher channel
-        bp.pushTo cliqr.$Polls
+      bp = new BackPusher channel
+      bp.pushTo cliqr.$Polls

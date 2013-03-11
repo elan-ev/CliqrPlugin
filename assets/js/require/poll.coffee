@@ -6,11 +6,12 @@ requirejs.config
 
   # Specify the paths of vendor libraries
   paths:
-      jquery:     'vendor/jquery-1.8.2',
-      underscore: 'vendor/underscore-1.4.4'
-      backbone:   'vendor/backbone-0.9.10'
-      handlebars: 'vendor/handlebars-1.0.rc.2'
-      jqm:        'vendor/jquery.mobile-1.2.0.min'
+    jquery:     'vendor/jquery-1.8.2',
+    underscore: 'vendor/underscore-1.4.4'
+    backbone:   'vendor/backbone-0.9.10'
+    handlebars: 'vendor/handlebars-1.0.rc.2'
+    jqm:        'vendor/jquery.mobile-1.2.0.min'
+    pusher:     'http://js.pusher.com/1.12/pusher.min'
 
 
   # Underscore and Backbone are not AMD-capable per default,
@@ -26,6 +27,8 @@ requirejs.config
       exports: 'jquery.mobile'
     handlebars:
       exports: 'Handlebars'
+    pusher:
+      exports: 'Pusher'
 
   # For easier development, disable browser caching
   # Of course, this should be removed in a production environment

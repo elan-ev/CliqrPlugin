@@ -15,6 +15,5 @@ define [
     showPoll: ->
       @changePage new PollView collection: cliqr.$Polls
 
-
     pusherEnabled: ->
       cliqr.config.PUSHER_APP_KEY?

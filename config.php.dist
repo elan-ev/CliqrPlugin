@@ -22,4 +22,5 @@ key = <MY-PUSHER-KEY>
 secret = <MY-PUSHER-SECRET>
 app_id = <MY-PUSHER-APP-ID>
 ;host = http://localhost
-;port = 8080
+;api_port = 4567
+;ws_port = 8080

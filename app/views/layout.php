@@ -7,12 +7,15 @@ PageLayout::addStylesheet($ASSETS . 'questions/styles.css');
 PageLayout::addScript($ASSETS . 'vendor/jquery.isotope.min.js');
 PageLayout::addScript($ASSETS . 'vendor/validator.js');
 
+$short_url = $plugin->config['shortener']->shorten($controller->poll_url($cid));
+
 PageLayout::addHeadElement('script', array(),
-'// TODO refine this
-var cliqr = {model: {}, config: {
+'
+var cliqr = {bootstrap: {}, config: {
     PLUGIN_URL : "' . htmlReady(current(explode('?', $controller->url_for("")))) . '"
   , CID        : "' . htmlReady($cid) . '"
   , ASSETS     : "' . htmlReady($ASSETS) . '"
+  , SHORT_URL  : "' . htmlReady($short_url) . '"
 }};
 ');
 ?>

@@ -14,7 +14,6 @@ define [
     initialize: ->
       @initStuff()
       @initRouters()
-      @initPseudoRouter()
 
       do Backbone.history.start
 
@@ -26,19 +25,4 @@ define [
 
 
     initRouters: ->
-      if $('#cliqr-index').length
-        router = new QuestionsRouter
-
-
-    initPseudoRouter: ->
-
-      # Route: questions/show
-      if $('#cliqr-show').length
-        # prepare model
-        model = new Question cliqr.model.$currentQuestion
-        # TODO gehört hier nicht hin
-        setInterval (-> do model.fetch), 2000
-
-        utils.changeToPage new QuestionView
-          el: $ '#cliqr-show .page'
-          model: model
+      router = new QuestionsRouter

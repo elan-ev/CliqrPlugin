@@ -104,6 +104,12 @@ class Question extends \Vote {
     /* INSTANCE METHODS */
     /********************/
 
+    function isActiveIn($range_id)
+    {
+        $_range_id = self::transformRangeId($range_id);
+        return $this->rangeID === $_range_id && $this->isActive();
+    }
+
     function recordAnswer($answer_id)
     {
         if (!$this->isActive()) {
@@ -136,11 +142,11 @@ class Question extends \Vote {
     /**
      * TODO
      */
-    function start($single_question = TRUE)
+    function start($stop_others = TRUE)
     {
 
         # stop all questions
-        if ($single_question) {
+        if ($stop_others) {
             $_range_id = $this->rangeID;
             self::stopAll($_range_id);
         }

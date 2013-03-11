@@ -17,6 +17,12 @@
   background-color: transparent;
   border: 0;
 }
+.reload-interactable {
+  display: none !important;
+}
+.page[data-mode='reload'] .reload-interactable {
+  display: inherit !important;
+}
 /*
 .input-block-level {
   display: block;

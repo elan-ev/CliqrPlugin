@@ -14,28 +14,45 @@ define [
     # TODO combinable with TemplateView?
     template: utils.compileTemplate("poll")
 
+    className: "page"
+
     events:
       "submit form": "recordAnswer"
 
     initialize: (options) ->
       super options
-      @listenTo @collection, "all", @render
+
+      @listenTo @collection, "all", @update
+      @listenTo Backbone, "pusher_connected", @onPusherConnected
+
+    update: ->
+      do @render
+      do @postRender
+
+    timeout = null
 
     render: ->
-
       @poll = @collection.firstFresh()
 
       if @poll
         for answer, index in @poll.get('answers')
           answer.nominal = helpers.nominal index
 
-      context =
-        poll: @poll?.toJSON()
-        pusher_enabled: cliqr.$App.pusherEnabled()
+      context = poll: @poll?.toJSON()
+
+      @setMode "pusher"  if cliqr.config.pusherConnected
 
       @$el.html @template context
       @
 
+    postRender: ->
+      unless cliqr.config.pusherConnected
+        timeout = setTimeout =>
+          @setMode "reload"
+        , 500
+
+    setMode: (mode) ->
+      @$el.attr "data-mode", mode
 
     recordAnswer: (event) =>
       event.preventDefault()
@@ -46,8 +63,13 @@ define [
           .always () =>
             id_list.add @poll
           .done (msg) =>
-            @render()
+            @update()
           .fail (jqXHR, textStatus) ->
             return
       else
-        alert "TODO poll was answered already"
+        alert "TODO poll was already answered"
+
+    onPusherConnected: ->
+      cliqr.config.pusherConnected = true
+      clearTimeout timeout
+      @setMode "pusher"

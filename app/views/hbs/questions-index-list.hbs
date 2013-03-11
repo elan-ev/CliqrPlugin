@@ -2,11 +2,12 @@
 <ol>
 {{#questions}}
   <li class="question state-{{state}}"
+    data-id="{{id}}"
     data-question="{{question}}"
     data-counter="{{sampleSize}}"
     data-startdate="{{startdate}}">
 
-    <a href="{{questions_path 'show'}}">
+    <a href="#show-{{id}}">
       <div class="count" title="{{sampleSize}} Teilnehmer">{{sampleSize}}</div>
       <div class="detail">
         <h4>
