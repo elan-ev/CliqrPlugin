@@ -24,7 +24,7 @@
     Handlebars.registerHelper('date', function(n) {
       var d;
       d = new Date(n * 1000);
-      return pad(d.getFullYear()) + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+      return pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + pad(d.getFullYear());
     });
     Handlebars.registerHelper('questions_path', function(action) {
       var path;
