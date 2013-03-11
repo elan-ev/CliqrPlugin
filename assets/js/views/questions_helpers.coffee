@@ -17,7 +17,7 @@ define [
   # {{date int}} formats a Date to YYYY-MM-DD
   Handlebars.registerHelper 'date', (n) ->
     d = new Date n * 1000
-    pad(d.getFullYear()) + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate())
+    pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + pad(d.getFullYear())
 
   # {{questions_path args}} creates a link URL to questions/<action>
   Handlebars.registerHelper 'questions_path', (action) ->
