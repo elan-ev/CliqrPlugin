@@ -55,8 +55,14 @@
       };
 
       QuestionsListView.prototype.postRender = function() {
-        var _ref;
-        return (_ref = this.sortOptions) != null ? _ref.postRender() : void 0;
+        var $el, el, _i, _len, _ref, _ref1;
+        _ref = this.$("li.question");
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          el = _ref[_i];
+          $el = $(el);
+          $el.addClass("slab-" + ("" + $el.data("counter")).length);
+        }
+        return (_ref1 = this.sortOptions) != null ? _ref1.postRender() : void 0;
       };
 
       QuestionsListView.prototype.deleteQuestion = function(event) {
