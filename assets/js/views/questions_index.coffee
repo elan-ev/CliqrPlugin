@@ -11,22 +11,14 @@ define [
     className: "page"
 
     initialize: ->
-      @listViews =
-        'new':     new QuestionsListView(collection: @collection, state: 'new')
-        'active':  new QuestionsListView(collection: @collection, state: 'active')
-        'stopped': new QuestionsListView(collection: @collection, state: 'stopvis', sortable: true)
-
-    remove: ->
-      view.remove() for key, view of @listViews
-      super()
+      @
 
     render: ->
       template = utils.compileTemplate 'questions-index'
-      @$el.html template()
-
-      for key, view of @listViews
-        @$('#' + key + '-questions').replaceWith view.render().el
+      context =
+        questions: @collection.toJSON()
+      @$el.html template(context)
       @
-
+      
     postRender: ->
-      view.postRender() for key, view of @listViews
+      $("#questions-table").tablesorter();

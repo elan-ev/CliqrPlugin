@@ -22,9 +22,14 @@
       }
     };
     Handlebars.registerHelper('date', function(n) {
-      var d;
-      d = new Date(n * 1000);
-      return pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + pad(d.getFullYear());
+      var d, ret;
+      if (n === 0) {
+        ret = "Noch nicht gestartet.";
+      } else {
+        d = new Date(n * 1000);
+        ret = pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + pad(d.getFullYear());
+      }
+      return ret;
     });
     Handlebars.registerHelper('questions_path', function(action) {
       var path;

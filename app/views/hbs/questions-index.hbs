@@ -2,17 +2,35 @@
      href="#new"
      tabindex="0">Frage erstellen</a>
 
-<h3>
-  Geplante Fragen
-</h3>
-<div class="questions" id="new-questions"/>
+<table id="questions-table" class="tablesorter">
+  <thead> 
+  <tr class="sort-by">
+    <th>Datum</th>
+    <th>Uhrzeit</th>
+    <th>Anzahl</th>
+    <th>Frage</th>
+    <th>Antworten</th>
+  </tr>
+  </thead> 
 
-<h3>
-  Laufende Fragen
-</h3>
-<div class="questions" id="active-questions"/>
+{{#if questions}}
+  <tbody> 
+  {{#questions}}
+  <tr>
+    <td>{{date startdate}}</td>
+    <td>{{date startdate}}</td>
+    <td>{{sampleSize}}</td>
+    <td><a href="#show-{{id}}">{{question}}</a></td>
+    <td>{{#answers}}{{shorten text}} {{/answers}}</td>
+  </tr>
+  {{/questions}}
+  </tbody> 
+{{/if}}
 
-<h3>
-  Gestoppte Fragen
-</h3>
-<div class="questions" id="stopped-questions"/>
+</table>
+
+{{^questions}}
+<div class="empty">
+  keine solche Fragen
+</div>
+{{/questions}}
