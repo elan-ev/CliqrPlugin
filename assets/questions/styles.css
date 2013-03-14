@@ -260,9 +260,18 @@ h4 small {
 }
 #cliqr-index .questions ol li .count {
   width: 60px;
-  font-size: 60px;
   line-height: 60px;
   color: #b3b3b3;
+  font-size: 24px;
+}
+#cliqr-index .questions ol li.slab-1 .count {
+  font-size: 60px;
+}
+#cliqr-index .questions ol li.slab-2 .count {
+  font-size: 48px;
+}
+#cliqr-index .questions ol li.slab-3 .count {
+  font-size: 36px;
 }
 #cliqr-index .questions ol li.state-new .count {
   visibility: hidden;

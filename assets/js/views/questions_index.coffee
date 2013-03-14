@@ -16,9 +16,6 @@ define [
         'active':  new QuestionsListView(collection: @collection, state: 'active')
         'stopped': new QuestionsListView(collection: @collection, state: 'stopvis', sortable: true)
 
-      # TODO Ob das so eine gute Idee ist?
-      @listenTo Backbone, "page-after-show", @postRender
-
     remove: ->
       view.remove() for key, view of @listViews
       super()

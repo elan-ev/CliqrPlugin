@@ -18,8 +18,7 @@ define [
     # render that view
     container = $("#layout_container")
     container.prepend view.render().$el
-    Backbone.trigger 'page-after-show', view
-
+    view.postRender?()
 
   # We use Handlebars as template engine. This function makes it a lot
   # easier to get a pre-compiled Handlebars template.

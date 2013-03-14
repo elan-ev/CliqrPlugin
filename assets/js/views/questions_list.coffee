@@ -38,6 +38,9 @@ define [
 
 
     postRender: ->
+      for el in @$("li.question")
+        $el = $ el
+        $el.addClass "slab-" + ("" + $el.data("counter")).length
       @sortOptions?.postRender()
 
 

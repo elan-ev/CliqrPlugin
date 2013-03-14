@@ -16,7 +16,7 @@
       QuestionsIndexView.prototype.className = "page";
 
       QuestionsIndexView.prototype.initialize = function() {
-        this.listViews = {
+        return this.listViews = {
           'new': new QuestionsListView({
             collection: this.collection,
             state: 'new'
@@ -31,7 +31,6 @@
             sortable: true
           })
         };
-        return this.listenTo(Backbone, "page-after-show", this.postRender);
       };
 
       QuestionsIndexView.prototype.remove = function() {

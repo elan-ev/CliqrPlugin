@@ -19,7 +19,8 @@ define [
       Math.floor(Date.now() / 1000)
 
     fetch = ->
-      JSON.parse(window.localStorage.getItem(KEY)) ? {}
+      item = window.localStorage.getItem(KEY)
+      if item is null then {} else JSON.parse item
 
     save = (ids) ->
       window.localStorage.setItem KEY, JSON.stringify ids
