@@ -3,7 +3,6 @@ define [
   'utils'
   'underscore'
   'views/questions_form'
-  'views/questions_list'
   'views/questions_helpers'
 ], (Backbone, utils, _, QuestionsForm, QuestionsListView, _helpers) ->
 
