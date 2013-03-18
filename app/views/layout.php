@@ -5,6 +5,8 @@ $this->set_layout($template_factory->open('layouts/base_without_infobox'));
 $ASSETS = $plugin->getPluginURL() . '/assets/';
 PageLayout::addStylesheet($ASSETS . 'questions/styles.css');
 PageLayout::addScript($ASSETS . 'vendor/jquery.isotope.min.js');
+PageLayout::addScript($ASSETS . 'vendor/jquery.tablesorter.min.js');
+PageLayout::addStylesheet($ASSETS . 'vendor/tablesorter.css');
 PageLayout::addScript($ASSETS . 'vendor/validator.js');
 
 $short_url = $plugin->config['shortener']->shorten($controller->poll_url($cid));

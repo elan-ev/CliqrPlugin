@@ -3,7 +3,6 @@ define [
   'utils'
   'underscore'
   'views/questions_form'
-  'views/questions_list'
   'views/questions_helpers'
 ], (Backbone, utils, _, QuestionsForm, QuestionsListView, _helpers) ->
 
@@ -11,22 +10,31 @@ define [
     className: "page"
 
     initialize: ->
-      @listViews =
-        'new':     new QuestionsListView(collection: @collection, state: 'new')
-        'active':  new QuestionsListView(collection: @collection, state: 'active')
-        'stopped': new QuestionsListView(collection: @collection, state: 'stopvis', sortable: true)
-
-    remove: ->
-      view.remove() for key, view of @listViews
-      super()
+      @
 
     render: ->
       template = utils.compileTemplate 'questions-index'
-      @$el.html template()
+      template_table = utils.compileTemplate 'questions-index-table'
+      
+      q_new = @collection.where(state: "new")
+      q_active = @collection.where(state: "active")
+      q_stopped = @collection.where(state: "stopvis")
+      
+      tables = 
+        table_new: template_table({
+          questions: _.invoke q_new, "toJSON"
+          state: "new"})
+        table_active: template_table({
+          questions: _.invoke q_active, "toJSON"
+          state: "active"})
+        table_stopped: template_table({
+          questions: _.invoke q_stopped, "toJSON"
+          state: "stopped"})
 
-      for key, view of @listViews
-        @$('#' + key + '-questions').replaceWith view.render().el
+      @$el.html template(tables)
       @
-
+      
     postRender: ->
-      view.postRender() for key, view of @listViews
+      $("#questions-table.new").tablesorter();
+      $("#questions-table.active").tablesorter();
+      $("#questions-table.stopped").tablesorter();

@@ -1,0 +1,29 @@
+{{#if questions}}
+<table id="questions-table" class="tablesorter {{state}}">
+  <thead> 
+  <tr class="sort-by">
+    <th width="180">Datum</th>
+    <th>Frage</th>
+    <th width="150">Anzahl Antworten</th>
+  </tr>
+  </thead> 
+
+  <tbody> 
+  {{#questions}}
+  <tr>
+    <td>{{datetime startdate}}</td>
+    <td><a href="#show-{{id}}">{{question}}</a></td>
+    <td>{{sampleSize}}</td>
+  </tr>
+  {{/questions}}
+  </tbody> 
+
+</table>
+
+{{/if}}
+
+{{^questions}}
+<div class="empty">
+  keine solche Fragen
+</div>
+{{/questions}}
