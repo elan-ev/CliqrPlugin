@@ -6,7 +6,7 @@
     paths: {
       jquery: 'vendor/jquery-1.8.2',
       underscore: 'vendor/underscore-1.4.4',
-      backbone: 'vendor/backbone-0.9.10',
+      backbone: 'vendor/backbone-1.0.0',
       handlebars: 'vendor/handlebars-1.0.rc.2',
       jqm: 'vendor/jquery.mobile-1.2.0.min',
       pusher: 'http://js.pusher.com/1.12/pusher.min'
