@@ -17,7 +17,7 @@
 
       /*
       As the webpage contains the initial polls, pre-populate the global
-      $Polls (the initial $ indicates a global variable) with these. This
+      $Polls (the initial dollar sign indicates a global variable) with these. This
       way we spare us an initial AJAX call.
       */
 
@@ -27,7 +27,7 @@
       };
 
       /*
-      Declare the global $App object (the initial $ indicates a global
+      Declare the global $App object (the initial dollar sign indicates a global
       variable). We need it to dynamically navigate between routes etc.
       */
 
@@ -38,7 +38,7 @@
 
       pusherPromise = function(pusher) {
         var deferred;
-        deferred = $.Deferred();
+        deferred = jQuery.Deferred();
         pusher.connection.bind("connected", function() {
           return deferred.resolve(pusher);
         });

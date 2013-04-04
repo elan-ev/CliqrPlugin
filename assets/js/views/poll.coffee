@@ -5,7 +5,7 @@ define [
   'views/helpers'
   'views/page'
   'models/id_list'
-], (_, $, utils, helpers, PageView, id_list) ->
+], (_, jQuery, utils, helpers, PageView, id_list) ->
 
   ###
   TODO: docu für pollview
@@ -59,7 +59,7 @@ define [
 
       # @poll should be unanswered
       unless id_list.test @poll
-        $.post(cliqr.$Polls.url(), @$("form").serialize())
+        jQuery.post(cliqr.$Polls.url(), @$("form").serialize())
           .always () =>
             id_list.add @poll
           .done (msg) =>

@@ -38,7 +38,7 @@ define [
 
     # TODO possibly deprecated
     # ids = fetch()
-    # $(window).on "storage", -> ids = fetch()
+    # jQuery(window).on "storage", -> ids = fetch()
 
     add: (poll) ->
       ids = fetch()

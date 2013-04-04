@@ -1,14 +1,14 @@
 define [
   'jquery'
-], ($) ->
+], (jQuery) ->
 
-  $(document).bind "mobileinit", ->
-    $.mobile.ajaxEnabled = false
-    $.mobile.linkBindingEnabled = false
-    $.mobile.hashListeningEnabled = false
-    $.mobile.pushStateEnabled = false
+  jQuery(document).bind "mobileinit", ->
+    jQuery.mobile.ajaxEnabled = false
+    jQuery.mobile.linkBindingEnabled = false
+    jQuery.mobile.hashListeningEnabled = false
+    jQuery.mobile.pushStateEnabled = false
 
-  $('div[data-role="page"]').live 'pagehide', (event, ui)->
-    $(event.currentTarget).remove()
+  jQuery('div[data-role="page"]').live 'pagehide', (event, ui)->
+    jQuery(event.currentTarget).remove()
 
   return

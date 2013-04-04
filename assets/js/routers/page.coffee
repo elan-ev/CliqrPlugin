@@ -1,7 +1,7 @@
 define [
   'backbone'
   'jquery'
-], (Backbone, $) ->
+], (Backbone, jQuery) ->
 
   ###
   Customized Backbone.Router playing nicely with jqm
@@ -24,15 +24,15 @@ define [
       ###
       add "data-role=page" to the element of the page, then render and insert into the body
       ###
-      $(page.el).attr('data-role', 'page')
+      jQuery(page.el).attr('data-role', 'page')
       page.render()
-      $('body').append $ page.el
+      jQuery('body').append jQuery page.el
       page.postRender?()
 
       ###
       do not use transition for first page
       ###
-      transition = $.mobile.defaultPageTransition
+      transition = jQuery.mobile.defaultPageTransition
       if @firstPage
         transition = 'none'
         @firstPage = false
@@ -40,6 +40,6 @@ define [
       ###
       call the jqm function
       ###
-      $.mobile.changePage $(page.el),
+      jQuery.mobile.changePage jQuery(page.el),
         changeHash: false
         transition: transition

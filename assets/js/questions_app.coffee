@@ -1,11 +1,7 @@
 define [
   'utils'
-  'models/question'
-  'models/questions'
-  'views/questions_index'
-  'views/questions_show'
   'routers/questions'
-], (utils, Question, QuestionCollection, QuestionsIndexView, QuestionView, QuestionsRouter) ->
+], (utils, QuestionsRouter) ->
 
   # The application object
   # Choose a meaningful name for your application

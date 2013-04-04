@@ -1,7 +1,7 @@
 define [
   'backbone'
   'jquery'
-], (Backbone, $) ->
+], (Backbone, jQuery) ->
 
   ###
   TODO: docu für pollview
@@ -9,7 +9,7 @@ define [
   PageView = do ->
 
     enhancePage = (el) ->
-      $(el).page("destroy").page() if el.parentNode
+      jQuery(el).page("destroy").page() if el.parentNode
 
     Backbone.View.extend
       initialize: ->

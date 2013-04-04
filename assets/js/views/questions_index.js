@@ -81,7 +81,7 @@
         console.log("listItems", listItems, val);
         if (val) {
           for (i = _i = _ref = listItems.length - 1; _i >= 0; i = _i += -1) {
-            item = $(listItems[i]);
+            item = jQuery(listItems[i]);
             itemtext = item.text();
             if (item.hasClass("divider")) {
               item.toggleClass("ui-filter-hidequeue", !childItems);

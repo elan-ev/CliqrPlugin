@@ -70,7 +70,7 @@ define [
         # and any list dividers without regular rows shown under it
 
         for i in [listItems.length-1..0] by -1
-          item = $ listItems[i]
+          item = jQuery listItems[i]
           itemtext = item.text()
 
           if item.hasClass "divider"

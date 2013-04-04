@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['backbone', 'jquery'], function(Backbone, $) {
+  define(['backbone', 'jquery'], function(Backbone, jQuery) {
     /*
     Customized Backbone.Router playing nicely with jqm
     */
@@ -37,9 +37,9 @@
         */
 
         var transition;
-        $(page.el).attr('data-role', 'page');
+        jQuery(page.el).attr('data-role', 'page');
         page.render();
-        $('body').append($(page.el));
+        jQuery('body').append(jQuery(page.el));
         if (typeof page.postRender === "function") {
           page.postRender();
         }
@@ -47,7 +47,7 @@
         do not use transition for first page
         */
 
-        transition = $.mobile.defaultPageTransition;
+        transition = jQuery.mobile.defaultPageTransition;
         if (this.firstPage) {
           transition = 'none';
           this.firstPage = false;
@@ -56,7 +56,7 @@
         call the jqm function
         */
 
-        return $.mobile.changePage($(page.el), {
+        return jQuery.mobile.changePage(jQuery(page.el), {
           changeHash: false,
           transition: transition
         });
