@@ -3,9 +3,10 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['backbone', 'utils', 'underscore', 'views/questions_form', 'views/questions_list', 'views/questions_helpers'], function(Backbone, utils, _, QuestionsForm, QuestionsListView, _helpers) {
+  define(['backbone', 'utils', 'underscore', 'views/questions_helpers'], function(Backbone, utils, _, _helpers) {
     var QuestionsIndexView;
     return QuestionsIndexView = (function(_super) {
+      var defaultFilterCallback, lastval;
 
       __extends(QuestionsIndexView, _super);
 
@@ -15,55 +16,92 @@
 
       QuestionsIndexView.prototype.className = "page";
 
-      QuestionsIndexView.prototype.initialize = function() {
-        return this.listViews = {
-          'new': new QuestionsListView({
-            collection: this.collection,
-            state: 'new'
-          }),
-          'active': new QuestionsListView({
-            collection: this.collection,
-            state: 'active'
-          }),
-          'stopped': new QuestionsListView({
-            collection: this.collection,
-            state: 'stopvis',
-            sortable: true
-          })
-        };
+      QuestionsIndexView.prototype.id = "questions-index";
+
+      QuestionsIndexView.prototype.events = {
+        "submit form": "submitFilter",
+        "keyup  input.search": "filterList",
+        "change input.search": "filterList",
+        "input  input.search": "filterList"
       };
 
-      QuestionsIndexView.prototype.remove = function() {
-        var key, view, _ref;
-        _ref = this.listViews;
-        for (key in _ref) {
-          view = _ref[key];
-          view.remove();
+      QuestionsIndexView.prototype.groupCollection = function() {
+        var date, grouped, groups, question, _i, _j, _len, _len1, _ref, _ref1;
+        groups = this.collection.groupByDate();
+        grouped = [];
+        _ref = _.keys(groups).reverse();
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          date = _ref[_i];
+          grouped.push({
+            divider: true,
+            startdate: date === "null" ? null : date
+          });
+          _ref1 = groups[date];
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            question = _ref1[_j];
+            grouped.push(question.toJSON());
+          }
         }
-        return QuestionsIndexView.__super__.remove.call(this);
+        return grouped;
       };
 
       QuestionsIndexView.prototype.render = function() {
-        var key, template, view, _ref;
+        var template;
         template = utils.compileTemplate('questions-index');
-        this.$el.html(template());
-        _ref = this.listViews;
-        for (key in _ref) {
-          view = _ref[key];
-          this.$('#' + key + '-questions').replaceWith(view.render().el);
-        }
+        this.$el.html(template({
+          grouped: this.groupCollection()
+        }));
         return this;
       };
 
-      QuestionsIndexView.prototype.postRender = function() {
-        var key, view, _ref, _results;
-        _ref = this.listViews;
-        _results = [];
-        for (key in _ref) {
-          view = _ref[key];
-          _results.push(view.postRender());
+      defaultFilterCallback = function(text, searchValue, item) {
+        return text.toString().toLowerCase().indexOf(searchValue) === -1;
+      };
+
+      lastval = "";
+
+      QuestionsIndexView.prototype.filterList = function(e) {
+        var childItems, i, item, itemtext, list, listItems, search, val, _i, _ref;
+        search = this.$("input.search");
+        val = search[0].value.toLowerCase();
+        listItems = null;
+        list = this.$("ol");
+        childItems = false;
+        itemtext = "";
+        console.log("last: " + lastval + " val: " + val);
+        if (lastval === val) {
+          return;
         }
-        return _results;
+        if (val.length < lastval.length || val.indexOf(lastval) !== 0) {
+          listItems = list.children();
+        } else {
+          listItems = list.children(":not(.ui-screen-hidden)");
+        }
+        lastval = val;
+        console.log("listItems", listItems, val);
+        if (val) {
+          for (i = _i = _ref = listItems.length - 1; _i >= 0; i = _i += -1) {
+            item = $(listItems[i]);
+            itemtext = item.text();
+            if (item.hasClass("divider")) {
+              item.toggleClass("ui-filter-hidequeue", !childItems);
+              childItems = false;
+            } else if (defaultFilterCallback(itemtext, val, item)) {
+              item.toggleClass("ui-filter-hidequeue", true);
+            } else {
+              childItems = true;
+            }
+          }
+          listItems.filter(":not(.ui-filter-hidequeue)").toggleClass("ui-screen-hidden", false);
+          return listItems.filter(".ui-filter-hidequeue").toggleClass("ui-screen-hidden", true).toggleClass("ui-filter-hidequeue", false);
+        } else {
+          return listItems.toggleClass("ui-screen-hidden", false);
+        }
+      };
+
+      QuestionsIndexView.prototype.submitFilter = function() {
+        this.$("input.search").blur();
+        return false;
       };
 
       return QuestionsIndexView;

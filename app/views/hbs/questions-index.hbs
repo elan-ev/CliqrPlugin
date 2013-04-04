@@ -1,18 +1,50 @@
-<h3>
-  Geplante Fragen
-  <a class="questions-new button"
-     href="#new"
-     tabindex="0">Frage erstellen</a>
+{{#unless grouped}}
+<div class="empty">
+  Bisher haben Sie noch keine Fragen erstellt.
 
-</h3>
-<div class="questions" id="new-questions"/>
+<a class="questions-new button"
+   href="#new"
+   tabindex="0">Frage erstellen</a>
 
-<h3>
-  Laufende Fragen
-</h3>
-<div class="questions" id="active-questions"/>
+</div>
 
-<h3>
-  Gestoppte Fragen
-</h3>
-<div class="questions" id="stopped-questions"/>
+{{^}}
+
+<form class="filter">
+  <input type="text" class="search">
+</form>
+
+<ol data-filter="true">
+{{#each grouped}}
+  {{#if divider}}
+    <li class="divider">
+      {{#if startdate}}
+        Fragen vom {{date startdate}}
+      {{^}}
+        zukünftige Fragen
+      {{/if}}
+    </li>
+  {{^}}
+  <li class="state-{{state}}">
+    <a href="#show-{{id}}">
+      <div class="detail">
+        <h4>
+          {{question}}
+        </h4>
+
+        <div class="answers">
+          {{#answers}}
+            <span>{{shorten text}}</span>
+          {{/answers}}
+        </div>
+      </div>
+
+      <span class="count" title="{{sampleSize}} Teilnehmer">{{sampleSize}}</span>
+    </a>
+  </li>
+
+  {{/if}}
+{{/each}}
+</ol>
+
+{{/unless}}

@@ -8,7 +8,7 @@
 @color-appeal: #C8C9C9;
 @color-detail: #b3b3b3;
 @color-accent: #b3b3b3;
-
+@color-hover:  #24437C;
 
 .xdebug-var-dump {
 
@@ -22,6 +22,15 @@
     opacity: 1;
     .transition(0s);
   }
+}
+
+.background-icon(@color, @img) {
+  & {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: transparent;
+    background-image: url('../../../../../assets/images/icons/16/@{color}/@{img}.png');
+    }
 }
 
 @import "loader.less";

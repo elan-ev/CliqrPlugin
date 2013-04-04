@@ -15,3 +15,8 @@ define [
 
     comparator: (question) ->
       question.get 'startdate'
+
+    groupByDate: ->
+      @groupBy (model) ->
+        start = model.get("startdate")
+        if start is 0 then null else 86400 * Math.floor start / 86400
