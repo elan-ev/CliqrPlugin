@@ -59,7 +59,7 @@
         _ref = this.$("li.question");
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           el = _ref[_i];
-          $el = $(el);
+          $el = jQuery(el);
           $el.addClass("slab-" + ("" + $el.data("counter")).length);
         }
         return (_ref1 = this.sortOptions) != null ? _ref1.postRender() : void 0;
@@ -70,7 +70,7 @@
           _this = this;
         event.preventDefault();
         if (window.confirm("Wirklich l\xf6schen?")) {
-          li = $(event.target).closest("li");
+          li = jQuery(event.target).closest("li");
           id = li.data("id");
           return li.fadeOut().promise().done(function() {
             _this.collection.get(id).destroy();

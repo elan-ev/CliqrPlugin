@@ -21,7 +21,7 @@ define [
     # TODO clean this up!
     initStuff: ->
       # destroy self-destroy messages
-      setTimeout (-> $(".self-destroy").remove()), 5000
+      setTimeout (-> jQuery(".self-destroy").remove()), 5000
 
 
     initRouters: ->

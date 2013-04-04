@@ -26,10 +26,10 @@ define [
 
     addChoice: (event) ->
       choice = Handlebars.partials['choice'] {}
-      $(choice).insertBefore(@$ '.choice-new').find("input").focus()
+      jQuery(choice).insertBefore(@$ '.choice-new').find("input").focus()
 
     removeChoice: (event) ->
-      choice_input = $(event.target).closest(".choice-input")
+      choice_input = jQuery(event.target).closest(".choice-input")
       if choice_input.siblings(".choice-input").length
         choice_input.remove()
       else
@@ -77,7 +77,7 @@ define [
         action = "questions/" + if @model then "update/#{@model.id}" else "create"
         url = "#{cliqr.config.PLUGIN_URL}#{action}?cid=#{cliqr.config.CID}"
 
-        $.post(url, form.serialize())
+        jQuery.post(url, form.serialize())
           .done (msg) ->
             Backbone.history.navigate "show-#{msg.id}", trigger: true
           .fail () ->

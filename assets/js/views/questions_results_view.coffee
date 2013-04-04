@@ -19,7 +19,7 @@ define [
       widths = _.map data, (d) -> if max > 0 then d / max * width else 0
 
       counts.before (index) ->
-        $('<span class="chart"></div>').css(width: widths[index]).attr("data-count": data[index])
+        jQuery('<span class="chart"></div>').css(width: widths[index]).attr("data-count": data[index])
 
     enrichedModel: () ->
       size = _.reduce @model, ((memo, answer) -> memo + answer.counter), 0

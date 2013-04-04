@@ -65,7 +65,7 @@
 
       SortOptionsView.prototype.sortBy = function(event) {
         var target;
-        target = $(event.target);
+        target = jQuery(event.target);
         if (target.hasClass("selected")) {
           target.toggleClass("reversed");
         } else {

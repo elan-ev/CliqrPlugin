@@ -39,7 +39,7 @@ define [
 
     sortBy: (event) =>
 
-      target = $ event.target
+      target = jQuery event.target
 
       if target.hasClass "selected"
         target.toggleClass "reversed"

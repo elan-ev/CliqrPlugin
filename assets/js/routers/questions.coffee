@@ -58,7 +58,7 @@ define [
     # TODO should return a promise instead
     fetchQuestions: (callback) ->
       if cliqr.bootstrap.POLLS
-        $.Deferred()
+        jQuery.Deferred()
          .resolve(bootstrapQuestions())
          .promise()
 
@@ -69,7 +69,7 @@ define [
     # TODO should return a promise instead
     fetchQuestion: (id, callback) ->
       if cliqr.bootstrap.POLLS
-        $.Deferred()
+        jQuery.Deferred()
          .resolve(bootstrapQuestions().get(id))
          .promise()
 
@@ -85,7 +85,7 @@ define [
 
     showLoading: ->
       timeout = setTimeout ->
-          loader = $('<span class="cliqr-loader"/>').html("Loading...").prependTo("#layout_container")
+          loader = jQuery('<span class="cliqr-loader"/>').html("Loading...").prependTo("#layout_container")
         , 300
 
     hideLoading: ->

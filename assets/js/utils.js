@@ -12,13 +12,13 @@
           currentView.remove();
         }
         currentView = view;
-        $(window).scrollTop(0);
-        container = $("#layout_container");
+        jQuery(window).scrollTop(0);
+        container = jQuery("#layout_container");
         container.prepend(view.render().$el);
         return typeof view.postRender === "function" ? view.postRender() : void 0;
       },
       compileTemplate: _.memoize(function(name) {
-        return Handlebars.compile($("#cliqr-template-" + name).html());
+        return Handlebars.compile(jQuery("#cliqr-template-" + name).html());
       })
     };
   });

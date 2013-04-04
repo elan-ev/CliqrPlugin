@@ -70,7 +70,7 @@
       };
 
       QuestionView.prototype.confirmDestroy = function(event) {
-        if (!window.confirm($(event.target).data("confirm"))) {
+        if (!window.confirm(jQuery(event.target).data("confirm"))) {
           return event.preventDefault();
         }
       };
@@ -78,7 +78,7 @@
       QuestionView.prototype.showFS = function(event) {
         var container, method, methods, _i, _len, _results;
         event.preventDefault();
-        container = $(".question")[0];
+        container = this.$(".question")[0];
         methods = ["requestFullscreen", "mozRequestFullScreen", "webkitRequestFullscreen"];
         _results = [];
         for (_i = 0, _len = methods.length; _i < _len; _i++) {

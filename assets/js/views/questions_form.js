@@ -40,12 +40,12 @@
       QuestionsForm.prototype.addChoice = function(event) {
         var choice;
         choice = Handlebars.partials['choice']({});
-        return $(choice).insertBefore(this.$('.choice-new')).find("input").focus();
+        return jQuery(choice).insertBefore(this.$('.choice-new')).find("input").focus();
       };
 
       QuestionsForm.prototype.removeChoice = function(event) {
         var choice_input;
-        choice_input = $(event.target).closest(".choice-input");
+        choice_input = jQuery(event.target).closest(".choice-input");
         if (choice_input.siblings(".choice-input").length) {
           return choice_input.remove();
         } else {
@@ -94,7 +94,7 @@
         disableSaveButton();
         action = "questions/" + (this.model ? "update/" + this.model.id : "create");
         url = "" + cliqr.config.PLUGIN_URL + action + "?cid=" + cliqr.config.CID;
-        return $.post(url, form.serialize()).done(function(msg) {
+        return jQuery.post(url, form.serialize()).done(function(msg) {
           return Backbone.history.navigate("show-" + msg.id, {
             trigger: true
           });

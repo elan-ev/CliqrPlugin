@@ -22,8 +22,8 @@ define [
 
     start: ->
       url = cliqr.config.PLUGIN_URL + "questions/start/#{@id}?cid=" + cliqr.config.CID
-      promise = $.post url
+      promise = jQuery.post url
 
     stop: ->
       url = cliqr.config.PLUGIN_URL + "questions/stop/#{@id}?cid=" + cliqr.config.CID
-      promise = $.post url
+      promise = jQuery.post url

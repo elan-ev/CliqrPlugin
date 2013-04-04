@@ -55,13 +55,13 @@ define [
       @$(".question").toggleClass "qr-visible"
 
     confirmDestroy: (event) ->
-      unless window.confirm $(event.target).data "confirm"
+      unless window.confirm jQuery(event.target).data "confirm"
         event.preventDefault()
 
     showFS: (event) ->
       event.preventDefault()
 
-      container = $(".question")[0]
+      container = @$(".question")[0]
 
       methods = ["requestFullscreen", "mozRequestFullScreen", "webkitRequestFullscreen"]
       for method in methods when container[method]

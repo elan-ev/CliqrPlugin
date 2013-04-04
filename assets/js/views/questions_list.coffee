@@ -39,7 +39,7 @@ define [
 
     postRender: ->
       for el in @$("li.question")
-        $el = $ el
+        $el = jQuery el
         $el.addClass "slab-" + ("" + $el.data("counter")).length
       @sortOptions?.postRender()
 
@@ -48,7 +48,7 @@ define [
       event.preventDefault()
 
       if window.confirm "Wirklich l\xf6schen?"
-        li = $(event.target).closest("li")
+        li = jQuery(event.target).closest("li")
         id = li.data("id")
         li.fadeOut().promise().done =>
           @collection.get(id).destroy()
