@@ -76,9 +76,9 @@
         }
       };
 
-      disableSaveButton = function() {
+      disableSaveButton = function(form) {
         var button;
-        button = this.$("button[name=save]");
+        button = form.find("button[name=save]");
         if (button.length) {
           return button.prop("disabled", true).showAjaxNotification();
         }
@@ -91,7 +91,7 @@
         if (!form.data("validator").checkValidity()) {
           return;
         }
-        disableSaveButton();
+        disableSaveButton(form);
         action = "questions/" + (this.model ? "update/" + this.model.id : "create");
         url = "" + cliqr.config.PLUGIN_URL + action + "?cid=" + cliqr.config.CID;
         return jQuery.post(url, form.serialize()).done(function(msg) {

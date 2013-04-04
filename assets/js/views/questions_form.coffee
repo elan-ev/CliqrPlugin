@@ -61,8 +61,8 @@ define [
             form_inputs.eq(index).focus()
             event.preventDefault()
 
-    disableSaveButton = ->
-      button = @$ "button[name=save]"
+    disableSaveButton = (form) ->
+      button = form.find "button[name=save]"
       button.prop("disabled", true).showAjaxNotification() if button.length
 
     # TODO
@@ -72,7 +72,7 @@ define [
 
         return unless form.data("validator").checkValidity()
 
-        disableSaveButton()
+        disableSaveButton form
 
         action = "questions/" + if @model then "update/#{@model.id}" else "create"
         url = "#{cliqr.config.PLUGIN_URL}#{action}?cid=#{cliqr.config.CID}"
