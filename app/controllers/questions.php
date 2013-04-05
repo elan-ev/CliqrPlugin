@@ -43,9 +43,10 @@ class QuestionsController extends CliqrStudipController
         }
 
         else {
-            $this->setupStudipLayout();
+            $this->setupStudipNavigation();
+            $this->short_url = $this->generateShortURL();
 
-            # render template implicitly
+            # now render template implicitly
         }
     }
 
@@ -127,6 +128,12 @@ class QuestionsController extends CliqrStudipController
         }
     }
 
+    # get poll URL and shorten it
+    private function generateShortURL()
+    {
+        $poll_url = $this->poll_url($this->cid);
+        return $this->plugin->config['shortener']->shorten($poll_url);
+    }
 
     private function getQuestionParams()
     {
@@ -217,12 +224,9 @@ class QuestionsController extends CliqrStudipController
         }
     }
 
-    # setup Stud.IP layout (layout, navigation, title etc.)
-    private function setupStudipLayout()
+    # setup Stud.IP navigation and title
+    private function setupStudipNavigation()
     {
-        # set default layout
-        $this->set_layout('layout');
-
         # set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
         PageLayout::setTitle(_('Cliqr'));
