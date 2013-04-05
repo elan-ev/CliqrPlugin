@@ -224,6 +224,7 @@ h4 small {
 }
 #questions-index ol li a {
   display: block;
+  height: 60px;
 }
 #questions-index ol li a:hover {
   color: #24437c;
