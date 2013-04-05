@@ -22,7 +22,7 @@ define [
       grouped = []
       for date in _.keys(groups).reverse()
         grouped.push {divider: true, startdate: if date is "null" then null else date}
-        for question in groups[date]
+        for question in groups[date].reverse()
           grouped.push question.toJSON()
 
       grouped

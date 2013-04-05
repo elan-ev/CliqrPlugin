@@ -280,6 +280,20 @@ h4 small {
 #questions-index ol li.state-new .count {
   display: none;
 }
+#questions-index ol li.state-active .count {
+  visibility: hidden;
+}
+#questions-index ol li.state-active .count:before {
+  visibility: visible;
+  content: "AKTIV";
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: .2em .5em .2em .45em;
+  border: 1px solid #cccccc;
+  border-radius: 1em;
+}
 #questions-index ol li .detail {
   padding: 0 15px;
   overflow: hidden;

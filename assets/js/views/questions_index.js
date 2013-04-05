@@ -36,7 +36,7 @@
             divider: true,
             startdate: date === "null" ? null : date
           });
-          _ref1 = groups[date];
+          _ref1 = groups[date].reverse();
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             question = _ref1[_j];
             grouped.push(question.toJSON());
