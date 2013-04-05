@@ -11,7 +11,10 @@ requirejs.config
     backbone:   'vendor/backbone-1.0.0'
     handlebars: 'vendor/handlebars-1.0.rc.2'
     jqm:        'vendor/jquery.mobile-1.2.0.min'
-    pusher:     'http://js.pusher.com/1.12/pusher.min'
+    pusher:     if document.location.protocol is 'https:'
+                  'https://d3dy5gmtp8yhk7.cloudfront.net/1.12/pusher.min'
+                else
+                  'http://js.pusher.com/1.12/pusher.min'
 
 
   # Underscore and Backbone are not AMD-capable per default,
