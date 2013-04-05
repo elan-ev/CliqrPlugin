@@ -1,7 +1,7 @@
 pluginname=Cliqr
 pluginclassname=CliqrPlugin
 origin=elan-ev
-version=0.4
+version=0.5
 description=This plugin is a software clicker solution with a strong emphasis on ease of use for lecturers and students. As minor feature the plugin displays the URL of the students' voting page as a QR code which lends its name to the plugin.
 homepage=https://github.com/luniki/CliqrPlugin
 studipMinVersion=2.3
