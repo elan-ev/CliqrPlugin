@@ -53,9 +53,8 @@
       }
     }
 
-
     .chart, .count, .percent {
-      visibility: hidden;
+      display: none;
     }
 
     .chart {
@@ -63,13 +62,11 @@
       #gradient > .horizontal(@chartColor1, @chartColor2);
       height: 1em;
       margin-left: 0.5em;
-      display: inline-block;
       vertical-align: text-top;
       border: 1px solid #232323;
     }
 
     .count {
-      display: inline-block;
       color: @chartColor1;
       padding-left: 0.5em;
     }
@@ -211,7 +208,7 @@
     // show results on stopped questions
     &.state-stopvis {
       .chart, .count, .percent {
-        visibility: visible;
+        display: inline-block;
       }
 
       .text {

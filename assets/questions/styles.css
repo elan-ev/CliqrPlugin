@@ -348,7 +348,7 @@ h4 small {
 .page.questions-show .results .count,
 #cliqr-show .results .percent,
 .page.questions-show .results .percent {
-  visibility: hidden;
+  display: none;
 }
 #cliqr-show .results .chart,
 .page.questions-show .results .chart {
@@ -363,13 +363,11 @@ h4 small {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3389b7', endColorstr='#ff96c7e1', GradientType=1);
   height: 1em;
   margin-left: 0.5em;
-  display: inline-block;
   vertical-align: text-top;
   border: 1px solid #232323;
 }
 #cliqr-show .results .count,
 .page.questions-show .results .count {
-  display: inline-block;
   color: #3389b7;
   padding-left: 0.5em;
 }
@@ -499,7 +497,7 @@ h4 small {
 .page.questions-show .question.state-stopvis .count,
 #cliqr-show .question.state-stopvis .percent,
 .page.questions-show .question.state-stopvis .percent {
-  visibility: visible;
+  display: inline-block;
 }
 #cliqr-show .question.state-stopvis .text,
 .page.questions-show .question.state-stopvis .text {
