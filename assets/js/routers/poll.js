@@ -3,9 +3,9 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['backbone', 'routers/page', 'views/poll'], function(Backbone, PageRouter, PollView) {
+  define(['backbone', 'views/poll'], function(Backbone, PollView) {
     /*
-    The singleton AppRouter containing the handlers for all the routes.
+    The singleton AppRouter contas handlers for all the routes and plays nicely with jqm.
     */
 
     var PollRouter;
@@ -16,6 +16,10 @@
       function PollRouter() {
         PollRouter.__super__.constructor.apply(this, arguments);
       }
+
+      PollRouter.prototype.initialize = function() {
+        return this.firstPage = true;
+      };
 
       PollRouter.prototype.routes = {
         "": "showPoll"
@@ -31,9 +35,50 @@
         return cliqr.config.PUSHER_APP_KEY != null;
       };
 
+      /*
+      Internal function to be used by the route handlers.
+      
+      `page` is a Backbone.View which is added as a jQuery mobile page to
+      the pageContainer. Eventually, after all the setup mojo and
+      everything is in place, the `jQuery mobile way`(TM) of changing
+      pages is invoked.
+      */
+
+
+      PollRouter.prototype.changePage = function(page) {
+        /*
+        add "data-role=page" to the element of the page, then render and insert into the body
+        */
+
+        var transition;
+        jQuery(page.el).attr('data-role', 'page');
+        page.render();
+        jQuery('body').append(jQuery(page.el));
+        if (typeof page.postRender === "function") {
+          page.postRender();
+        }
+        /*
+        do not use transition for first page
+        */
+
+        transition = jQuery.mobile.defaultPageTransition;
+        if (this.firstPage) {
+          transition = 'none';
+          this.firstPage = false;
+        }
+        /*
+        call the jqm function
+        */
+
+        return jQuery.mobile.changePage(jQuery(page.el), {
+          changeHash: false,
+          transition: transition
+        });
+      };
+
       return PollRouter;
 
-    })(PageRouter);
+    })(Backbone.Router);
   });
 
 }).call(this);
