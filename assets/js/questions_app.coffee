@@ -1,7 +1,6 @@
 define [
-  'utils'
   'routers/questions'
-], (utils, QuestionsRouter) ->
+], (QuestionsRouter) ->
 
   # The application object
   # Choose a meaningful name for your application
