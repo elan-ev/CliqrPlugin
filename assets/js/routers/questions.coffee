@@ -8,7 +8,7 @@ define [
   'views/questions_index'
   'views/questions_new'
   'views/questions_edit'
-  'views/questions/show'
+  'views/questions_show'
 ], (Backbone, utils,
     Question, QuestionCollection,
     QuestionsIndexView, QuestionsNewView, QuestionsEditView, QuestionView) ->

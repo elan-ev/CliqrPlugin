@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['backbone', 'utils', 'models/question', 'models/questions', 'views/questions_index', 'views/questions_new', 'views/questions_edit', 'views/questions/show'], function(Backbone, utils, Question, QuestionCollection, QuestionsIndexView, QuestionsNewView, QuestionsEditView, QuestionView) {
+  define(['backbone', 'utils', 'models/question', 'models/questions', 'views/questions_index', 'views/questions_new', 'views/questions_edit', 'views/questions_show'], function(Backbone, utils, Question, QuestionCollection, QuestionsIndexView, QuestionsNewView, QuestionsEditView, QuestionView) {
     var QuestionsRouter;
     return QuestionsRouter = (function(_super) {
       var bootstrapQuestions, loader, timeout;

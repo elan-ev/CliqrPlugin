@@ -4,7 +4,6 @@ $this->set_layout($template_factory->open('layouts/base_without_infobox'));
 
 $ASSETS = $plugin->getPluginURL() . '/assets/';
 PageLayout::addStylesheet($ASSETS . 'questions/styles.css');
-PageLayout::addScript($ASSETS . 'vendor/jquery.isotope.min.js');
 PageLayout::addScript($ASSETS . 'vendor/validator.js');
 
 PageLayout::addHeadElement('script', array(),
