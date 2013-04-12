@@ -1,7 +1,6 @@
 define [
-  'backbone'
   'underscore'
-], (Backbone, _) ->
+], (_) ->
 
   ###
   TODO

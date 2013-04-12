@@ -1,11 +1,11 @@
 define [
-  'underscore'
+  'backbone'
   'jquery'
   'utils'
   'views/helpers'
   'views/page'
   'models/id_list'
-], (_, jQuery, utils, helpers, PageView, id_list) ->
+], (Backbone, jQuery, utils, helpers, PageView, id_list) ->
 
   ###
   TODO: docu für pollview

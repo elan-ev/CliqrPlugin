@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['backbone', 'utils', 'underscore', 'views/questions_helpers'], function(Backbone, utils, _, _helpers) {
+  define(['backbone', 'utils', 'underscore'], function(Backbone, utils, _) {
     var QuestionsIndexView;
     return QuestionsIndexView = (function(_super) {
       var defaultFilterCallback, lastval;
@@ -68,7 +68,6 @@
         list = this.$("ol");
         childItems = false;
         itemtext = "";
-        console.log("last: " + lastval + " val: " + val);
         if (lastval === val) {
           return;
         }
@@ -78,7 +77,6 @@
           listItems = list.children(":not(.ui-screen-hidden)");
         }
         lastval = val;
-        console.log("listItems", listItems, val);
         if (val) {
           for (i = _i = _ref = listItems.length - 1; _i >= 0; i = _i += -1) {
             item = jQuery(listItems[i]);

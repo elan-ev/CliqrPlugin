@@ -1,9 +1,7 @@
 define [
-  'utils'
-  'models/question'
   'views/template_view'
   'views/questions_results_view'
-], (utils, Question, TemplateView, ResultsView) ->
+], (TemplateView, ResultsView) ->
 
   class QuestionView extends TemplateView
     template_id: "questions-show"
@@ -28,8 +26,8 @@ define [
 
     remove: ->
       clearInterval @interval
+      @resultsView.remove()
       super()
-
 
     render: ->
       context = _.extend @model.toJSON(),
@@ -72,10 +70,10 @@ define [
     startQuestion: (event) ->
       event.preventDefault()
       @$(".appeal.start").addClass("busy")
-      @model.start().done(=> @model.fetch()).always -> console.log arguments
+      @model.start().done(=> @model.fetch())
 
 
 
     stopQuestion: (event) ->
       event.preventDefault()
-      @model.stop().done(=> @model.fetch()).always -> console.log arguments
+      @model.stop().done(=> @model.fetch())

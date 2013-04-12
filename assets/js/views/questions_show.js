@@ -4,7 +4,7 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['utils', 'models/question', 'views/template_view', 'views/questions_results_view'], function(utils, Question, TemplateView, ResultsView) {
+  define(['views/template_view', 'views/questions_results_view'], function(TemplateView, ResultsView) {
     var QuestionView;
     return QuestionView = (function(_super) {
 
@@ -42,6 +42,7 @@
 
       QuestionView.prototype.remove = function() {
         clearInterval(this.interval);
+        this.resultsView.remove();
         return QuestionView.__super__.remove.call(this);
       };
 
@@ -98,8 +99,6 @@
         this.$(".appeal.start").addClass("busy");
         return this.model.start().done(function() {
           return _this.model.fetch();
-        }).always(function() {
-          return console.log(arguments);
         });
       };
 
@@ -108,8 +107,6 @@
         event.preventDefault();
         return this.model.stop().done(function() {
           return _this.model.fetch();
-        }).always(function() {
-          return console.log(arguments);
         });
       };
 

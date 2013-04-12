@@ -1,10 +1,11 @@
 define [
   'jqm'
   'pusher'
+  'backbone'
   'models/poll_collection'
   'models/back_pusher'
   'routers/poll'
-], (jqm, Pusher, PollCollection, BackPusher, PollRouter) ->
+], (jqm, Pusher, Backbone, PollCollection, BackPusher, PollRouter) ->
 
   # The application object
   # Choose a meaningful name for your application

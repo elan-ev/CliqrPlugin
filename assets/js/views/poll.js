@@ -4,7 +4,7 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['underscore', 'jquery', 'utils', 'views/helpers', 'views/page', 'models/id_list'], function(_, jQuery, utils, helpers, PageView, id_list) {
+  define(['backbone', 'jquery', 'utils', 'views/helpers', 'views/page', 'models/id_list'], function(Backbone, jQuery, utils, helpers, PageView, id_list) {
     /*
     TODO: docu für pollview
     */

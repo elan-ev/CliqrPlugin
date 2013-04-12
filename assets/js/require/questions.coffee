@@ -1,3 +1,6 @@
+#define "jQuery", [], ->
+#  window.jQuery
+
 # Configure the AMD module loader
 requirejs.config
 

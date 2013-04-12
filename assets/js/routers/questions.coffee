@@ -66,7 +66,7 @@ define [
         questions = new QuestionCollection
         questions.fetch().pipe -> questions # TODO (mlunzena) pipe should be then
 
-    # TODO should return a promise instead
+
     fetchQuestion: (id, callback) ->
       if cliqr.bootstrap.POLLS
         jQuery.Deferred()

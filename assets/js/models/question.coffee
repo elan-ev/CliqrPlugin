@@ -1,6 +1,7 @@
 define [
   'backbone'
-], (Backbone) ->
+  'underscore'
+], (Backbone, _) ->
 
   # TODO please fix the sync
   actionMap =

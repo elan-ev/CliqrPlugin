@@ -1,6 +1,8 @@
 define [
+  'backbone'
   'routers/questions'
-], (QuestionsRouter) ->
+  'views/questions_helpers'
+], (Backbone, QuestionsRouter, _helpers) ->
 
   # The application object
   # Choose a meaningful name for your application

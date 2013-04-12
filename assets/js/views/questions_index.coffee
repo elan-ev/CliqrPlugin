@@ -2,8 +2,7 @@ define [
   'backbone'
   'utils'
   'underscore'
-  'views/questions_helpers'
-], (Backbone, utils, _, _helpers) ->
+], (Backbone, utils, _) ->
 
   class QuestionsIndexView extends Backbone.View
     className: "page"
@@ -47,8 +46,6 @@ define [
       childItems = false
       itemtext = ""
 
-      console.log "last: #{lastval} val: #{val}"
-
       return if lastval is val
 
       if val.length < lastval.length || val.indexOf(lastval) != 0
@@ -62,7 +59,6 @@ define [
       # Change val as lastval for next execution
       lastval = val
 
-      console.log "listItems", listItems, val
 
       if val
 
