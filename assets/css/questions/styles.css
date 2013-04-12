@@ -82,49 +82,6 @@ h3 small {
 h4 small {
   font-size: 14px;
 }
-/* Start: Recommended Isotope styles */
-/**** Isotope Filtering ****/
-.isotope-item {
-  z-index: 2;
-}
-.isotope-hidden.isotope-item {
-  pointer-events: none;
-  z-index: 1;
-}
-/**** Isotope CSS3 transitions ****/
-.isotope,
-.isotope .isotope-item {
-  -webkit-transition-duration: 0.8s;
-  -moz-transition-duration: 0.8s;
-  -ms-transition-duration: 0.8s;
-  -o-transition-duration: 0.8s;
-  transition-duration: 0.8s;
-}
-.isotope {
-  -webkit-transition-property: height, width;
-  -moz-transition-property: height, width;
-  -ms-transition-property: height, width;
-  -o-transition-property: height, width;
-  transition-property: height, width;
-}
-.isotope .isotope-item {
-  -webkit-transition-property: -webkit-transform, opacity;
-  -moz-transition-property: -moz-transform, opacity;
-  -ms-transition-property: -ms-transform, opacity;
-  -o-transition-property: -o-transform, opacity;
-  transition-property: transform, opacity;
-}
-/**** disabling Isotope CSS3 transitions ****/
-.isotope.no-transition,
-.isotope.no-transition .isotope-item,
-.isotope .isotope-item.no-transition {
-  -webkit-transition-duration: 0s;
-  -moz-transition-duration: 0s;
-  -ms-transition-duration: 0s;
-  -o-transition-duration: 0s;
-  transition-duration: 0s;
-}
-/* End: Recommended Isotope styles */
 .xdebug-var-dump {
   height: 1em;
   overflow: hidden;
@@ -145,7 +102,7 @@ h4 small {
 .cliqr-loader {
   line-height: 1.5em;
   color: #444;
-  background: url('../../../../../assets/images/ajax_indicator_small.gif') 95% center no-repeat;
+  background: url('../../../../../../assets/images/ajax_indicator_small.gif') 95% center no-repeat;
   padding: 0.5em 20px 0.5em 0.5em;
   border: 1px solid #ccc;
   -webkit-border-radius: 8px;
@@ -188,7 +145,7 @@ h4 small {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-color: transparent;
-  background-image: url('../../../../../assets/images/icons/16/black/search.png');
+  background-image: url('../../../../../../assets/images/icons/16/black/search.png');
 }
 #questions-index form.filter input.search {
   width: 100%;

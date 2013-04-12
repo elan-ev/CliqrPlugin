@@ -3,8 +3,8 @@ global $template_factory;
 $this->set_layout($template_factory->open('layouts/base_without_infobox'));
 
 $ASSETS = $plugin->getPluginURL() . '/assets/';
-PageLayout::addStylesheet($ASSETS . 'questions/styles.css');
-PageLayout::addScript($ASSETS . 'vendor/validator.js');
+PageLayout::addStylesheet($ASSETS . 'css/questions/styles.css');
+PageLayout::addScript($ASSETS . 'js/vendor/validator.js');
 
 PageLayout::addHeadElement('script', array(),
 '

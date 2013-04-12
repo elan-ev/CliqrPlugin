@@ -5,8 +5,8 @@
     <title>Stud.IP &ndash; Cliqr</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="<?= $ASSETS ?>vendor/jquery.mobile-1.2.0.css" />
-    <link rel="stylesheet" href="<?= $ASSETS ?>/presentation.css"/>
+    <link rel="stylesheet" href="<?= $ASSETS ?>css/jquery.mobile-1.2.0.css" />
+    <link rel="stylesheet" href="<?= $ASSETS ?>css/presentation.css"/>
 
 
 <?
