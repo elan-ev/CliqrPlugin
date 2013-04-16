@@ -38,14 +38,15 @@ define [
       @$(".question").append @resultsView.render().el
       @
 
+    postRender: ->
+      @resultsView.postRender()
+
     updateAnswers: (model, answers, options) =>
       @resultsView.update answers
 
     updateState: (model, state, options) =>
-      # TODO currently we reload the page on state change
-      #      this should not be necessary
-      #do document.location.reload
       @render()
+      @postRender()
 
     showQRCode: (event) ->
       # do not show code, handle this on your own

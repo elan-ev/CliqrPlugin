@@ -20,7 +20,7 @@
       ResultsView.prototype.enhanceChart = function() {
         var counts, data, max, width, widths;
         this.$('.chart').remove();
-        width = 300;
+        width = 150;
         counts = this.$("ol .count");
         data = _.pluck(this.model, "counter");
         max = _.max(data);
@@ -32,10 +32,11 @@
           }
         });
         return counts.before(function(index) {
-          return jQuery('<span class="chart"></div>').css({
-            width: widths[index]
-          }).attr({
+          return jQuery('<span class="chart"></div>').attr({
             "data-count": data[index]
+          }).css({
+            width: widths[index],
+            marginLeft: max ? width - widths[index] : 0
           });
         });
       };
@@ -70,9 +71,18 @@
         return this;
       };
 
+      ResultsView.prototype.postRender = function() {
+        var w;
+        w = this.$(".chart").position().left - this.$(".text").position().left;
+        return this.$(".text").css({
+          width: w - 30
+        });
+      };
+
       ResultsView.prototype.update = function(answers) {
         this.model = answers;
-        return this.render();
+        this.render();
+        return this.postRender();
       };
 
       return ResultsView;

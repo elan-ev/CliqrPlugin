@@ -57,12 +57,17 @@
         return this;
       };
 
+      QuestionView.prototype.postRender = function() {
+        return this.resultsView.postRender();
+      };
+
       QuestionView.prototype.updateAnswers = function(model, answers, options) {
         return this.resultsView.update(answers);
       };
 
       QuestionView.prototype.updateState = function(model, state, options) {
-        return this.render();
+        this.render();
+        return this.postRender();
       };
 
       QuestionView.prototype.showQRCode = function(event) {

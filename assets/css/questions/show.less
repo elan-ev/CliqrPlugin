@@ -14,7 +14,7 @@
   .question {
     min-height: 500px;
     position: relative;
-    padding: 0em @appeal-height 1em 2em;
+    padding: 0em @appeal-height 1em 0;
   }
 
   h2 {
@@ -36,6 +36,18 @@
       margin: 0;
       font-size: 2.5em;
       line-height: 1.5;
+      clear: both;
+
+      .transition(background-color 0.25s ease);
+
+      &:hover {
+        background: #eee;
+
+        .text {
+          width: auto !important;
+          white-space: normal !important;
+        }
+      }
     }
 
     .text {
@@ -44,7 +56,9 @@
       white-space: nowrap;
       .box-sizing(border-box);
 
-      margin-left: 1.5em;
+      text-overflow: ellipsis;
+
+      margin-left: 0.25em;
       display: inline-block;
 
       .nominal {
@@ -55,6 +69,11 @@
 
     .chart, .count, .percent {
       display: none;
+    }
+
+    .result {
+      float: right;
+      padding-right: 0.25em;
     }
 
     .chart {
@@ -69,16 +88,18 @@
     .count {
       color: @chartColor1;
       padding-left: 0.5em;
+      width: 2.5em;
     }
 
     .percent {
       font-size: 0.66em;
       color: @color-detail;
+      width: 2.5em;
     }
 
     li[data-count="0"] {
       .chart, .percent {
-        display: none;
+        visibility: hidden;
       }
     }
 
@@ -95,11 +116,12 @@
   .controls {
     position: absolute;
     top: 4em;
-    right: 1em;
+    right: -20px;
     text-align: right;
 
     .button {
       display: inline-block;
+      margin-right: 0;
     }
   }
 
@@ -209,11 +231,6 @@
     &.state-stopvis {
       .chart, .count, .percent {
         display: inline-block;
-      }
-
-      .text {
-        width: 30%;
-        text-align: right;
       }
     }
 

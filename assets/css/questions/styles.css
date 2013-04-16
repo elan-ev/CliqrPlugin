@@ -277,7 +277,7 @@ h4 small {
 .page.questions-show .question {
   min-height: 500px;
   position: relative;
-  padding: 0em 75px 1em 2em;
+  padding: 0em 75px 1em 0;
 }
 #cliqr-show h2,
 .page.questions-show h2 {
@@ -297,6 +297,20 @@ h4 small {
   margin: 0;
   font-size: 2.5em;
   line-height: 1.5;
+  clear: both;
+  -webkit-transition: background-color 0.25s ease;
+  -moz-transition: background-color 0.25s ease;
+  -o-transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease;
+}
+#cliqr-show .results li:hover,
+.page.questions-show .results li:hover {
+  background: #eee;
+}
+#cliqr-show .results li:hover .text,
+.page.questions-show .results li:hover .text {
+  width: auto !important;
+  white-space: normal !important;
 }
 #cliqr-show .results .text,
 .page.questions-show .results .text {
@@ -306,7 +320,8 @@ h4 small {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  margin-left: 1.5em;
+  text-overflow: ellipsis;
+  margin-left: 0.25em;
   display: inline-block;
 }
 #cliqr-show .results .text .nominal,
@@ -321,6 +336,11 @@ h4 small {
 #cliqr-show .results .percent,
 .page.questions-show .results .percent {
   display: none;
+}
+#cliqr-show .results .result,
+.page.questions-show .results .result {
+  float: right;
+  padding-right: 0.25em;
 }
 #cliqr-show .results .chart,
 .page.questions-show .results .chart {
@@ -342,17 +362,19 @@ h4 small {
 .page.questions-show .results .count {
   color: #3389b7;
   padding-left: 0.5em;
+  width: 2.5em;
 }
 #cliqr-show .results .percent,
 .page.questions-show .results .percent {
   font-size: 0.66em;
   color: #b3b3b3;
+  width: 2.5em;
 }
 #cliqr-show .results li[data-count="0"] .chart,
 .page.questions-show .results li[data-count="0"] .chart,
 #cliqr-show .results li[data-count="0"] .percent,
 .page.questions-show .results li[data-count="0"] .percent {
-  display: none;
+  visibility: hidden;
 }
 #cliqr-show .results .sample-size,
 .page.questions-show .results .sample-size {
@@ -366,12 +388,13 @@ h4 small {
 .page.questions-show .controls {
   position: absolute;
   top: 4em;
-  right: 1em;
+  right: -20px;
   text-align: right;
 }
 #cliqr-show .controls .button,
 .page.questions-show .controls .button {
   display: inline-block;
+  margin-right: 0;
 }
 #cliqr-show img.qr,
 .page.questions-show img.qr {
@@ -470,11 +493,6 @@ h4 small {
 #cliqr-show .question.state-stopvis .percent,
 .page.questions-show .question.state-stopvis .percent {
   display: inline-block;
-}
-#cliqr-show .question.state-stopvis .text,
-.page.questions-show .question.state-stopvis .text {
-  width: 30%;
-  text-align: right;
 }
 #cliqr-show .question.state-new .appeal.start,
 .page.questions-show .question.state-new .appeal.start,

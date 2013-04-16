@@ -12,14 +12,18 @@ define [
     enhanceChart: ->
       @$('.chart').remove()
 
-      width  = 300
+      width  = 150
       counts = @$ "ol .count"
       data   = _.pluck @model, "counter"
       max    = _.max data
       widths = _.map data, (d) -> if max > 0 then d / max * width else 0
 
       counts.before (index) ->
-        jQuery('<span class="chart"></div>').css(width: widths[index]).attr("data-count": data[index])
+          jQuery('<span class="chart"></div>')
+          .attr("data-count": data[index])
+          .css
+            width: widths[index]
+            marginLeft: if max then width - widths[index] else 0
 
     enrichedModel: () ->
       size = _.reduce @model, ((memo, answer) -> memo + answer.counter), 0
@@ -37,6 +41,11 @@ define [
       @enhanceChart()
       @
 
+    postRender: ->
+      w = @$(".chart").position().left - @$(".text").position().left
+      @$(".text").css width: w - 30
+
     update: (answers) ->
       @model = answers
       @render()
+      @postRender()
