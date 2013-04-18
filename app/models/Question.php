@@ -218,13 +218,14 @@ class Question extends \Vote {
             $answers[] = $ary;
         }
         return array(
-            'id'        => $this->objectID,
-            //'range_id'  => studip_utf8encode($this->rangeID),
-            'question'  => studip_utf8encode($this->question),
-            'startdate' => (int)$this->getStartdate(),
-            'stopdate'  => (int)$this->getStopdate(),
-            'state'     => $this->getState(),
-            'answers'   => $answers
+            'id'             => $this->objectID,
+            //'range_id'       => studip_utf8encode($this->rangeID),
+            'question'       => studip_utf8encode($this->question),
+            'question_html'  => studip_utf8encode(formatReady($this->question)),
+            'startdate'      => (int)$this->getStartdate(),
+            'stopdate'       => (int)$this->getStopdate(),
+            'state'          => $this->getState(),
+            'answers'        => $answers
         );
     }
 }
