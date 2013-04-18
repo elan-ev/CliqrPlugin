@@ -59,15 +59,14 @@ define [
 
       # @poll should be unanswered
       unless id_list.test @poll
+        id_list.add @poll
         jQuery.post(cliqr.$Polls.url(), @$("form").serialize())
-          .always () =>
-            id_list.add @poll
           .done (msg) =>
             @update()
           .fail (jqXHR, textStatus) ->
             return
       else
-        alert "TODO poll was already answered"
+        alert "Question was already answered"
 
     onPusherConnected: ->
       cliqr.config.pusherConnected = true

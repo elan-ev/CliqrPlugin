@@ -78,13 +78,12 @@
         var _this = this;
         event.preventDefault();
         if (!id_list.test(this.poll)) {
-          return jQuery.post(cliqr.$Polls.url(), this.$("form").serialize()).always(function() {
-            return id_list.add(_this.poll);
-          }).done(function(msg) {
+          id_list.add(this.poll);
+          return jQuery.post(cliqr.$Polls.url(), this.$("form").serialize()).done(function(msg) {
             return _this.update();
           }).fail(function(jqXHR, textStatus) {});
         } else {
-          return alert("TODO poll was already answered");
+          return alert("Question was already answered");
         }
       };
 
