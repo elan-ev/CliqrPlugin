@@ -1,15 +1,12 @@
-<ol>
+<table>
   {{#answers}}
-    <li data-count="{{counter}}">
-      <span class="text">
-        <span class="nominal">{{nominal}}:</span>
-        {{text}}
-      </span>
-      <span class="result">
-        <span class="count">{{counter}}</span>
-        <span class="percent">{{percent}}%</span>
-      </span>
-    </li>
+    <tr data-count="{{counter}}">
+      <td class="nominal">{{nominal}}</td>
+      <td class="text"><div>{{text}}</div></td>
+      <td class="graph"></td>
+      <td class="count">{{counter}}</td>
+      <td class="percent">{{percent}}%</td>
+    </tr>
   {{/answers}}
-</ol>
+</table>
 <div class="sample-size">n={{size}}</div>

@@ -21,7 +21,7 @@
         var counts, data, max, width, widths;
         this.$('.chart').remove();
         width = 150;
-        counts = this.$("ol .count");
+        counts = this.$(".count");
         data = _.pluck(this.model, "counter");
         max = _.max(data);
         widths = _.map(data, function(d) {
@@ -31,8 +31,8 @@
             return 0;
           }
         });
-        return counts.before(function(index) {
-          return jQuery('<span class="chart"></div>').attr({
+        return this.$(".graph").append(function(index) {
+          return jQuery('<span class="chart"></span>').attr({
             "data-count": data[index]
           }).css({
             width: widths[index],
@@ -71,13 +71,7 @@
         return this;
       };
 
-      ResultsView.prototype.postRender = function() {
-        var w;
-        w = this.$(".chart").position().left - this.$(".text").position().left;
-        return this.$(".text").css({
-          width: w - 30
-        });
-      };
+      ResultsView.prototype.postRender = function() {};
 
       ResultsView.prototype.update = function(answers) {
         this.model = answers;

@@ -264,86 +264,47 @@ h4 small {
 #questions-index div.empty {
   padding: 1em 0;
 }
-#cliqr-show,
-.page.questions-show {
-  /*
-  #layout_container {
-    padding: 5px 0 0 0;
-  }
-  */
-
-}
-#cliqr-show .question,
 .page.questions-show .question {
   min-height: 500px;
   position: relative;
   padding: 0em 75px 1em 0;
 }
-#cliqr-show h2,
-.page.questions-show h2 {
-  font-size: 3em;
-  line-height: 1.5;
-  margin-top: 0;
-}
-#cliqr-show .results ol,
-.page.questions-show .results ol {
-  padding: 0;
-  margin: 0;
-}
-#cliqr-show .results li,
-.page.questions-show .results li {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.page.questions-show div.title {
   font-size: 2.5em;
   line-height: 1.5;
-  clear: both;
-  -webkit-transition: background-color 0.25s ease;
-  -moz-transition: background-color 0.25s ease;
-  -o-transition: background-color 0.25s ease;
-  transition: background-color 0.25s ease;
 }
-#cliqr-show .results li:hover,
-.page.questions-show .results li:hover {
-  background: #eee;
-}
-#cliqr-show .results li:hover .text,
-.page.questions-show .results li:hover .text {
-  width: auto !important;
-  white-space: normal !important;
-}
-#cliqr-show .results .text,
-.page.questions-show .results .text {
-  width: 90%;
+.page.questions-show .results table {
+  font-size: 2em;
+  line-height: 1.5;
+  width: 100%;
   overflow: hidden;
-  white-space: nowrap;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  text-overflow: ellipsis;
-  margin-left: 0.25em;
-  display: inline-block;
+  border-collapse: collapse;
 }
-#cliqr-show .results .text .nominal,
-.page.questions-show .results .text .nominal {
+.page.questions-show .results tr:hover {
+  background: #ccc;
+}
+.page.questions-show .results tr:hover .text div {
+  height: auto;
+}
+.page.questions-show .results .nominal {
   color: #999;
   font-size: 0.7em;
 }
-#cliqr-show .results .chart,
-.page.questions-show .results .chart,
-#cliqr-show .results .count,
+.page.questions-show .results .text {
+  padding-left: 0.25em;
+}
+.page.questions-show .results .text div {
+  height: 1.5em;
+  overflow: hidden;
+}
+.page.questions-show .results .graph,
 .page.questions-show .results .count,
-#cliqr-show .results .percent,
 .page.questions-show .results .percent {
   display: none;
+  padding-left: 0.5em;
 }
-#cliqr-show .results .result,
-.page.questions-show .results .result {
-  float: right;
-  padding-right: 0.25em;
-}
-#cliqr-show .results .chart,
 .page.questions-show .results .chart {
+  display: inline-block;
   background-color: #3389b7;
   background-color: #96c7e1;
   background-image: -moz-linear-gradient(left, #3389b7, #96c7e1);
@@ -358,25 +319,17 @@ h4 small {
   vertical-align: text-top;
   border: 1px solid #232323;
 }
-#cliqr-show .results .count,
 .page.questions-show .results .count {
   color: #3389b7;
-  padding-left: 0.5em;
-  width: 2.5em;
 }
-#cliqr-show .results .percent,
 .page.questions-show .results .percent {
   font-size: 0.66em;
   color: #b3b3b3;
-  width: 2.5em;
 }
-#cliqr-show .results li[data-count="0"] .chart,
-.page.questions-show .results li[data-count="0"] .chart,
-#cliqr-show .results li[data-count="0"] .percent,
-.page.questions-show .results li[data-count="0"] .percent {
+.page.questions-show .results tr[data-count="0"] .chart,
+.page.questions-show .results tr[data-count="0"] .percent {
   visibility: hidden;
 }
-#cliqr-show .results .sample-size,
 .page.questions-show .results .sample-size {
   font-size: 2em;
   color: #666;
@@ -384,19 +337,16 @@ h4 small {
   right: 1em;
   bottom: 4em;
 }
-#cliqr-show .controls,
 .page.questions-show .controls {
   position: absolute;
   top: 4em;
   right: -20px;
   text-align: right;
 }
-#cliqr-show .controls .button,
 .page.questions-show .controls .button {
   display: inline-block;
   margin-right: 0;
 }
-#cliqr-show img.qr,
 .page.questions-show img.qr {
   height: 350px;
   position: absolute;
@@ -404,17 +354,14 @@ h4 small {
   top: 4.5em;
   visibility: hidden;
 }
-#cliqr-show .question.qr-visible img.qr,
 .page.questions-show .question.qr-visible img.qr {
   visibility: visible;
 }
-#cliqr-show .question:after,
 .page.questions-show .question:after {
   height: 90px;
   content: "";
   display: block;
 }
-#cliqr-show .appeal,
 .page.questions-show .appeal {
   margin: 0 -20px -20px -20px;
   font-size: 4em;
@@ -429,21 +376,17 @@ h4 small {
   overflow: hidden;
   display: none;
 }
-#cliqr-show span.loader,
 .page.questions-show span.loader {
   font-style: italic;
   color: #a1a3a3;
   display: none;
 }
-#cliqr-show .appeal.busy button,
 .page.questions-show .appeal.busy button {
   display: none !important;
 }
-#cliqr-show .appeal.busy span.loader,
 .page.questions-show .appeal.busy span.loader {
   display: block;
 }
-#cliqr-show .appeal.start button,
 .page.questions-show .appeal.start button {
   width: 100%;
   font-size: 1em;
@@ -451,22 +394,18 @@ h4 small {
   padding: 0;
   margin: 0;
 }
-#cliqr-show .appeal.vote,
 .page.questions-show .appeal.vote {
   padding: 0.4em;
 }
-#cliqr-show .appeal.vote a.short,
 .page.questions-show .appeal.vote a.short {
   white-space: nowrap;
 }
-#cliqr-show .appeal.vote a.short:before,
 .page.questions-show .appeal.vote a.short:before {
   content: attr(alt);
   font-size: 0.6666em;
   padding-right: 0.3333em;
   color: #6e7070;
 }
-#cliqr-show .appeal.vote a.qr,
 .page.questions-show .appeal.vote a.qr {
   float: right;
   width: 64px;
@@ -482,33 +421,24 @@ h4 small {
   margin-right: 16px;
   z-index: 1;
 }
-#cliqr-show .appeal.vote a.qr:hover,
 .page.questions-show .appeal.vote a.qr:hover {
   box-shadow: 0 0 0.25em #6e7070;
 }
-#cliqr-show .question.state-stopvis .chart,
-.page.questions-show .question.state-stopvis .chart,
-#cliqr-show .question.state-stopvis .count,
+.page.questions-show .question.state-stopvis .graph,
 .page.questions-show .question.state-stopvis .count,
-#cliqr-show .question.state-stopvis .percent,
 .page.questions-show .question.state-stopvis .percent {
-  display: inline-block;
+  display: table-cell;
 }
-#cliqr-show .question.state-new .appeal.start,
 .page.questions-show .question.state-new .appeal.start,
-#cliqr-show .question.state-stopvis .appeal.start,
 .page.questions-show .question.state-stopvis .appeal.start {
   display: block;
 }
-#cliqr-show .question.state-active .appeal.vote,
 .page.questions-show .question.state-active .appeal.vote {
   display: block;
 }
-#cliqr-show .question.state-new .sample-size,
 .page.questions-show .question.state-new .sample-size {
   display: none;
 }
-#cliqr-show .question:fullscreen,
 .page.questions-show .question:fullscreen {
   height: 100%;
   width: 100%;
@@ -517,20 +447,16 @@ h4 small {
   background: #fff;
   color: #000;
 }
-#cliqr-show .question:fullscreen h2,
 .page.questions-show .question:fullscreen h2 {
   margin-left: 0.5em;
   padding-top: 0.5em;
 }
-#cliqr-show .question:fullscreen button.fullscreen,
 .page.questions-show .question:fullscreen button.fullscreen {
   display: none;
 }
-#cliqr-show .question:fullscreen .appeal,
 .page.questions-show .question:fullscreen .appeal {
   margin: 0;
 }
-#cliqr-show .question:-webkit-full-screen,
 .page.questions-show .question:-webkit-full-screen {
   height: 100%;
   width: 100%;
@@ -539,20 +465,16 @@ h4 small {
   background: #fff;
   color: #000;
 }
-#cliqr-show .question:-webkit-full-screen h2,
 .page.questions-show .question:-webkit-full-screen h2 {
   margin-left: 0.5em;
   padding-top: 0.5em;
 }
-#cliqr-show .question:-webkit-full-screen button.fullscreen,
 .page.questions-show .question:-webkit-full-screen button.fullscreen {
   display: none;
 }
-#cliqr-show .question:-webkit-full-screen .appeal,
 .page.questions-show .question:-webkit-full-screen .appeal {
   margin: 0;
 }
-#cliqr-show .question:-moz-full-screen,
 .page.questions-show .question:-moz-full-screen {
   height: 100%;
   width: 100%;
@@ -561,16 +483,13 @@ h4 small {
   background: #fff;
   color: #000;
 }
-#cliqr-show .question:-moz-full-screen h2,
 .page.questions-show .question:-moz-full-screen h2 {
   margin-left: 0.5em;
   padding-top: 0.5em;
 }
-#cliqr-show .question:-moz-full-screen button.fullscreen,
 .page.questions-show .question:-moz-full-screen button.fullscreen {
   display: none;
 }
-#cliqr-show .question:-moz-full-screen .appeal,
 .page.questions-show .question:-moz-full-screen .appeal {
   margin: 0;
 }

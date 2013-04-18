@@ -13,13 +13,13 @@ define [
       @$('.chart').remove()
 
       width  = 150
-      counts = @$ "ol .count"
+      counts = @$ ".count"
       data   = _.pluck @model, "counter"
       max    = _.max data
       widths = _.map data, (d) -> if max > 0 then d / max * width else 0
 
-      counts.before (index) ->
-          jQuery('<span class="chart"></div>')
+      @$(".graph").append (index) ->
+          jQuery('<span class="chart"></span>')
           .attr("data-count": data[index])
           .css
             width: widths[index]
@@ -42,8 +42,6 @@ define [
       @
 
     postRender: ->
-      w = @$(".chart").position().left - @$(".text").position().left
-      @$(".text").css width: w - 30
 
     update: (answers) ->
       @model = answers
