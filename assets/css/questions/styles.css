@@ -276,7 +276,6 @@ h4 small {
 .page.questions-show .results table {
   font-size: 2em;
   line-height: 1.5;
-  width: 100%;
   overflow: hidden;
   border-collapse: collapse;
 }
@@ -289,6 +288,7 @@ h4 small {
 .page.questions-show .results .nominal {
   color: #999;
   font-size: 0.7em;
+  width: 1em;
 }
 .page.questions-show .results .text {
   padding-left: 0.25em;
@@ -518,6 +518,7 @@ h4 small {
 .vote-form .control-group {
   margin-left: 260px;
 }
+.vote-form .control-group textarea,
 .vote-form .control-group input,
 .vote-form .control-group .choice-new {
   width: 400px;

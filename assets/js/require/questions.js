@@ -4,6 +4,7 @@
   requirejs.config({
     baseUrl: cliqr.config.ASSETS + 'js/',
     paths: {
+      'jquery.elastic': 'vendor/jquery.elastic',
       underscore: 'vendor/underscore-1.4.4',
       backbone: 'vendor/backbone-1.0.0',
       handlebars: 'vendor/handlebars-1.0.rc.2'

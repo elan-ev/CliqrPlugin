@@ -3,6 +3,7 @@ define [
   'utils'
   'handlebars'
   'views/template_view'
+  'jquery.elastic'
 ], (Backbone, utils, Handlebars, TemplateView) ->
 
   class QuestionsForm extends TemplateView
@@ -23,6 +24,9 @@ define [
       @$el.html @template if @model then @model.toJSON() else {}
       @$("form").validator()
       @
+
+    postRender: ->
+      @$("textarea").elastic()
 
     addChoice: (event) ->
       choice = Handlebars.partials['choice'] {}

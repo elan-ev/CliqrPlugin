@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['backbone', 'utils', 'handlebars', 'views/template_view'], function(Backbone, utils, Handlebars, TemplateView) {
+  define(['backbone', 'utils', 'handlebars', 'views/template_view', 'jquery.elastic'], function(Backbone, utils, Handlebars, TemplateView) {
     var QuestionsForm;
     return QuestionsForm = (function(_super) {
       var disableSaveButton;
@@ -35,6 +35,10 @@
         this.$el.html(this.template(this.model ? this.model.toJSON() : {}));
         this.$("form").validator();
         return this;
+      };
+
+      QuestionsForm.prototype.postRender = function() {
+        return this.$("textarea").elastic();
       };
 
       QuestionsForm.prototype.addChoice = function(event) {

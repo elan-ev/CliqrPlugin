@@ -15,3 +15,10 @@ define [
       @$el.html @template()
       @$el.append @form.render().el
       @
+
+    postRender: ->
+      @form.postRender()
+
+    remove: ->
+      @form.remove()
+      super()
