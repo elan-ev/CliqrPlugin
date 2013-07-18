@@ -52,11 +52,7 @@ $polls = array_map(function ($q) {
 
   </head>
   <body>
-    <noscript>
-      <h1>
-      <?= _("Sie können Cliqr nur verwenden, wenn Sie in Ihrem Browser JavaScript aktiviert haben.") ?>
-      </h1>
-    </noscript>
+    <?= $this->render_partial('_noscript') ?>
 
     <script data-main="<?= $ASSETS ?>js/require/poll.js"
             src="<?= $ASSETS ?>js/vendor/require.js"></script>
