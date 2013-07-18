@@ -2,8 +2,11 @@
 (function() {
 
   define(['handlebars', 'underscore'], function(Handlebars, _) {
-    var currentView;
+    var currentView, getContainer;
     currentView = false;
+    getContainer = function() {
+      return jQuery("#cliqr-container");
+    };
     return {
       changeToPage: function(view) {
         var container;
@@ -13,7 +16,7 @@
         }
         currentView = view;
         jQuery(window).scrollTop(0);
-        container = jQuery("#layout_container");
+        container = getContainer();
         container.prepend(view.render().$el);
         return typeof view.postRender === "function" ? view.postRender() : void 0;
       },
