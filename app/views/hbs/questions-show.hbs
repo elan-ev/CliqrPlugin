@@ -2,32 +2,32 @@
 
   <div class="title">{{{question_html}}}</div>
 
-    <div class="controls">
+  <div class="controls">
 
-      <!-- STOP -->
-      {{#if_state 'active'}}
-      <form action="{{questions_path 'stop'}}" method="POST">
-        <button class="button stop" type="submit">Stoppen</button>
-      </form>
-      {{/if_state}}
+    <!-- STOP -->
+    {{#if_state 'active'}}
+    <form action="{{questions_path 'stop'}}" method="POST">
+      <button class="button stop" type="submit">Stoppen</button>
+    </form>
+    {{/if_state}}
 
-      <!-- EDIT -->
-      {{#unless_state 'active'}}
-      <a class="button edit"
-         href="#edit-{{id}}"
-        tabindex="0">Ändern</a>
-      {{/unless_state}}
+    <!-- EDIT -->
+    {{#unless_state 'active'}}
+    <a class="button edit"
+       href="#edit-{{id}}"
+       tabindex="0">Ändern</a>
+    {{/unless_state}}
 
-      <!-- DELETE -->
-      <form class="questions-destroy"
-            action="{{questions_path 'destroy'}}"
-            method="POST"
-            data-confirm="Wollen Sie die Frage wirklich löschen?">
-          <button class="button destroy" type="submit">Löschen</button>
-      </form>
+    <!-- DELETE -->
+    <form class="questions-destroy"
+          action="{{questions_path 'destroy'}}"
+          method="POST"
+          data-confirm="Wollen Sie die Frage wirklich löschen?">
+        <button class="button destroy" type="submit">Löschen</button>
+    </form>
 
-      <!-- FULLSCREEN -->
-      <button class="button fullscreen">Vollbild</button>
+    <!-- FULLSCREEN -->
+    <button class="button fullscreen">Vollbild</button>
 
   </div>
 
