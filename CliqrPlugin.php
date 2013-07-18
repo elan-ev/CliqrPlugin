@@ -80,7 +80,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     }
 
 
-    public function getIconNavigation($course_id, $last_visit)
+    public function getIconNavigation($course_id, $last_visit, $user_id = null)
     {
         // ...
     }
@@ -89,6 +89,17 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     {
         // ...
     }
+
+    function getTabNavigation($course_id)
+    {
+        // ...
+    }
+
+    function getNotificationObjects($course_id, $since, $user_id)
+    {
+        // ...
+    }
+
 
     const DEFAULT_CONTROLLER = "questions";
 
