@@ -5,22 +5,22 @@
     Mit Cliqr lässt sich ein so genanntes Peer Instruction nach Eric
     Mazur (2006) durchführen. Dies in eine Methode, mit der die
     Studierenden in Vorlesungen besser eingebunden werden und die
-    Möglichkeit erhalten, ihr Verständnis über die vorgetr agenen
+    Möglichkeit erhalten, ihr Verständnis über die vorgetragenen
     Lerninhalte zu überprüfen.
 
 <h3>Wie geht das?</h3>
 
-    Der Vortragende stellt alle 20-30 Minuten eine Frage mit mehreren
+    Der Vortragende stellt alle 20&ndash;30 Minuten eine Frage mit mehreren
     Antwortoptionen (Single-Choice-Frage) ans Plenum. Jeder
     Studierende ist aufgefordert, diese Frage zu beantworten. Seine
     Antwort wird mit Cliqr statistisch erfasst, d.h. der Lehrende
     sieht nur, welche Antwortoptionen das Plenum präferiert. Zur
-    Beantwortung der Frag e verwenden die Studierenden ein
+    Beantwortung der Frage verwenden die Studierenden ein
     mitgebrachtes internetfähiges Endgerät, z.B. ihr Mobiltelefon, ein
-    Tablet oder ein Notebook un d stimmen auf einer Web-Site ab. Je
-    nachdem, ob das Plenum überwie gend auf die richtige Antwort
+    Tablet oder ein Notebook und stimmen auf einer Website ab. Je
+    nachdem, ob das Plenum überwiegend auf die richtige Antwort
     getippt hat oder ob eher die falschen Antwortoptionen gewählt
-    wurden, führt der Lehrende seine Le hre fort.  Es wird die
+    wurden, führt der Lehrende seine Lehre fort.  Es wird die
     folgende Vorgehensweise empfohlen:
 
     <ol>
@@ -48,12 +48,6 @@
     Methode. Exemplarisch gibt der nachfolgende Film (3 Minuten) die
     Erfahrungen von Prof. Dr. Riegler wieder:
 
-    <a href="http://icast.zew.uni-hannover.de/FlowcastsInfo/play.php?id=3DmheVZ0da">
-      &lt;http://icast.zew.uni-hannover.de/FlowcastsInfo/play.php?id=3DmheVZ0da&gt;
-    </a>
-
-    oder YouTube:<br>
-
     <a href="http://www.youtube.com/watch?v=3D-QERxwN9k2I">
       &lt;http://www.youtube.com/watch?v=3D-QERxwN9k2I&gt;
     </a>
@@ -76,6 +70,6 @@
       <li>
         Sofern an Ihrem Standort vorhanden, fragen Sie die
         didaktischen Berater in den Hochschul- und Mediendidaktischen
-        Einrichtungen. Die können Sie beim Einsatz von Cliqr
+        Einrichtungen. Diese können Sie beim Einsatz von Cliqr
         unterstützen.
     </ul>
