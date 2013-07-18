@@ -4,11 +4,8 @@
 require dirname(__FILE__) . '/vendor/autoload.php';
 
 /**
- * CliqrPlugin.class.php
+ * TODO
  *
- * cliqrbeschreibung
- *
- * @author  Christian Flothmann <cflothma@uos.de>
  * @author  <mlunzena@uos.de>
  **/
 
@@ -36,32 +33,30 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     {
         global $perm;
 
-        if (Request::isXhr()) {
+        $cid = $this->getContext();
+        if (Request::isXhr()
+            || Navigation::hasItem('/course/cliqr')
+            || !$this->isActivated($cid)
+            || !$perm->have_studip_perm("tutor", $cid)) {
             return;
         }
 
-        $context = $this->getContext();
-        if (!$this->isActivated($context)
-            || !$perm->have_studip_perm("tutor", $context)) {
-            return;
-        }
 
         # /course/cliqr -> plugins.php/cliqrplugin/questions
-        $url = PluginEngine::getURL('cliqrplugin/questions');
+        $url = PluginEngine::getURL('cliqrplugin', compact('cid'), 'questions', true);
+
         $navigation = new Navigation(_('Cliqr'), $url);
         $navigation->setImage(Assets::image_path('icons/16/white/test.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/test.png'));
 
         # /course/cliqr/index -> plugins.php/cliqrplugin/questions#index
-        $url = PluginEngine::getURL('cliqrplugin/questions') . '#index';
-        $navigation->addSubNavigation("index", new Navigation(_("Fragen"), $url));
+        $navigation->addSubNavigation("index", new Navigation(_("Fragen"), '#index'));
 
         # /course/cliqr/new -> plugins.php/cliqrplugin/questions#new
-        $url = PluginEngine::getURL('cliqrplugin/questions') . '#new';
-        $navigation->addSubNavigation("new", new Navigation(_("Frage erstellen"), $url));
+        $navigation->addSubNavigation("new", new Navigation(_("Frage erstellen"), '#new'));
 
         # /course/cliqr/help -> plugins.php/cliqrplugin/help
-        $url = PluginEngine::getURL('cliqrplugin/help');
+        $url = PluginEngine::getURL('cliqrplugin', compact('cid'), 'help', true);
         $navigation->addSubNavigation("help", new Navigation(_("Methodische Informationen"), $url));
 
         Navigation::addItem('/course/cliqr', $navigation);
