@@ -1,7 +1,11 @@
 define [
   'views/template_view'
   'views/questions_results_view'
-], (TemplateView, ResultsView) ->
+  'utils'
+  'jquery.bigtext'
+], (TemplateView, ResultsView, utils) ->
+
+  console.log utils
 
   class QuestionView extends TemplateView
     template_id: "questions-show"
@@ -35,11 +39,12 @@ define [
         short_url: cliqr.config.SHORT_URL
 
       @$el.html @template context
-      @$(".question").append @resultsView.render().el
+      @$(".results").replaceWith @resultsView.render().el
       @
 
     postRender: ->
       @resultsView.postRender()
+      @$(".vote .url").bigtext minfontsize: 12, childSelector: 'a'
 
     updateAnswers: (model, answers, options) =>
       @resultsView.update answers
@@ -60,7 +65,7 @@ define [
     showFS: (event) ->
       event.preventDefault()
 
-      container = @$(".question")[0]
+      container = @el
 
       methods = ["requestFullscreen", "mozRequestFullScreen", "webkitRequestFullscreen"]
       for method in methods when container[method]

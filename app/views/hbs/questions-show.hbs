@@ -1,54 +1,73 @@
-<div class="question state-{{state}}">
+<div class="question state-{{state}} clearfix">
 
-  <div class="title">{{{question_html}}}</div>
+  <article>
+    <h1>{{{question_html}}}</h1>
+    <div class="results" />
+  </article>
 
-  <div class="controls">
+  <aside class="instructions">
 
-    <!-- STOP -->
-    {{#if_state 'active'}}
-    <form action="{{questions_path 'stop'}}" method="POST">
-      <button class="button stop" type="submit">Stoppen</button>
-    </form>
-    {{/if_state}}
+    <div class="appeal start">
 
-    <!-- EDIT -->
-    {{#unless_state 'active'}}
-    <a class="button edit"
-       href="#edit-{{id}}"
-       tabindex="0">Ändern</a>
-    {{/unless_state}}
 
-    <!-- DELETE -->
-    <form class="questions-destroy"
-          action="{{questions_path 'destroy'}}"
-          method="POST"
-          data-confirm="Wollen Sie die Frage wirklich löschen?">
-        <button class="button destroy" type="submit">Löschen</button>
-    </form>
+      <!-- START -->
+      {{#if_state 'new'}}
+      <form action="{{questions_path 'start'}}" method="POST">
+          <button class="button start" type="submit">Frage starten</button>
+      </form>
+      {{/if_state}}
 
-    <!-- FULLSCREEN -->
-    <button class="button fullscreen">Vollbild</button>
+      <!-- RESTART -->
+      {{#if_state 'stopvis'}}
+      <form action="{{questions_path 'start'}}" method="POST">
+          <button class="button start" type="submit">Frage erneut starten</button>
+      </form>
+      {{/if_state}}
 
-  </div>
+      <!-- STOP -->
+      {{#if_state 'active'}}
+      <form action="{{questions_path 'stop'}}" method="POST">
+        <button class="button stop" type="submit">Stoppen</button>
+      </form>
+      {{/if_state}}
+
+      <span class="loader">
+        loading&hellip;
+      </span>
+    </div>
+
+
+    <div class="appeal vote">
+      <div class="url">
+        <a class="short" alt="Abstimmen unter" href="{{short_url}}">{{short_url}}</a>
+      </div>
+      <a class="qr" href="{{qr_code}}"></a>
+    </div>
+
+
+    <div class="controls">
+
+      <!-- EDIT -->
+      {{#unless_state 'active'}}
+      <a class="button edit"
+         href="#edit-{{id}}"
+         tabindex="0">Ändern</a>
+      {{/unless_state}}
+
+      <!-- DELETE -->
+      <form class="questions-destroy"
+            action="{{questions_path 'destroy'}}"
+            method="POST"
+            data-confirm="Wollen Sie die Frage wirklich löschen?">
+          <button class="button destroy" type="submit">Löschen</button>
+      </form>
+
+      <!-- FULLSCREEN -->
+      <button class="button fullscreen">Vollbild</button>
+
+    </div>
+  </aside>
 
   <img class="qr" src="{{qr_code}}">
-
-  <div class="appeal vote">
-    <a class="short" alt="Vote:" href="{{short_url}}">{{short_url}}</a>
-    <a class="qr" href="{{qr_code}}"></a>
-  </div>
-
-  <div class="appeal start">
-    <form action="{{questions_path 'start'}}" method="POST">
-      {{#if_state 'new'}}
-        <button class="start" type="submit">Frage starten</button>
-      {{else}}
-        <button class="start" type="submit">Frage erneut starten</button>
-      {{/if_state}}
-    </form>
-    <span class="loader">
-      loading&hellip;
-    </span>
-  </div>
 
 </div>

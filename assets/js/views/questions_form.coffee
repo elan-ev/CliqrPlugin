@@ -30,7 +30,7 @@ define [
 
     addChoice: (event) ->
       choice = Handlebars.partials['choice'] {}
-      jQuery(choice).insertBefore(@$ '.choice-new').find("input").focus()
+      jQuery(choice).insertBefore(@$ '.choice-new').find("input")[0].focus()
 
     removeChoice: (event) ->
       choice_input = jQuery(event.target).closest(".choice-input")

@@ -44,7 +44,7 @@
       QuestionsForm.prototype.addChoice = function(event) {
         var choice;
         choice = Handlebars.partials['choice']({});
-        return jQuery(choice).insertBefore(this.$('.choice-new')).find("input").focus();
+        return jQuery(choice).insertBefore(this.$('.choice-new')).find("input")[0].focus();
       };
 
       QuestionsForm.prototype.removeChoice = function(event) {

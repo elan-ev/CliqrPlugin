@@ -4,6 +4,7 @@
   define(['backbone', 'routers/questions', 'views/questions_helpers'], function(Backbone, QuestionsRouter, _helpers) {
     var QuestionsApp;
     return QuestionsApp = (function() {
+      var detectFeatures;
 
       function QuestionsApp() {}
 
@@ -14,6 +15,7 @@
       };
 
       QuestionsApp.prototype.initStuff = function() {
+        detectFeatures();
         return setTimeout((function() {
           return jQuery(".self-destroy").remove();
         }), 5000);
@@ -22,6 +24,34 @@
       QuestionsApp.prototype.initRouters = function() {
         var router;
         return router = new QuestionsRouter;
+      };
+
+      detectFeatures = function() {
+        var addCssClass, cssomPrefixes, mStyle, testProp;
+        if (window.Modernizr) {
+          return;
+        }
+        mStyle = window.document.createElement('modernizr').style;
+        cssomPrefixes = 'Webkit Moz O ms'.split(' ');
+        testProp = function(prop) {
+          var i, props, ucProp, _i, _len;
+          ucProp = prop.charAt(0).toUpperCase() + prop.slice(1);
+          props = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
+          for (_i = 0, _len = props.length; _i < _len; _i++) {
+            i = props[_i];
+            if (mStyle[i] !== void 0) {
+              return true;
+            }
+          }
+          return false;
+        };
+        addCssClass = function(prop, truthy) {
+          var pref;
+          pref = truthy ? '' : 'no-';
+          return window.document.documentElement.className += ' ' + pref + prop;
+        };
+        addCssClass("flexbox", testProp("flexWrap"));
+        return addCssClass("flexboxlegacy", testProp("boxDirection"));
       };
 
       return QuestionsApp;

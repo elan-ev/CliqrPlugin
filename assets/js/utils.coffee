@@ -5,7 +5,7 @@ define [
 
   currentView = false
 
-  getContainer = ->
+  getContainer: ->
     jQuery "#cliqr-container"
 
   changeToPage: (view) ->
@@ -19,7 +19,7 @@ define [
     jQuery(window).scrollTop 0
 
     # render that view
-    container = getContainer()
+    container = @getContainer()
     container.prepend view.render().$el
     view.postRender?()
 

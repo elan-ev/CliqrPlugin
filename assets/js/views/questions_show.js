@@ -4,8 +4,9 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['views/template_view', 'views/questions_results_view'], function(TemplateView, ResultsView) {
+  define(['views/template_view', 'views/questions_results_view', 'utils', 'jquery.bigtext'], function(TemplateView, ResultsView, utils) {
     var QuestionView;
+    console.log(utils);
     return QuestionView = (function(_super) {
 
       __extends(QuestionView, _super);
@@ -53,12 +54,16 @@
           short_url: cliqr.config.SHORT_URL
         });
         this.$el.html(this.template(context));
-        this.$(".question").append(this.resultsView.render().el);
+        this.$(".results").replaceWith(this.resultsView.render().el);
         return this;
       };
 
       QuestionView.prototype.postRender = function() {
-        return this.resultsView.postRender();
+        this.resultsView.postRender();
+        return this.$(".vote .url").bigtext({
+          minfontsize: 12,
+          childSelector: 'a'
+        });
       };
 
       QuestionView.prototype.updateAnswers = function(model, answers, options) {
@@ -84,7 +89,7 @@
       QuestionView.prototype.showFS = function(event) {
         var container, method, methods, _i, _len, _results;
         event.preventDefault();
-        container = this.$(".question")[0];
+        container = this.el;
         methods = ["requestFullscreen", "mozRequestFullScreen", "webkitRequestFullscreen"];
         _results = [];
         for (_i = 0, _len = methods.length; _i < _len; _i++) {
