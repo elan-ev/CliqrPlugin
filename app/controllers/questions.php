@@ -94,8 +94,8 @@ class QuestionsController extends CliqrStudipController
         if ($error) {
             throw new Trails_Exception(500, "Could not delete");
         } else {
+            $this->redirect('questions/index');
             $this->response->set_status(204);
-            $this->render_nothing();
         }
     }
 
