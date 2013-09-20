@@ -50,10 +50,10 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $navigation->setActiveImage(Assets::image_path('icons/16/black/test.png'));
 
         # /course/cliqr/index -> plugins.php/cliqrplugin/questions#index
-        $navigation->addSubNavigation("index", new Navigation(_("Fragen"), '#index'));
+        $navigation->addSubNavigation("index", new Navigation(_("Fragen"), $url . '#index'));
 
         # /course/cliqr/new -> plugins.php/cliqrplugin/questions#new
-        $navigation->addSubNavigation("new", new Navigation(_("Frage erstellen"), '#new'));
+        $navigation->addSubNavigation("new", new Navigation(_("Frage erstellen"), $url . '#new'));
 
         # /course/cliqr/help -> plugins.php/cliqrplugin/help
         $url = PluginEngine::getURL('cliqrplugin', compact('cid'), 'help', true);
