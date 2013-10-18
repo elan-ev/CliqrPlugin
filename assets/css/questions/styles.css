@@ -440,13 +440,6 @@ h4 small {
 .page.questions-show .instructions .appeal.vote a.short {
   white-space: nowrap;
 }
-.page.questions-show .instructions .appeal.vote a.short:before {
-  content: attr(alt);
-  font-size: 1rem;
-  padding-right: 0.3333em;
-  color: #6e7070;
-  display: block;
-}
 .page.questions-show .instructions .appeal.vote a.qr {
   width: 64px;
   height: 64px;
