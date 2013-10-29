@@ -68,14 +68,11 @@ define [
 
 
     fetchQuestion: (id, callback) ->
-      if cliqr.bootstrap.POLLS
-        jQuery.Deferred()
-         .resolve(bootstrapQuestions().get(id))
-         .promise()
-
+      if cliqr.bootstrap.POLLS and question = bootstrapQuestions().get(id)
+          return jQuery.Deferred().resolve(question).promise()
       else
         question = new Question id: id
-        question.fetch().pipe -> question # TODO (mlunzena) pipe should be then
+        question.fetch().pipe -> question # TODO (mlunzena) #pipe should be #then
 
 
     # Loader stuff - TODO should not be here, AppView?

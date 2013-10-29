@@ -80,8 +80,8 @@
 
       QuestionsRouter.prototype.fetchQuestion = function(id, callback) {
         var question;
-        if (cliqr.bootstrap.POLLS) {
-          return jQuery.Deferred().resolve(bootstrapQuestions().get(id)).promise();
+        if (cliqr.bootstrap.POLLS && (question = bootstrapQuestions().get(id))) {
+          return jQuery.Deferred().resolve(question).promise();
         } else {
           question = new Question({
             id: id
