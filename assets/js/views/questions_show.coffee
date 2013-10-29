@@ -5,8 +5,6 @@ define [
   'jquery.bigtext'
 ], (TemplateView, ResultsView, utils) ->
 
-  console.log utils
-
   class QuestionView extends TemplateView
     template_id: "questions-show"
 

@@ -6,7 +6,6 @@
 
   define(['views/template_view', 'views/questions_results_view', 'utils', 'jquery.bigtext'], function(TemplateView, ResultsView, utils) {
     var QuestionView;
-    console.log(utils);
     return QuestionView = (function(_super) {
 
       __extends(QuestionView, _super);
