@@ -429,6 +429,7 @@ h4 small {
 .page.questions-show .instructions .appeal.start .button {
   font-size: 1em;
   width: 80%;
+  white-space: normal;
 }
 .page.questions-show .instructions .appeal.vote {
   text-align: center;
