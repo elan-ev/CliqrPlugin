@@ -229,7 +229,8 @@ class QuestionsController extends CliqrStudipController
     {
         # set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
-        PageLayout::setTitle(_('Cliqr'));
+
+        PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . _('Cliqr'));
 
         if ($action === 'new') {
             Navigation::activateItem("/course/cliqr/new");
