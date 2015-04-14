@@ -138,7 +138,7 @@ h4 small {
   position: relative;
 }
 #questions-index div.page {
-  padding: 15px 5% 4.5em;
+  padding: 15px 0 4.5em;
 }
 #questions-index form.filter {
   background-color: #e8e8e8;
@@ -155,6 +155,10 @@ h4 small {
 #questions-index form.filter:after {
   background-color: #666;
   background-color: rgba(0, 0, 0, 0.4);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-color: transparent;
+  background-image: url('../../../../../../assets/images/icons/16/black/search.png');
   position: absolute;
   left: 7px;
   top: 50%;
@@ -163,12 +167,6 @@ h4 small {
   width: 18px;
   height: 18px;
   opacity: .2;
-}
-#questions-index form.filter:after {
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-color: transparent;
-  background-image: url('../../../../../../assets/images/icons/16/black/search.png');
 }
 #questions-index form.filter input.search {
   width: 100%;
@@ -296,7 +294,6 @@ h4 small {
     top: 4.5em;
   }
   */
-
 }
 .page.questions-show:before {
   content: " ";
@@ -397,7 +394,7 @@ h4 small {
   font-size: 2em;
   color: #666;
   position: absolute;
-  right: 20%;
+  right: 25%;
   bottom: 0;
   padding: 1rem;
 }
@@ -444,7 +441,7 @@ h4 small {
 .page.questions-show .instructions .appeal.vote a.qr {
   width: 64px;
   height: 64px;
-  background: #ffffff url('qrcode.png') no-repeat 50% 50%;
+  background: white url('qrcode.png') no-repeat 50% 50%;
   display: inline-block;
   vertical-align: middle;
   margin: 1rem;
