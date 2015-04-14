@@ -31,12 +31,4 @@ interface Shortener {
      * @return string shortened URL or null if anything went wrong
      */
     public function shorten($url);
-
-    /**
-     * expands a shortened URL
-     *
-     * @param string $url short URL to be expanded
-     * @return string expanded URL or null if anything went wrong
-     */
-    public function expand($url);
 }

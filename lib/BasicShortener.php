@@ -1,6 +1,6 @@
 <?php
 
-// Copyright (c) 2012 - <mlunzena@uos.de>
+// Copyright (c) 2013 - <mlunzena@uos.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,44 @@ namespace Cliqr;
 
 require_once 'Shortener.php';
 
-class MockShortener implements Shortener {
+class BasicShortener implements Shortener {
+
+    function __construct($container)
+    {
+        $this->config = $container['ini']['basicshortener'];
+    }
 
     public function shorten($url)
     {
-        return $url;
+        $response = $this->performRequest($url);
+        return $response;
+    }
+
+    /**
+     * Wrapper around the actual #_performRequest memoizing its
+     * results to prevent calling the shortener service on each invocation.
+     */
+    private function performRequest($url)
+    {
+        $cache = \StudipCacheFactory::getCache();
+        $cache_key = 'cliqr/basicshortener/' . md5($url);
+
+        $result = unserialize($cache->read($cache_key));
+        if (true ||$result === false) {
+            $result = $this->_performRequest($url);
+            $cache->write($cache_key, serialize($result));
+        }
+
+        return $result;
+    }
+
+    private function _performRequest($url)
+    {
+        $apiUrl = sprintf($this->config['url'], urlencode($url));
+
+        $ch = \curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        return curl_exec($ch);
     }
 }
