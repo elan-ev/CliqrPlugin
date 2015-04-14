@@ -54,6 +54,17 @@ define [
     showQRCode: (event) ->
       # do not show code, handle this on your own
       event.preventDefault()
+      origin = $(event.target)
+      dialog = origin
+          .closest '.vote'
+          .find '.dialog'
+      content = dialog.html()
+
+      $(document).one 'dialog-open', (event, parameters) ->
+        $(parameters.dialog).bigtext minfontsize: 12, childSelector: 'a'
+
+      STUDIP.Dialog.show content, width: 550, height: 700, title: dialog.attr 'title'
+
       @$(".question").toggleClass "qr-visible"
 
     confirmDestroy: (event) ->
