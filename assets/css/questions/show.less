@@ -1,3 +1,53 @@
+@import '../mixins/mixins-flex';
+
+html.flexbox {
+  .questions-show .question {
+    .mixin-display-flex();
+    .mixin-justify-content(space-around);
+
+    article {
+      .mixin-flex(3 1 auto);
+      position: relative;
+    }
+
+    aside {
+      .mixin-flex(1 1 200px);
+      background: lighten(@color-appeal, 15%);
+    }
+  }
+}
+
+html:not(.flexbox) {
+  .questions-show .question {
+
+    position: relative;
+
+    article, aside {
+      float: left;
+    }
+
+    article {
+      width: 75%;
+      padding: 0 0.75rem;
+    }
+
+    aside {
+      width: 20%;
+      content: " ";
+      position: absolute;
+      top: 0;
+      left: 80%;
+      width: 20%;
+      height: 100%;
+      background: lighten(@color-appeal, 15%);
+    }
+
+    .sample-size {
+      right: 20%;
+    }
+  }
+}
+
 .page.questions-show {
 
   @chartColor1: #3389b7;
@@ -8,58 +58,27 @@
 
   z-index: 1;
 
-
-  // background color of aside
-  &:before {
-    content: " ";
-    position: absolute;
-    top: 0;
-    left: 80%;
-    width: 20%;
-    height: 100%;
-    background: lighten(@color-appeal, 15%);
-  }
-
   .question {
-    position: relative;
     width: 100%;
-    min-height: 600px;
+    min-height: 500px;
   }
 
   article, aside {
-    float: left;
     .box-sizing(border-box);
   }
 
   article {
-    width: 75%;
-    padding: 0 0.75rem;
   }
 
   aside {
-    margin-left: 5%;
-    width: 20%
+    text-align: center;
   }
 
   .controls {
-    position: absolute;
-    bottom: 0;
-    width: 20%;
-    text-align: right;
-
     .buttons {
       width: 100%;
     }
   }
-
-  /*
-  img.qr {
-    position: absolute;
-    right: 120px;
-    top: 4.5em;
-  }
-  */
-
 
   // RESULTS
   .results {
@@ -130,10 +149,11 @@
     .sample-size {
       font-size: 2em;
       color: #666; // TODO
+      padding-right: 1em;
+
       position: absolute;
-      right: 25%;
+      right: 0;
       bottom: 0;
-      padding: 1rem;
     }
   } // END RESULTS
 
@@ -192,25 +212,15 @@
         margin: 0 0.5em;
       }
 
-      a.short {
-        white-space: nowrap;
-      }
-
       a.qr {
-        // float: right;
         width: 64px;
         height: 64px;
         background: white url('qrcode.png') no-repeat 50% 50%;
-        // border-radius: 64px;
         display: inline-block;
         vertical-align: middle;
         margin: 1rem;
-        // position: absolute;
-        // top: 50%;
-        // right: 0;
-        // margin-top: -32px;
-        // margin-right: 16px;
         z-index: 1;
+        box-shadow: 0 0 0.25em darken(@color-appeal, 5%);
 
         &:hover {
           box-shadow: 0 0 0.25em darken(@color-appeal, 35%);
@@ -235,9 +245,6 @@
     display: inline;
   }
   // END QR CODE
-
-
-
 
 
   .question  {
@@ -296,4 +303,17 @@
     &:fullscreen { .fullscreen(); }
     &:-webkit-full-screen { .fullscreen(); }
     &:-moz-full-screen { .fullscreen(); }
+}
+
+.ui-dialog, .page.questions-show {
+  a.short {
+    white-space: nowrap;
+  }
+}
+
+.ui-dialog {
+  .ui-dialog-content {
+    text-align: center;
+    padding: 0;
+  }
 }

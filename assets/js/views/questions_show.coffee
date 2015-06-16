@@ -2,7 +2,7 @@ define [
   'views/template_view'
   'views/questions_results_view'
   'utils'
-  'jquery.bigtext'
+  'jquery.fittext'
 ], (TemplateView, ResultsView, utils) ->
 
   class QuestionView extends TemplateView
@@ -42,7 +42,7 @@ define [
 
     postRender: ->
       @resultsView.postRender()
-      @$(".vote .url").bigtext minfontsize: 12, childSelector: 'a'
+      @$(".vote .url").fitText()
 
     updateAnswers: (model, answers, options) =>
       @resultsView.update answers
@@ -61,9 +61,14 @@ define [
       content = dialog.html()
 
       $(document).one 'dialog-open', (event, parameters) ->
-        $(parameters.dialog).bigtext minfontsize: 12, childSelector: 'a'
+        $(parameters.dialog).fitText()
 
-      STUDIP.Dialog.show content, width: 550, height: 700, title: dialog.attr 'title'
+      STUDIP.Dialog.show content,
+        id: "dialog-qr"
+        width: 550
+        height: 700
+        title: dialog.attr 'title'
+        resize: false
 
       @$(".question").toggleClass "qr-visible"
 

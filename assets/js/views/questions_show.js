@@ -4,7 +4,7 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['views/template_view', 'views/questions_results_view', 'utils', 'jquery.bigtext'], function(TemplateView, ResultsView, utils) {
+  define(['views/template_view', 'views/questions_results_view', 'utils', 'jquery.fittext'], function(TemplateView, ResultsView, utils) {
     var QuestionView;
     return QuestionView = (function(_super) {
       __extends(QuestionView, _super);
@@ -59,10 +59,7 @@
 
       QuestionView.prototype.postRender = function() {
         this.resultsView.postRender();
-        return this.$(".vote .url").bigtext({
-          minfontsize: 12,
-          childSelector: 'a'
-        });
+        return this.$(".vote .url").fitText();
       };
 
       QuestionView.prototype.updateAnswers = function(model, answers, options) {
@@ -81,15 +78,14 @@
         dialog = origin.closest('.vote').find('.dialog');
         content = dialog.html();
         $(document).one('dialog-open', function(event, parameters) {
-          return $(parameters.dialog).bigtext({
-            minfontsize: 12,
-            childSelector: 'a'
-          });
+          return $(parameters.dialog).fitText();
         });
         STUDIP.Dialog.show(content, {
+          id: "dialog-qr",
           width: 550,
           height: 700,
-          title: dialog.attr('title')
+          title: dialog.attr('title'),
+          resize: false
         });
         return this.$(".question").toggleClass("qr-visible");
       };
