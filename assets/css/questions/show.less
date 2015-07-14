@@ -12,6 +12,7 @@ html.flexbox {
 
     aside {
       .mixin-flex(1 1 200px);
+      max-width: 50%;
       background: lighten(@color-appeal, 15%);
     }
   }
@@ -210,6 +211,7 @@ html:not(.flexbox) {
 
       .url {
         margin: 0 0.5em;
+        overflow: auto;
       }
 
       a.qr {

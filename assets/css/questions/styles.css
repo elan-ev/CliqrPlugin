@@ -307,6 +307,7 @@ html.flexbox .questions-show .question aside {
   -webkit-flex: 1 1 200px;
   -ms-flex: 1 1 200px;
   flex: 1 1 200px;
+  max-width: 50%;
   background: #efefef;
 }
 html:not(.flexbox) .questions-show .question {
@@ -452,6 +453,7 @@ html:not(.flexbox) .questions-show .question .sample-size {
 }
 .page.questions-show .instructions .appeal.vote .url {
   margin: 0 0.5em;
+  overflow: auto;
 }
 .page.questions-show .instructions .appeal.vote a.qr {
   width: 64px;
