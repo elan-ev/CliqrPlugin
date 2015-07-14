@@ -16,8 +16,7 @@ class HelpController extends CliqrStudipController
 
         # set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
-        PageLayout::setTitle(_('Cliqr - Methodische Informationen'));
-
+        PageLayout::setTitle(_($_SESSION['SessSemName']['header_line']. " - Cliqr - Methodische Informationen"));
 
         Navigation::activateItem("/course/cliqr/help");
     }

@@ -12,8 +12,9 @@ class QuestionsController extends CliqrStudipController
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
-
-        $this->cid = self::requireContext();
+		
+        $this->cid = self::requireContext();				
+		
         self::requireAuthorisation($this->cid);
 
         // TODO: anders sicherstellen, dass sich #state und #start/stopdate nicht widersprechen
@@ -21,10 +22,11 @@ class QuestionsController extends CliqrStudipController
 
         # find and set question
         # URL: /cliqr/questions/(show|update|destroy|start|stop)/:question_id
-        if (in_array($action, words("show update destroy start stop"))) {
+        if (in_array($action, words("show update destroy start stop reset"))) {
             $question_id = self::ensureMD5($args[0]);
             $this->question = Question::find($question_id);
         }
+		
         # else: index create
     }
 
@@ -33,10 +35,9 @@ class QuestionsController extends CliqrStudipController
     /***************************************************************************/
 
     function index_action() {
-
-
+	
         $this->questions = Question::findAll($this->cid);
-
+		
         if (Request::isXhr()) {
             $this->render_json(array_map(function ($q) { return $q->toJSON(); },
                                          $this->questions));
@@ -71,8 +72,7 @@ class QuestionsController extends CliqrStudipController
         }
     }
 
-    // TODO: mit create_action kombinieren?
-    // TODO: Validation!? (eingebaut?)
+
     function update_action($id)
     {
         $params = $this->getQuestionParams();
@@ -94,12 +94,11 @@ class QuestionsController extends CliqrStudipController
         if ($error) {
             throw new Trails_Exception(500, "Could not delete");
         } else {
+			$this->redirect('questions/index');
             $this->response->set_status(204);
-            $this->render_nothing();
         }
     }
 
-    # TODO not restful
     function start_action($id)
     {
         CSRFProtection::verifyUnsafeRequest();
@@ -113,8 +112,6 @@ class QuestionsController extends CliqrStudipController
         }
     }
 
-
-    # TODO not restful
     function stop_action($id)
     {
         CSRFProtection::verifyUnsafeRequest();
@@ -126,6 +123,27 @@ class QuestionsController extends CliqrStudipController
         } else {
             throw new Trails_Exception(400, "Could not stop");
         }
+    }
+	
+	
+	function history_action($id)
+    {
+		return 0;
+    }
+	
+	
+	function reset_action($id)
+    {
+		$this->question->executeResetHistory();
+		$error = $this->question->isError();
+
+		if ($error) {
+			throw new Trails_Exception(500, "Could not delete history");
+		} else {
+			$this->render_nothing();
+			$this->response->set_status(204);
+		}	
+		
     }
 
     # get poll URL and shorten it
@@ -156,11 +174,10 @@ class QuestionsController extends CliqrStudipController
     {
         global $auth;
 
-        // TODO: Validation!? (eingebaut?)
+        
         $question = new Question();
         $question->setAuthorID($auth->auth["uid"]);
 
-        // TODO: das ist so nicht sauber, das müsste Question machen
         $question->setRangeID(Question::transformRangeId($this->cid));
 
         $question->setQuestion($q = $params['question']);
@@ -184,7 +201,6 @@ class QuestionsController extends CliqrStudipController
         }
 
         // UPDATE CHOICES
-        // TODO zuviel in dieser action, besser nur 10 zeilen pro function
         if (isset($params['answers'])) {
 
             $answers = array();
@@ -229,7 +245,7 @@ class QuestionsController extends CliqrStudipController
     {
         # set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
-        PageLayout::setTitle(_('Cliqr'));
+        PageLayout::setTitle(_($_SESSION['SessSemName']['header_line']. " - Cliqr"));
 
         if ($action === 'new') {
             Navigation::activateItem("/course/cliqr/new");

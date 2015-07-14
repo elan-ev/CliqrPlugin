@@ -43,7 +43,7 @@ class QrController extends CliqrStudipController
     private function createQRCode($url, $filename)
     {
         $enc = QRencode::factory();
-        $enc->size = 5;
+        $enc->size = 17; //5
         $enc->margin = 2;
         # bug!
         $enc->fore_color = 0x101010;

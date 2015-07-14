@@ -26,8 +26,7 @@ require_once 'Shortener.php';
 
 class GoogleShortener implements Shortener {
 
-    function __construct($container)
-    {
+    function __construct($container) {
         $this->config = $container['ini']['google'];
     }
 
@@ -54,7 +53,8 @@ class GoogleShortener implements Shortener {
         $cache_key = 'cliqr/google/' . md5($url) . '/' . (int)$shorten;
 
         $result = unserialize($cache->read($cache_key));
-        if ($result === false) {
+
+        if ($result == false) {
             $result = $this->_performRequest($url, $shorten);
             $cache->write($cache_key, serialize($result));
         }
@@ -64,8 +64,8 @@ class GoogleShortener implements Shortener {
 
     private function _performRequest($url, $shorten)
     {
-        $apiUrl = $this->config['api_url'] . '?' . $this->config['api_key'];
-
+        $apiUrl = $this->config['api_url'] . '?key=' . $this->config['api_key'];
+		
         if (!$shorten) {
             $apiUrl .= "&shortUrl=$url";
         }

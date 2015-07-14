@@ -13,7 +13,7 @@
         }
         currentView = view;
         jQuery(window).scrollTop(0);
-        container = jQuery("#layout_container");
+        container = jQuery("#layout_content"); // #layout_container ersetzen mit #layout_content TUC - rzmk 27.02.2014
         container.prepend(view.render().$el);
         return typeof view.postRender === "function" ? view.postRender() : void 0;
       },

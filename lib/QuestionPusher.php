@@ -21,14 +21,12 @@ class QuestionPusher {
     {
         $user_data = $question->toJSON(false);
         $ok = $this->trigger('started', $user_data);
-        // TODO was wenn es ein fehler ist?
     }
 
     function onQuestionStopped($notification, $question)
     {
         $user_data = $question->getVoteID();
         $ok = $this->trigger('stopped', $user_data);
-        // TODO was wenn es ein fehler ist?
     }
 
     private function trigger($event, $user_data)

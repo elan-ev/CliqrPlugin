@@ -16,6 +16,8 @@ var cliqr = {bootstrap: {}, config: {
   , SHORT_URL  : "' . htmlReady($short_url) . '"
 }};
 ');
+
+
 ?>
 
 <!-- BEGIN CLIQR PAGE -->
@@ -24,7 +26,10 @@ cliqr.bootstrap.POLLS = <?= json_encode(array_map(function ($q) { return $q->toJ
 </script>
 <!-- END CLIQR PAGE -->
 
+
 <?= $this->render_partial('hbs/_include_js_templates', array('prefix' => 'questions-')) ?>
 
 <script data-main="<?= $ASSETS ?>js/require/questions.js"
         src="<?= $ASSETS ?>js/vendor/require.js"></script>
+		
+	

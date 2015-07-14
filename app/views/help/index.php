@@ -1,5 +1,11 @@
-<h2>Methodische Informationen zum Einsatz von Cliqr</h2>
-
+<h2>Technische Hinweise zum Einsatz von Cliqr</h2>
+	<ul>
+		<li>Wenn eine Frage gestartet wurde, ist das QR-Icon anklickbar damit die Studenten den QR-Code einscannen können.</li>
+		<li>Jeder sollte sein eigenes Endgerät nutzen, da die <strong>Weitergabe der Mobilgeräte nicht funktioniert</strong> (jedes Gerät kann nur einmal die Frage beantorten)</li>
+		<li>Cliqr kann nur im Eduroam oder über das Mobilfunktnetzt genutzt werden (<strong>WiTuC-Guest funktioniert nicht!</strong>)</li>
+	</ul>
+	
+<h2>Methodische Informationen zum Einsatz von Cliqr</h2>	
 <h3>Wozu ist "Cliqr" gut?</h3>
 
     Mit Cliqr lässt sich ein so genanntes Peer Instruction nach Eric
@@ -7,7 +13,7 @@
     Studierenden in Vorlesungen besser eingebunden werden und die
     Möglichkeit erhalten, ihr Verständnis über die vorgetr agenen
     Lerninhalte zu überprüfen.
-
+	
 <h3>Wie geht das?</h3>
 
     Der Vortragende stellt alle 20-30 Minuten eine Frage mit mehreren
@@ -79,3 +85,7 @@
         Einrichtungen. Die können Sie beim Einsatz von Cliqr
         unterstützen.
     </ul>
+
+<h3>Anleitungsvideo</h3>
+
+Hier finden Sie ein <a href="http://video.tu-clausthal.de/film/500.html"> Anleitungsvideo</a> zum Einsatz von Cliqr.

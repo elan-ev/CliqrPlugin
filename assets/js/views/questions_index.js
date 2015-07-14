@@ -14,7 +14,7 @@
         QuestionsIndexView.__super__.constructor.apply(this, arguments);
       }
 
-      QuestionsIndexView.prototype.className = "page";
+      QuestionsIndexView.prototype.className = "page2";
 
       QuestionsIndexView.prototype.id = "questions-index";
 

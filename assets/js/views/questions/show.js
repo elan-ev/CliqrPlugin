@@ -25,6 +25,7 @@
         "click button.stop": "stopQuestion",
         "click a.qr": "showQRCode",
         "submit form.questions-destroy": "confirmDestroy",
+		"submit form.questions-reset": "confirmReset",
         "click .fullscreen": "showFS"
       };
 
@@ -70,6 +71,12 @@
       };
 
       QuestionView.prototype.confirmDestroy = function(event) {
+        if (!window.confirm(jQuery(event.target).data("confirm"))) {
+          return event.preventDefault();
+        }
+      };
+	  
+	  QuestionView.prototype.confirmReset = function(event) {
         if (!window.confirm(jQuery(event.target).data("confirm"))) {
           return event.preventDefault();
         }

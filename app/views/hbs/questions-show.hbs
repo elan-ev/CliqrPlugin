@@ -1,8 +1,27 @@
+<style>
+.lightbox {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, .8);
+	z-index: 1000;
+}
+.lightbox_table {
+    width:100%;
+    height:100%;
+}
+.lightbox_table_cell {
+    vertical-align:middle;
+}
+</style>
+
 <div class="question state-{{state}}">
 
-  <h2>{{question}}</h2>
+  <h2 style="width:93%">{{question}}</h2>
 
-    <div class="controls">
+  <div class="controls">
 
       <!-- STOP -->
       {{#if_state 'active'}}
@@ -16,6 +35,21 @@
       <a class="button edit"
          href="#edit-{{id}}"
         tabindex="0">Ändern</a>
+		
+	  <!-- SHOW HISTORY -->
+		<form action="{{questions_path 'history'}}" method="POST">
+        <button class="button history" type="submit">History</button>
+		</form>
+		
+	<!-- RESET HISTORY -->	
+		<form class="questions-reset"
+            action="{{questions_path 'reset'}}"
+            method="POST"
+			data-confirm="Wollen Sie den Verlauf wirklich löschen?">
+          <button class="button reset" type="submit">Reset</button>
+      </form>
+	  
+	  
       {{/unless_state}}
 
       <!-- DELETE -->
@@ -33,11 +67,43 @@
 
   <img class="qr" src="{{qr_code}}">
 
-  <div class="appeal vote">
+  <div class="appeal vote" id = "appealvote">
     <a class="short" alt="Vote:" href="{{short_url}}">{{short_url}}</a>
-    <a class="qr" href="{{qr_code}}"></a>
+	
+	
+	
+	<!--Ein Button erstellen mit ein Event(On Click): "Lightbox" zu zeigen und "Appeal vote" zu verschwinden!-->
+	
+	<button onclick="document.getElementById('lightbox').style.display='block';document.getElementById('appealvote').style.display='none';" 
+			style="background-color:transparent; border:none; ">
+		<img src="{{qr_code}}" border = 0 height="70" width="70"/>
+	</button>
+	
+	
   </div>
+    
+  <!--Jetzt beginnt die "Lightbox", mit einer Tabelle in sich und ein Event(On Click): "Lightbox" zu verschwinden und "Appeal vote" zu zeigen!-->
+  <!--In der Tabelle wird eine Cell erstellt in dem wird der QR Code angezeigt!-->
+  
+  <div id="lightbox" class="lightbox" style="display:none"
+      onclick="document.getElementById('lightbox').style.display='none'; document.getElementById('appealvote').style.display='inline';">
+		<table class="lightbox_table">
+		<tr>
+		<td class="lightbox_table_cell" align="center">
+	<!--	<div id="lightbox_content" style= "background-color:black; border:5px solid black;">  !-->   <!-- Mit schwarzen Rahmen !-->
+	<!--		<div id="lightbox_content">	<!-- Ohne schwarzen Rahmen !-->	!-->
+			<span style="font-size: 48px; color: #ffffff; margin: 0; padding: 0;">{{short_url}}</span>
+			<p><img src="{{qr_code}}" height="900" width="1000"/></p>    <!-- hier kann man die Größe des QR-Code ändern im Standard ist heigth und width nicht vorhanden  !-->
+			<p><font color="#767676">Um diese Ansicht zu schließen irgendwohin klicken. <br>
+			Vergrößern (Strg und +) | Verkleinern (Strg und -) | Standardgröße (Strg und 0)
+			</font></p>
+		</div>
+		</td>
+		</tr>
+		</table>
+	</div>
 
+	
   <div class="appeal start">
     <form action="{{questions_path 'start'}}" method="POST">
       {{#if_state 'new'}}

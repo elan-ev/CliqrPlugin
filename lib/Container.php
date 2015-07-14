@@ -22,14 +22,6 @@ class Container extends \Pimple {
             }
         );
 
-        /*
-        $this['logger'] = $this->share(
-            function ($c) {
-                $log = new \Monolog\Logger('name');
-                $log->pushHandler(new \Monolog\Handler\StreamHandler('/tmp/your.log'));
-                return $log;
-            });
-        */
 
         $this['pusher_configured'] = function ($c) {
             return isset($c['ini']['pusher']['key']);
@@ -56,10 +48,7 @@ class Container extends \Pimple {
                     $pusher = new \Pusher($c['ini']['pusher']['key'],
                                           $c['ini']['pusher']['secret'],
                                           $c['ini']['pusher']['app_id']);
-                                          // 'http://api.pusherapp.com',
-                                          // '80'
                 }
-                //$pusher->set_logger($c['logger']);
                 return $pusher;
             }
         );

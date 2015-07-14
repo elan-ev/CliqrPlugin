@@ -157,8 +157,8 @@ h4 small {
 #layout_container {
   position: relative;
 }
-#questions-index div.page {
-  padding: 15px 5% 4.5em;
+#questions-index {
+  margin-top: 13px;
 }
 #questions-index form.filter {
   background-color: #e8e8e8;
@@ -171,6 +171,7 @@ h4 small {
   padding: 0px 30px;
   text-shadow: #ffffff 0px 1px 0px;
   position: relative;
+  margin-bottom:5px;
 }
 #questions-index form.filter:after {
   background-color: #666;
@@ -297,9 +298,11 @@ h4 small {
 .page.questions-show {
   /*
   #layout_container {
-    padding: 5px 0 0 0;
+    
   }
   */
+  padding: 0 0 0 50px;
+  width:90%;
 
 }
 #cliqr-show .question,
@@ -307,7 +310,12 @@ h4 small {
   min-height: 500px;
   position: relative;
   padding: 0em 75px 1em 2em;
+  /*background-color: #444444; /* rzmk */
 }
+#layout_wrapper #layout_page #layout_container #layout_content {
+/*	background-color: #444444; /* rzmk */
+}
+
 #cliqr-show h2,
 .page.questions-show h2 {
   font-size: 3em;
@@ -389,7 +397,8 @@ h4 small {
   color: #666;
   position: absolute;
   right: 1em;
-  bottom: 4em;
+  bottom: 5em;
+  z-index: 1000;
 }
 #cliqr-show .controls,
 .page.questions-show .controls {
@@ -404,11 +413,12 @@ h4 small {
 }
 #cliqr-show img.qr,
 .page.questions-show img.qr {
-  height: 350px;
-  position: absolute;
-  right: 120px;
-  top: 4.5em;
+  height: 350px;		/* 350px       130%*/ 
+  position: absolute; /* absolute */
+  right: 120px;		/* 120px */
+  top: 4.5em;		/* 4.5em */
   visibility: hidden;
+  z-index: 1000;
 }
 #cliqr-show .question.qr-visible img.qr,
 .page.questions-show .question.qr-visible img.qr {

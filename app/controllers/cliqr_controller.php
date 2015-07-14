@@ -13,7 +13,6 @@ class CliqrStudipController extends StudipController
 
     function poll_url($cid)
     {
-
         $abs_base = $GLOBALS['ABSOLUTE_URI_STUDIP'];
 
         # Fallback to HTTP for uos

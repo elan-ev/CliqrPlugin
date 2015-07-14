@@ -63,7 +63,12 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         # /course/cliqr/help -> plugins.php/cliqrplugin/help
         $url = PluginEngine::getURL('cliqrplugin/help');
         $navigation->addSubNavigation("help", new Navigation(_("Methodische Informationen"), $url));
-
+		
+		# /course/cliqr -> plugins.php/cliqrplugin/import_export #günay 10.12.2014
+		$url = PluginEngine::getURL('cliqrplugin/import_export');
+        $navigation->addSubNavigation("import_export", new Navigation(_("Import & Export"), $url));
+		
+		
         Navigation::addItem('/course/cliqr', $navigation);
     }
 
@@ -80,15 +85,22 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     }
 
 
-    public function getIconNavigation($course_id, $last_visit)
-    {
-        // ...
+    public function getTabNavigation($course_id) {
+        return array();
     }
 
-    public function getInfoTemplate($course_id)
-    {
-        // ...
+    public function getNotificationObjects($course_id, $since, $user_id) {
+        return array();
     }
+
+    public function getIconNavigation($course_id, $last_visit, $user_id) {
+
+    }
+
+    public function getInfoTemplate($course_id) {
+
+    }
+
 
     const DEFAULT_CONTROLLER = "questions";
 

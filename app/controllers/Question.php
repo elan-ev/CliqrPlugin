@@ -2,7 +2,6 @@
 namespace Cliqr;
 
 require_once "lib/vote/Vote.class.php";
-require_once "lib/classes/DBManager.class.php";
 require_once "errors.php";
 
 class Question extends \Vote {
@@ -34,7 +33,7 @@ class Question extends \Vote {
         // order questions by title
         usort($questions, function($a, $b) {
                 return strcasecmp($a->title, $b->title);
-         });
+            });
         return $questions;
     }
 
@@ -99,159 +98,22 @@ class Question extends \Vote {
             'counter'   => 0,
             'correct'   => 0);
     }
-	
-	/*
-	* This method adds a new question to the database. 
-	* param: data - fields to add to the db
-	*/
-	static function insertNewQuestion($data)
-	{		
-		$new_vote_id = md5(uniqid(rand()));
-		
-		$sql = "INSERT INTO vote (vote_id, author_id, range_id, title, question, state, multiplechoice, anonymous, changeable, resultvisibility, mkdate, chdate) ".
-			   "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		$stmt = \DBManager::get()->prepare($sql);
-		
-		$stmt->execute(
-			array( $new_vote_id , $data['author_id'], self::transformRangeId($data['range_id']), $data['title'], $data['question'], 'new', $data['multiplechoice'], $data['anonymous'], $data['changeable'], 'delivery', $data['mkdate'], $data['chdate']));
- 
-		$position_counter = 0;
-		foreach ($data['answers'] as $a) 
-		{
-			$new_answer_id = md5(uniqid(rand()));
-			
-			$sql = "INSERT INTO voteanswers (answer_id, vote_id, answer, position, correct) ".
-			   "VALUES (?, ?, ?, ?, ?)";
-			$stm = \DBManager::get()->prepare($sql);
-			$stm->execute( array( $new_answer_id, $new_vote_id, $a->text, $position_counter, $a->correct ) );
-			
-			$position_counter++;
-		} 
-		return $stmt;	
-	}
-	
-	/*
-	* This method gets the VeranstaltungName from the db
-	* param: veranstaltung_id
-	*/
-	public static function getVeranstaltungName($veranstaltung_id)
-	{	
-		$dbquery = "SELECT Name FROM seminare WHERE Seminar_id = ?";
-		$db = \DBManager::get()->prepare($dbquery);
-		$db->execute(array($veranstaltung_id));
-		$row = $db->fetch(\PDO::FETCH_ASSOC);
-		return $row['Name'];
-	}
-	
-	/*
-	* This method deletes all the questions in db	
-	*/
-	public static function deleteAllQuestions($seminar_id)
-	{	
-		$questions = Question::findAll($seminar_id);
-		
-		foreach($questions as $q)
-		{
-			$query = "DELETE FROM vote WHERE vote_id = ?";
-			$st = \DBManager::get()->prepare($query); 
-			$st->execute(array($q->objectID));
-									
-			$query = "DELETE FROM votehistory WHERE vote_id = ?";
-			$st = \DBManager::get()->prepare($query); 
-			$st->execute(array($q->objectID));
-			
-			$query = "DELETE FROM voteanswers WHERE vote_id = ?";
-			$st = \DBManager::get()->prepare($query); 
-			$st->execute(array($q->objectID));
-		}		
-				
-		return '<b>Hervorragend!</b> Die Frage(n) wurde(n) erfolgreich <b>gelöscht</b>.';
-	}
 
     /********************/
     /* INSTANCE METHODS */
     /********************/
+
     function isActiveIn($range_id)
     {
         $_range_id = self::transformRangeId($range_id);
         return $this->rangeID === $_range_id && $this->isActive();
     }
-	
-     /**
-     * Deletes the vote history from the DB
-     *
-     * @access  public
-     * @param   string   $voteID   The specified voteID
-     */
-    function removeHistory($voteID)
-    {
-        $query="DELETE FROM votehistory WHERE vote_id = ?";
-        $statement = \DBManager::get()->prepare($query);
-        $statement->execute(array($voteID));
-		
-		$query="UPDATE voteanswers SET counter = 0 WHERE vote_id = ?";
-        $statement = \DBManager::get()->prepare($query);
-        $statement->execute(array($voteID));
-   }
-   
-   /**
-     * Deletes the old vote history from the DB
-     *
-     * @access  public
-     * @param   string   $voteID   The specified voteID
-     */ 
-    function removeOldHistory($voteID, $Durchgangsanzahl)
-    {
-        $query="SELECT DISTINCT startdate FROM votehistory WHERE vote_id = ?";
-        $statement = \DBManager::get()->prepare($query);
-        $statement->execute(array($voteID));
-
-		while ($statement->rowCount() > $Durchgangsanzahl) {
-		
-			$query="SELECT MIN(startdate) AS startdate FROM votehistory WHERE vote_id = ?";
-			$statement = \DBManager::get()->prepare($query);
-			$statement->execute(array($voteID));
-			$result = $statement->fetch(\PDO::FETCH_ASSOC);
-			
-			$query="DELETE FROM votehistory WHERE vote_id = ? AND startdate = ?";
-			$statement2 = \DBManager::get()->prepare($query);
-			$statement2->execute(array($voteID, $result['startdate']));
-			
-			$query="SELECT DISTINCT startdate FROM votehistory WHERE vote_id = ?";
-			$statement = \DBManager::get()->prepare($query);
-			$statement->execute(array($voteID));
-		}
-   }
-   
-	/**
-    * Removes the vote history from the database (!)
-    * @access  public
-    * @throws  error
-    */
-   function executeResetHistory () {
-
-      $this->removeHistory ($this->objectID);
-      if ($this->voteDB->isError ())
-     $this->throwErrorFromClass ($this->voteDB);
-   }
-   
-   /**
-    * Removes the old vote history from the database (!)
-    * @access  public
-    * @throws  error
-    */
-   function executeRemoveOldHistory ($Durchgangsanzahl) {
-
-      $this->removeOldHistory ($this->objectID, $Durchgangsanzahl);
-      if ($this->voteDB->isError ())
-		$this->throwErrorFromClass ($this->voteDB);
-   }
 
     function recordAnswer($answer_id)
     {
 	
         if (!$this->isActive()) {
-            $this->throwError(23, _("Nur aktive Fragen können beantwortet werden."));
+            $this->throwError(23, _("Nur aktive Fragen kÃ¶nnen beantwortet werden."));
             return false;
         }
 
@@ -272,45 +134,43 @@ class Question extends \Vote {
             }
         }
 
-
+				
 		$sql = "SELECT history_id FROM votehistory JOIN vote ON vote.vote_id = votehistory.vote_id ".
 			   "JOIN voteanswers ON votehistory.answer = voteanswers.answer ".
 			   "WHERE votehistory.vote_id = ? AND vote.startdate = votehistory.startdate AND answer_id = ?";
         $stmt = \DBManager::get()->prepare($sql);
         $stmt->execute(array($this->getVoteID(), $answer_id));
 		
-		if ($stmt->rowCount() == 0) {
+		if ($stmt->rowCount() == 0) {				
 		
 			$sql = "SELECT startdate, answer, counter, position FROM voteanswers JOIN vote ON vote.vote_id = voteanswers.vote_id ".
 				   "WHERE voteanswers.vote_id = ?";
 			$stmt = \DBManager::get()->prepare($sql);
 			$stmt->execute(array($this->getVoteID()));
 			
-			foreach($stmt as $row)
-			{
+			foreach($stmt as $row){
 				
 				$history_id = md5(uniqid(rand()));	
 				
 				$sql = "INSERT INTO votehistory (history_id, startdate, vote_id, answer, counter, position) ".
 					   "VALUES (?, ?, ?, ?, ?, ?)";
 				$stmt = \DBManager::get()->prepare($sql);
-				$stmt->execute(array($history_id, $row['startdate'], $this->getVoteID(), $row['answer'], $row['counter'], $row['position']));
+				$stmt->execute(array($history_id, $row['startdate'], $this->getVoteID(), $row['answer'], $row['counter'], $row['position']));			
 			}
-		
 		}
 		else{
-		
-			foreach($stmt as $row)
-			{
+			
+			foreach($stmt as $row){
+			
 				$sql = "UPDATE votehistory SET counter = counter + 1 ".
 					   "WHERE history_id = ?";
 				$stmt2 = \DBManager::get()->prepare($sql);
 				$stmt2->execute(array($row['history_id']));
-				break;	
+				break;
+				
 			}
 		}
-		$this->executeRemoveOldHistory(4);	
-		
+
         return true;
     }
 
@@ -366,18 +226,10 @@ class Question extends \Vote {
     {
         $questions = self::_findAllActive($_range_id);
         foreach ($questions as $question) {
-            # TODO what about status?
             $status = $question->stop();
         }
     }
-	
-	/**
-     * Load the answer history of a specific question
-     */
-    function history()
-    {
-       return 0; 
-    }
+
 
     function toJSON($with_counter = true)
     {
@@ -399,5 +251,7 @@ class Question extends \Vote {
             'state'     => $this->getState(),
             'answers'   => $answers
         );
-    }				
+    }
+	
+	
 }
