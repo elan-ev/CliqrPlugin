@@ -57,7 +57,7 @@ class GoogleShortener implements Shortener {
 
     private function _performRequest($url)
     {
-        $apiUrl = $this->config['api_url'] . '?' . $this->config['api_key'];
+        $apiUrl = $this->config['api_url'] . '?key=' . $this->config['api_key'];
 
         $ch = \curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
