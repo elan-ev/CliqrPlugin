@@ -6,17 +6,17 @@
 
 [shortener]
 ; COMMENT these and UNCOMMENT the second set to use Google's urlshortener
-file = lib/MockShortener.php
-class = \Cliqr\MockShortener
+file = lib/BasicShortener.php
+class = \Cliqr\BasicShortener
 
-;file = lib/BasicShortener.php
-;class = \Cliqr\BasicShortener
+;file = lib/MockShortener.php
+;class = \Cliqr\MockShortener
 
 ;file = lib/GoogleShortener.php
 ;class = \Cliqr\GoogleShortener
 
 [basicshortener]
-url = http://<MY-BASIC-SHORTENER-URL?name-of-the-url-key=%s
+url = http://vt.uos.de/shorten.php?longurl=%s
 
 [google]
 ;api_url = https://www.googleapis.com/urlshortener/v1/url
