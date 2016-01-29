@@ -1,8 +1,5 @@
 <?
-
 require_once 'cliqr_controller.php';
-
-require_once dirname(__FILE__) . '/../models/Question.php';
 
 class CliqrStudipController extends StudipController
 {

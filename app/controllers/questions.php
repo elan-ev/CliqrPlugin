@@ -1,11 +1,5 @@
 <?php
-global $sess;
-require_once "lib/vote/vote.config.php";
-require_once "lib/vote/Vote.class.php";
-
 require_once 'cliqr_controller.php';
-
-use \Cliqr\Question;
 
 class QuestionsController extends CliqrStudipController
 {
@@ -16,14 +10,11 @@ class QuestionsController extends CliqrStudipController
         $this->cid = self::requireContext();
         self::requireAuthorisation($this->cid);
 
-        // TODO: anders sicherstellen, dass sich #state und #start/stopdate nicht widersprechen
-        Question::consolidateState($this->cid);
-
         # find and set question
         # URL: /cliqr/questions/(show|update|destroy|start|stop)/:question_id
         if (in_array($action, words("show update destroy start stop"))) {
             $question_id = self::ensureMD5($args[0]);
-            $this->question = Question::find($question_id);
+            $this->question = Problem::find($question_id);
         }
         # else: index create
     }
@@ -35,7 +26,7 @@ class QuestionsController extends CliqrStudipController
     function index_action() {
 
 
-        $this->questions = Question::findAll($this->cid);
+        $this->questions = Problem::findBySQL('1 = 1', $this->cid);
 
         if (Request::isXhr()) {
             $this->render_json(array_map(function ($q) { return $q->toJSON(); },
