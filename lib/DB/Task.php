@@ -42,7 +42,7 @@ class Task extends \eAufgaben\DB\Task
                 'test_id' => $test->id,
                 'range_type' => $range_type,
                 'range_id' => $range_id,
-                'type' => 'cliqr:poll',
+                'type' => Assignment::TYPE_POLL,
                 'start' => $start,
                 'end' => $end,
                 'active' => 1
