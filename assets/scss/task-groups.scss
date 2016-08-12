@@ -1,0 +1,21 @@
+table.task-groups, table.tasks {
+
+  border-collapse: collapse;
+  width: 100%;
+
+  tbody tr {
+    border-top: 1px solid $color-accent;
+    border-bottom: 1px solid $color-accent;
+    line-height: 3em;
+  }
+
+  tbody {
+    a {
+      font-weight: 800;
+    }
+  }
+
+  th {
+    text-align: left;
+  }
+}

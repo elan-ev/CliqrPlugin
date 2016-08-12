@@ -1,48 +1,37 @@
-import { createStore, applyMiddleware } from 'redux'
 import Backbone from 'backbone'
+import jQuery from 'jquery'
 import QuestionsRouter from './routers/questions'
 
+import TaskTypes from './models/task_types'
+import MultipleChoice from './task-types/multiple-choice'
 
-console.log(Backbone)
+import core_css from '../scss/core.scss'
 
 class StudIPCliqrApp {
     constructor() {
+        this.initBackbone()
         this.initStuff()
         this.initRouters()
+        this.initTaskTypes()
 
         Backbone.history.start()
     }
 
+    initBackbone() {
+        Backbone.$ = jQuery
+    }
+
     initStuff() {
-        // detectFeatures()
-        setTimeout( () => { jQuery('.self-destroy').remove() }, 5000)
+        setTimeout( () => { Backbone.$('.self-destroy').remove() }, 5000)
     }
 
     initRouters() {
-        router = new QuestionsRouter()
+        let router = new QuestionsRouter()
     }
 
-    /*
-    detectFeatures() {
-      return  if window.Modernizr
-
-      mStyle = window.document.createElement('modernizr').style
-      cssomPrefixes = 'Webkit Moz O ms'.split ' '
-
-      testProp = (prop) ->
-        ucProp = prop.charAt(0).toUpperCase() + prop.slice(1)
-        props  = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split ' '
-
-        return true for i in props when mStyle[i] != undefined
-
-        false
-
-      addCssClass = (prop, truthy) ->
-        pref = if truthy then '' else 'no-'
-        window.document.documentElement.className += ' ' + pref  + prop
-
-      addCssClass "flexbox", testProp "flexWrap"
-      addCssClass "flexboxlegacy", testProp "boxDirection"
+    initTaskTypes() {
+        TaskTypes.add({ id: 'multiple-choice', class: MultipleChoice })
     }
-    */
 }
+
+const app = new StudIPCliqrApp('#cliqr-container')

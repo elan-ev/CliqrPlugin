@@ -1,0 +1,48 @@
+<header>
+    <h1>Fragesammlungen</h1>
+</header>
+
+{{#if taskGroups}}
+    <table class="task-groups">
+        <thead>
+            <tr>
+                <th></th>
+                <th> Name der Fragensammlung </th>
+                <th> Anzahl Fragen</th>
+                <th> letzte Änderung </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each taskGroups}}
+                <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+
+                    <td>
+                        <a href="#task-groups-{{id}}">
+                            {{title}}
+                        </a>
+                    </td>
+
+                    <td>
+                        <span class="bubble" data-tooltip="Fragesammlung mit {{tasks_count}} Fragen">{{tasks_count}}</span>
+                    </td>
+
+                    <td>
+                        {{moment changed}}
+                    </td>
+
+                    <td>
+                        {{button "Export" icon="archive3" }}
+                        {{button "Duplizieren" icon="add/files" }}
+                        {{button "Löschen" icon="trash" }}
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    Es sind keine TaskGroups vorhanden.
+{{/if}}

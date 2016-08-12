@@ -1,13 +1,8 @@
-(function() {
+const charCodeA = 'A'.charCodeAt(0),
+      helpers = {
+          nominal: function (index) {
+              return String.fromCharCode(charCodeA + index % 26)
+          }
+      }
 
-  define([], function() {
-    return {
-      nominal: (function(A) {
-        return function(index) {
-          return String.fromCharCode(A + index % 26);
-        };
-      })("A".charCodeAt(0))
-    };
-  });
-
-}).call(this);
+export default helpers

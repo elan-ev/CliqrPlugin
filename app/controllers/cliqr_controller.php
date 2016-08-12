@@ -187,4 +187,20 @@ class CliqrStudipController extends StudipController
             return $data;
         }
     }
+
+    # require a cid; throw a 400 otherwise
+    static protected function requireContext()
+    {
+        $cid = self::ensureMD5(\Request::option("cid"));
+        return $cid;
+    }
+
+    # require ´tutor´ permission; throw a 403 otherwise
+    static protected function requireAuthorisation($cid)
+    {
+        if (!$GLOBALS['perm']->have_studip_perm("tutor", $cid)) {
+            throw new \Trails_Exception(403);
+        }
+    }
+
 }

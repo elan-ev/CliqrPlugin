@@ -170,7 +170,7 @@ class StudIPv34Migrator
                                 'assignment_id' => $assignment->id,
                                 'task_id' => $task->id,
                                 'user_id' => '',
-                                'response' => [ $answer_id ]
+                                'response' => [ 'answer' => $answer_id ]
                             ]);
                     }
                 }

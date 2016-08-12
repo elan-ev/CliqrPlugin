@@ -1,6 +1,9 @@
 <?php
 require_once 'cliqr_controller.php';
 
+use \Cliqr\DB\Assignment;
+use \Cliqr\DB\Test;
+
 class QuestionsController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)
@@ -24,19 +27,19 @@ class QuestionsController extends CliqrStudipController
     /***************************************************************************/
 
     function index_action() {
+        $taskGroups = Assignment::findTaskGroups($this->cid);
+        $tests = $taskGroups->pluck('test');
 
-
-        $this->questions = Problem::findBySQL('1 = 1', $this->cid);
+        $this->json = [
+            'taskGroups' => array_map(function ($test) {
+                return $test->toJSON();
+            }, $tests)
+        ];
 
         if (Request::isXhr()) {
-            $this->render_json(array_map(function ($q) { return $q->toJSON(); },
-                                         $this->questions));
-        }
-
-        else {
-            $this->setupStudipNavigation();
+            $this->render_json($this->json);
+        } else {
             $this->short_url = $this->generateShortURL();
-
             # now render template implicitly
         }
     }
@@ -198,35 +201,5 @@ class QuestionsController extends CliqrStudipController
             $question->executeWrite();
         }
         return $question->isError();
-    }
-
-    # require a cid; throw a 400 otherwise
-    static private function requireContext()
-    {
-        $cid = self::ensureMD5(Request::option("cid"));
-        return $cid;
-    }
-
-    # require ´tutor´ permission; throw a 403 otherwise
-    static private function requireAuthorisation($cid)
-    {
-        if (!$GLOBALS['perm']->have_studip_perm("tutor", $cid)) {
-            throw new Trails_Exception(403);
-        }
-    }
-
-    # setup Stud.IP navigation and title
-    private function setupStudipNavigation()
-    {
-        # set title
-        $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
-
-        PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . _('Cliqr'));
-
-        if ($action === 'new') {
-            Navigation::activateItem("/course/cliqr/new");
-        } else {
-            Navigation::activateItem("/course/cliqr/index");
-        }
     }
 }

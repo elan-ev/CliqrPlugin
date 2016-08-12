@@ -1,0 +1,103 @@
+<header>
+  <h1>Fragensammlung: {{title}}</h1>
+  <p>Letzte Änderung: {{moment changed}}</p>
+</header>
+
+{{#if tasks}}
+    <table class="tasks">
+        <thead>
+            <tr>
+                <th></th>
+                <th> Frage </th>
+                <th> letzte Änderung </th>
+                <th> zuletzt gestartet </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each tasks}}
+                <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+
+                    <td>
+                        <a href="#task-{{id}}">
+                            {{#if_state 'new'}} {{icon 'new/vote'}} {{/if_state}}
+                            {{#if_state 'is_active'}} {{icon 'play'}} {{/if_state}}
+                            <!--
+                                 {{#if_state 'was_active'}} {{icon 'vote-stopped'}} {{/if_state}}
+                            -->
+                            {{description}}
+                        </a>
+                    </td>
+
+                    <td>
+                        {{moment changed}}
+                    </td>
+
+                    <td>
+                        {{moment last_assignment.start}}
+                    </td>
+
+                    <td>
+                        {{#unless_state 'new'}}
+                            {{button "Starten" icon="play" }}
+                            {{^}}
+                            {{button "Stoppen" icon="pause" }}
+                        {{/unless_state}}
+                        {{button "Duplizieren" icon="add/files" }}
+                        {{button "Löschen" icon="trash" }}
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    Es sind keine Fragen vorhanden.
+{{/if}}
+
+{{json .}}
+{
+  "tasks": [
+    {
+      "id": "1",
+      "type": "multiple-choice",
+      "title": "",
+      "description": "frage",
+      "task": {
+        "type": "single",
+        "answers": [
+          {
+            "text": "ja",
+            "score": 0,
+            "feedback": null
+          },
+          {
+            "text": "nein",
+            "score": 0,
+            "feedback": null
+          },
+          {
+            "text": "warum?",
+            "score": 0,
+            "feedback": null
+          }
+        ]
+      },
+      "user_id": "76ed43ef286fb55cf9e41beadb484a9f",
+      "created": "2016-01-29 08:12:23",
+      "changed": "2016-07-05 13:43:01",
+      "assignments": [
+        {
+          "id": "2",
+          "test_id": "2",
+          "start": "2016-01-29 08:12:40",
+          "end": "2016-01-29 10:12:40",
+          "active": "1",
+          "responses_count": 20
+        }
+      ]
+    }
+  ]
+}

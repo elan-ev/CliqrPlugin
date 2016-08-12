@@ -1,0 +1,26 @@
+<article>
+    <header>
+        <h1>Task Nr.{{id}}: {{title}}</h1>
+    </header>
+
+    <main>
+        {{{taskTypeView}}}
+    </main>
+
+    <section class="assignments">
+        <h2>
+            Assignments:
+        </h2>
+        <ol>
+            {{#each assignments}}
+                <li>
+                    <a href="#voting-{{id}}">
+                        <span>{{#if running}}running{{^}}not running{{/if}}</span>
+                        vom {{moment start}} ({{responses_count}} Stimmen)
+                    </a>
+                </li>
+            {{/each}}
+        </ol>
+    </section>
+
+</article>

@@ -42,7 +42,7 @@ class Task extends \eAufgaben\DB\Task
                 'test_id' => $test->id,
                 'range_type' => $range_type,
                 'range_id' => $range_id,
-                'type' => Assignment::TYPE_POLL,
+                'type' => Assignment::TYPE_VOTING,
                 'start' => $start,
                 'end' => $end,
                 'active' => 1
@@ -55,5 +55,38 @@ class Task extends \eAufgaben\DB\Task
         \NotificationCenter::postNotification('CliqrQuestionDidStart', $assignment);
 
         return $assignment;
+    }
+
+    public function getAssignments()
+    {
+        $sql = "SELECT ea . *
+                FROM eauf_tasks et
+                INNER JOIN eauf_test_tasks ett ON ett.task_id = et.id
+                INNER JOIN eauf_assignments ea ON ea.test_id = ett.test_id
+                WHERE et.id = ? AND ea.type = ?
+                ORDER BY start, id";
+        $st = \DBManager::get()->prepare($sql);
+        $st->execute([$this->id, Assignment::TYPE_VOTING]);
+
+        $ret = new \SimpleORMapCollection();
+        $ret->setClassName(Assignment::class);
+        while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {
+            $ret[] = Assignment::buildExisting($row);
+        }
+        return $ret;
+    }
+
+    public function toJSON($flat = false)
+    {
+        $result = $this->toArray('id type title description task user_id created changed');
+
+        if (!$flat) {
+            $result['assignments'] = $this->getAssignments()->map(function ($poll) {
+                $ret = $poll->toArray('id test_id start end active');
+                $ret['responses_count'] = Response::countBySql('assignment_id = ?', [$poll->id]);
+                return $ret;
+            });
+        }
+        return $result;
     }
 }

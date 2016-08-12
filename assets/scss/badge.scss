@@ -1,0 +1,44 @@
+$badge-font-size: 12px !default;
+$badge-color: $color-accent-contrast !default;
+$badge-background: $color-accent !default;
+$badge-size : 22px !default;
+$badge-padding: 2px !default;
+
+.mdl-badge {
+  position : relative;
+  white-space: nowrap;
+  margin-right: calc($badge-size + $badge-padding);
+
+  &:not([data-badge]) {
+    margin-right: auto;
+  }
+
+  &[data-badge]:after {
+    content: attr(data-badge);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: calc(-$badge-size / 2);
+    right: calc(-$badge-size + $badge-padding);
+
+    .mdl-button & {
+      top: -10px;
+      right: -5px;
+    }
+
+    font-weight: 600;
+    font-size: $badge-font-size;
+    width: $badge-size;
+    height: $badge-size;
+    border-radius : 50%;
+
+    background: $badge-background;
+    color: $badge-color;
+  }
+}

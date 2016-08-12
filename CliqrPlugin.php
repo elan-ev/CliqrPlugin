@@ -43,14 +43,14 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 
 
         # /course/cliqr -> plugins.php/cliqrplugin/questions
-        $url = PluginEngine::getURL('cliqrplugin', compact('cid'), 'questions', true);
+        $url = PluginEngine::getURL('cliqrplugin', compact('cid'), '', true);
 
         $navigation = new Navigation(_('Cliqr'), $url);
         $navigation->setImage(Assets::image_path('icons/16/white/test.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/test.png'));
 
         # /course/cliqr/index -> plugins.php/cliqrplugin/questions#index
-        $navigation->addSubNavigation("index", new Navigation(_("Fragen"), $url . '#index'));
+        $navigation->addSubNavigation("index", new Navigation(_("Fragen"), $url . '#task-groups'));
 
         # /course/cliqr/new -> plugins.php/cliqrplugin/questions#new
         $navigation->addSubNavigation("new", new Navigation(_("Frage erstellen"), $url . '#new'));
@@ -96,16 +96,35 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     }
 
 
-    const DEFAULT_CONTROLLER = "questions";
+    const DEFAULT_CONTROLLER = 'app';
 
     function perform($unconsumed_path)
     {
-        $trails_root = $this->getPluginPath() . "/app";
+        if (!\Request::isXhr()) {
+            $this->setupStudipNavigation();
+        }
+
+        $trails_root = $this->getPluginPath() . '/app';
         $dispatcher = new Trails_Dispatcher($trails_root,
-                                            rtrim(PluginEngine::getURL($this, null, ''), '/'),
+                                            rtrim(PluginEngine::getLink($this, [], null), '/'),
                                             self::DEFAULT_CONTROLLER);
         $dispatcher->plugin = $this;
         $dispatcher->dispatch($unconsumed_path);
+    }
+
+    # setup Stud.IP navigation and title
+    private function setupStudipNavigation($action = null)
+    {
+        # set title
+        $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
+
+        PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . _('Cliqr'));
+
+        if ($action === 'new') {
+            Navigation::activateItem("/course/cliqr/new");
+        } else {
+            Navigation::activateItem("/course/cliqr/index");
+        }
     }
 
     function observeQuestions()

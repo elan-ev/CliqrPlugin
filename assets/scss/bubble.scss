@@ -1,0 +1,20 @@
+$bubble-font-size: 12px !default;
+$bubble-color: $color-accent-contrast !default;
+$bubble-background: $color-accent !default;
+$bubble-min-size : 12px !default;
+$bubble-padding: 3px 7px !default;
+
+.bubble {
+  display: inline-block;
+  min-width: $bubble-min-size;
+  padding: $bubble-padding;
+  font-size: $bubble-font-size;
+  font-weight: 600;
+  color: $bubble-color;
+  line-height: 1;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: center;
+  background-color: $bubble-background;
+  border-radius: $bubble-min-size;
+}
