@@ -1,7 +1,7 @@
 const webpack = require('webpack'),
       path = require('path'),
       postcss_autoprefixer = require('autoprefixer'),
-      postcss_precss = require('precss')
+      postcss_precss = require('precss'),
       postcss_calc = require('postcss-calc'),
       ExtractTextPlugin = require('extract-text-webpack-plugin')
 

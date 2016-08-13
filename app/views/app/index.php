@@ -22,8 +22,13 @@ var cliqr = {
 <div id="cliqr-container"></div>
 <?= $this->render_partial('_noscript') ?>
 
-<link charset="utf-8" href="<?= $PLGNURL ?>/static/bundle.css" rel="stylesheet" media="screen, print">
-<script charset="utf-8" src="<?= $PLGNURL ?>/static/vendor.bundle.js"></script>
-<script charset="utf-8" src="<?= $PLGNURL ?>/static/bundle.js"></script>
-
+<? if (TRUE || WDS ) { ?>
+    <link charset="utf-8" href="http://localhost:8081/bundle.css" rel="stylesheet" media="screen, print">
+    <script charset="utf-8" src="http://localhost:8081/vendor.bundle.js"></script>
+    <script charset="utf-8" src="http://localhost:8081/bundle.js"></script>
+<? } else { ?>
+    <link charset="utf-8" href="<?= $PLGNURL ?>/static/bundle.css" rel="stylesheet" media="screen, print">
+    <script charset="utf-8" src="<?= $PLGNURL ?>/static/vendor.bundle.js"></script>
+    <script charset="utf-8" src="<?= $PLGNURL ?>/static/bundle.js"></script>
+<? } ?>
 <!-- END CLIQR PAGE -->
