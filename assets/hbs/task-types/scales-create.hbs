@@ -1,0 +1,103 @@
+scales create hbs
+
+Your question
+
+Enter the question you want to ask your audience (max 100 characters).
+
+
+<div class="row question-input-group form-group hidden-for-slide">
+<div class="col-md-3 question-input-label">
+<h4>Your question</h4>
+<p>Enter the question you want to ask your audience (max 100 characters).</p>
+</div>
+<div class="col-md-6">
+<div class="question-text-group">
+<input autocomplete="off" class="form-control question-text" maxlength="100" name="question-text-dd49789691cb" placeholder="The question you want to ask" type="text" value="">
+<i class="icon icon-lightbulb-o form-control-feedback hidden" data-container="body" data-placement="top" title="" data-original-title="Tip! Long texts may be hard to read in the presentation view, consider adding additional information in the description instead."></i>
+</div>
+<a class="js-add-question-description hidden-for-quiz" href="#">
+<i class="icon icon-pencil"></i>
+<span class="default-settings">Add optional description</span>
+</a>
+<div class="question-description-text-group hidden">
+<textarea autocomplete="off" class="form-control question-description-text hidden-for-quiz" maxlength="500" name="question-description-dd49789691cb" placeholder="Optional: Enter an additional question description that only will be shown on the audience's phones." type="text"></textarea>
+</div>
+</div>
+</div>
+
+
+<div class="row question-input-group form-group hidden-for-open hidden-for-wordcloud hidden-for-slide js-settings-for-slide-bullets">
+<div class="col-md-3 question-input-label js-alternatives default-settings">
+<h4>Alternatives</h4>
+<p>Enter the alternatives that your audience can vote on.</p>
+</div>
+<div class="col-md-3 question-input-label hidden">
+<h4>Statements to rate</h4>
+<p>Enter the statements that your audience can rate from 0-5.</p>
+</div>
+<div class="col-md-3 question-input-label settings-for-rating hidden">
+<h4>Items to rate</h4>
+<p>Enter the items that your audience can rate.</p>
+</div>
+<div class="col-md-3 question-input-label settings-for-slide hidden">
+<h4>Bullets</h4>
+<p>Enter the bullets that you would like on your slide.</p>
+</div>
+<div class="col-md-6" id="choices">
+<ul class="list-unstyled"><li data-id="33">
+<div class="input-group">
+<span class="input-group-addon reorder-addon">
+<img src="https://d1rp2jn8dkvrz.cloudfront.net/assets/pretendfontawesome-arrows-v-4d38915784576a9ead8c995df34381b07510f55b5bf4d4929a50635fc63f9f44.png" width="31px">
+</span>
+<input class="form-control" data-id="33" maxlength="250" type="text" value="" placeholder="Statement 1">
+<span class="icon icon-lightbulb-o form-control-feedback choice-view-warning hidden" data-container="body" data-placement="top" title="" data-original-title="Tip! Long texts may be hard to read on a screen, consider shortening this."></span>
+<span class="input-group-addon remove-addon">
+<i class="icon icon-trash-o"></i>
+</span>
+</div>
+</li><li data-id="36">
+<div class="input-group">
+<span class="input-group-addon reorder-addon">
+<img src="https://d1rp2jn8dkvrz.cloudfront.net/assets/pretendfontawesome-arrows-v-4d38915784576a9ead8c995df34381b07510f55b5bf4d4929a50635fc63f9f44.png" width="31px">
+</span>
+<input class="form-control" data-id="36" maxlength="250" type="text" value="" placeholder="Statement 2">
+<span class="icon icon-lightbulb-o form-control-feedback choice-view-warning hidden" data-container="body" data-placement="top" title="" data-original-title="Tip! Long texts may be hard to read on a screen, consider shortening this."></span>
+<span class="input-group-addon remove-addon">
+<i class="icon icon-trash-o"></i>
+</span>
+</div>
+</li></ul>
+<a class="new btn-outline btn" href="#">
+<i class="icomoon icomoon-plus"></i>
+<span class="js-alternatives default-settings hidden">Add alternative</span>
+<span class="settings-for-scales">Add statement</span>
+<span class="settings-for-rating hidden">Add item</span>
+<span class="settings-for-slide hidden">Add bullet</span>
+</a>
+<div class="choices-info alert alert-warning hidden"></div>
+<div class="choices-info-quiz-correct alert alert-warning hidden"></div>
+</div>
+</div>
+
+<div class="row question-input-group settings-for-scales">
+<div class="col-md-3">
+<h4>Low and high label</h4>
+<p>Enter short labels to explain the low and high value.</p>
+</div>
+<div class="col-md-6 custom-scales-range">
+<div class="form-inline form-scales-range">
+<label for="lrange">
+Low value
+</label>
+<input class="form-control" id="lrange" maxlength="4" placeholder="0" type="number" value="" max="9">
+<input class="form-control" id="llabel" maxlength="50" placeholder="Low label (optional)" type="text" value="">
+</div>
+<div class="form-inline form-scales-range">
+<label for="hrange">
+High value
+</label>
+<input class="form-control" id="hrange" maxlength="4" placeholder="5" type="number" value="" min="2">
+<input class="form-control" id="hlabel" maxlength="50" placeholder="High label (optional)" type="text" value="">
+</div>
+</div>
+</div>

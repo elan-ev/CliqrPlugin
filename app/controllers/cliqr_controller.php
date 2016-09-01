@@ -8,7 +8,7 @@ class CliqrStudipController extends StudipController
         $this->plugin = $this->dispatcher->plugin;
     }
 
-    function poll_url($cid)
+    function polls_url($cid)
     {
 
         $abs_base = $GLOBALS['ABSOLUTE_URI_STUDIP'];
@@ -24,7 +24,7 @@ class CliqrStudipController extends StudipController
         # force an absolute URL
         URLHelper::setBaseUrl($abs_base);
 
-        $url = current(explode('?', $this->url_for('poll', $cid)));
+        $url = current(explode('?', $this->url_for('polls', $cid)));
 
         # reset to the default set in plugins.php
         URLHelper::setBaseUrl($GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP']);
@@ -87,9 +87,7 @@ class CliqrStudipController extends StudipController
     function parseJSONBody()
     {
         $body = file_get_contents('php://input');
-        # TODO should utf8decode be optional using a func param for this?
-        $body = self::utf8decode($body);
-        return json_decode($body, true);
+        return self::utf8decode(json_decode($body, true));
     }
 
 

@@ -1,10 +1,204 @@
+/* Local Variables: */
+/* eval: (outline-minor-mode 1) */
+/* eval: (org-global-cycle) */
+/* End: */
+
+@lost flexbox flex;
+
+/*
+// * Variables */
+
+$color-accent: #28497c !default;
+$color-accent-contrast: #ffffff !default;
+
+$button-size: 32px;
+$button-icon-size: 20px;
+
+$bubble-font-size: 12px !default;
+$bubble-color: #ffffff !default;
+$bubble-background: #28497c !default;
+$bubble-min-size : 12px !default;
+$bubble-padding: 3px 7px !default;
+
 #cliqr-container {
-  @import "colors.scss";
 
-  @import "badge.scss";
-  @import "bubble.scss";
-  @import "button.scss";
-  @import "icon.scss";
+/*
 
-  @import "task-groups.scss";
+
+/*
+// * Grid */
+  /*
+  <section class="row">
+  <div class="quarter">1</div>
+  <div class="half">2</div>
+  <div class="quarter">3</div>
+  </section>
+   */
+  .row {
+      lost-flex-container: row;
+    /* lost-utility: clearfix; */
+  }
+
+  .eighth {
+    lost-column: 1/8 0;
+  }
+
+  .quarter {
+    lost-column: 1/4 0;
+  }
+
+  .half {
+    lost-column: 1/2 0;
+  }
+
+// * Bubble */
+  .bubble {
+    display: inline-block;
+    min-width: $bubble-min-size;
+    padding: $bubble-padding;
+    font-size: $bubble-font-size;
+    font-weight: 600;
+    color: $bubble-color;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background-color: $bubble-background;
+    border-radius: $bubble-min-size;
+  }
+
+/*
+// * Button */
+
+  .cliqr--button-fab {
+    width: $button-size;
+    height: $button-size;
+    min-width: $button-size;
+    color: transparent;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin: 0;
+    padding: 0;
+
+    img {
+      vertical-align: middle;
+    }
+
+    &:hover {
+      background-color: color($color-accent alpha(20%));
+    }
+
+    & + & {
+      margin-left: 8px;
+    }
+  }
+
+  .cliqr--button {
+    img {
+      vertical-align: middle;
+      padding: 2px;
+    }
+
+    &:hover img {
+      background-color: $color-accent-contrast;
+    }
+  }
+
+/*
+// * Icon */
+
+  img.cliqr--icon {
+    width: $button-icon-size;
+    height: $button-icon-size;
+    vertical-align: middle;
+  }
+
+/*
+// * Task Groups */
+
+  table.task-groups {
+    border-collapse: collapse;
+    width: 100%;
+
+    tbody tr {
+      border-top: 1px solid $color-accent;
+      border-bottom: 1px solid $color-accent;
+      line-height: 3em;
+    }
+
+    tbody {
+      a {
+        font-weight: 800;
+      }
+    }
+
+    th {
+      text-align: left;
+    }
+  }
+
+  ol.task-list {
+    width: 100%;
+    padding: 0;
+    list-decoration: none;
+
+    li {
+      lost-flex-container: row;
+      lost-align: middle-left flex;
+    }
+
+    li.task-list-header {
+      text-align: left;
+      font-weight: 800;
+    }
+
+    li.task-list-item {
+      border-color: $color-accent;
+      border-top: 1px solid;
+
+      &:last-child {
+        border-bottom: 1px solid;
+      }
+
+      > div {
+        line-height: 4em;
+      }
+    }
+
+    a {
+      font-weight: 800;
+
+      & + button {
+        margin-left: 1em;
+      }
+    }
+  }
+
+/*
+// * Task Creator */
+  .tasks-add {
+    ul.task-types {
+      padding: 0;
+
+      li {
+        display: inline-block;
+
+        button img {
+          vertical-align: middle;
+        }
+
+        button:hover {
+          background-color: color($color-accent-contrast blackness(20%));
+          color: $color-accent;
+        }
+      }
+
+      li.selected button {
+        background: $color-accent;
+        color: $color-accent-contrast;
+        outline: 0;
+      }
+    }
+  }
 }

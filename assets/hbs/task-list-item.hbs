@@ -1,0 +1,32 @@
+  <div class="half">
+    <a href="#task-{{id}}">
+      {{#if_state 'new'}} {{icon 'new/vote'}} {{/if_state}}
+      {{#if_state 'is_active'}} {{icon 'play'}} {{/if_state}}
+      <!-- {{#if_state 'was_active'}} {{icon 'vote-stopped'}} {{/if_state}} -->
+      {{description}}
+    </a>
+  </div>
+
+  <div class="eighth">
+    {{moment changed}}
+  </div>
+
+  <div class="eighth">
+    {{moment last_assignment.start}}
+  </div>
+
+  <div class="quarter">
+    {{#if_state 'is_active'}}
+        {{fab "stop" "Stoppen" "pause"}}
+        {{^}}
+        {{fab "start" "Starten" "play"}}
+    {{/if_state}}
+    {{fab "duplicate" "Duplizieren" "add/files"}}
+    {{fab "remove" "Löschen" "trash"}}
+  </div>
+
+<!--
+<textarea>
+  {{json .}}
+</textarea>
+-->

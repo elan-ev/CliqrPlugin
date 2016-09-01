@@ -12,6 +12,10 @@ class AppController extends CliqrStudipController
 
         $this->cid = self::requireContext();
         self::requireAuthorisation($this->cid);
+
+        if (\Navigation::hasItem("/course/cliqr")) {
+                \Navigation::activateItem("/course/cliqr/index");
+        }
     }
 
     /***************************************************************************/
@@ -29,14 +33,13 @@ class AppController extends CliqrStudipController
     private function getTaskGroupsJSON($cid)
     {
         $taskGroups = Assignment::findTaskGroups($cid);
-        $tests = $taskGroups->pluck('test');
-        return array_map(function ($test) { return $test->toJSON(); }, $tests);
+        return $taskGroups->toJSON();
     }
 
     # get poll URL and shorten it
     private function generateShortURL()
     {
-        $poll_url = $this->poll_url($this->cid);
-        return $this->plugin->config['shortener']->shorten($poll_url);
+        $polls_url = $this->polls_url($this->cid);
+        return $this->plugin->config['shortener']->shorten($polls_url);
     }
 }

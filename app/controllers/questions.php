@@ -125,8 +125,8 @@ class QuestionsController extends CliqrStudipController
     # get poll URL and shorten it
     private function generateShortURL()
     {
-        $poll_url = $this->poll_url($this->cid);
-        return $this->plugin->config['shortener']->shorten($poll_url);
+        $polls_url = $this->polls_url($this->cid);
+        return $this->plugin->config['shortener']->shorten($polls_url);
     }
 
     private function getQuestionParams()

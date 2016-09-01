@@ -1,16 +1,26 @@
 <article>
     <header>
         <h1>Task Nr.{{id}}: {{title}}</h1>
+        <p>
+            <a href="#task-groups-{{task_group_id}}">
+                zurück zur Fragensammlung
+            </a>
+        </p>
     </header>
 
-    <main>
-        {{{taskTypeView}}}
-    </main>
+    <main></main>
 
     <section class="assignments">
         <h2>
             Assignments:
         </h2>
+
+        <nav>
+            {{#unless_state 'is_active'}}
+                {{fab "start" "Starten" "play"}}
+            {{/unless_state}}
+        </nav>
+
         <ol>
             {{#each assignments}}
                 <li>

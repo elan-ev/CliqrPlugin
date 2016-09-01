@@ -23,8 +23,8 @@ class QrController extends CliqrStudipController
 
     private function generateURL($cid)
     {
-        $poll_url = $this->poll_url($cid);
-        $short_url = $this->plugin->config['shortener']->shorten($poll_url);
+        $polls_url = $this->polls_url($cid);
+        $short_url = $this->plugin->config['shortener']->shorten($polls_url);
         return $short_url;
     }
 

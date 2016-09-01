@@ -2,6 +2,7 @@ const webpack = require('webpack'),
       path = require('path'),
       postcss_autoprefixer = require('autoprefixer'),
       postcss_precss = require('precss'),
+      postcss_lost = require('lost'),
       postcss_calc = require('postcss-calc'),
       ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -14,12 +15,13 @@ module.exports = {
     devtool: isProd ? 'hidden-source-map' : 'cheap-module-eval-source-map',
     context: path.join(__dirname, './assets/js'),
     entry: {
-        js: './studip-app.js',
+        studip: './studip-app.js',
+        polls: './polls-app.js',
         vendor: [ 'backbone' ]
     },
     output: {
         path: path.join(__dirname, './static'),
-        filename: 'bundle.js'
+        filename: '[name].js'
     },
     module: {
         loaders: [
@@ -54,7 +56,7 @@ module.exports = {
             }
         ]
     },
-    postcss: [ postcss_precss, postcss_calc, postcss_autoprefixer ],
+    postcss: [ postcss_precss, postcss_calc, postcss_autoprefixer, postcss_lost ],
     resolve: {
         alias: {
             jquery: path.join(__dirname, './assets/js/jquery')
@@ -66,6 +68,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.NoErrorsPlugin(),
         new ExtractTextPlugin({
             filename: 'bundle.css',
             allChunks: false

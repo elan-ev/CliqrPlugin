@@ -117,14 +117,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     {
         # set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
-
         PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . _('Cliqr'));
-
-        if ($action === 'new') {
-            Navigation::activateItem("/course/cliqr/new");
-        } else {
-            Navigation::activateItem("/course/cliqr/index");
-        }
     }
 
     function observeQuestions()

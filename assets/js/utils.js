@@ -4,11 +4,11 @@ import _ from 'underscore'
 let currentView = false
 
 const utils = {
-    getContainer() {
-        return Backbone.$('#cliqr-container')
+    getContainer(selector) {
+        return Backbone.$(selector || '#cliqr-container')
     },
 
-    changeToPage(view) {
+    changeToPage(view, selector = null) {
         let container
         if (currentView) {
             currentView.$el.hide()
@@ -16,7 +16,7 @@ const utils = {
         }
         currentView = view
         Backbone.$(window).scrollTop(0)
-        container = this.getContainer()
+        container = this.getContainer(selector)
         container.prepend(view.render().$el)
         return typeof view.postRender === 'function' ? view.postRender() : void 0
     }

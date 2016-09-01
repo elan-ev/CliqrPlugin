@@ -23,8 +23,8 @@ const Assignment = Backbone.Model.extend({
     },
 
     isBetween(now = new Date().valueOf()) {
-        const start = new Date(this.get('start').valueOf()),
-              end = new Date(this.get('end').valueOf())
+        const start = new Date(this.get('start')).valueOf(),
+              end = new Date(this.get('end')).valueOf() || Infinity
         return start <= now && now <= end
     }
 })

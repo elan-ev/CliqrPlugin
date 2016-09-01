@@ -29,7 +29,8 @@ class Task extends \eAufgaben\DB\Task
                     'description' => '',
                     'user_id' => $user_id,
                     'created' => $now,
-                    'changed' => $now
+                    'changed' => $now,
+                    'option' => ['voting' => 1]
                 ])) {
             throw new \RuntimeException('Could not store test');
         }
@@ -57,8 +58,28 @@ class Task extends \eAufgaben\DB\Task
         return $assignment;
     }
 
+    public function getTaskGroup()
+    {
+        \Log::debug("getTaskGroup called for id: " . $this->id);
+        $sql = "SELECT ea . *
+                FROM eauf_tasks et
+                INNER JOIN eauf_test_tasks ett ON ett.task_id = et.id
+                INNER JOIN eauf_assignments ea ON ea.test_id = ett.test_id
+                WHERE et.id = ? AND ea.type = ?
+                ORDER BY start, id";
+        $st = \DBManager::get()->prepare($sql);
+        $st->execute([$this->id, Assignment::TYPE_TASK_GROUP]);
+
+        $rowCount = $st->rowCount();
+        if ($rowCount !== 1) {
+            throw new \RuntimeException('Task "' . $this->id . '" has "' . $rowCount . '" Task Groups but must have exactly one.');
+        }
+        return Assignment::buildExisting($st->fetch(\PDO::FETCH_ASSOC));
+    }
+
     public function getAssignments()
     {
+        \Log::debug("getAssignments called for id: " . $this->id);
         $sql = "SELECT ea . *
                 FROM eauf_tasks et
                 INNER JOIN eauf_test_tasks ett ON ett.task_id = et.id
@@ -81,6 +102,8 @@ class Task extends \eAufgaben\DB\Task
         $result = $this->toArray('id type title description task user_id created changed');
 
         if (!$flat) {
+            # TODO nicht sehr performant
+            $result['task_group_id'] = $this->getTaskGroup()->id;
             $result['assignments'] = $this->getAssignments()->map(function ($poll) {
                 $ret = $poll->toArray('id test_id start end active');
                 $ret['responses_count'] = Response::countBySql('assignment_id = ?', [$poll->id]);
@@ -88,5 +111,31 @@ class Task extends \eAufgaben\DB\Task
             });
         }
         return $result;
+    }
+
+    public function createInTaskGroup($range_id, $id, $data)
+    {
+        if (!$taskGroup = Assignment::findTaskGroup($range_id, $id)) {
+            throw new \RuntimeException('Could not find task group: ' . intval($id));
+        }
+
+        $now = date('c', time());
+
+        if (!$task = Task::create(
+                [
+                    'type' => $data['type'],
+                    'title' => '',
+                    'description' => $data['description'],
+                    'task' => $data['task'],
+                    'created' => $now,
+                    'changed' => $now,
+                    'user_id' => $data['user_id']
+                ])) {
+            throw new \RuntimeException('Could not store task');
+        }
+
+        $taskGroup->test->addTask($task);
+
+        return $task;
     }
 }

@@ -2,47 +2,85 @@
     <h1>Fragesammlungen</h1>
 </header>
 
-{{#if taskGroups}}
-    <table class="task-groups">
-        <thead>
-            <tr>
-                <th></th>
-                <th> Name der Fragensammlung </th>
-                <th> Anzahl Fragen</th>
-                <th> letzte Änderung </th>
-                <th></th>
+<table class="task-groups">
+    <thead>
+        <tr>
+            <th></th>
+            <th> Name der Fragensammlung </th>
+            <th> Anzahl Fragen</th>
+            <th> letzte Änderung </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {{#each taskGroups}}
+            <tr data-taskgroupid={{id}}>
+                <td>
+                    <input type="checkbox">
+                </td>
+
+                <td>
+                    <a href="#task-groups-{{id}}">
+                        {{test.title}}
+                    </a>
+                </td>
+
+                <td>
+                    <span class="bubble" data-tooltip="Fragesammlung mit {{tasks_count}} Fragen">{{tasks_count}}</span>
+                </td>
+
+                <td>
+                    {{moment test.changed}}
+                </td>
+
+                <td>
+                    {{fab "export" "Export" "archive3" }}
+                    {{fab "duplicate" "Duplizieren" "add/files" }}
+                    {{fab "remove" "Löschen" "trash" }}
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            {{#each taskGroups}}
+
+        {{else}}
+            <tr>
+                <td class="cliqr--empty" colspan="5"> Es sind keine Fragesammlungen vorhanden.</td>
+            </tr>
+        {{/each}}
+
+        <tfoot>
+            {{#if_mode "button"}}
                 <tr>
-                    <td>
-                        <input type="checkbox">
-                    </td>
-
-                    <td>
-                        <a href="#task-groups-{{id}}">
-                            {{title}}
-                        </a>
-                    </td>
-
-                    <td>
-                        <span class="bubble" data-tooltip="Fragesammlung mit {{tasks_count}} Fragen">{{tasks_count}}</span>
-                    </td>
-
-                    <td>
-                        {{moment changed}}
-                    </td>
-
-                    <td>
-                        {{button "Export" icon="archive3" }}
-                        {{button "Duplizieren" icon="add/files" }}
-                        {{button "Löschen" icon="trash" }}
+                    <td colspan="5">
+                        {{button "add-task-group" "Fragesammlung erstellen"}}
                     </td>
                 </tr>
-            {{/each}}
-        </tbody>
-    </table>
-{{else}}
-    Es sind keine TaskGroups vorhanden.
-{{/if}}
+            {{/if_mode}}
+
+            {{#if_mode "form"}}
+                <tr>
+                    <td colspan="5">
+
+                        <form class="cliqr--add-task-group-form" method="post" accept-char="UTF-8">
+                            <fieldset>
+                                <legend>Fragesammlung erstellen</legend>
+                                <label for="cliqr--task-group-title">Name:</label>
+                                <div class="control-group">
+                                    <input id="cliqr--task-group-title" name="title" required>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="button-group">
+                                    {{button "create-task-group" "Speichern"}}
+                                    {{button "cancel" "Abbrechen"}}
+                                </div>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+            {{/if_mode}}
+        </tfoot>
+
+
+    </tbody>
+</table>

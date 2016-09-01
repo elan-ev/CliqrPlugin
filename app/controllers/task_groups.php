@@ -21,11 +21,7 @@ class TaskGroupsController extends CliqrStudipController
     function index_action()
     {
         $taskGroups = Assignment::findTaskGroups($this->cid);
-        $tests = $taskGroups->pluck('test');
-
-        $this->render_json(array_map(function ($test) {
-            return $test->toJSON();
-        }, $tests));
+        $this->render_json(studip_utf8encode($taskGroups->toJSON()));
     }
 
     function show_action($id)
@@ -33,8 +29,36 @@ class TaskGroupsController extends CliqrStudipController
         $result = null;
         if ($assignment = Assignment::findTaskGroup($this->cid, $id)) {
             // TODO Rechtecheck
-            $result = $assignment->test->toJSON();
+            $result = $assignment->toJSON();
         }
-        $this->render_json($result);
+        $this->render_json(studip_utf8encode($result));
+    }
+
+    function create_action()
+    {
+
+        if (!$this->hasJSONContentType()) {
+            throw new \Trails_Exception(400, 'TODO: has to be JSON');
+        }
+        $json = $this->parseJSONBody();
+
+        if (!array_key_exists('title', $json)) {
+            throw new \Trails_Exception(400, 'TODO: title required');
+        }
+
+        $taskGroup = Assignment::createTaskGroup('course', $this->cid, $json);
+
+        $this->render_json(studip_utf8encode($taskGroup->toJSON()));
+    }
+
+    function destroy_action($id)
+    {
+        $result = null;
+        if ($assignment = Assignment::findTaskGroup($this->cid, $id)) {
+            // TODO Rechtecheck
+            $test = $assignment->test;
+            $test->delete();
+        }
+        $this->render_json(['status' => 'OK', 'rows_deleted' => $rows]);
     }
 }

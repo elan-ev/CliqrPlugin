@@ -3,6 +3,7 @@ import _ from 'underscore'
 import utils from '../utils'
 
 import taskTypes from '../models/task_types'
+import Voting from '../models/voting'
 
 const decorateTask = function (task) {
     return {
@@ -21,6 +22,7 @@ const TasksShowView = Backbone.View.extend({
     className: 'page tasks-show',
 
     events: {
+        'click .js-start': 'onClickStart'
     },
 
     taskType: null,
@@ -38,9 +40,25 @@ const TasksShowView = Backbone.View.extend({
 
     render() {
         const template = require('../../hbs/tasks-show.hbs')
-        const taskTypeView = this.taskType.renderAuthor()
-        this.$el.html(template({ ...decorateTask(this.model), taskTypeView }))
+        this.$el.html(template({ ...decorateTask(this.model) }))
+        this.renderTaskTypeView()
         return this
+    },
+
+    renderTaskTypeView() {
+        const taskTypeView = this.taskType.getAuthorView()
+        this.$('main').append(taskTypeView.render().$el)
+    },
+
+    onClickStart(event) {
+        event.preventDefault()
+        const vtng = new Voting({ task_id: this.model.id })
+        vtng.save()
+            .then((model) => {
+                const id = model.id
+                Backbone.history.navigate(`voting-${id}`, { trigger: true })
+            })
+            .catch((response) => console.log("TODO catch", response))
     }
 })
 

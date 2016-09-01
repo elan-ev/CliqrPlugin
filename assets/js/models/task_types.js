@@ -4,14 +4,13 @@ import _ from 'underscore'
 const TaskTypesCollection = Backbone.Collection.extend({
 
     getTaskType(task) {
-        const type = taskTypes.get(task.get('type'))
+        const type = _.isObject(task) ? taskTypes.get(task.get('type')) : taskTypes.get(task)
         if (!type) {
-            throw 'TODO';
+            throw new Error('TODO');
         }
         const klass = type.get('class')
         return new klass(task)
     }
-
 })
 
 const taskTypes = new TaskTypesCollection()

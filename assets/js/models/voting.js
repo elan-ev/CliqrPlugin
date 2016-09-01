@@ -25,12 +25,13 @@ const Voting = Backbone.Model.extend({
     },
 
     getTask() {
-        return new Task(this.get('task'))
+        const tasks = this.get('test').tasks
+        return new Task(_.first(tasks))
     },
 
     isRunning() {
         const start = new Date(this.get('start')).valueOf(),
-              end = new Date(this.get('end')).valueOf(),
+              end = new Date(this.get('end')).valueOf() || Infinity,
               now = new Date().valueOf()
         return start <= now && now <= end
     }

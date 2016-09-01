@@ -1,0 +1,25 @@
+<section class="cliqr--multiple-choice-assignment">
+    <header>
+        <h1>Voting {{task.description}} ({{#if isRunning}}läuft gerade{{^}}abgelaufen{{/if}})</h1>
+    </header>
+    <main>
+        {{#each answers}}
+            <label data-score="{{score}}" data-feedback="{{feedback}}">
+
+                {{#if isSingleSelect}}
+                    <input type="radio" name="choice" value="{{id}}" {{#if isCorrect}}checked{{/if}} required disabled>
+                {{else}}
+                    <input type="checkbox" name="choice[{{id}}]" value="1" {{#if isCorrect}}checked{{/if}} required disabled>
+                {{/if}}
+
+                {{text}} {{#unless ../isRunning}}(Stimmen: {{votes_count}}){{/unless}}
+            </label>
+        {{/each}}
+
+        {{#unless isRunning}}
+          <p>
+            insgesamt {{votes_count}} Stimmen
+          </p>
+        {{/unless}}
+    </main>
+</section>

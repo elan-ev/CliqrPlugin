@@ -117,24 +117,11 @@ class StudIPv34Migrator
 
     private function transformCliqrQuestions($type, $range_id, $questions)
     {
-        $results = [];
-        $now = date('c', time());
-
         $range_type = $type === 'sem' ? 'course' : 'institute';
+        $results = [];
 
-        $defaultTest = new Test();
-        $defaultTest->title = 'Cliqr-Fragen';
-        $defaultTest->created = $now;
-        $defaultTest->changed = $now;
-        $defaultTest->store();
-
-        $defaultAssignment = new Assignment();
-        $defaultAssignment->range_type = $range_type;
-        $defaultAssignment->range_id = $range_id;
-        $defaultAssignment->type = Assignment::TYPE_TASK_GROUP;
-        $defaultAssignment->active = 1;
-        $defaultAssignment->test_id = $defaultTest->id;
-        $defaultAssignment->store();
+        $defaultAssignment = Assignment::createTaskGroup($range_type, $range_id);
+        $defaultTest = $defaultAssignment->test;
 
         foreach ($questions as $question) {
 

@@ -27,12 +27,11 @@ const Task = Backbone.Model.extend({
     getAssignments() {
         const assignments = this.get('assignments');
         if (!_.isArray(assignments)) {
-            throw 'NYI';
+            return new Backbone.Collection()
         }
 
         return new Backbone.Collection(_.map(assignments, a => new Assignment(a)))
     },
-
 
     STATE_NEW: 'new',
     STATE_IS_ACTIVE: 'is_active',
