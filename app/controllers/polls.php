@@ -19,21 +19,19 @@ class PollsController extends CliqrStudipController
 
         # transform params
         # $action -> show/update, $args -> [range_id]
-        $action = Request::method() === 'POST' && !Request::submitted('login_ticket') ? 'update' : 'show';
+        $action = Request::method() === 'POST' && !Request::submitted('login_ticket') ? 'update' : 'index';
         $args = array($range_id);
     }
 
-    function show_action($cid)
+    function index_action($cid)
     {
-        $this->json = [
-            'polls' => $this->getPollsJSON($cid)
-        ];
+        $this->json = [ 'polls' => $this->getPollsJSON($cid) ];
+        $this->cid = $cid;
     }
 
     private function getPollsJSON($cid)
     {
-
         $polls = Assignment::findVotingsAt('course', $cid, time());
-        return $polls->toJSON(true);
+        return $polls->toJSON('test');
     }
 }

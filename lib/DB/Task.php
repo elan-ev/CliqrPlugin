@@ -97,19 +97,26 @@ class Task extends \eAufgaben\DB\Task
         return $ret;
     }
 
-    public function toJSON($flat = false)
+    public function toJSON($include = 'task_group_id $assignments')
     {
+        $include = words($include);
+
         $result = $this->toArray('id type title description task user_id created changed');
 
-        if (!$flat) {
-            # TODO nicht sehr performant
+        # TODO nicht sehr performant
+        if (in_array('task_group_id', $include)) {
             $result['task_group_id'] = $this->getTaskGroup()->id;
+        }
+
+        # TODO nicht sehr performant
+        if (in_array('assignments', $include)) {
             $result['assignments'] = $this->getAssignments()->map(function ($poll) {
                 $ret = $poll->toArray('id test_id start end active');
                 $ret['responses_count'] = Response::countBySql('assignment_id = ?', [$poll->id]);
                 return $ret;
             });
         }
+
         return $result;
     }
 

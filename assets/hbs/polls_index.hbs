@@ -1,1 +1,23 @@
-polls_index {{json .}}
+<nav class="navbar navbar-static-top navbar-dark bg-inverse">
+    <a class="navbar-brand" href="#"> Stud.IP &ndash; Cliqr </a>
+
+    <span class="pull-xs-right bg-primary">
+        {{fab "refresh" "Neu laden" "refresh" class="btn btn-secondary btn-sm"}}
+    </span>
+</nav>
+
+<main></main>
+
+{{#unless hasFresh}}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Keine weiteren Fragen</h4>
+        </div>
+
+        <!-- <img src="..." alt="Card image"> -->
+
+        <div class="card-block">
+            {{button "refresh" "Neu laden" class="btn btn-primary"}}
+        </div>
+    </div>
+{{/unless}}

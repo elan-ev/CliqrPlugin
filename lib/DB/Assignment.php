@@ -102,15 +102,22 @@ class Assignment extends eAssignment
         return $taskGroup;
     }
 
-    public function toJSON($flat = false)
+    public function toJSON($include = 'test responses')
     {
+        $include = words($include);
+
         $result = $this->toArray('id test_id start end active');
 
         $result['is_task_group'] = $this->type == Assignment::TYPE_TASK_GROUP;
         $result['is_voting'] = $this->type == Assignment::TYPE_VOTING;
 
-        $result['test'] = $this->test->toJSON($flat);
-        $result['responses'] = $this->responses->map(function ($resp) { return $resp->response->getArrayCopy(); });
+        if (in_array('test', $include)) {
+            $result['test'] = $this->test->toJSON();
+        }
+
+        if (in_array('responses', $include)) {
+            $result['responses'] = $this->responses->map(function ($resp) { return $resp->response->getArrayCopy(); });
+        }
 
         return $result;
     }

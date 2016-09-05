@@ -6,7 +6,7 @@ const TaskTypesCollection = Backbone.Collection.extend({
     getTaskType(task) {
         const type = _.isObject(task) ? taskTypes.get(task.get('type')) : taskTypes.get(task)
         if (!type) {
-            throw new Error('TODO');
+            throw new Error(`Could not find task type: ${type}`);
         }
         const klass = type.get('class')
         return new klass(task)

@@ -7,12 +7,14 @@ const button = function (klass, text, { hash } ) {
     text = escapeExpression(text)
     klass = 'js-' + escapeExpression(klass)
 
+    const addClasses = escapeExpression(hash['class']) || ''
+
     if (icon) {
         icon_el = `<img src="${[STUDIP.ASSETS_URL, 'images/icons/blue/', escapeExpression(icon), '.svg'].join('')}" alt="${text}">`
     }
 
     return new SafeString(`
-            <button type="submit" class="button cliqr--button ${klass}" name="${text}">
+            <button type="submit" class="button cliqr--button ${klass} ${addClasses}" name="${text}">
               ${icon_el} ${text}
             </button>`)
 }

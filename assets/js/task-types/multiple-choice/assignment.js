@@ -28,9 +28,8 @@ const tallyVotes = function (task, voting) {
     for (let i = 0, len = task.get('task').answers.length; i < len; ++i) {
         counts[i] = 0
     }
-
     return _.reduce(voting && voting.get('responses'), (memo, response) => {
-        memo[response.answer]++
+        _.each(response.answer, (answer) => memo[answer]++)
         return memo
     }, counts)
 }

@@ -3,11 +3,12 @@ import _ from 'underscore'
 import utils from '../utils'
 import Promise from 'bluebird'
 
+import { Schema, arrayOf, normalize } from 'normalizr'
+
 import VotingsCollection from '../models/votings'
 
 import ErrorView from '../views/error'
 import PollsIndexView from '../views/polls_index'
-import PollsShowView from '../views/polls_show'
 
 // instantiate then remove bootstrapped
 const bootstrapPolls = function () {
@@ -32,12 +33,29 @@ const fetchPolls = function () {
 const PollsRouter = Backbone.Router.extend({
 
     routes: {
-        '': 'maybePolls',
+        '': 'polls',
         'polls': 'polls'
     },
 
     initialize(options) {
         this.selector = options.selector
+
+        if (cliqr.bootstrap.polls) {
+
+            const pollSchema = new Schema('poll')
+            const testSchema = new Schema('test')
+            const taskSchema = new Schema('task')
+
+            pollSchema.define({
+                test: testSchema
+            })
+            testSchema.define({
+                tasks: arrayOf(taskSchema)
+            })
+
+            const response = normalize(cliqr.bootstrap.polls, arrayOf(pollSchema));
+            console.log("normalizred", response)
+        }
     },
 
     routeHandler(fetcher, id, view, useCollection = false) {
@@ -57,15 +75,6 @@ const PollsRouter = Backbone.Router.extend({
     },
 
     // ROUTE: ''
-    maybePolls() {
-        this.routeHandler(fetchPolls, null, function (options) {
-            if (options.collection.length === 1) {
-                return new PollsShowView({ model: options.collection.first() })
-            } else {
-                return new PollsIndexView(options)
-            }
-        }, true) },
-
     // ROUTE: '#polls'
     polls() { this.routeHandler(fetchPolls, null, PollsIndexView, true) },
 

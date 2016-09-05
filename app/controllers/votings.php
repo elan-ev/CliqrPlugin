@@ -29,7 +29,7 @@ class VotingsController extends CliqrStudipController
     {
         $result = null;
         if ($voting = Assignment::findVoting($this->cid, $id)) {
-            $result = $voting->toJSON(true);
+            $result = $voting->toJSON();
         }
         $this->render_json($result);
     }

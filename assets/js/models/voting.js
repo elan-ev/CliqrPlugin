@@ -34,6 +34,10 @@ const Voting = Backbone.Model.extend({
               end = new Date(this.get('end')).valueOf() || Infinity,
               now = new Date().valueOf()
         return start <= now && now <= end
+    },
+
+    addResponse(newResponse) {
+        newResponse.save().then((response) => this.trigger('add:response', this, newResponse))
     }
 })
 

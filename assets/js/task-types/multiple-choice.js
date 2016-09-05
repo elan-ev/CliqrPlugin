@@ -1,11 +1,13 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import CreateView from './multiple-choice/create'
-import AuthorView from './multiple-choice/author'
 import AssignmentView from './multiple-choice/assignment'
+import AuthorView from './multiple-choice/author'
+import CreateView from './multiple-choice/create'
+import PollView from './multiple-choice/poll'
 
 import MCTask from './multiple-choice/task'
+import MCResponse from './multiple-choice/response'
 
 class MultipleChoice {
     constructor(task) {
@@ -36,11 +38,19 @@ class MultipleChoice {
         return new CreateView({ model: this.createTask(), taskGroup, type: this })
     }
 
+    getPollView(voting) {
+        return new PollView({ model: this.createResponse(voting), voting, type: this })
+    }
+
     createTask(data) {
         const task = new MCTask()
-        _.times(3, () => task.addAnswer())
-        console.log(task)
+        _.times(2, () => task.addAnswer())
         return task
+    }
+
+    createResponse(voting) {
+        const response = new MCResponse({ assignment_id: voting.id, task_id: voting.getTask().id })
+        return response
     }
 }
 
