@@ -8,7 +8,7 @@ class CliqrStudipController extends StudipController
         $this->plugin = $this->dispatcher->plugin;
     }
 
-    function polls_url($cid)
+    protected function polls_url($cid)
     {
 
         $abs_base = $GLOBALS['ABSOLUTE_URI_STUDIP'];
@@ -32,7 +32,7 @@ class CliqrStudipController extends StudipController
         return $url;
     }
 
-    function url_for($to)
+    protected function url_for($to)
     {
         $args = func_get_args();
 
@@ -49,7 +49,7 @@ class CliqrStudipController extends StudipController
         return PluginEngine::getURL($this->dispatcher->plugin, $params, join('/', $args));
     }
 
-    function render_json($data)
+    protected function render_json($data)
     {
         $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(json_encode(studip_utf8encode($data)));
@@ -60,7 +60,7 @@ class CliqrStudipController extends StudipController
      * Return the Content-Type of the HTTP request.
      * @return string the content type
      */
-    function contentType()
+    private function contentType()
     {
         if (preg_match('/^([^,\;]*)/', @$_SERVER['CONTENT_TYPE'], $matches)) {
             return strtolower(trim($matches[1]));
@@ -74,7 +74,7 @@ class CliqrStudipController extends StudipController
      * application/json
      * @return bool true if it has, otherwise false
      */
-    function hasJSONContentType()
+    protected function hasJSONContentType()
     {
         return $this->contentType() === 'application/json';
     }
@@ -84,7 +84,7 @@ class CliqrStudipController extends StudipController
      * Decode the request body using json_decode and utf8decode.
      * @return mixed the decoded request body.
      */
-    function parseJSONBody()
+    protected function parseJSONBody()
     {
         $body = file_get_contents('php://input');
         return self::utf8decode(json_decode($body, true));
@@ -101,7 +101,7 @@ class CliqrStudipController extends StudipController
     {
         if ($exception instanceof \Cliqr\RecordNotFound) {
             return $this->dispatcher->trails_error(
-                new Trails_Exception(404, "Record not found"));
+                new Trails_Exception(404, 'Record not found'));
         } else {
             throw $exception;
         }
@@ -125,7 +125,7 @@ class CliqrStudipController extends StudipController
      * @param mixed $data a string in UTF-8 or an array with all strings encoded in utf-8
      * @return string  the string in WINDOWS-1252/HTML-ENTITIES
      */
-    static function utf8decode($data)
+    public static function utf8decode($data)
     {
         if (is_array($data)) {
             $new_data = array();
@@ -187,14 +187,14 @@ class CliqrStudipController extends StudipController
     }
 
     # require a cid; throw a 400 otherwise
-    static protected function requireContext()
+    protected static function requireContext()
     {
         $cid = self::ensureMD5(\Request::option("cid"));
         return $cid;
     }
 
     # require ´tutor´ permission; throw a 403 otherwise
-    static protected function requireAuthorisation($cid)
+    protected static function requireAuthorisation($cid)
     {
         if (!$GLOBALS['perm']->have_studip_perm("tutor", $cid)) {
             throw new \Trails_Exception(403);

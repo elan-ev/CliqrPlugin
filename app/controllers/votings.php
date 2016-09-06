@@ -50,7 +50,7 @@ class VotingsController extends CliqrStudipController
             return $this->render_json($voting->toJSON());
         }
 
-        throw new Trails_Exception(404, 'Could not find task');
+        throw new \Cliqr\RecordNotFound();
     }
 
     function update_action($id)
@@ -72,6 +72,6 @@ class VotingsController extends CliqrStudipController
             return $this->render_json($voting->toJSON());
         }
 
-        throw new Trails_Exception(404, 'Could not find voting');
+        throw new \Cliqr\RecordNotFound();
     }
 }

@@ -50,7 +50,7 @@ class TasksController extends CliqrStudipController
     function destroy_action($id)
     {
         if (!$task = Task::find($id)) {
-            throw new \Trails_Exception(404);
+            throw new \Cliqr\RecordNotFound();
         }
 
         // TODO: Rechteprüfung

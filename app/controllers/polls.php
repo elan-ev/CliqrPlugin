@@ -14,7 +14,7 @@ class PollsController extends CliqrStudipController
 
         # check activation of this plugin in range_id
         if (!$this->plugin->isActivated($range_id)) {
-            throw new Trails_Exception(404);
+            throw new \Cliqr\RecordNotFound();
         }
 
         # transform params

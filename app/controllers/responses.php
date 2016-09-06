@@ -3,7 +3,6 @@ require_once 'cliqr_controller.php';
 
 use \Cliqr\DB\Assignment;
 use \Cliqr\DB\Response;
-use \Cliqr\DB\Task;
 use \Cliqr\DB\TestTask;
 
 class ResponsesController extends CliqrStudipController
