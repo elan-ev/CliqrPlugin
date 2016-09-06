@@ -19,7 +19,9 @@ const decorateTask = function (task) {
 
 const TasksShowView = Backbone.View.extend({
 
-    className: 'page tasks-show',
+    tagName: 'article',
+
+    className: 'cliqr--tasks-show',
 
     events: {
         'click .js-start': 'onClickStart'

@@ -7,27 +7,29 @@ import TaskListItemView from './task_list_item'
 
 const TaskListView = Viewmaster.extend({
 
+    className: 'cliqr--task-list',
+
     initialize() {
         Viewmaster.prototype.initialize.call(this)
 
         this.listenTo(this.collection, 'add', this.onTaskAdded)
         this.listenTo(this.collection, 'remove', this.onTaskRemoved)
 
-        this.collection.each((model) => this.appendView('ol.task-list', new TaskListItemView({ model })))
+        this.collection.each(this.appendItem, this)
     },
 
-
-    template(context){
-        const template = require('../../hbs/task-list.hbs')
-        return template(context)
-    },
+    template: require('../../hbs/task-list.hbs'),
 
     context() {
         return { tasks: this.collection.toJSON() }
     },
 
+    appendItem(model) {
+        this.appendView('.cliqr--task-list', new TaskListItemView({ model }))
+    },
+
     onTaskAdded(model) {
-        this.appendView('ol.task-list', new TaskListItemView({ model }))
+        this.appendItem(model)
         this.refreshViews()
     },
 

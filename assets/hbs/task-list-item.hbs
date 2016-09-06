@@ -1,21 +1,20 @@
-  <div class="half">
+<div class="cliqr--task-checkbox">
+    <input type="checkbox" name="task[]" value="{{id}}">
+</div>
+
+<div class="cliqr--task-header">
     <a href="#task-{{id}}">
-      {{#if_state 'new'}} {{icon 'new/vote'}} {{/if_state}}
-      {{#if_state 'is_active'}} {{icon 'play'}} {{/if_state}}
-      <!-- {{#if_state 'was_active'}} {{icon 'vote-stopped'}} {{/if_state}} -->
-      {{description}}
+        {{#if_state 'new'}} {{icon 'new/vote'}} {{/if_state}}
+        {{#if_state 'is_active'}} {{icon 'play'}} {{/if_state}}
+        {{description}}
     </a>
-  </div>
+</div>
 
-  <div class="eighth">
+<div class="cliqr--task-changed">
     {{moment changed}}
-  </div>
+</div>
 
-  <div class="eighth">
-    {{moment last_assignment.start}}
-  </div>
-
-  <div class="quarter">
+<div class="cliqr--task-actions">
     {{#if_state 'is_active'}}
         {{fab "stop" "Stoppen" "pause"}}
         {{^}}
@@ -23,10 +22,4 @@
     {{/if_state}}
     {{fab "duplicate" "Duplizieren" "add/files"}}
     {{fab "remove" "Löschen" "trash"}}
-  </div>
-
-<!--
-<textarea>
-  {{json .}}
-</textarea>
--->
+</div>

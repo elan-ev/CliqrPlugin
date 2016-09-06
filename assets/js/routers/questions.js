@@ -15,7 +15,6 @@ import TaskGroupsShowView from '../views/task_groups_show'
 import TasksShowView from '../views/tasks_show'
 import VotingsShowView from '../views/votings_show'
 
-import ErrorView from '../views/error'
 
 import { Schema, arrayOf, normalize, unionOf, valuesOf } from 'normalizr'
 
@@ -98,12 +97,6 @@ const QuestionsRouter = Backbone.Router.extend({
                 this.hideLoading()
                 return utils.changeToPage(new view(useCollection ? { collection: response } : { model: response }))
             })
-            /*
-            .catch((error, ...args) => {
-                this.hideLoading()
-                return utils.changeToPage(new ErrorView({ error, args }))
-            })
-            */
     },
 
     initialize(options) {

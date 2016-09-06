@@ -1,14 +1,7 @@
-<ol class="task-list">
-  <li class="task-list-header">
-    <div class="half"> Frage </div>
-    <div class="eighth"> letzte Änderung </div>
-    <div class="eighth"> zuletzt gestartet </div>
-    <div class="quarter"></div>
-  </li>
-
-  {{#unless tasks}}
-    <li class="task-list-empty">
-      Es sind keine Fragen vorhanden.
-    </li>
-  {{/unless}}
+<ol class="cliqr--task-list">
+    {{#unless tasks}}
+        <li class="task-list-empty">
+            <p>Es sind keine Fragen vorhanden.</p>
+        </li>
+    {{/unless}}
 </ol>

@@ -3,6 +3,11 @@ namespace Cliqr\DB;
 
 class Test extends \eAufgaben\DB\Test
 {
+    public function belongsToAVoting()
+    {
+        return isset($this->options['voting']) && $this->options['voting'] == 1;
+    }
+
     public function toJSON($include = '')
     {
         $include = words($include);

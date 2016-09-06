@@ -9,6 +9,8 @@ import PollView from './multiple-choice/poll'
 import MCTask from './multiple-choice/task'
 import MCResponse from './multiple-choice/response'
 
+import mc_css from './multiple-choice/multiple-choice.scss'
+
 class MultipleChoice {
     constructor(task) {
         this.task = task

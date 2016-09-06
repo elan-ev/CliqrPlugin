@@ -1,36 +1,33 @@
-<article>
-    <header>
-        <h1>Task Nr.{{id}}: {{title}}</h1>
-        <p>
-            <a href="#task-groups-{{task_group_id}}">
-                zurück zur Fragensammlung
-            </a>
-        </p>
-    </header>
+<nav>
+  <!--<h1>Task Nr.{{id}}: {{title}}</h1>-->
+  <p>
+    <a href="#task-groups-{{task_group_id}}">
+      zurück zur Fragensammlung
+    </a>
+  </p>
+</nav>
 
-    <main></main>
+<main></main>
 
-    <section class="assignments">
-        <h2>
-            Assignments:
-        </h2>
+<aside class="assignments">
+  <h2>
+    Assignments:
+  </h2>
 
-        <nav>
-            {{#unless_state 'is_active'}}
-                {{fab "start" "Starten" "play"}}
-            {{/unless_state}}
-        </nav>
+  <nav>
+    {{#unless_state 'is_active'}}
+    {{fab "start" "Starten" "play"}}
+    {{/unless_state}}
+  </nav>
 
-        <ol>
-            {{#each assignments}}
-                <li>
-                    <a href="#voting-{{id}}">
-                        <span>{{#if running}}running{{^}}not running{{/if}}</span>
-                        vom {{moment start}} ({{responses_count}} Stimmen)
-                    </a>
-                </li>
-            {{/each}}
-        </ol>
-    </section>
-
-</article>
+  <ol>
+    {{#each assignments}}
+      <li>
+        <a href="#voting-{{id}}">
+          <span>{{#if running}}running{{^}}not running{{/if}}</span>
+            vom {{moment start}} ({{responses_count}} Stimmen)
+        </a>
+      </li>
+    {{/each}}
+  </ol>
+</aside>

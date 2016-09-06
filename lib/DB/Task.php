@@ -97,7 +97,7 @@ class Task extends \eAufgaben\DB\Task
         return $ret;
     }
 
-    public function toJSON($include = 'task_group_id $assignments')
+    public function toJSON($include = 'task_group_id assignments')
     {
         $include = words($include);
 

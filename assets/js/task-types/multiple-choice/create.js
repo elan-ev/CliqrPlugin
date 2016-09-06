@@ -10,6 +10,8 @@ const decorateTaskGroup = function (taskGroup) {
 
 const CreateView = Backbone.View.extend({
 
+    className: 'cliqr--multiple-choice-create-view',
+
     events: {
         'click .choice-new': 'onAddChoice',
         'click .close': 'onRemoveChoice',
@@ -35,7 +37,7 @@ const CreateView = Backbone.View.extend({
     },
 
     render() {
-        const template = require('../../../hbs/task-types/multiple-choice-create.hbs')
+        const template = require('./multiple-choice-create.hbs')
         this.$el.html(template({
             taskGroup: decorateTaskGroup(this.taskGroup),
             task: this.model.toJSON()

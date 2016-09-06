@@ -15,6 +15,8 @@ const decorateContext = function (response, voting) {
 
 const PollView = Backbone.View.extend({
 
+    className: 'cliqr--multiple-choice-poll-view',
+
     events: {
         'submit form': 'onSubmitForm'
     },
@@ -29,7 +31,7 @@ const PollView = Backbone.View.extend({
     },
 
     render() {
-        const template = require('../../../hbs/task-types/multiple-choice-poll.hbs')
+        const template = require('./multiple-choice-poll.hbs')
         this.$el.html(template(decorateContext(this.model, this.voting)))
         return this
     },

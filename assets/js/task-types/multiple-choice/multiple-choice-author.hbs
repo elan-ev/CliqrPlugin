@@ -1,0 +1,28 @@
+<header>
+    <h1>{{description}}</h1>
+</header>
+
+<main>
+    <table>
+        <tbody>
+            {{#each answers}}
+                <tr>
+                    <td class="nominal"> {{nominal @index}} </td>
+                    <td class="text"> {{text}} </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+<!--
+        <label data-score="{{score}}" data-feedback="{{feedback}}">
+
+            {{#if isSingleSelect}}
+                <input type="radio" name="choice" value="{{id}}" {{#if isCorrect}}checked{{/if}} required disabled>
+            {{else}}
+                <input type="checkbox" name="choice[{{id}}]" value="1" {{#if isCorrect}}checked{{/if}} required disabled>
+            {{/if}}
+
+            {{text}}
+        </label>
+        -->
+</main>

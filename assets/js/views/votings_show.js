@@ -43,10 +43,7 @@ const VotingsShowView = Viewmaster.extend({
         Backbone.View.prototype.remove.call(this)
     },
 
-    template(context) {
-        const template = require('../../hbs/votings-show.hbs')
-        return template(this.context())
-    },
+    template: require('../../hbs/votings-show.hbs'),
 
     context() {
         return decorateVoting(this.model)
@@ -55,9 +52,6 @@ const VotingsShowView = Viewmaster.extend({
     onClickStop(event) {
         event.preventDefault()
         this.model.save({ end: new Date().toISOString() })
-        .then((model) => console.log(model))
-        .catch((...args) => console.log("caught: ", args))
-
     },
 
     onClickRestart(event) {
@@ -70,7 +64,6 @@ const VotingsShowView = Viewmaster.extend({
                 Backbone.history.navigate(`voting-${voting_id}`, { trigger: true })
                 return model;
             })
-            .catch((response) => console.log("TODO catch", response))
     },
 
     onClickShowQRCode(event) {

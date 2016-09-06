@@ -4,7 +4,7 @@ $this->set_layout($template_factory->open('layouts/base_without_infobox'));
 
 $PLGNURL = $plugin->getPluginURL();
 $ASSETS = $PLGNURL . '/assets/';
-PageLayout::addStylesheet($ASSETS . 'css/questions/styles.css');
+#PageLayout::addStylesheet($ASSETS . 'css/questions/styles.css');
 PageLayout::addScript($ASSETS . 'js/vendor/jquery.fittext.js');
 PageLayout::addScript($ASSETS . 'js/vendor/jquery.elastic.js');
 

@@ -29,7 +29,6 @@ class TasksController extends CliqrStudipController
         $result = null;
         if ($task = Task::find($id)) {
             // TODO: Rechteprüfung
-
             $result = $task->toJSON();
         }
         $this->render_json($result);
@@ -50,23 +49,22 @@ class TasksController extends CliqrStudipController
 
     function destroy_action($id)
     {
-        $result = null;
-
-        $task = Task::find($id);
-        if ($task) {
-            // TODO: Rechteprüfung
-
-            // TODO
-            //$rows = $task->delete();
-
-            $tests = $task->getTests();
-            $counts = $task->getTests()->map(function ($test) {
-                return [$test->countTasks(), $test->options];
-            });
-
-            $result = ['status' => 'ok', 'rows_deleted' => $rows, 'counts' => $counts];
+        if (!$task = Task::find($id)) {
+            throw new \Trails_Exception(404);
         }
 
-        $this->render_json($result);
+        // TODO: Rechteprüfung
+
+        // find assignments/votings containing this task only and delete them
+        $singleTasker = $task->getAssignments()->filter(function ($ass) {
+            return $ass->isVoting() &&  $ass->countTasks() == 1;
+        });
+        $counts = \SimpleORMapCollection::createFromArray($singleTasker->pluck('test'))
+                ->sendMessage('delete');
+
+        // now delete the row (and TestTasks, Responses)
+        $rows = $task->delete();
+
+        $this->render_json(['status' => 'ok']);
     }
 }

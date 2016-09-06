@@ -17,18 +17,17 @@ const TaskListItemView = Backbone.View.extend({
 
     tagName: 'li',
 
-    className: 'task-list-item',
+    className: 'cliqr--task-list-item',
 
     events: {
         'click .js-remove': 'onClickRemove'
     },
 
     initialize() {
-        //this.interval = setInterval( () => this.model.fetch(), 2000)
+        this.listenTo(this.model, 'change', this.render)
     },
 
     remove() {
-        //clearInterval(this.interval)
         Backbone.View.prototype.remove.call(this)
     },
 
@@ -40,8 +39,6 @@ const TaskListItemView = Backbone.View.extend({
 
     onClickRemove(event) {
         event.preventDefault()
-
-        console.log(this.model.collection.remove(this.model.id))
         this.model.destroy()
         this.remove()
     }

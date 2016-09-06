@@ -59,7 +59,24 @@ class Assignment extends eAssignment
 
     // ***** INSTANCE METHODS
 
-    public function findTasks() {
+    public function countTasks()
+    {
+        $sql = "SELECT COUNT(*)
+                FROM eauf_assignments ea
+                INNER JOIN eauf_test_tasks ett
+                USING ( test_id )
+                INNER JOIN eauf_tasks et ON ett.task_id = et.id
+                WHERE ea.id = ?
+                ORDER BY ett.position ASC";
+
+        $st = \DBManager::get()->prepare($sql);
+        $st->execute([ $this->id ]);
+
+        return (int) $st->fetchColumn();
+    }
+
+    public function findTasks()
+    {
         $sql = "SELECT et.*
                 FROM eauf_assignments ea
                 INNER JOIN eauf_test_tasks ett
@@ -100,6 +117,16 @@ class Assignment extends eAssignment
         $taskGroup->store();
 
         return $taskGroup;
+    }
+
+    public function isVoting()
+    {
+        return $this->type = Assignment::TYPE_VOTING;
+    }
+
+    public function isTaskGroup()
+    {
+        return $this->type = Assignment::TYPE_TASK_GROUP;
     }
 
     public function toJSON($include = 'test responses')

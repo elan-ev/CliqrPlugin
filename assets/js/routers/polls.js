@@ -7,7 +7,6 @@ import { Schema, arrayOf, normalize } from 'normalizr'
 
 import VotingsCollection from '../models/votings'
 
-import ErrorView from '../views/error'
 import PollsIndexView from '../views/polls_index'
 
 // instantiate then remove bootstrapped
@@ -66,12 +65,6 @@ const PollsRouter = Backbone.Router.extend({
                 const page = new view(useCollection ? { collection: response } : { model: response })
                 utils.changeToPage(page, this.selector)
             })
-        /*
-            .catch((error, ...args) => {
-                this.hideLoading()
-                utils.changeToPage(new ErrorView({ error, args }))
-            })
-        */
     },
 
     // ROUTE: ''

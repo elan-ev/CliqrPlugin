@@ -21,7 +21,7 @@ class TaskGroupsController extends CliqrStudipController
     function index_action()
     {
         $taskGroups = Assignment::findTaskGroups($this->cid);
-        $this->render_json(studip_utf8encode($taskGroups->toJSON()));
+        $this->render_json($taskGroups->toJSON());
     }
 
     function show_action($id)
@@ -31,7 +31,7 @@ class TaskGroupsController extends CliqrStudipController
             // TODO Rechtecheck
             $result = $assignment->toJSON();
         }
-        $this->render_json(studip_utf8encode($result));
+        $this->render_json($result);
     }
 
     function create_action()
@@ -48,7 +48,7 @@ class TaskGroupsController extends CliqrStudipController
 
         $taskGroup = Assignment::createTaskGroup('course', $this->cid, $json);
 
-        $this->render_json(studip_utf8encode($taskGroup->toJSON()));
+        $this->render_json($taskGroup->toJSON());
     }
 
     function destroy_action($id)

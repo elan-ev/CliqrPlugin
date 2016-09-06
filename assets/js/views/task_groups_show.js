@@ -30,29 +30,22 @@ const TaskGroupsShowView = Viewmaster.extend({
 
         this.tasks = new TaskCollection(this.model.get('test').tasks)
 
-        //this.listenTo(this.tasks, 'add', this.onTaskAdded)
-        //this.listenTo(this.tasks, 'remove', this.onTaskRemoved)
-
         this.setView('.task-list-container', new TaskListView({ collection: this.tasks }))
         this.setView('.task-create-container', new TasksAddView({ model: this.model }))
     },
 
-
-    template(context) {
-        const template = require('../../hbs/task-groups-show.hbs')
-        return template(context)
-    },
+    template: require('../../hbs/task-groups-show.hbs'),
 
     context() {
         return decorateTaskGroup(this.model)
     },
 
     onNewTask(task) {
-        this.tasks.create({ ...task.attributes, task_group_id: this.model.id }, {
-            success: (...args) => {
-                console.log("TODO onNewTask success", args)
-            }
-        })
+        this.tasks.create({ ...task.attributes, task_group_id: this.model.id },
+                          { success: (...args) => {
+                              this.setView('.task-create-container', new TasksAddView({ model: this.model }))
+                              this.refreshViews()
+                          } })
     }
 })
 

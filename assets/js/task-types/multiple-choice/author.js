@@ -17,8 +17,13 @@ const decorateTask = function (task) {
 }
 
 const AuthorView = Backbone.View.extend({
+
+    tagName: 'section',
+
+    className: 'cliqr--multiple-choice-author-view',
+
     render() {
-        const template = require('../../../hbs/task-types/multiple-choice-author.hbs')
+        const template = require('./multiple-choice-author.hbs')
         this.$el.html(template(decorateTask(this.model)))
         return this
     }

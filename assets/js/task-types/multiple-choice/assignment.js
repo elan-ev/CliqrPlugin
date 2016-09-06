@@ -35,12 +35,15 @@ const tallyVotes = function (task, voting) {
 }
 
 const AssignmentView = Backbone.View.extend({
+
+    className: 'cliqr--multiple-choice-assignment-view',
+
     initialize(options) {
         this.voting = options.voting
     },
 
     render() {
-        const template = require('../../../hbs/task-types/multiple-choice-assignment.hbs')
+        const template = require('./multiple-choice-assignment.hbs')
         this.$el.html(template(decorateTask(this.model, this.voting)))
         return this
     }

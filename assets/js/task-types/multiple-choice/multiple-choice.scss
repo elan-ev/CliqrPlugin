@@ -1,0 +1,26 @@
+#cliqr-container {
+  .cliqr--multiple-choice-author-view {
+
+    h1 {
+      font-weight: 400;
+    }
+
+    table {
+      font-size: 2em;
+      line-height: 1.5;
+      overflow: hidden;
+      border-collapse: collapse;
+
+
+      .nominal {
+        color: #999;
+        font-size: 0.7em;
+        width: 1em;
+      }
+
+      .text {
+        padding-left: 0.25em;
+      }
+    }
+  }
+}
