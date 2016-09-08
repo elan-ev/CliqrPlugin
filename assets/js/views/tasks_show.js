@@ -58,7 +58,7 @@ const TasksShowView = Backbone.View.extend({
         vtng.save()
             .then((model) => {
                 const id = model.id
-                Backbone.history.navigate(`voting-${id}`, { trigger: true })
+                Backbone.history.navigate(`voting/${id}`, { trigger: true })
             })
             .catch((response) => console.log("TODO catch", response))
     }

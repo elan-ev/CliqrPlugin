@@ -29,5 +29,28 @@
 
     {{else}}
         {{button "restart" "Noch einmal starten"}}
+
+        {{#if otherAssignments}}
+            <form class="default">
+                <fieldset>
+                    <legend>
+                        Vergleichen mit:
+                    </legend>
+                    <select>
+                        {{#each otherAssignments}}
+                            <option value="{{id}}" {{#if isRunning}}disabled{{/if}}>
+                                {{moment start}}
+                                {{#unless isRunning}}
+                                    ({{responses_count}} Stimmen)
+                                    {{^}}
+                                    (läuft gerade)
+                                {{/unless}}
+                            </option>
+                        {{/each}}
+                    </select>
+                {{fab "compare" "Vergleichen" "test"}}
+                </fieldset>
+            </form>
+        {{/if}}
     {{/if}}
 </nav>

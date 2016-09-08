@@ -1,17 +1,27 @@
-votings-compare
+<header>
+    <h1>Votings vergleichen</h1>
+</header>
 
-{{#with votingA}}
-    <section class="cliqr--voting-side-a">
-        {{json .}}
+<main>
+    {{#with votingA}}
+        <section class="cliqr--voting-side-a">
+            <nav>
+                <a href="#voting/{{id}}">
+                    Voting {{#if start}}vom {{moment start}}{{/if}}
+                </a>
+            </nav>
+            <main></main>
+        </section>
+    {{/with}}
 
-        <main></main>
-    </section>
-{{/with}}
-
-{{#with votingB}}
-    <section class="cliqr--voting-side-b">
-        {{json .}}
-
-        <main></main>
-</section>
-{{/with}}
+    {{#with votingB}}
+        <section class="cliqr--voting-side-b">
+            <nav>
+                <a href="#voting/{{id}}">
+                    Voting {{#if start}}vom {{moment start}}{{/if}}
+                </a>
+            </nav>
+            <main></main>
+        </section>
+    {{/with}}
+</main>

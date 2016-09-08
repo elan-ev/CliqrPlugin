@@ -97,7 +97,7 @@ const QuestionsRouter = Backbone.Router.extend({
 
         'compare/:v1/:v2': 'votingCompare',
 
-        'voting-:id': 'voting'
+        'voting/:id': 'voting'
 
     },
 
@@ -141,7 +141,7 @@ const QuestionsRouter = Backbone.Router.extend({
     // ROUTE: '#task-:id'
     task(id) { this.routeHandler(fetchTask, id, TasksShowView) },
 
-    // ROUTE: '#voting-:id'
+    // ROUTE: '#voting/:id'
     voting(id) { this.routeHandler(fetchVoting, id, VotingsShowView) },
 
     // ROUTE: #compare/:v1/:v2

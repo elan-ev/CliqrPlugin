@@ -23,10 +23,9 @@
     <ol>
         {{#each assignments}}
             <li>
-                <a href="#voting-{{id}}">
+                <a href="#voting/{{id}}">
                     <span>
-                        {{#if_state 'new'}} {{icon 'new/vote'}} {{/if_state}}
-                        {{#if_state 'is_active'}} {{icon 'play'}} {{/if_state}}
+                        {{#if running}} {{icon 'play'}} {{else}} {{icon 'new/vote'}} {{/if}}
                     </span>
                     am {{moment start}}
                     <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>

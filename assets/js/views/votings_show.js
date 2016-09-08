@@ -8,10 +8,12 @@ import taskTypes from '../models/task_types'
 import Viewmaster from './viewmaster'
 
 const decorateVoting = function (voting) {
+    const task = voting.getTask()
     return {
         ..._.omit(voting.toJSON(), 'test'),
-        task: voting.getTask().toJSON(),
-        isRunning: voting.isRunning()
+        task: task.toJSON(),
+        isRunning: voting.isRunning(),
+        otherAssignments: _.map(_.reject(task.get('assignments'), (ass) => ass.id === voting.id), (attrs) => { return { ...attrs, isRunning: new Voting(attrs).isRunning() } })
     }
 }
 
@@ -24,7 +26,8 @@ const VotingsShowView = Viewmaster.extend({
     events: {
         'click .js-stop': 'onClickStop',
         'click .js-restart': 'onClickRestart',
-        'click .js-show-qr-code': 'onClickShowQRCode'
+        'click .js-show-qr-code': 'onClickShowQRCode',
+        'click .js-compare': 'onClickCompare'
     },
 
     initialize() {
@@ -61,7 +64,7 @@ const VotingsShowView = Viewmaster.extend({
         vtng.save()
             .then((model) => {
                 const voting_id = model.id
-                Backbone.history.navigate(`voting-${voting_id}`, { trigger: true })
+                Backbone.history.navigate(`voting/${voting_id}`, { trigger: true })
                 return model;
             })
     },
@@ -80,6 +83,14 @@ const VotingsShowView = Viewmaster.extend({
             title: dialog.attr('title'),
             resize: false
         })
+    },
+
+    onClickCompare(event) {
+        event.preventDefault()
+
+        const thisVersion = this.model.id,
+              otherVersion = Backbone.$(event.target).closest('form').find('select').val()
+        Backbone.history.navigate(`compare/${otherVersion}/${thisVersion }`, { trigger: true })
     }
 })
 
