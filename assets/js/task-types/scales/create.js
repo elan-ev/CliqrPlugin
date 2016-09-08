@@ -15,7 +15,7 @@ const CreateView = Backbone.View.extend({
     },
 
     render() {
-        const template = require('../../../hbs/task-types/scales-create.hbs')
+        const template = require('./scales-create.hbs')
         this.$el.html(template(decorateTaskGroup(this.model)))
         return this
     }

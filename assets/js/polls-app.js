@@ -44,7 +44,7 @@ class PollCliqrApp {
 
     initTaskTypes() {
         TaskTypes.add({ id: 'multiple-choice', class: MultipleChoice })
-        TaskTypes.add({ id: 'scales', class: Scales })
+        // TaskTypes.add({ id: 'scales', class: Scales })
     }
 }
 

@@ -1,36 +1,33 @@
-<article>
-    <header>
-      <h1>Voting Nr.{{id}}</h1>
-      <p>
+<header>
+    <h1>Voting Nr.{{id}} ({{#if isRunning}}läuft gerade{{^}}abgelaufen{{/if}})</h1>
+    <p>
         <a href="#task-{{task.id}}">
-          zurück zur Frage
+            zurück zur Frage
         </a>
-      </p>
-    </header>
+    </p>
+</header>
 
-    <nav>
-      {{#if isRunning}}
+<main></main>
+
+<nav>
+    {{#if isRunning}}
         {{button "stop" "Beenden"}}
 
         <div class="appeal vote">
-          <div class="url">
-            Abstimmen unter
-            <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
-          </div>
+            <div class="url">
+                Abstimmen unter
+                <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
+            </div>
 
-          {{button "show-qr-code" "QR-Code zeigen" icon="code-qr"}}
+            {{button "show-qr-code" "QR-Code zeigen" icon="code-qr"}}
 
-          <div class="dialog" title="Abstimmen unter" style=display:none>
-            <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
-            <img class="qr" src="{{qr_code}}">
-          </div>
+            <div class="dialog" title="Abstimmen unter" style=display:none>
+                <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
+                <img class="qr" src="{{qr_code}}">
+            </div>
         </div>
 
-      {{else}}
+    {{else}}
         {{button "restart" "Noch einmal starten"}}
-      {{/if}}
-    </nav>
-
-    <main></main>
-
-</article>
+    {{/if}}
+</nav>

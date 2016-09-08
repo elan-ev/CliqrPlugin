@@ -1,25 +1,33 @@
-<section class="cliqr--multiple-choice-assignment">
-    <header>
-        <h1>Voting {{task.description}} ({{#if isRunning}}läuft gerade{{^}}abgelaufen{{/if}})</h1>
-    </header>
-    <main>
-        {{#each answers}}
-            <label data-score="{{score}}" data-feedback="{{feedback}}">
+<header>
+    <h1>{{task.description}}</h1>
+    {{#if isSingleSelect}}
+    {{else}}
+    {{/if}}
+</header>
 
-                {{#if isSingleSelect}}
-                    <input type="radio" name="choice" value="{{id}}" {{#if isCorrect}}checked{{/if}} required disabled>
-                {{else}}
-                    <input type="checkbox" name="choice[{{id}}]" value="1" {{#if isCorrect}}checked{{/if}} required disabled>
-                {{/if}}
+<main>
+    <table>
+        <tbody>
+            {{#each answers}}
+                <tr>
+                    <td class="nominal"> {{nominal @index}} </td>
+                    <td class="text"> {{text}} </td>
 
-                {{text}} {{#unless ../isRunning}}(Stimmen: {{votes_count}}){{/unless}}
-            </label>
-        {{/each}}
+                    {{#unless ../isRunning}}
+                        <td class="graph"></td>
+                        <td class="count">{{votes_count}}</td>
+                        <td class="percent">
+                            {{#if votes_count}}{{percent}}%{{/if}}
+                        </td>
+                    {{/unless}}
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
 
-        {{#unless isRunning}}
-          <p>
-            insgesamt {{votes_count}} Stimmen
-          </p>
-        {{/unless}}
-    </main>
-</section>
+    {{#unless isRunning}}
+        <div class="sample-size">
+            insgesamt {{votes_count}} Stimme(n)
+        </div>
+    {{/unless}}
+</main>

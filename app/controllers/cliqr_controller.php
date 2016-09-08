@@ -32,7 +32,7 @@ class CliqrStudipController extends StudipController
         return $url;
     }
 
-    protected function url_for($to)
+    public function url_for($to)
     {
         $args = func_get_args();
 
@@ -49,9 +49,9 @@ class CliqrStudipController extends StudipController
         return PluginEngine::getURL($this->dispatcher->plugin, $params, join('/', $args));
     }
 
-    protected function render_json($data)
+    public function render_json($data)
     {
-        $this->response->add_header('Content-Type', 'application/json');
+        $this->response->add_header('Content-Type', 'application/json;charset=utf-8');
         $this->render_text(json_encode(studip_utf8encode($data)));
     }
 

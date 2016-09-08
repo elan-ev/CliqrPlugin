@@ -1,33 +1,37 @@
 <nav>
-  <!--<h1>Task Nr.{{id}}: {{title}}</h1>-->
-  <p>
-    <a href="#task-groups-{{task_group_id}}">
-      zurück zur Fragensammlung
-    </a>
-  </p>
+    <!--<h1>Task Nr.{{id}}: {{title}}</h1>-->
+    <p>
+        <a href="#task-groups-{{task_group_id}}">
+            zurück zur Fragensammlung
+        </a>
+    </p>
 </nav>
 
 <main></main>
 
 <aside class="assignments">
-  <h2>
-    Assignments:
-  </h2>
+    <h2>
+        Votings:
+    </h2>
 
-  <nav>
-    {{#unless_state 'is_active'}}
-    {{fab "start" "Starten" "play"}}
-    {{/unless_state}}
-  </nav>
+    <nav>
+        {{#unless_state 'is_active'}}
+            {{button "start" "Frage starten" icon="play"}}
+        {{/unless_state}}
+    </nav>
 
-  <ol>
-    {{#each assignments}}
-      <li>
-        <a href="#voting-{{id}}">
-          <span>{{#if running}}running{{^}}not running{{/if}}</span>
-            vom {{moment start}} ({{responses_count}} Stimmen)
-        </a>
-      </li>
-    {{/each}}
-  </ol>
+    <ol>
+        {{#each assignments}}
+            <li>
+                <a href="#voting-{{id}}">
+                    <span>
+                        {{#if_state 'new'}} {{icon 'new/vote'}} {{/if_state}}
+                        {{#if_state 'is_active'}} {{icon 'play'}} {{/if_state}}
+                    </span>
+                    am {{moment start}}
+                    <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
+                </a>
+            </li>
+        {{/each}}
+    </ol>
 </aside>

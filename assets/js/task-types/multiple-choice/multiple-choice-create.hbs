@@ -20,16 +20,14 @@
                         class="choice" maxlength="100" type="text"
                         name="answers[{{@index}}]"
                         value="{{text}}" required>
-                    <a class="close">×</a>
+                    {{fab "remove" "Entfernen" "trash"}}
                 </div>
             {{/each}}
-            <div class="choice-new">Click here to add option</div>
+            {{button "add" "Antwort hinzufügen" icon="add"}}
         </div>
     </fieldset>
 
     <fieldset>
-        <button type="submit" class="button" name="save">
-            Speichern
-        </button>
+      {{button "save" "Speichern" icon="accept"}}
     </fieldset>
 </form>

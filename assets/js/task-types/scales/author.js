@@ -18,7 +18,7 @@ const decorateTask = function (task) {
 
 const AuthorView = Backbone.View.extend({
     render() {
-        const template = require('../../../hbs/task-types/scales-author.hbs')
+        const template = require('./scales-author.hbs')
         this.$el.html(template(decorateTask(this.model)))
         return this
     }

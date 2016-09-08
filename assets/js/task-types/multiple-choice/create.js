@@ -13,8 +13,8 @@ const CreateView = Backbone.View.extend({
     className: 'cliqr--multiple-choice-create-view',
 
     events: {
-        'click .choice-new': 'onAddChoice',
-        'click .close': 'onRemoveChoice',
+        'click .js-add': 'onClickAdd',
+        'click .js-remove': 'onClickRemove',
         'submit form': 'onSubmitForm',
 
         'keypress #task-description': 'onDescriptionUpdate',
@@ -45,11 +45,15 @@ const CreateView = Backbone.View.extend({
         return this
     },
 
-    onAddChoice(event) {
+    onClickAdd(event) {
+        event.preventDefault()
+
         this.model.addAnswer()
     },
 
-    onRemoveChoice(event) {
+    onClickRemove(event) {
+        event.preventDefault()
+
         const index = parseInt(Backbone.$(event.target).closest('.choice-input').find('input[name]').attr('name').match(/\d+/)[0], 10)
         this.model.removeAnswer(index)
     },

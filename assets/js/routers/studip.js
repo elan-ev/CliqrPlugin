@@ -1,4 +1,5 @@
 import Backbone from 'backbone'
+import _ from 'underscore'
 import utils from '../utils'
 import Promise from 'bluebird'
 
@@ -14,6 +15,7 @@ import TaskGroupsIndexView from '../views/task_groups_index'
 import TaskGroupsShowView from '../views/task_groups_show'
 import TasksShowView from '../views/tasks_show'
 import VotingsShowView from '../views/votings_show'
+import VotingsCompareView from '../views/votings_compare'
 
 
 import { Schema, arrayOf, normalize, unionOf, valuesOf } from 'normalizr'
@@ -64,6 +66,12 @@ const fetchVoting = function (id) {
         .then( () => { return voting })
 }
 
+const fetchTwoVotings = function (ids) {
+    return Promise.resolve(
+        _.times(2, (i) => _.tap(new Voting({ id: ids[i] }), (v) => v.fetch()) )
+    )
+}
+
 const fetchTask = function (id) {
     let task
     if (cliqr.bootstrap.taskGroups) {
@@ -87,15 +95,18 @@ const QuestionsRouter = Backbone.Router.extend({
 
         'task-:id': 'task',
 
+        'compare/:v1/:v2': 'votingCompare',
+
         'voting-:id': 'voting'
+
     },
 
-    routeHandler(fetcher, id, view, useCollection = false) {
+    routeHandler(fetcher, id, view, useCollection = 'model') {
         this.showLoading()
         fetcher(id)
             .then((response) => {
                 this.hideLoading()
-                return utils.changeToPage(new view(useCollection ? { collection: response } : { model: response }))
+                return utils.changeToPage(new view({ [useCollection]: response }))
             })
     },
 
@@ -122,7 +133,7 @@ const QuestionsRouter = Backbone.Router.extend({
     },
 
     // ROUTE: '' and '#task-groups'
-    taskGroups() { this.routeHandler(fetchTaskGroups, null, TaskGroupsIndexView, true) },
+    taskGroups() { this.routeHandler(fetchTaskGroups, null, TaskGroupsIndexView, 'collection') },
 
     // ROUTE: '#task-groups-:id'
     taskGroup(id) { this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView) },
@@ -132,6 +143,9 @@ const QuestionsRouter = Backbone.Router.extend({
 
     // ROUTE: '#voting-:id'
     voting(id) { this.routeHandler(fetchVoting, id, VotingsShowView) },
+
+    // ROUTE: #compare/:v1/:v2
+    votingCompare(v1, v2) { this.routeHandler(fetchTwoVotings, [v1, v2], VotingsCompareView, 'votings') },
 
     // Loader stuff - TODO should not be here, AppView?
 

@@ -38,7 +38,7 @@ const AuthorView = Backbone.View.extend({
     },
 
     render() {
-        const template = require('../../../hbs/task-types/scales-assignment.hbs')
+        const template = require('./scales-assignment.hbs')
         this.$el.html(template(decorateTask(this.model, this.voting)))
         return this
     }

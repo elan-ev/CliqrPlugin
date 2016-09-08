@@ -2,7 +2,7 @@ import Backbone from 'backbone'
 import jQuery from 'jquery'
 import Promise from 'bluebird'
 
-import QuestionsRouter from './routers/questions'
+import StudipRouter from './routers/studip'
 
 import TaskTypes from './models/task_types'
 import MultipleChoice from './task-types/multiple-choice'
@@ -39,12 +39,12 @@ class StudIPCliqrApp {
     }
 
     initRouters(selector) {
-        let router = new QuestionsRouter({ selector })
+        let router = new StudipRouter({ selector })
     }
 
     initTaskTypes() {
         TaskTypes.add({ id: 'multiple-choice', class: MultipleChoice })
-        TaskTypes.add({ id: 'scales', class: Scales })
+        // TaskTypes.add({ id: 'scales', class: Scales })
     }
 }
 

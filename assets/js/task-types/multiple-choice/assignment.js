@@ -4,7 +4,9 @@ import _ from 'underscore'
 const decorateTask = function (task, voting = null) {
     const task_id = task.get('id'),
           votes = tallyVotes(task, voting),
-          json = voting.toJSON()
+          json = voting.toJSON(),
+          votes_total = _.reduce(votes, (sum, n) => { return sum + n }, 0)
+
 
     return {
         ...json,
@@ -16,10 +18,11 @@ const decorateTask = function (task, voting = null) {
                                ...nswr,
                                id: `${task_id}-${i}`,
                                isCorrect: !!nswr.score,
-                               votes_count: votes[i]
+                               votes_count: votes[i],
+                               percent: votes_total ? Math.floor(votes[i] / votes_total * 100) : 0
                            }}),
         isSingleSelect: task.get('task')['type'] === 'single',
-        votes_count:  _.reduce(votes, (sum, n) => { return sum + n }, 0)
+        votes_count: votes_total
     }
 }
 
@@ -36,6 +39,8 @@ const tallyVotes = function (task, voting) {
 
 const AssignmentView = Backbone.View.extend({
 
+    tagName: 'section',
+
     className: 'cliqr--multiple-choice-assignment-view',
 
     initialize(options) {
@@ -43,9 +48,35 @@ const AssignmentView = Backbone.View.extend({
     },
 
     render() {
-        const template = require('./multiple-choice-assignment.hbs')
-        this.$el.html(template(decorateTask(this.model, this.voting)))
+        const template = require('./multiple-choice-assignment.hbs'),
+              context = decorateTask(this.model, this.voting)
+
+        this.$el.html(template(context))
+
+        if (!this.voting.isRunning()) {
+            this.enhanceChart(context)
+        }
+
         return this
+    },
+
+    enhanceChart(context) {
+        this.$('.chart').remove()
+
+        const width = 150,
+              data = context.answers,
+              max = _.max(_.pluck(data, 'votes_count')),
+              widths = _.map(data, (d) => max > 0 ? d.votes_count / max * width : 0)
+
+        this.$('.graph').append(function (index) {
+            if (!data[index].votes_count) {
+                return null
+            }
+            return Backbone.$('<span class="chart"></span>').css({
+                width: widths[index],
+                marginLeft: max ? width - widths[index] : 0
+            })
+        })
     }
 })
 

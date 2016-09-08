@@ -156,7 +156,6 @@ $headingsFontWeight:    bold;
       border-top: 1px solid;
 
       lost-flex-container: row;
-      /* lost-utility: clearfix; */
 
       > div {
         line-height: 4em;
@@ -235,10 +234,30 @@ $headingsFontWeight:    bold;
   }
 
 /*
+// * Voting Show */
+
+  article.cliqr--votings-show {
+    lost-flex-container: row;
+
+    > header {
+      lost-column: 12/12;
+    }
+
+    > main {
+      lost-column: 9/12;
+    }
+
+    > nav {
+      lost-column: 3/12 0;
+    }
+  }
+
+/*
 // * Task Show */
 
   article.cliqr--tasks-show {
-    lost-utility: clearfix;
+    lost-flex-container: row;
+
 
     > nav {
       width: 100%;
@@ -249,7 +268,12 @@ $headingsFontWeight:    bold;
     }
 
     > aside {
-      lost-column: 3/12;
+      lost-column: 3/12 0;
+
+      ol {
+        padding: 0;
+      }
     }
   }
+
 }

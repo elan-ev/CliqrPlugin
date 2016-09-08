@@ -17,7 +17,9 @@ const decorateVoting = function (voting) {
 
 const VotingsShowView = Viewmaster.extend({
 
-    className: 'page votings-show',
+    tagName: 'article',
+
+    className: 'cliqr--votings-show',
 
     events: {
         'click .js-stop': 'onClickStop',
@@ -25,17 +27,15 @@ const VotingsShowView = Viewmaster.extend({
         'click .js-show-qr-code': 'onClickShowQRCode'
     },
 
-    taskType: null,
-
     initialize() {
         Viewmaster.prototype.initialize.call(this)
 
-        const task = this.model.getTask()
-        this.taskType = taskTypes.getTaskType(task)
-
         this.listenTo(this.model, 'change', this.render)
 
-        this.setView('main', this.taskType.getAssignmentView(this.model))
+        const task = this.model.getTask(),
+              taskType = taskTypes.getTaskType(task)
+
+        this.setView('main', taskType.getAssignmentView(this.model))
     },
 
     remove() {

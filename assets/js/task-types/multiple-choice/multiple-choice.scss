@@ -1,4 +1,69 @@
 #cliqr-container {
+
+  .cliqr--multiple-choice-assignment-view {
+
+    $chartColor1: #3389b7;
+    $chartColor2: #96c7e1;
+    $color-detail: #000;
+
+    h1 {
+      font-weight: 400;
+    }
+
+    table {
+      font-size: 2em;
+      line-height: 1.5;
+      overflow: hidden;
+      border-collapse: collapse;
+
+
+      .nominal {
+        color: #999;
+        font-size: 0.7em;
+        width: 1em;
+      }
+
+      .text {
+        padding-left: 0.25em;
+      }
+
+      .graph, .count, .percent {
+        padding-left: 0.5em;
+      }
+    }
+
+    .chart {
+      display: inline-block;
+      background-color: $chartColor2;
+
+      background-image: linear-gradient(to right, $chartColor1, $chartColor2);
+      background-repeat: repeat-x;
+
+      height: 1em;
+      margin-left: 0.5em;
+      vertical-align: text-top;
+      border: 1px solid #232323;
+    }
+
+    .count {
+      color: $chartColor1;
+    }
+
+    .percent {
+      font-size: 0.66em;
+      color: $color-detail;
+    }
+
+    .sample-size {
+      font-size: 2em;
+      color: #666;
+      padding-right: 1em;
+
+      text-align: right;
+    }
+  }
+
+
   .cliqr--multiple-choice-author-view {
 
     h1 {
@@ -20,6 +85,78 @@
 
       .text {
         padding-left: 0.25em;
+      }
+    }
+  }
+
+  .cliqr--multiple-choice-create-view {
+
+    .vote-form {
+
+      fieldset {
+        border: none;
+        border-bottom: 1px solid #EEEEEE;
+        margin-left: 0px;
+        padding: 30px 0px 20px 20px;
+      }
+
+      legend {
+        font-size: 1.75em;
+        color: #899AB9;
+        padding-top: 30px;
+      }
+
+      label {
+        text-align: left;
+        width: 220px;
+        float: left;
+        padding-top: 5px;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+
+      .control-group {
+        margin-left: 260px;
+
+        input {
+        }
+
+        textarea, input, .choice-new {
+          width: 400px;
+          margin-bottom: 5px;
+          padding: 4px 6px;
+          border: 1px solid #CCCCCC;
+          box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.024);
+        }
+
+        .choice-new {
+          cursor: pointer;
+          display: block;
+          vertical-align: middle;
+          background-color: #FCFCFC;
+          color: #999999;
+        }
+
+        .choice-input {
+
+          a.close {
+            vertical-align: middle;
+            padding: 5px;
+            cursor: pointer;
+
+            &:hover {
+              text-shadow: 0 0 2px #899AB9;
+              color: #666666;
+            }
+          }
+        }
+      }
+
+      .form-actions {
+        float: right;
       }
     }
   }
