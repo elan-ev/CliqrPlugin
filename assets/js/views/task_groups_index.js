@@ -12,6 +12,7 @@ const TaskGroupsIndexView = Backbone.View.extend({
     events: {
         'click .js-add-task-group': 'onClickAddTaskGroup',
         'submit form.cliqr--add-task-group-form': 'onSubmitForm',
+        'click .js-export': 'onClickExport',
         'click .js-remove': 'onClickRemove'
     },
 
@@ -59,6 +60,15 @@ const TaskGroupsIndexView = Backbone.View.extend({
         this.collection.get(id).destroy()
             .then((...args) => console.log("destroyed task group:", args))
             .catch((e) => console.log("error on destroying task group: ", e))
+    },
+
+    onClickExport(event) {
+        event.preventDefault()
+
+        const id = Backbone.$(event.target).closest('tr').data('taskgroupid'),
+              taskGroup = this.collection.get(id)
+        console.log(`exporting task group ${id}`, taskGroup)
+        const wndHandle = window.open(taskGroup.exportURL())
     }
 })
 

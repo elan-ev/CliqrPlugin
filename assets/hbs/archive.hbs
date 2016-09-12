@@ -1,0 +1,15 @@
+<header>
+    <h1>Fragenarchiv</h1>
+</header>
+
+<section class="cliqr--archive-votings">
+    <ol>
+        {{#each votings}}
+            <li>
+                <a href="#voting/{{id}}"> {{task.description}} </a>
+                <span class="bubble" data-tooltip="Frage mit {{responses_count}} Antworten">{{responses_count}}</span>
+                <div> gestellt am {{moment start}}  </div>
+            </li>
+        {{/each}}
+    </ol>
+</section>

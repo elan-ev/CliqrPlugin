@@ -20,6 +20,10 @@ const TaskGroup = Backbone.Model.extend({
     url(action) {
         let id = this.id != null ? '/' + this.id : ''
         return cliqr.config.PLUGIN_URL + ('task_groups/' + action + id + '?cid=') + cliqr.config.CID
+    },
+
+    exportURL() {
+        return this.url('export')
     }
 })
 

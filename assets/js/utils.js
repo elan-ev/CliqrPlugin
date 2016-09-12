@@ -4,6 +4,12 @@ import _ from 'underscore'
 let currentView = false
 
 const utils = {
+
+    userRole(expected) {
+        const role = window.cliqr.bootstrap.userRole
+        return expected === role
+    },
+
     getContainer(selector) {
         return Backbone.$(selector || '#cliqr-container')
     },

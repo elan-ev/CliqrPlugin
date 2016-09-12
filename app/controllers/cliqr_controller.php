@@ -6,6 +6,12 @@ class CliqrStudipController extends StudipController
     function before_filter(&$action, &$args)
     {
         $this->plugin = $this->dispatcher->plugin;
+        $this->container = $this->dispatcher->container;
+    }
+
+    protected function current_user()
+    {
+        return $GLOBALS['user'];
     }
 
     protected function polls_url($cid)
@@ -201,4 +207,8 @@ class CliqrStudipController extends StudipController
         }
     }
 
+    protected function can($action, $resource, $resourceValue = null)
+    {
+        return $this->container['authority']->can($action, $resource, $resourceValue);
+    }
 }

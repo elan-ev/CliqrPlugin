@@ -54,6 +54,17 @@
                         {{button "add-task-group" "Fragesammlung erstellen"}}
                     </td>
                 </tr>
+
+                <tr>
+                    <td colspan="5">
+
+                        <form enctype="multipart/form-data" action="{{url_for "task_groups/import"}}" method="POST">
+                            <input name="task-group-import-file" type="file">
+                            {{button "import" "Import"}}
+                        </form>
+
+                    </td>
+                </tr>
             {{/if_mode}}
 
             {{#if_mode "form"}}

@@ -37,10 +37,9 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         if (Request::isXhr()
             || Navigation::hasItem('/course/cliqr')
             || !$this->isActivated($cid)
-            || !$perm->have_studip_perm("tutor", $cid)) {
+            || !$isAtLeastAutor = $perm->have_studip_perm('autor', $cid)) {
             return;
         }
-
 
         # /course/cliqr -> plugins.php/cliqrplugin/questions
         $url = PluginEngine::getURL('cliqrplugin', compact('cid'), '', true);
@@ -49,15 +48,17 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $navigation->setImage(Assets::image_path('icons/16/white/test.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/test.png'));
 
-        # /course/cliqr/index -> plugins.php/cliqrplugin/questions#index
-        $navigation->addSubNavigation("index", new Navigation(_("Fragen"), $url . '#task-groups'));
+        if ($perm->get_studip_perm($cid) === 'autor') {
+            $navigation->addSubNavigation("index", new Navigation(_("Fragenarchiv"), $url . '#'));
 
-        # /course/cliqr/new -> plugins.php/cliqrplugin/questions#new
-        $navigation->addSubNavigation("new", new Navigation(_("Frage erstellen"), $url . '#new'));
+        } else {
+            $navigation->addSubNavigation("index", new Navigation(_("Fragen"), $url . '#'));
 
-        # /course/cliqr/help -> plugins.php/cliqrplugin/help
-        $url = PluginEngine::getURL('cliqrplugin', compact('cid'), 'help', true);
-        $navigation->addSubNavigation("help", new Navigation(_("Methodische Informationen"), $url));
+            $navigation->addSubNavigation("new", new Navigation(_("Frage erstellen"), $url . '#new'));
+
+            $url = PluginEngine::getURL('cliqrplugin', compact('cid'), 'help', true);
+            $navigation->addSubNavigation("help", new Navigation(_("Methodische Informationen"), $url));
+        }
 
         Navigation::addItem('/course/cliqr', $navigation);
     }
@@ -108,7 +109,10 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $dispatcher = new Trails_Dispatcher($trails_root,
                                             rtrim(PluginEngine::getLink($this, [], null), '/'),
                                             self::DEFAULT_CONTROLLER);
+
         $dispatcher->plugin = $this;
+        $dispatcher->container = $this->config;
+
         $dispatcher->dispatch($unconsumed_path);
     }
 

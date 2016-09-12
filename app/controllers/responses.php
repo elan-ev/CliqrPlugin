@@ -27,6 +27,10 @@ class ResponsesController extends CliqrStudipController
 
     function create_action()
     {
+        if (!$this->can('create', 'Response')) {
+            throw new \Trails_Exception(403);
+        }
+
         // ensure assignment_id, task_id and the response's content
         foreach(words('assignment_id task_id response') as $key) {
             if (!array_key_exists($key, $this->json)) {

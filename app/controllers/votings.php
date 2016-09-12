@@ -11,7 +11,6 @@ class VotingsController extends CliqrStudipController
         parent::before_filter($action, $args);
 
         $this->cid = self::requireContext();
-        self::requireAuthorisation($this->cid);
 
         if (in_array($action, words("create update"))) {
             if (!$this->hasJSONContentType()) {
@@ -25,17 +24,38 @@ class VotingsController extends CliqrStudipController
     /* ACTIONS                                                                 */
     /***************************************************************************/
 
+    function index_action()
+    {
+        $votings = Assignment::findOldVotings('course', $this->cid);
+
+        if (!$this->can('read', 'Voting', $votings->first())) {
+            throw new \Trails_Exception(403);
+        }
+
+        $this->render_json($votings->toJSON());
+    }
+
     function show_action($id)
     {
-        $result = null;
-        if ($voting = Assignment::findVoting($this->cid, $id)) {
-            $result = $voting->toJSON();
+        $voting = Assignment::findVoting($this->cid, $id);
+
+        if (!$this->can('read', 'Voting', $voting)) {
+            throw new \Trails_Exception(403);
         }
-        $this->render_json($result);
+
+        if (!$voting) {
+            throw new Cliqr\RecordNotFound();
+        }
+
+        $this->render_json($voting->toJSON());
     }
 
     function create_action()
     {
+        if (!$this->can('create', 'Voting')) {
+            throw new \Trails_Exception(403);
+        }
+
         if (!array_key_exists('task_id', $this->json)) {
             throw new \Trails_Exception(400, 'TODO: task_id required');
         }
@@ -55,23 +75,25 @@ class VotingsController extends CliqrStudipController
 
     function update_action($id)
     {
-        $result = null;
-        if ($voting = Assignment::findVoting($this->cid, $id)) {
+        $voting = Assignment::findVoting($this->cid, $id);
 
-            // TODO: Rechtecheck
-
-            // TODO: only updating the `end` for now
-            if (!array_key_exists('end', $this->json)) {
-                throw new \Trails_Exception(400, 'TODO: end required');
-            }
-            $voting->end = $this->json['end'];
-
-            // TODO: validate model
-            $voting->store();
-
-            return $this->render_json($voting->toJSON());
+        if (!$this->can('update', 'Voting', $voting)) {
+            throw new \Trails_Exception(403);
         }
 
-        throw new \Cliqr\RecordNotFound();
+        if (!$voting) {
+            throw new Cliqr\RecordNotFound();
+        }
+
+        // TODO: only updating the `end` for now
+        if (!array_key_exists('end', $this->json)) {
+            throw new \Trails_Exception(400, 'TODO: end required');
+        }
+        $voting->end = $this->json['end'];
+
+        // TODO: validate model
+        $voting->store();
+
+        return $this->render_json($voting->toJSON());
     }
 }

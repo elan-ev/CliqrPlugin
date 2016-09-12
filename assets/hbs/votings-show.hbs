@@ -1,10 +1,12 @@
 <header>
     <h1>Voting Nr.{{id}} ({{#if isRunning}}läuft gerade{{^}}abgelaufen{{/if}})</h1>
+    {{#user_role 'lecturer'}}
     <p>
         <a href="#task-{{task.id}}">
             zurück zur Frage
         </a>
     </p>
+    {{/user_role}}
 </header>
 
 <main></main>

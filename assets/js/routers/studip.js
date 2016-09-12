@@ -1,29 +1,29 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-import utils from '../utils'
 import Promise from 'bluebird'
+import { Schema, arrayOf, normalize, unionOf, valuesOf } from 'normalizr'
 
-import TaskGroup from '../models/task_group'
-import TaskGroupsCollection from '../models/task_groups'
+import utils from '../utils'
 
 import Task from '../models/task'
+import TaskGroup from '../models/task_group'
+import TaskGroupsCollection from '../models/task_groups'
 import TasksCollection from '../models/tasks'
-
 import Voting from '../models/voting'
+import VotingsCollection from '../models/votings'
 
+import ArchiveView from '../views/archive'
+import ErrorView from '../views/error'
 import TaskGroupsIndexView from '../views/task_groups_index'
 import TaskGroupsShowView from '../views/task_groups_show'
 import TasksShowView from '../views/tasks_show'
-import VotingsShowView from '../views/votings_show'
 import VotingsCompareView from '../views/votings_compare'
-
-
-import { Schema, arrayOf, normalize, unionOf, valuesOf } from 'normalizr'
+import VotingsShowView from '../views/votings_show'
 
 // instantiate then remove bootstrapped
 const bootstrapTaskGroups = function () {
-    const taskGroups = new TaskGroupsCollection(cliqr.bootstrap.taskGroups)
-    delete(cliqr.bootstrap.taskGroups)
+    const taskGroups = new TaskGroupsCollection(window.cliqr.bootstrap.taskGroups)
+    delete(window.cliqr.bootstrap.taskGroups)
     return taskGroups
 }
 
@@ -34,20 +34,25 @@ const bootstrapTasks = function () {
     return new TasksCollection(tasks)
 }
 
+const bootstrapLastAssignments = function () {
+    const lastAssignments = new VotingsCollection(window.cliqr.bootstrap.lastAssignments || [])
+    delete(window.cliqr.bootstrap.lastAssignments)
+    return lastAssignments
+}
+
 const fetchTaskGroups = function () {
-    if (cliqr.bootstrap.taskGroups) {
+    if (window.cliqr.bootstrap.taskGroups) {
         return Promise.resolve(bootstrapTaskGroups())
     }
 
     const taskGroups = new TaskGroupsCollection()
     return taskGroups.fetch()
         .then((...args) => { console.log(args); return taskGroups })
-        .catch((...args) => { console.log("caught: ", args) })
 }
 
 const fetchTaskGroup = function (id) {
     let taskGroup
-    if (cliqr.bootstrap.taskGroups) {
+    if (window.cliqr.bootstrap.taskGroups) {
         taskGroup = bootstrapTaskGroups().get(id)
         if (taskGroup) {
             return Promise.resolve(taskGroup)
@@ -57,7 +62,6 @@ const fetchTaskGroup = function (id) {
     taskGroup = new TaskGroup({ id })
     return taskGroup.fetch()
         .then( () => { return taskGroup })
-        .catch((...args) => { console.log("caught: ", args) })
 }
 
 const fetchVoting = function (id) {
@@ -74,7 +78,7 @@ const fetchTwoVotings = function (ids) {
 
 const fetchTask = function (id) {
     let task
-    if (cliqr.bootstrap.taskGroups) {
+    if (window.cliqr.bootstrap.taskGroups) {
         task = bootstrapTasks().get(id)
         if (task) {
             return Promise.resolve(task)
@@ -85,10 +89,20 @@ const fetchTask = function (id) {
     return task.fetch().then( () => { return task }) // TODO (mlunzena) #then should be #then
 }
 
-const QuestionsRouter = Backbone.Router.extend({
+const fetchLastAssignments = function () {
+    if (window.cliqr.bootstrap.lastAssignments) {
+        return Promise.resolve(bootstrapLastAssignments())
+    }
+
+    const lastAssignments = new VotingsCollection()
+    return lastAssignments.fetch()
+        .then((...args) => lastAssignments)
+}
+
+const StudipRouter = Backbone.Router.extend({
 
     routes: {
-        '': 'taskGroups',
+        '': 'redirectByAuthorization',
 
         'task-groups': 'taskGroups',
         'task-groups-:id': 'taskGroup',
@@ -97,22 +111,32 @@ const QuestionsRouter = Backbone.Router.extend({
 
         'compare/:v1/:v2': 'votingCompare',
 
-        'voting/:id': 'voting'
+        'voting/:id': 'voting',
+
+        'archive': 'archive'
 
     },
 
     routeHandler(fetcher, id, view, useCollection = 'model') {
         this.showLoading()
-        fetcher(id)
+        return fetcher(id)
             .then((response) => {
                 this.hideLoading()
                 return utils.changeToPage(new view({ [useCollection]: response }))
+            })
+            .catch((error) => {
+                const status = error && error.status
+                if (status === 403) {
+                    this.hideLoading()
+                    return this.navigate('', { trigger: true, replace: true })
+                }
+                throw error
             })
     },
 
     initialize(options) {
 
-        if (cliqr.bootstrap.taskGroups) {
+        if (window.cliqr.bootstrap.taskGroups) {
 
             const taskGroupSchema = new Schema('task_group')
             const testSchema = new Schema('test')
@@ -127,13 +151,34 @@ const QuestionsRouter = Backbone.Router.extend({
             taskGroupSchema.define({
                 test: testSchema
             });
-            const response = normalize(cliqr.bootstrap.taskGroups, arrayOf(taskGroupSchema));
+            const response = normalize(window.cliqr.bootstrap.taskGroups, arrayOf(taskGroupSchema));
             console.log("normalizred", response)
         }
     },
 
-    // ROUTE: '' and '#task-groups'
-    taskGroups() { this.routeHandler(fetchTaskGroups, null, TaskGroupsIndexView, 'collection') },
+    // ROUTE: ''
+    redirectByAuthorization() {
+        const userRole = window.cliqr.bootstrap.userRole
+
+        switch (userRole) {
+
+        case 'student':
+            this.navigate('#archive', { trigger: true, replace: true })
+            break
+
+        default:
+            this.navigate('#task-groups', { trigger: true, replace: true })
+            break
+        }
+    },
+
+    // ROUTE: '#task-groups'
+    taskGroups() {
+        this.routeHandler(fetchTaskGroups, null, TaskGroupsIndexView, 'collection')
+            .catch((...args) => {
+                console.log("caught:", args)
+            })
+    },
 
     // ROUTE: '#task-groups-:id'
     taskGroup(id) { this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView) },
@@ -144,8 +189,11 @@ const QuestionsRouter = Backbone.Router.extend({
     // ROUTE: '#voting/:id'
     voting(id) { this.routeHandler(fetchVoting, id, VotingsShowView) },
 
-    // ROUTE: #compare/:v1/:v2
+    // ROUTE: '#compare/:v1/:v2'
     votingCompare(v1, v2) { this.routeHandler(fetchTwoVotings, [v1, v2], VotingsCompareView, 'votings') },
+
+    // ROUTE: '#archive'
+    archive() { this.routeHandler(fetchLastAssignments, null, ArchiveView, 'collection') },
 
     // Loader stuff - TODO should not be here, AppView?
 
@@ -155,7 +203,7 @@ const QuestionsRouter = Backbone.Router.extend({
     showLoading() {
         this.timeout = setTimeout( () => {
             this.loader = Backbone.$('<span class="cliqr-loader"/>').html('Loading...').prependTo('#layout_content')
-        }, 300)
+        }, 200)
     },
 
     hideLoading() {
@@ -166,4 +214,4 @@ const QuestionsRouter = Backbone.Router.extend({
     }
 })
 
-export default QuestionsRouter
+export default StudipRouter

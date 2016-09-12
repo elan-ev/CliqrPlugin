@@ -10,7 +10,6 @@ class TasksController extends CliqrStudipController
         parent::before_filter($action, $args);
 
         $this->cid = self::requireContext();
-        self::requireAuthorisation($this->cid);
 
         if (in_array($action, words("create"))) {
             if (!$this->hasJSONContentType()) {
@@ -26,16 +25,25 @@ class TasksController extends CliqrStudipController
 
     function show_action($id)
     {
-        $result = null;
-        if ($task = Task::find($id)) {
-            // TODO: Rechteprüfung
-            $result = $task->toJSON();
+        $task = Task::find($id);
+
+        if (!$this->can('read', 'Task', $task)) {
+            throw new \Trails_Exception(403);
         }
-        $this->render_json($result);
+
+        if (!$task) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        $this->render_json($task->toJSON());
     }
 
     function create_action()
     {
+        if (!$this->can('create', 'Task')) {
+            throw new \Trails_Exception(403);
+        }
+
         if (!array_key_exists('task_group_id', $this->json)) {
             throw new \Trails_Exception(400, 'TODO: task_group_id required');
         }
@@ -49,11 +57,15 @@ class TasksController extends CliqrStudipController
 
     function destroy_action($id)
     {
-        if (!$task = Task::find($id)) {
-            throw new \Cliqr\RecordNotFound();
+        $task = Task::find($id);
+
+        if (!$this->can('create', 'Task', $task)) {
+            throw new \Trails_Exception(403);
         }
 
-        // TODO: Rechteprüfung
+        if (!$task) {
+            throw new \Cliqr\RecordNotFound();
+        }
 
         // find assignments/votings containing this task only and delete them
         $singleTasker = $task->getAssignments()->filter(function ($ass) {

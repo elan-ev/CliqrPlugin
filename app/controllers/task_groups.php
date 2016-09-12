@@ -11,7 +11,6 @@ class TaskGroupsController extends CliqrStudipController
         parent::before_filter($action, $args);
 
         $this->cid = self::requireContext();
-        self::requireAuthorisation($this->cid);
     }
 
     /***************************************************************************/
@@ -20,22 +19,34 @@ class TaskGroupsController extends CliqrStudipController
 
     function index_action()
     {
+        if (!$this->can('index', 'TaskGroup')) {
+            throw new \Trails_Exception(403);
+        }
+
         $taskGroups = Assignment::findTaskGroups($this->cid);
         $this->render_json($taskGroups->toJSON());
     }
 
     function show_action($id)
     {
-        $result = null;
-        if ($assignment = Assignment::findTaskGroup($this->cid, $id)) {
-            // TODO Rechtecheck
-            $result = $assignment->toJSON();
+        $taskGroup = Assignment::findTaskGroup($this->cid, $id);
+
+        if (!$this->can('read', 'TaskGroup', $taskGroup)) {
+            throw new \Trails_Exception(403);
         }
-        $this->render_json($result);
+
+        if (!$taskGroup) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        $this->render_json($taskGroup->toJSON());
     }
 
     function create_action()
     {
+        if (!$this->can('create', 'TaskGroup')) {
+            throw new \Trails_Exception(403);
+        }
 
         if (!$this->hasJSONContentType()) {
             throw new \Trails_Exception(400, 'TODO: has to be JSON');
@@ -47,18 +58,81 @@ class TaskGroupsController extends CliqrStudipController
         }
 
         $taskGroup = Assignment::createTaskGroup('course', $this->cid, $json);
-
         $this->render_json($taskGroup->toJSON());
     }
 
     function destroy_action($id)
     {
-        $result = null;
-        if ($assignment = Assignment::findTaskGroup($this->cid, $id)) {
-            // TODO Rechtecheck
-            $test = $assignment->test;
-            $test->delete();
+        $taskGroup = Assignment::findTaskGroup($this->cid, $id);
+
+        if (!$this->can('delete', 'TaskGroup', $taskGroup)) {
+            throw new \Trails_Exception(403);
         }
-        $this->render_json(['status' => 'OK', 'rows_deleted' => $rows]);
+
+        if (!$taskGroup) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        $test = $taskGroup->test;
+        $test->delete();
+
+        $this->render_json([ 'status' => 'OK' ]);
+    }
+
+    function export_action($id)
+    {
+        $taskGroup = Assignment::findTaskGroup($this->cid, $id);
+
+        if (!$this->can('export', 'TaskGroup', $taskGroup)) {
+            throw new \Trails_Exception(403);
+        }
+
+        if (!$taskGroup) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        $exporter = new \Cliqr\Exporter();
+
+        $exportString = $exporter->exportTaskGroup($taskGroup);
+
+        if ($_SERVER['HTTPS'] === 'on') {
+            $this->response->add_header('Pragma', 'public');
+            $this->response->add_header('Cache-Control', 'private');
+        } else {
+            $this->response->add_header('Pragma', 'no-cache');
+            $this->response->add_header('Cache-Control', 'no-store, no-cache, must-revalidate');
+        }
+
+        $this->response->add_header('Content-Disposition', 'attachment;filename="task-group-1.json"');
+        $this->response->add_header('Content-Description', 'File Transfer');
+        $this->response->add_header('Content-Transfer-Encoding' , 'binary');
+        $this->response->add_header('Content-Type', 'application/json;charset=utf-8');
+        $this->response->add_header('Content-Length', strlen($exportString));
+
+        $this->render_text($exportString);
+    }
+
+    function import_action()
+    {
+        if (!$this->can('import', 'TaskGroup', $taskGroup)) {
+            throw new \Trails_Exception(403);
+        }
+
+        if (empty($_FILES) || !isset($_FILES['task-group-import-file'])) {
+            throw new \Trails_Exception(400);
+        }
+
+        if (!is_uploaded_file($tmpname = $_FILES['task-group-import-file']['tmp_name'])) {
+            throw new \Trails_Exception(400, 'Datei wurde fehlerhaft hochgeladen:');
+        }
+
+        if ($error = $_FILES['task-group-import-file']['error']) {
+            throw new \Trails_Exception(400, 'Datei wurde fehlerhaft hochgeladen:');
+        }
+
+        $importer = new \Cliqr\Importer('course', $this->cid);
+        $importer->importString(file_get_contents($tmpname), $debug = true);
+
+        $this->render_json(['status' => 'OK']);
     }
 }

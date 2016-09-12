@@ -27,7 +27,7 @@ class Assignment extends eAssignment
     {
         return \SimpleORMapCollection::createFromArray(
             Assignment::findBySQL(
-                'type = ? AND range_type = ? AND range_id = ?',
+                'type = ? AND range_type = ? AND range_id = ? ORDER BY start ASC',
                 [ Assignment::TYPE_VOTING, $range_type, $range_id]));
     }
 
@@ -35,8 +35,16 @@ class Assignment extends eAssignment
     {
         $now = date('c', $time);
         return  \SimpleORMapCollection::createFromArray(Assignment::findBySQL(
-            'type = ? AND range_type = ? AND range_id = ? AND start <= ? AND (? <= end OR end IS NULL)',
+            'type = ? AND range_type = ? AND range_id = ? AND start <= ? AND (? <= end OR end IS NULL) ORDER BY start ASC',
             [ Assignment::TYPE_VOTING, $range_type, $range_id, $now, $now ]));
+    }
+
+    public static function findOldVotings($range_type, $range_id)
+    {
+        $now = date('c', time());
+        return  \SimpleORMapCollection::createFromArray(Assignment::findBySQL(
+            'type = ? AND range_type = ? AND range_id = ? AND end < ? ORDER BY end DESC',
+            [ Assignment::TYPE_VOTING, $range_type, $range_id, $now ]));
     }
 
     public static function findVoting($range_id, $id)
@@ -148,4 +156,14 @@ class Assignment extends eAssignment
 
         return $result;
     }
+
+    public function isRunning()
+    {
+        $start = new \DateTime($this->start);
+        $now = new \DateTime();
+        $end = $this->end ? new \DateTime($this->end) : PHP_MAX_INT;
+
+        return $start <= $now && $now <= $end;
+    }
+
 }

@@ -11,10 +11,9 @@ class AppController extends CliqrStudipController
         parent::before_filter($action, $args);
 
         $this->cid = self::requireContext();
-        self::requireAuthorisation($this->cid);
 
         if (\Navigation::hasItem("/course/cliqr")) {
-                \Navigation::activateItem("/course/cliqr/index");
+            \Navigation::activateItem("/course/cliqr/index");
         }
     }
 
@@ -23,17 +22,34 @@ class AppController extends CliqrStudipController
     /***************************************************************************/
 
     function index_action() {
+
+        $canEdit = $this->container['authority']->can('edit', 'TaskGroup');
+
         $this->json = [
-            'taskGroups' => $this->getTaskGroupsJSON($this->cid)
+            'userRole' =>  $canEdit ? 'lecturer' : 'student'
         ];
+
+        if ($canEdit) {
+            $this->json['taskGroups'] = $this->getTaskGroupsJSON($this->cid);
+        } else {
+            $this->json['lastAssignments'] = $this->getLastAssignmentsJSON($this->cid);
+        }
 
         $this->short_url = $this->generateShortURL();
     }
+
+
 
     private function getTaskGroupsJSON($cid)
     {
         $taskGroups = Assignment::findTaskGroups($cid);
         return $taskGroups->toJSON();
+    }
+
+    private function getLastAssignmentsJSON($cid)
+    {
+        $lastAssignments = Assignment::findVotings('course', $cid);
+        return $lastAssignments->toJSON();
     }
 
     # get poll URL and shorten it

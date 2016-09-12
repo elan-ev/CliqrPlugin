@@ -6,13 +6,28 @@ class Container extends \Pimple {
 
     function __construct()
     {
+        $this->setupAuthorization();
+        $this->setupConfigPhp();
+    }
 
+    protected function setupAuthorization()
+    {
+        $this['current_user'] = function ($c) {
+            return $GLOBALS['user'];
+        };
+
+        $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
+
+        $this['authority'] = function ($c) {
+            return new Authority($c, $c['current_user']);
+        };
+    }
+
+    protected function setupConfigPhp()
+    {
         $base_path = dirname(dirname(__FILE__)) . '/';
 
-        $ini = array();
-
         $this['ini'] = parse_ini_file($base_path . 'config.php', true, INI_SCANNER_RAW);
-
 
         $this['shortener'] = $this->share(
             function ($c) use ($base_path) {
@@ -21,15 +36,6 @@ class Container extends \Pimple {
                 return new $class($c);
             }
         );
-
-        /*
-        $this['logger'] = $this->share(
-            function ($c) {
-                $log = new \Monolog\Logger('name');
-                $log->pushHandler(new \Monolog\Handler\StreamHandler('/tmp/your.log'));
-                return $log;
-            });
-        */
 
         $this['pusher_configured'] = function ($c) {
             return isset($c['ini']['pusher']['key']);
