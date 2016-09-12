@@ -14,7 +14,14 @@ const utils = {
         return Backbone.$(selector || '#cliqr-container')
     },
 
-    changeToPage(view, selector = null) {
+    activateNavigation(selector = 'li:first-child') {
+        Backbone.$('#sidebar-navigation ul.sidebar-navigation')
+            .find('> li.active').removeClass('active').end()
+            .find(selector).eq(0)
+            .closest('li').addClass('active')
+    },
+
+    changeToPage(view, selector) {
         let container
         if (currentView) {
             currentView.$el.hide()

@@ -6,9 +6,21 @@
     <ol>
         {{#each votings}}
             <li>
-                <a href="#voting/{{id}}"> {{task.description}} </a>
-                <span class="bubble" data-tooltip="Frage mit {{responses_count}} Antworten">{{responses_count}}</span>
-                <div> gestellt am {{moment start}}  </div>
+                <div class="cliqr--archive-header">
+                    <a href="#voting/{{id}}">
+                        {{icon "test"}}
+                        {{task.description}}
+                    </a>
+                </div>
+
+                <div class="cliqr--archive-date">
+                    <div> {{moment start}} </div>
+                </div>
+
+                <div class="cliqr--archive-bubble">
+                    <span class="bubble" data-tooltip="Frage mit {{responses_count}} Antworten">{{responses_count}}</span>
+                </div>
+
             </li>
         {{/each}}
     </ol>

@@ -2,6 +2,8 @@ import Backbone from 'backbone'
 import _ from 'underscore'
 
 import Assignment from './assignment'
+import Voting from './voting'
+import VotingsCollection from './votings'
 
 const actionMap = {
     create: 'create',
@@ -24,13 +26,12 @@ const Task = Backbone.Model.extend({
         return cliqr.config.PLUGIN_URL + ('tasks/' + action + id + '?cid=') + cliqr.config.CID
     },
 
-    getAssignments() {
-        const assignments = this.get('assignments');
-        if (!_.isArray(assignments)) {
-            return new Backbone.Collection()
+    getVotings() {
+        if (!this.votings) {
+            this.votings = new VotingsCollection(_.map(this.get('assignments') || [], v => new Voting(v)))
+            this.listenTo(this.votings, 'change', (...args) => this.trigger('change', ...args))
         }
-
-        return new Backbone.Collection(_.map(assignments, a => new Assignment(a)))
+        return this.votings
     },
 
     STATE_NEW: 'new',
@@ -38,13 +39,13 @@ const Task = Backbone.Model.extend({
     STATE_WAS_ACTIVE: 'was_active',
 
     getCurrentState() {
-        const assignments = this.getAssignments()
+        const votings = this.getVotings()
 
-        if (!assignments.length) {
+        if (!votings.length) {
             return this.STATE_NEW
         }
 
-        const did_run = assignments.any(a => a.isBetween())
+        const did_run = votings.any(a => a.isRunning())
         return did_run ? this.STATE_IS_ACTIVE : this.STATE_WAS_ACTIVE
     }
 })

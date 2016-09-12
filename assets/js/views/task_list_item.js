@@ -1,13 +1,15 @@
 import Backbone from 'backbone'
 
+import Voting from '../models/voting'
+
 const decorateTaskListItem = function (model) {
 
-    const assignments = model.getAssignments()
+    const votings = model.getVotings()
 
     return {
         ...model.toJSON(),
-        assignments_count: assignments.length,
-        last_assignment: assignments.length ? assignments.last().toJSON() : null,
+        assignments_count: votings.length,
+        last_assignment: votings.length ? votings.last().toJSON() : null,
         state: model.getCurrentState(),
         $mode: 'show'
     }
@@ -20,6 +22,7 @@ const TaskListItemView = Backbone.View.extend({
     className: 'cliqr--task-list-item',
 
     events: {
+        'click .js-start': 'onClickStart',
         'click .js-remove': 'onClickRemove'
     },
 
@@ -41,6 +44,16 @@ const TaskListItemView = Backbone.View.extend({
         event.preventDefault()
         this.model.destroy()
         this.remove()
+    },
+
+    onClickStart(event) {
+        event.preventDefault()
+        const vtng = new Voting({ task_id: this.model.id })
+        vtng.save()
+            .then((model) => {
+                const id = model.id
+                Backbone.history.navigate(`voting/${id}`, { trigger: true })
+            })
     }
 })
 

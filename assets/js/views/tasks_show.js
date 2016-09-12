@@ -8,10 +8,11 @@ import Voting from '../models/voting'
 const decorateTask = function (task) {
     return {
         ...task.toJSON(),
-        assignments: task.getAssignments().map(function (a) {
+        state: task.getCurrentState(),
+        votings: task.getVotings().map(function (v) {
             return {
-                ...a.toJSON(),
-                running: a.isBetween()
+                ...v.toJSON(),
+                running: v.isRunning()
             }
         })
     }
@@ -24,7 +25,8 @@ const TasksShowView = Backbone.View.extend({
     className: 'cliqr--tasks-show',
 
     events: {
-        'click .js-start': 'onClickStart'
+        'click .js-start': 'onClickStart',
+        'click .js-stop': 'onClickStop'
     },
 
     taskType: null,
@@ -61,7 +63,18 @@ const TasksShowView = Backbone.View.extend({
                 Backbone.history.navigate(`voting/${id}`, { trigger: true })
             })
             .catch((response) => console.log("TODO catch", response))
+    },
+
+    onClickStop(event) {
+        event.preventDefault()
+
+        const running = this.model.getVotings().find(a => a.isRunning())
+        running.save({ end: new Date().toISOString() }).then((r) => {
+            console.log("saved")
+            this.render()
+        })
     }
+
 })
 
 export default TasksShowView

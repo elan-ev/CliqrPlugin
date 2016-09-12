@@ -23,7 +23,7 @@ class AppController extends CliqrStudipController
 
     function index_action() {
 
-        $canEdit = $this->container['authority']->can('edit', 'TaskGroup');
+        $canEdit = $this->container['authority']->can('index', 'TaskGroup');
 
         $this->json = [
             'userRole' =>  $canEdit ? 'lecturer' : 'student'

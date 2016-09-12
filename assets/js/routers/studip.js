@@ -117,12 +117,13 @@ const StudipRouter = Backbone.Router.extend({
 
     },
 
-    routeHandler(fetcher, id, view, useCollection = 'model') {
+    routeHandler(fetcher, id, view, useCollection = 'model', ...rest) {
         this.showLoading()
         return fetcher(id)
             .then((response) => {
                 this.hideLoading()
-                return utils.changeToPage(new view({ [useCollection]: response }))
+                utils.activateNavigation(...rest)
+                return utils.changeToPage(new view({ [useCollection]: response }), this.selector)
             })
             .catch((error) => {
                 const status = error && error.status
@@ -135,6 +136,7 @@ const StudipRouter = Backbone.Router.extend({
     },
 
     initialize(options) {
+        this.selector = options.selector
 
         if (window.cliqr.bootstrap.taskGroups) {
 
@@ -158,17 +160,13 @@ const StudipRouter = Backbone.Router.extend({
 
     // ROUTE: ''
     redirectByAuthorization() {
-        const userRole = window.cliqr.bootstrap.userRole
 
-        switch (userRole) {
-
-        case 'student':
+        if (utils.userRole('student')) {
             this.navigate('#archive', { trigger: true, replace: true })
-            break
+        }
 
-        default:
+        else {
             this.navigate('#task-groups', { trigger: true, replace: true })
-            break
         }
     },
 
@@ -193,7 +191,7 @@ const StudipRouter = Backbone.Router.extend({
     votingCompare(v1, v2) { this.routeHandler(fetchTwoVotings, [v1, v2], VotingsCompareView, 'votings') },
 
     // ROUTE: '#archive'
-    archive() { this.routeHandler(fetchLastAssignments, null, ArchiveView, 'collection') },
+    archive() { this.routeHandler(fetchLastAssignments, null, ArchiveView, 'collection', '#nav_cliqr_archive') },
 
     // Loader stuff - TODO should not be here, AppView?
 

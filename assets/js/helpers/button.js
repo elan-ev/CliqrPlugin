@@ -1,8 +1,9 @@
 import { SafeString, escapeExpression } from 'handlebars/runtime'
 
 const button = function (klass, text, { hash } ) {
-    let { icon = false } = hash
+    let { icon = false, disabled = false } = hash
     let icon_el = ''
+    const disabledAttr = disabled ? 'disabled' : ''
 
     text = escapeExpression(text)
     klass = 'js-' + escapeExpression(klass)
@@ -14,7 +15,7 @@ const button = function (klass, text, { hash } ) {
     }
 
     return new SafeString(`
-            <button type="submit" class="button cliqr--button ${klass} ${addClasses}" name="${text}">
+            <button type="submit" class="button cliqr--button ${klass} ${addClasses}" name="${text}" ${disabledAttr}>
               ${icon_el} ${text}
             </button>`)
 }

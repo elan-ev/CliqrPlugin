@@ -14,14 +14,8 @@
         Votings:
     </h2>
 
-    <nav>
-        {{#unless_state 'is_active'}}
-            {{button "start" "Frage starten" icon="play"}}
-        {{/unless_state}}
-    </nav>
-
     <ol>
-        {{#each assignments}}
+        {{#each votings}}
             <li>
                 <a href="#voting/{{id}}">
                     <span>
@@ -33,4 +27,13 @@
             </li>
         {{/each}}
     </ol>
+
+    <nav>
+        {{#unless_state 'is_active'}}
+            {{button "start" "Frage starten" icon="play"}}
+        {{else}}
+            {{button "stop" "Frage beenden" icon="pause"}}
+        {{/unless_state}}
+
+    </nav>
 </aside>
