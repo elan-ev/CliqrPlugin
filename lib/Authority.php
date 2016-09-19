@@ -10,11 +10,8 @@ class Authority extends \Authority\Authority
 
         $this->container = $container;
 
-        $this->addAlias('manage', ['create', 'update', 'index', 'read', 'delete']);
+        $this->addAlias('manage', ['create', 'update', 'index', 'read', 'delete', 'export', 'import']);
         $this->addAlias('edit', ['create', 'update', 'delete']);
-
-        $this->addAlias('export', ['create']);
-        $this->addAlias('import', ['create']);
 
         // ***** TASK GROUP ****
 
