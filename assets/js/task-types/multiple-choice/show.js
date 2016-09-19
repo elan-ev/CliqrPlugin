@@ -16,17 +16,17 @@ const decorateTask = function (task) {
     }
 }
 
-const AuthorView = Backbone.View.extend({
+const ShowView = Backbone.View.extend({
 
     tagName: 'section',
 
-    className: 'cliqr--multiple-choice-author-view',
+    className: 'cliqr--multiple-choice-show-view',
 
     render() {
-        const template = require('./multiple-choice-author.hbs')
+        const template = require('./multiple-choice-show.hbs')
         this.$el.html(template(decorateTask(this.model)))
         return this
     }
 })
 
-export default AuthorView
+export default ShowView

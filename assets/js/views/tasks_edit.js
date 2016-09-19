@@ -1,5 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
+import { showLoading, hideLoading } from '../utils'
 
 import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
@@ -17,15 +18,13 @@ const decorateTask = function (task) {
     }
 }
 
-const TasksShowView = Backbone.View.extend({
+const TasksEditView = Backbone.View.extend({
 
     tagName: 'article',
 
-    className: 'cliqr--tasks-show',
+    className: 'cliqr--tasks-edit',
 
     events: {
-        'click .js-start': 'onClickStart',
-        'click .js-stop': 'onClickStop'
     },
 
     taskType: null,
@@ -34,6 +33,8 @@ const TasksShowView = Backbone.View.extend({
         //this.interval = setInterval( () => this.model.fetch(), 2000)
 
         this.taskType = taskTypes.getTaskType(this.model)
+
+        this.listenTo(this.taskType, 'editTask', this.onEditTask);
     },
 
     remove() {
@@ -42,14 +43,14 @@ const TasksShowView = Backbone.View.extend({
     },
 
     render() {
-        const template = require('../../hbs/tasks-show.hbs')
+        const template = require('../../hbs/tasks-edit.hbs')
         this.$el.html(template({ ...decorateTask(this.model) }))
         this.renderTaskTypeView()
         return this
     },
 
     renderTaskTypeView() {
-        const taskTypeView = this.taskType.getShowView()
+        const taskTypeView = this.taskType.getEditView()
         this.$('main').append(taskTypeView.render().$el)
     },
 
@@ -78,8 +79,25 @@ const TasksShowView = Backbone.View.extend({
                 this.render()
                 return null
             })
-    }
+    },
 
+    onEditTask(model) {
+        this.model.set(model.attributes, { silent: true })
+
+        showLoading()
+
+        this.model.save()
+            .then((response) => {
+                Backbone.history.navigate(`task/show/${this.model.id}`, { trigger: true })
+                hideLoading()
+                return null
+            })
+            .catch((error) => {
+                console.log("caught an error while editing task", this.model)
+                hideLoading()
+                return null
+            })
+    }
 })
 
-export default TasksShowView
+export default TasksEditView

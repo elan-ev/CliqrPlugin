@@ -53,6 +53,7 @@ const TaskListItemView = Backbone.View.extend({
             .then((model) => {
                 const id = model.id
                 Backbone.history.navigate(`voting/${id}`, { trigger: true })
+                return null
             })
     }
 })

@@ -64,7 +64,7 @@
   }
 
 
-  .cliqr--multiple-choice-author-view {
+  .cliqr--multiple-choice-show-view {
 
     h1 {
       font-weight: 400;
@@ -89,7 +89,8 @@
     }
   }
 
-  .cliqr--multiple-choice-create-view {
+  .cliqr--multiple-choice-create-view,
+  .cliqr--multiple-choice-edit-view {
 
     .vote-form {
 

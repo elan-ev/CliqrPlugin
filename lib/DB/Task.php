@@ -124,7 +124,7 @@ class Task extends \eAufgaben\DB\Task
         return $result;
     }
 
-    public function createInTaskGroup($range_id, $id, $data)
+    public static function createInTaskGroup($range_id, $id, $data)
     {
         if (!$taskGroup = Assignment::findTaskGroup($range_id, $id)) {
             throw new \RuntimeException('Could not find task group: '.intval($id));

@@ -37,7 +37,11 @@ const Voting = Backbone.Model.extend({
     },
 
     addResponse(newResponse) {
-        newResponse.save().then((response) => this.trigger('add:response', this, newResponse))
+        newResponse.save()
+            .then((response) => {
+                this.trigger('add:response', this, newResponse)
+                return null
+            })
     }
 })
 

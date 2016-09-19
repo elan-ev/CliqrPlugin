@@ -1,0 +1,33 @@
+<form class="vote-form" method="post" accept-char="UTF-8">
+
+    <fieldset>
+        <legend>Multiple-Choice-Frage</legend>
+        <label for="task-description">Was möchten Sie fragen?</label>
+        <div class="control-group">
+            <textarea id="task-description" name="description" required>{{task.description}}</textarea>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Antwortmöglichkeiten</legend>
+        <label class="control-label">
+            Tragen Sie die Antworten ein
+        </label>
+        <div class="control-group choices">
+            {{#each task.task.answers}}
+                <div class="choice-input">
+                    <input
+                        class="choice" maxlength="100" type="text"
+                        name="answers[{{@index}}]"
+                        value="{{text}}" required>
+                    {{fab "remove" "Entfernen" "trash"}}
+                </div>
+            {{/each}}
+            {{button "add" "Antwort hinzufügen" icon="add"}}
+        </div>
+    </fieldset>
+
+    <fieldset>
+      {{button "save" "Speichern" icon="accept"}}
+    </fieldset>
+</form>

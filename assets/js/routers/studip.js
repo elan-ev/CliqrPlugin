@@ -3,7 +3,7 @@ import _ from 'underscore'
 import Promise from 'bluebird'
 import { Schema, arrayOf, normalize, unionOf, valuesOf } from 'normalizr'
 
-import utils from '../utils'
+import { userRole, activateNavigation, showLoading, hideLoading, changeToPage } from '../utils'
 
 import Task from '../models/task'
 import TaskGroup from '../models/task_group'
@@ -16,6 +16,7 @@ import ArchiveView from '../views/archive'
 import ErrorView from '../views/error'
 import TaskGroupsIndexView from '../views/task_groups_index'
 import TaskGroupsShowView from '../views/task_groups_show'
+import TasksEditView from '../views/tasks_edit'
 import TasksShowView from '../views/tasks_show'
 import VotingsCompareView from '../views/votings_compare'
 import VotingsShowView from '../views/votings_show'
@@ -47,7 +48,7 @@ const fetchTaskGroups = function () {
 
     const taskGroups = new TaskGroupsCollection()
     return taskGroups.fetch()
-        .then((...args) => { console.log(args); return taskGroups })
+        .then((...args) => taskGroups)
 }
 
 const fetchTaskGroup = function (id) {
@@ -61,13 +62,13 @@ const fetchTaskGroup = function (id) {
 
     taskGroup = new TaskGroup({ id })
     return taskGroup.fetch()
-        .then( () => { return taskGroup })
+        .then( () => taskGroup )
 }
 
 const fetchVoting = function (id) {
     const voting = new Voting({ id })
     return voting.fetch()
-        .then( () => { return voting })
+        .then( () => voting )
 }
 
 const fetchTwoVotings = function (ids) {
@@ -86,7 +87,7 @@ const fetchTask = function (id) {
     }
 
     task = new Task({ id })
-    return task.fetch().then( () => { return task }) // TODO (mlunzena) #then should be #then
+    return task.fetch().then( () => task )
 }
 
 const fetchLastVotings = function () {
@@ -107,7 +108,8 @@ const StudipRouter = Backbone.Router.extend({
         'task-groups': 'taskGroups',
         'task-groups-:id': 'taskGroup',
 
-        'task-:id': 'task',
+        'task/show/:id': 'task',
+        'task/edit/:id': 'taskEdit',
 
         'compare/:v1/:v2': 'votingCompare',
 
@@ -118,17 +120,17 @@ const StudipRouter = Backbone.Router.extend({
     },
 
     routeHandler(fetcher, id, view, useCollection = 'model', ...rest) {
-        this.showLoading()
+        showLoading()
         return fetcher(id)
             .then((response) => {
-                this.hideLoading()
-                utils.activateNavigation(...rest)
-                return utils.changeToPage(new view({ [useCollection]: response }), this.selector)
+                hideLoading()
+                activateNavigation(...rest)
+                return changeToPage(new view({ [useCollection]: response }), this.selector)
             })
             .catch((error) => {
                 const status = error && error.status
                 if (status === 403) {
-                    this.hideLoading()
+                    hideLoading()
                     return this.navigate('', { trigger: true, replace: true })
                 }
                 throw error
@@ -161,7 +163,7 @@ const StudipRouter = Backbone.Router.extend({
     // ROUTE: ''
     redirectByAuthorization() {
 
-        if (utils.userRole('student')) {
+        if (userRole('student')) {
             this.navigate('#archive', { trigger: true, replace: true })
         }
 
@@ -181,8 +183,11 @@ const StudipRouter = Backbone.Router.extend({
     // ROUTE: '#task-groups-:id'
     taskGroup(id) { this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView) },
 
-    // ROUTE: '#task-:id'
+    // ROUTE: '#task/show/:id'
     task(id) { this.routeHandler(fetchTask, id, TasksShowView) },
+
+    // ROUTE: '#task/edit/:id'
+    taskEdit(id) { this.routeHandler(fetchTask, id, TasksEditView) },
 
     // ROUTE: '#voting/:id'
     voting(id) { this.routeHandler(fetchVoting, id, VotingsShowView) },
@@ -191,25 +196,7 @@ const StudipRouter = Backbone.Router.extend({
     votingCompare(v1, v2) { this.routeHandler(fetchTwoVotings, [v1, v2], VotingsCompareView, 'votings') },
 
     // ROUTE: '#archive'
-    archive() { this.routeHandler(fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive') },
-
-    // Loader stuff - TODO should not be here, AppView?
-
-    loader: false,
-    timeout: false,
-
-    showLoading() {
-        this.timeout = setTimeout( () => {
-            this.loader = Backbone.$('<span class="cliqr-loader"/>').html('Loading...').prependTo('#layout_content')
-        }, 200)
-    },
-
-    hideLoading() {
-        clearTimeout(this.timeout)
-        if (this.loader) {
-            this.loader.remove()
-        }
-    }
+    archive() { this.routeHandler(fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive') }
 })
 
 export default StudipRouter

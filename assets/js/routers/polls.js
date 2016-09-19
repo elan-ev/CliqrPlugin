@@ -1,6 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-import utils from '../utils'
+import { changeToPage } from '../utils'
 import Promise from 'bluebird'
 
 import { Schema, arrayOf, normalize } from 'normalizr'
@@ -11,20 +11,20 @@ import PollsIndexView from '../views/polls_index'
 
 // instantiate then remove bootstrapped
 const bootstrapPolls = function () {
-    const polls = new VotingsCollection(cliqr.bootstrap.polls || [])
-    delete(cliqr.bootstrap.polls)
+    const polls = new VotingsCollection(window.cliqr.bootstrap.polls || [])
+    delete(window.cliqr.bootstrap.polls)
     return polls
 }
 
 const fetchPolls = function () {
-    if (cliqr.bootstrap.polls) {
+    if (window.cliqr.bootstrap.polls) {
         return Promise.resolve(bootstrapPolls())
     }
 
     const polls = new VotingsCollection()
     return polls.fetch()
-        .then((...args) => { console.log(args); return polls })
-        .catch((...args) => { console.log("caught: ", args) })
+        .then((...args) => polls )
+        .catch((...args) => { console.log("caught: ", args); return args })
 }
 
 

@@ -1,8 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import utils from '../utils'
-
 const TaskGroupsIndexView = Backbone.View.extend({
 
     className: 'page',
@@ -58,8 +56,14 @@ const TaskGroupsIndexView = Backbone.View.extend({
         const id = Backbone.$(event.target).closest('tr').data('taskgroupid')
 
         this.collection.get(id).destroy()
-            .then((...args) => console.log("destroyed task group:", args))
-            .catch((e) => console.log("error on destroying task group: ", e))
+            .then((...args) => {
+                console.log("destroyed task group:", args)
+                return null
+            })
+            .catch((e) => {
+                console.log("error on destroying task group: ", e)
+                return null
+            })
     },
 
     onClickExport(event) {

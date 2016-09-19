@@ -65,7 +65,7 @@ const VotingsShowView = Viewmaster.extend({
             .then((model) => {
                 const voting_id = model.id
                 Backbone.history.navigate(`voting/${voting_id}`, { trigger: true })
-                return model;
+                return null
             })
     },
 
