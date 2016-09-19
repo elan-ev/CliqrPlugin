@@ -1,4 +1,5 @@
 <?php
+
 namespace Cliqr\DB;
 
 class Attempt extends \eAufgaben\DB\Attempt
@@ -8,6 +9,7 @@ class Attempt extends \eAufgaben\DB\Attempt
         $include = words($include);
 
         $result = $this->toArray();
+
         return $result;
     }
 }

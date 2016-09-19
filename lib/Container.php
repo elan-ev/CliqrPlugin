@@ -2,9 +2,9 @@
 
 namespace Cliqr;
 
-class Container extends \Pimple {
-
-    function __construct()
+class Container extends \Pimple
+{
+    public function __construct()
     {
         $this->setupAuthorization();
         $this->setupConfigPhp();
@@ -25,14 +25,15 @@ class Container extends \Pimple {
 
     protected function setupConfigPhp()
     {
-        $base_path = dirname(dirname(__FILE__)) . '/';
+        $base_path = dirname(dirname(__FILE__)).'/';
 
-        $this['ini'] = parse_ini_file($base_path . 'config.php', true, INI_SCANNER_RAW);
+        $this['ini'] = parse_ini_file($base_path.'config.php', true, INI_SCANNER_RAW);
 
         $this['shortener'] = $this->share(
             function ($c) use ($base_path) {
-                require_once $base_path . $c['ini']['shortener']['file'];
+                require_once $base_path.$c['ini']['shortener']['file'];
                 $class = $c['ini']['shortener']['class'];
+
                 return new $class($c);
             }
         );
@@ -44,7 +45,7 @@ class Container extends \Pimple {
         $this['pusher'] = $this->share(
             function ($c) {
 
-                # no pusher w/o config
+                // no pusher w/o config
                 if ($c['pusher_configured'] == false) {
                     return null;
                 }
@@ -56,9 +57,7 @@ class Container extends \Pimple {
                                           true,
                                           $c['ini']['pusher']['host'],
                                           $c['ini']['pusher']['api_port']);
-
-                }
-                else {
+                } else {
                     $pusher = new \Pusher($c['ini']['pusher']['key'],
                                           $c['ini']['pusher']['secret'],
                                           $c['ini']['pusher']['app_id']);
@@ -71,7 +70,9 @@ class Container extends \Pimple {
         );
 
         $this['pusher_channel'] = function ($c) {
-            return function ($range_id) { return "cliqr_" . $range_id;  };
+            return function ($range_id) {
+                return 'cliqr_'.$range_id;
+            };
         };
     }
 }

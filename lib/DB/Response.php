@@ -1,4 +1,5 @@
 <?php
+
 namespace Cliqr\DB;
 
 class Response extends \eAufgaben\DB\Response
@@ -8,6 +9,7 @@ class Response extends \eAufgaben\DB\Response
         $include = words($include);
 
         $result = $this->toArray();
+
         return $result;
     }
 }

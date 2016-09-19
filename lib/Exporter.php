@@ -1,31 +1,30 @@
 <?php
+
 namespace Cliqr;
 
 class Exporter
 {
-
     const VERSION = '1.0';
 
     public function __construct()
     {
         $this->export = [
             'version' => self::VERSION,
-            'entities' => []
+            'entities' => [],
         ];
     }
 
     public function exportTaskGroup(DB\Assignment $taskGroup)
     {
         $this->encodeTaskGroup($taskGroup);
+
         return json_encode(studip_utf8encode($this->export), JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES);
     }
 
-
     private function encodeID(\SimpleORMap $sormObject)
     {
-        return md5(get_class($sormObject) . '-' . json_encode($sormObject->id));
+        return md5(get_class($sormObject).'-'.json_encode($sormObject->id));
     }
-
 
     private function encodeTaskGroup(DB\Assignment $taskGroup)
     {
@@ -37,7 +36,7 @@ class Exporter
 
         $entry = [
             'type' => 'task_group',
-            'id' => $id
+            'id' => $id,
         ];
 
         $attributes = $taskGroup->toArray('type active options');
@@ -61,7 +60,7 @@ class Exporter
 
         $entry = [
             'type' => 'test',
-            'id' => $id
+            'id' => $id,
         ];
 
         $entry['attributes'] = $test->toArray('title description options');
@@ -69,8 +68,8 @@ class Exporter
         $this->export['entities'][$id] = &$entry;
 
         // now encode tasks
-        $entry['relationships'] = [ 'tasks' => [] ];
-        foreach($test->getTasks() as $task) {
+        $entry['relationships'] = ['tasks' => []];
+        foreach ($test->getTasks() as $task) {
             $entry['relationships']['tasks'][] = $this->encodeID($task);
             $this->encodeTask($task);
         }
@@ -86,7 +85,7 @@ class Exporter
 
         $entry = [
             'type' => 'task',
-            'id' => $id
+            'id' => $id,
         ];
 
         $entry['attributes'] = $task->toArray('type title description task options');

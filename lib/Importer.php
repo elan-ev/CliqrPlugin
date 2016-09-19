@@ -1,11 +1,9 @@
 <?php
+
 namespace Cliqr;
-
-
 
 class Importer
 {
-
     const VERSION = '1.0';
 
     public function __construct($range_type, $range_id)
@@ -38,7 +36,6 @@ class Importer
         $debug ? $dbh->rollBack() : $dbh->commit();
     }
 
-
     private function decodeEntities()
     {
         if (!isset($this->import['entities'])) {
@@ -48,7 +45,7 @@ class Importer
         $mapping = [
             'task_group' => DB\Assignment::class,
             'test' => DB\Test::class,
-            'task' => DB\Task::class
+            'task' => DB\Task::class,
         ];
 
         $now = date('c');
@@ -57,7 +54,7 @@ class Importer
             'range_id' => $this->range_id,
             'user_id' => $GLOBALS['user']->id,
             'created' => $now,
-            'changed' => $now
+            'changed' => $now,
         ];
 
         foreach ($this->import['entities'] as $id => $entity) {
@@ -69,7 +66,7 @@ class Importer
 
         foreach ($this->import['entities'] as $id => $entity) {
 
-            # var_dump("relate $id/".$this->imported[$id]->id);
+            // var_dump("relate $id/".$this->imported[$id]->id);
 
             $sormObject = $this->imported[$id];
 
@@ -78,14 +75,14 @@ class Importer
                 $test = $this->imported[$entity['relationships']['test']];
                 $sormObject->test_id = $test->id;
                 $sormObject->store();
-                #var_dump("Verknüfung von task_group " . $sormObject->id . " zu test " . $entity['relationships']['test'] . " importiert als " . json_encode($this->imported[$entity['relationships']['test']]->toArray()));
+                //var_dump("Verknüfung von task_group " . $sormObject->id . " zu test " . $entity['relationships']['test'] . " importiert als " . json_encode($this->imported[$entity['relationships']['test']]->toArray()));
                 break;
 
             case DB\Test::class:
                 foreach ($entity['relationships']['tasks'] as $task) {
                     $testTask = $sormObject->addTask($this->imported[$task]);
-                var_dump("neuer TestTask: ", json_encode(studip_utf8encode($testTask->toArray())));
-                    #var_dump("Verknüfung von test " . $sormObject->id . " zu task " . $task . " importiert als ", $this->imported[$task]->toArray());
+                    //var_dump('neuer TestTask: ', json_encode(studip_utf8encode($testTask->toArray())));
+                    //var_dump("Verknüfung von test " . $sormObject->id . " zu task " . $task . " importiert als ", $this->imported[$task]->toArray());
                 }
                 break;
             }

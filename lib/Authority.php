@@ -2,8 +2,8 @@
 
 namespace Cliqr;
 
-class Authority extends \Authority\Authority {
-
+class Authority extends \Authority\Authority
+{
     public function __construct($container, $currentUser, $dispatcher = null)
     {
         parent::__construct($currentUser, $dispatcher);
@@ -16,13 +16,11 @@ class Authority extends \Authority\Authority {
         $this->addAlias('export', ['create']);
         $this->addAlias('import', ['create']);
 
-
         // ***** TASK GROUP ****
 
         $this->allow('manage', 'TaskGroup', function ($self) {
             return $GLOBALS['perm']->have_studip_perm('tutor', $this->container['cid']);
         });
-
 
         // ***** TASK ****
 
@@ -33,11 +31,11 @@ class Authority extends \Authority\Authority {
             return $GLOBALS['perm']->have_studip_perm('tutor', $this->container['cid']);
         });
 
-
         // ***** VOTING ****
 
         $this->allow('edit', 'Voting', function ($self, $assignment) {
             $cid = $assignment ? $assignment->range_id : $this->container['cid'];
+
             return $GLOBALS['perm']->have_studip_perm('tutor', $cid);
         });
 
@@ -58,7 +56,6 @@ class Authority extends \Authority\Authority {
 
             return $isAtLeastTutor || !$assignment->isRunning();
         });
-
 
         // ***** RESPONSE ****
         $this->allow('create', 'Response', function ($self) {

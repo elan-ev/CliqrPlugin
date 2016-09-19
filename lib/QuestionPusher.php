@@ -2,29 +2,28 @@
 
 namespace Cliqr;
 
-class QuestionPusher {
-
-    function __construct($config, $cid)
+class QuestionPusher
+{
+    public function __construct($config, $cid)
     {
         $this->config = $config;
-        $this->cid    = $cid;
+        $this->cid = $cid;
     }
 
-    function observeNotifications()
+    public function observeNotifications()
     {
         \NotificationCenter::addObserver($this, 'onQuestionStarted', 'QuestionDidStart');
         \NotificationCenter::addObserver($this, 'onQuestionStopped', 'QuestionDidStop');
     }
 
-
-    function onQuestionStarted($notification, $question)
+    public function onQuestionStarted($notification, $question)
     {
         $user_data = $question->toJSON(false);
         $ok = $this->trigger('started', $user_data);
         // TODO was wenn es ein fehler ist?
     }
 
-    function onQuestionStopped($notification, $question)
+    public function onQuestionStopped($notification, $question)
     {
         $user_data = $question->getVoteID();
         $ok = $this->trigger('stopped', $user_data);
@@ -35,6 +34,7 @@ class QuestionPusher {
     {
         $channel = $this->config['pusher_channel']($this->cid);
         $pusher = $this->config['pusher'];
+
         return $pusher->trigger($channel, $event, $user_data);
     }
 }
