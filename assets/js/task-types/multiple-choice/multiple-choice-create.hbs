@@ -23,7 +23,13 @@
                     {{fab "remove" "Entfernen" "trash"}}
                 </div>
             {{/each}}
+
             {{button "add" "Antwort hinzufügen" icon="add"}}
+            {{#unless task.task.answers}}
+                <div class="choices-required">
+                    <select required oninvalid="setCustomValidity('{{i18n "Mindestens eine Antwort wird benötigt."}}')"></select>
+                </div>
+            {{/unless}}
         </div>
     </fieldset>
 

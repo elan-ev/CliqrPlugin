@@ -1,3 +1,4 @@
+import _ from 'underscore'
 import Task from '../../models/task'
 
 const MCTask = Task.extend({
@@ -7,6 +8,32 @@ const MCTask = Task.extend({
             type: 'single',
             answers: []
         }
+    },
+
+    validate({ description, task }, options) {
+        if (!description || _.isEmpty(description)) {
+            return {
+                'attribute': 'description',
+                'text': 'Die Frage kann nicht leer sein.'
+            }
+        }
+
+        if (!task) {
+            return {
+                'attribute': 'task',
+                'text': 'Task fehlt.'
+            }
+        }
+
+        const { answers = false } = task
+        if (!answers || _.isEmpty(answers)) {
+            return {
+                'attribute': 'task.answers',
+                'text': 'Es wird mindestens eine Antwort benötigt.'
+            }
+        }
+
+        return null
     },
 
     addAnswer(data = {}, options = {}) {

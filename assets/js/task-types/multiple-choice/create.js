@@ -72,7 +72,9 @@ const CreateView = Backbone.View.extend({
 
     onSubmitForm(event) {
         event.preventDefault()
-        this.taskGroup.trigger('newTask', this.model)
+        if (this.model.isValid()) {
+            this.taskGroup.trigger('newTask', this.model)
+        }
     }
 })
 
