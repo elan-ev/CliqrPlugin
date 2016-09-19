@@ -8,8 +8,8 @@ const decorateTaskListItem = function (model) {
 
     return {
         ...model.toJSON(),
-        assignments_count: votings.length,
-        last_assignment: votings.length ? votings.last().toJSON() : null,
+        votings_count: votings.length,
+        last_voting: votings.length ? votings.last().toJSON() : null,
         state: model.getCurrentState(),
         $mode: 'show'
     }

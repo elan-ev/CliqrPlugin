@@ -7,10 +7,10 @@
         {{description}}
     </a>
     <div class="cliqr--task-last-assignment">
-        {{#if last_assignment}}
+        {{#if last_voting}}
             Letztes Voting:
             {{#if_state 'is_active'}} {{icon 'play' color="black"}} {{/if_state}}
-            <a href="#voting/{{last_assignment.id}}">{{moment last_assignment.start}}</a>
+            <a href="#voting/{{last_voting.id}}">{{moment last_voting.start}}</a>
         {{else}}
             nie gestellt {{#if_state 'new'}} {{icon 'new/vote' color="black"}} {{/if_state}}
         {{/if}}

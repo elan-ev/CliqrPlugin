@@ -1,8 +1,11 @@
 <?php
-require_once 'cliqr_controller.php';
 
-use \Cliqr\DB\Assignment;
-use \Cliqr\DB\Test;
+namespace Cliqr;
+
+use Cliqr\DB\Assignment;
+use Cliqr\DB\Test;
+
+require_once 'cliqr_studip_controller.php';
 
 class TaskGroupsController extends CliqrStudipController
 {
@@ -17,7 +20,7 @@ class TaskGroupsController extends CliqrStudipController
     /* ACTIONS                                                                 */
     /***************************************************************************/
 
-    function index_action()
+    public function index_action()
     {
         if (!$this->can('index', 'TaskGroup')) {
             throw new \Trails_Exception(403);
@@ -27,7 +30,7 @@ class TaskGroupsController extends CliqrStudipController
         $this->render_json($taskGroups->toJSON());
     }
 
-    function show_action($id)
+    public function show_action($id)
     {
         $taskGroup = Assignment::findTaskGroup($this->cid, $id);
 
@@ -42,7 +45,7 @@ class TaskGroupsController extends CliqrStudipController
         $this->render_json($taskGroup->toJSON());
     }
 
-    function create_action()
+    public function create_action()
     {
         if (!$this->can('create', 'TaskGroup')) {
             throw new \Trails_Exception(403);
@@ -61,7 +64,7 @@ class TaskGroupsController extends CliqrStudipController
         $this->render_json($taskGroup->toJSON());
     }
 
-    function destroy_action($id)
+    public function destroy_action($id)
     {
         $taskGroup = Assignment::findTaskGroup($this->cid, $id);
 
@@ -76,10 +79,10 @@ class TaskGroupsController extends CliqrStudipController
         $test = $taskGroup->test;
         $test->delete();
 
-        $this->render_json([ 'status' => 'OK' ]);
+        $this->render_json(['status' => 'OK']);
     }
 
-    function export_action($id)
+    public function export_action($id)
     {
         $taskGroup = Assignment::findTaskGroup($this->cid, $id);
 
@@ -105,14 +108,14 @@ class TaskGroupsController extends CliqrStudipController
 
         $this->response->add_header('Content-Disposition', 'attachment;filename="task-group-1.json"');
         $this->response->add_header('Content-Description', 'File Transfer');
-        $this->response->add_header('Content-Transfer-Encoding' , 'binary');
+        $this->response->add_header('Content-Transfer-Encoding', 'binary');
         $this->response->add_header('Content-Type', 'application/json;charset=utf-8');
         $this->response->add_header('Content-Length', strlen($exportString));
 
         $this->render_text($exportString);
     }
 
-    function import_action()
+    public function import_action()
     {
         if (!$this->can('import', 'TaskGroup', $taskGroup)) {
             throw new \Trails_Exception(403);

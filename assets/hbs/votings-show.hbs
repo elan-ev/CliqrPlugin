@@ -32,14 +32,14 @@
     {{else}}
         {{button "restart" "Noch einmal starten"}}
 
-        {{#if otherAssignments}}
+        {{#if otherVotings}}
             <form class="default">
                 <fieldset>
                     <legend>
                         Vergleichen mit:
                     </legend>
                     <select>
-                        {{#each otherAssignments}}
+                        {{#each otherVotings}}
                             <option value="{{id}}" {{#if isRunning}}disabled{{/if}}>
                                 {{moment start}}
                                 {{#unless isRunning}}

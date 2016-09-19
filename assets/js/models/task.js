@@ -1,7 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import Assignment from './assignment'
 import Voting from './voting'
 import VotingsCollection from './votings'
 
@@ -28,7 +27,7 @@ const Task = Backbone.Model.extend({
 
     getVotings() {
         if (!this.votings) {
-            this.votings = new VotingsCollection(_.map(this.get('assignments') || [], v => new Voting(v)))
+            this.votings = new VotingsCollection(_.map(this.get('votings') || [], v => new Voting(v)))
             this.listenTo(this.votings, 'change', (...args) => this.trigger('change', ...args))
         }
         return this.votings

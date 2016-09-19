@@ -51,7 +51,7 @@ class MultipleChoice {
     }
 
     createResponse(voting) {
-        const response = new MCResponse({ assignment_id: voting.id, task_id: voting.getTask().id })
+        const response = new MCResponse({ voting_id: voting.id, task_id: voting.getTask().id })
         return response
     }
 }

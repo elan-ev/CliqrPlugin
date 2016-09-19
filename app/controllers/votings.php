@@ -1,8 +1,11 @@
 <?php
-require_once 'cliqr_controller.php';
 
-use \Cliqr\DB\Assignment;
-use \Cliqr\DB\Task;
+namespace Cliqr;
+
+use Cliqr\DB\Assignment;
+use Cliqr\DB\Task;
+
+require_once 'cliqr_studip_controller.php';
 
 class VotingsController extends CliqrStudipController
 {
@@ -12,7 +15,7 @@ class VotingsController extends CliqrStudipController
 
         $this->cid = self::requireContext();
 
-        if (in_array($action, words("create update"))) {
+        if (in_array($action, words('create update'))) {
             if (!$this->hasJSONContentType()) {
                 throw new \Trails_Exception(400, 'TODO: has to be JSON');
             }
@@ -24,7 +27,7 @@ class VotingsController extends CliqrStudipController
     /* ACTIONS                                                                 */
     /***************************************************************************/
 
-    function index_action()
+    public function index_action()
     {
         $votings = Assignment::findOldVotings('course', $this->cid);
 
@@ -35,7 +38,7 @@ class VotingsController extends CliqrStudipController
         $this->render_json($votings->toJSON());
     }
 
-    function show_action($id)
+    public function show_action($id)
     {
         $voting = Assignment::findVoting($this->cid, $id);
 
@@ -50,7 +53,7 @@ class VotingsController extends CliqrStudipController
         $this->render_json($voting->toJSON());
     }
 
-    function create_action()
+    public function create_action()
     {
         if (!$this->can('create', 'Voting')) {
             throw new \Trails_Exception(403);
@@ -73,7 +76,7 @@ class VotingsController extends CliqrStudipController
         throw new \Cliqr\RecordNotFound();
     }
 
-    function update_action($id)
+    public function update_action($id)
     {
         $voting = Assignment::findVoting($this->cid, $id);
 

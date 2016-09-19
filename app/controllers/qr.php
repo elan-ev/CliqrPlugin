@@ -1,6 +1,8 @@
-<?
+<?php
 
-require_once 'cliqr_controller.php';
+namespace Cliqr;
+
+require_once 'cliqr_studip_controller.php';
 
 class QrController extends CliqrStudipController
 {
@@ -8,14 +10,14 @@ class QrController extends CliqrStudipController
     {
         parent::before_filter($action, $args);
 
-        # URL: /cliqr/qr/:id
+        // URL: /cliqr/qr/:id
         $cid = self::ensureMD5($action);
 
-        $action = "show";
+        $action = 'show';
         $args = array($cid);
     }
 
-    function show_action($cid)
+    public function show_action($cid)
     {
         $url = $this->generateURL($cid);
         $this->renderQRCode($url);
@@ -25,6 +27,7 @@ class QrController extends CliqrStudipController
     {
         $polls_url = $this->polls_url($cid);
         $short_url = $this->plugin->config['shortener']->shorten($polls_url);
+
         return $short_url;
     }
 
@@ -42,16 +45,17 @@ class QrController extends CliqrStudipController
 
     private function createQRCode($url, $filename)
     {
-        $enc = QRencode::factory();
+        $enc = \QRencode::factory();
         $enc->size = 17;
         $enc->margin = 2;
-        # bug!
+        // bug!
         $enc->fore_color = 0x101010;
+
         return $enc->encodeSVG($url, $filename);
     }
 
     private function generateFilename($url)
     {
-        return $GLOBALS['TMP_PATH'] . '/cliqr-' . md5($url) . '.svg';
+        return $GLOBALS['TMP_PATH'].'/cliqr-'.md5($url).'.svg';
     }
 }

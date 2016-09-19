@@ -13,7 +13,7 @@ const decorateVoting = function (voting) {
         ..._.omit(voting.toJSON(), 'test'),
         task: task.toJSON(),
         isRunning: voting.isRunning(),
-        otherAssignments: _.map(_.reject(task.get('assignments'), (ass) => ass.id === voting.id), (attrs) => { return { ...attrs, isRunning: new Voting(attrs).isRunning() } })
+        otherVotings: _.map(_.reject(task.get('votings'), (v) => v.id === voting.id), (attrs) => { return { ...attrs, isRunning: new Voting(attrs).isRunning() } })
     }
 }
 

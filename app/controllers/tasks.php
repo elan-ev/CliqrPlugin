@@ -1,7 +1,10 @@
 <?php
-require_once 'cliqr_controller.php';
 
-use \Cliqr\DB\Task;
+namespace Cliqr;
+
+use Cliqr\DB\Task;
+
+require_once 'cliqr_studip_controller.php';
 
 class TasksController extends CliqrStudipController
 {
@@ -11,7 +14,7 @@ class TasksController extends CliqrStudipController
 
         $this->cid = self::requireContext();
 
-        if (in_array($action, words("create"))) {
+        if (in_array($action, words('create'))) {
             if (!$this->hasJSONContentType()) {
                 throw new \Trails_Exception(400, 'TODO: has to be JSON');
             }
@@ -23,7 +26,7 @@ class TasksController extends CliqrStudipController
     /* ACTIONS                                                                 */
     /***************************************************************************/
 
-    function show_action($id)
+    public function show_action($id)
     {
         $task = Task::find($id);
 
@@ -38,7 +41,7 @@ class TasksController extends CliqrStudipController
         $this->render_json($task->toJSON());
     }
 
-    function create_action()
+    public function create_action()
     {
         if (!$this->can('create', 'Task')) {
             throw new \Trails_Exception(403);
@@ -55,7 +58,7 @@ class TasksController extends CliqrStudipController
         $this->render_json($task->toJSON());
     }
 
-    function destroy_action($id)
+    public function destroy_action($id)
     {
         $task = Task::find($id);
 
@@ -68,8 +71,8 @@ class TasksController extends CliqrStudipController
         }
 
         // find assignments/votings containing this task only and delete them
-        $singleTasker = $task->getAssignments()->filter(function ($ass) {
-            return $ass->isVoting() &&  $ass->countTasks() == 1;
+        $singleTasker = $task->getVotings()->filter(function ($ass) {
+            return $ass->isVoting() && $ass->countTasks() == 1;
         });
         $counts = \SimpleORMapCollection::createFromArray($singleTasker->pluck('test'))
                 ->sendMessage('delete');

@@ -1,9 +1,12 @@
 <?php
-require_once 'cliqr_controller.php';
 
-use \Cliqr\DB\Assignment;
-use \Cliqr\DB\Response;
-use \Cliqr\DB\TestTask;
+namespace Cliqr;
+
+use Cliqr\DB\Assignment;
+use Cliqr\DB\Response;
+use Cliqr\DB\TestTask;
+
+require_once 'cliqr_studip_controller.php';
 
 class ResponsesController extends CliqrStudipController
 {
@@ -13,7 +16,7 @@ class ResponsesController extends CliqrStudipController
 
         $this->cid = self::requireContext();
 
-        if (in_array($action, words("create"))) {
+        if (in_array($action, words('create'))) {
             if (!$this->hasJSONContentType()) {
                 throw new \Trails_Exception(400, 'TODO: has to be JSON');
             }
@@ -25,21 +28,21 @@ class ResponsesController extends CliqrStudipController
     /* ACTIONS                                                                 */
     /***************************************************************************/
 
-    function create_action()
+    public function create_action()
     {
         if (!$this->can('create', 'Response')) {
             throw new \Trails_Exception(403);
         }
 
-        // ensure assignment_id, task_id and the response's content
-        foreach(words('assignment_id task_id response') as $key) {
+        // ensure voting_id, task_id and the response's content
+        foreach (words('voting_id task_id response') as $key) {
             if (!array_key_exists($key, $this->json)) {
                 throw new \Trails_Exception(400, 'Could not create response');
             }
         }
 
         // try to find the voting
-        if (!$assignment = Assignment::findVoting($this->cid, $this->json['assignment_id'])) {
+        if (!$assignment = Assignment::findVoting($this->cid, $this->json['voting_id'])) {
             throw new \Trails_Exception(400, 'Could not create response');
         }
 
@@ -51,13 +54,13 @@ class ResponsesController extends CliqrStudipController
         $now = date('c');
         $response = Response::create(
             [
-                'assignment_id' => $this->json['assignment_id'],
+                'assignment_id' => $this->json['voting_id'],
                 'task_id' => $this->json['task_id'],
                 'user_id' => '', // !!!
                 'response' => $this->json['response'],
                 'created' => $now,
                 'changed' => $now,
-                'options' => []
+                'options' => [],
             ]);
 
         return $this->render_json($response->toJSON());

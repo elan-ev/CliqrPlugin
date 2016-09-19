@@ -77,9 +77,9 @@ class Task extends \eAufgaben\DB\Task
         return Assignment::buildExisting($st->fetch(\PDO::FETCH_ASSOC));
     }
 
-    public function getAssignments()
+    public function getVotings()
     {
-        \Log::debug("getAssignments called for id: " . $this->id);
+        \Log::debug("getVotings called for id: " . $this->id);
         $sql = "SELECT ea . *
                 FROM eauf_tasks et
                 INNER JOIN eauf_test_tasks ett ON ett.task_id = et.id
@@ -97,7 +97,7 @@ class Task extends \eAufgaben\DB\Task
         return $ret;
     }
 
-    public function toJSON($include = 'task_group_id assignments')
+    public function toJSON($include = 'task_group_id votings')
     {
         $include = words($include);
 
@@ -109,8 +109,8 @@ class Task extends \eAufgaben\DB\Task
         }
 
         # TODO nicht sehr performant
-        if (in_array('assignments', $include)) {
-            $result['assignments'] = $this->getAssignments()->map(function ($poll) {
+        if (in_array('votings', $include)) {
+            $result['votings'] = $this->getVotings()->map(function ($poll) {
                 $ret = $poll->toArray('id test_id start end active');
                 $ret['responses_count'] = Response::countBySql('assignment_id = ?', [$poll->id]);
                 return $ret;

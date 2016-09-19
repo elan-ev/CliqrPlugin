@@ -34,10 +34,10 @@ const bootstrapTasks = function () {
     return new TasksCollection(tasks)
 }
 
-const bootstrapLastAssignments = function () {
-    const lastAssignments = new VotingsCollection(window.cliqr.bootstrap.lastAssignments || [])
-    delete(window.cliqr.bootstrap.lastAssignments)
-    return lastAssignments
+const bootstrapLastVotings = function () {
+    const lastVotings = new VotingsCollection(window.cliqr.bootstrap.lastVotings || [])
+    delete(window.cliqr.bootstrap.lastVotings)
+    return lastVotings
 }
 
 const fetchTaskGroups = function () {
@@ -89,14 +89,14 @@ const fetchTask = function (id) {
     return task.fetch().then( () => { return task }) // TODO (mlunzena) #then should be #then
 }
 
-const fetchLastAssignments = function () {
-    if (window.cliqr.bootstrap.lastAssignments) {
-        return Promise.resolve(bootstrapLastAssignments())
+const fetchLastVotings = function () {
+    if (window.cliqr.bootstrap.lastVotings) {
+        return Promise.resolve(bootstrapLastVotings())
     }
 
-    const lastAssignments = new VotingsCollection()
-    return lastAssignments.fetch()
-        .then((...args) => lastAssignments)
+    const lastVotings = new VotingsCollection()
+    return lastVotings.fetch()
+        .then((...args) => lastVotings)
 }
 
 const StudipRouter = Backbone.Router.extend({
@@ -143,9 +143,9 @@ const StudipRouter = Backbone.Router.extend({
             const taskGroupSchema = new Schema('task_group')
             const testSchema = new Schema('test')
             const taskSchema = new Schema('task')
-            const assignmentSchema = new Schema('assignment')
+            const votingSchema = new Schema('voting')
             taskSchema.define({
-                assignments: arrayOf(assignmentSchema)
+                votings: arrayOf(votingSchema)
             })
             testSchema.define({
                 tasks: arrayOf(taskSchema)
@@ -191,7 +191,7 @@ const StudipRouter = Backbone.Router.extend({
     votingCompare(v1, v2) { this.routeHandler(fetchTwoVotings, [v1, v2], VotingsCompareView, 'votings') },
 
     // ROUTE: '#archive'
-    archive() { this.routeHandler(fetchLastAssignments, null, ArchiveView, 'collection', '#nav_cliqr_archive') },
+    archive() { this.routeHandler(fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive') },
 
     // Loader stuff - TODO should not be here, AppView?
 

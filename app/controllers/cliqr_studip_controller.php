@@ -1,9 +1,10 @@
-<?
-require_once 'cliqr_controller.php';
+<?php
 
-class CliqrStudipController extends StudipController
+namespace Cliqr;
+
+abstract class CliqrStudipController extends \StudipController
 {
-    function before_filter(&$action, &$args)
+    public function before_filter(&$action, &$args)
     {
         $this->plugin = $this->dispatcher->plugin;
         $this->container = $this->dispatcher->container;
@@ -16,24 +17,23 @@ class CliqrStudipController extends StudipController
 
     protected function polls_url($cid)
     {
-
         $abs_base = $GLOBALS['ABSOLUTE_URI_STUDIP'];
 
-        # Fallback to HTTP for uos
-        # TODO remove me ASAP
+        // Fallback to HTTP for uos
+        // TODO remove me ASAP
         if (0 === strncasecmp($abs_base, 'https', 5)) {
-            if (stripos($abs_base, 'uos.de') !== FALSE || stripos($abs_base, 'uni-osnabrueck.de') !== FALSE) {
-                $abs_base = 'http' . substr($abs_base, 5);
+            if (stripos($abs_base, 'uos.de') !== false || stripos($abs_base, 'uni-osnabrueck.de') !== false) {
+                $abs_base = 'http'.substr($abs_base, 5);
             }
         }
 
-        # force an absolute URL
-        URLHelper::setBaseUrl($abs_base);
+        // force an absolute URL
+        \URLHelper::setBaseUrl($abs_base);
 
         $url = current(explode('?', $this->url_for('polls', $cid)));
 
-        # reset to the default set in plugins.php
-        URLHelper::setBaseUrl($GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP']);
+        // reset to the default set in plugins.php
+        \URLHelper::setBaseUrl($GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP']);
 
         return $url;
     }
@@ -42,17 +42,17 @@ class CliqrStudipController extends StudipController
     {
         $args = func_get_args();
 
-        # find params
+        // find params
         $params = array();
         if (is_array(end($args))) {
             $params = array_pop($args);
         }
 
-        # urlencode all but the first argument
+        // urlencode all but the first argument
         $args = array_map('urlencode', $args);
         $args[0] = $to;
 
-        return PluginEngine::getURL($this->dispatcher->plugin, $params, join('/', $args));
+        return \PluginEngine::getURL($this->dispatcher->plugin, $params, implode('/', $args));
     }
 
     public function render_json($data)
@@ -61,9 +61,9 @@ class CliqrStudipController extends StudipController
         $this->render_text(json_encode(studip_utf8encode($data)));
     }
 
-
     /**
      * Return the Content-Type of the HTTP request.
+     *
      * @return string the content type
      */
     private function contentType()
@@ -71,13 +71,14 @@ class CliqrStudipController extends StudipController
         if (preg_match('/^([^,\;]*)/', @$_SERVER['CONTENT_TYPE'], $matches)) {
             return strtolower(trim($matches[1]));
         }
+
         return null;
     }
 
-
     /**
      * Determine whether this Request has a Content-type of
-     * application/json
+     * application/json.
+     *
      * @return bool true if it has, otherwise false
      */
     protected function hasJSONContentType()
@@ -85,17 +86,17 @@ class CliqrStudipController extends StudipController
         return $this->contentType() === 'application/json';
     }
 
-
     /**
      * Decode the request body using json_decode and utf8decode.
-     * @return mixed the decoded request body.
+     *
+     * @return mixed the decoded request body
      */
     protected function parseJSONBody()
     {
         $body = file_get_contents('php://input');
+
         return self::utf8decode(json_decode($body, true));
     }
-
 
     /**
      * Exception handler called when the performance of an action raises an
@@ -103,11 +104,11 @@ class CliqrStudipController extends StudipController
      *
      * @param  object     the thrown exception
      */
-    function rescue($exception)
+    public function rescue($exception)
     {
         if ($exception instanceof \Cliqr\RecordNotFound) {
             return $this->dispatcher->trails_error(
-                new Trails_Exception(404, 'Record not found'));
+                new \Trails_Exception(404, 'Record not found'));
         } else {
             throw $exception;
         }
@@ -116,20 +117,21 @@ class CliqrStudipController extends StudipController
     protected static function ensureMD5($id)
     {
         if (!preg_match('/^[0-9a-f]{32}$/', $id)) {
-            throw new Trails_Exception(400);
+            throw new \Trails_Exception(400);
         }
+
         return $id;
     }
 
-
     /**
      * Encodes a string or array from UTF-8 to Stud.IP encoding
-     * (WINDOWS-1252/ISO-8859-1 with numeric HTML-ENTITIES)
+     * (WINDOWS-1252/ISO-8859-1 with numeric HTML-ENTITIES).
      *
      * @stolenfrom Stud.IP v2.4
      *
      * @param mixed $data a string in UTF-8 or an array with all strings encoded in utf-8
-     * @return string  the string in WINDOWS-1252/HTML-ENTITIES
+     *
+     * @return string the string in WINDOWS-1252/HTML-ENTITIES
      */
     public static function utf8decode($data)
     {
@@ -139,9 +141,10 @@ class CliqrStudipController extends StudipController
                 $key = studip_utf8decode($key);
                 $new_data[$key] = $value = self::utf8decode($value);
             }
+
             return $new_data;
         } elseif (is_string($data)) {
-            if(!preg_match('/[\200-\377]/', $data)){
+            if (!preg_match('/[\200-\377]/', $data)) {
                 return $data;
             } else {
                 $windows1252 = array(
@@ -176,7 +179,8 @@ class CliqrStudipController extends StudipController
                     "\x9C" => '&#339;',
                     "\x9D" => '&#65533;',
                     "\x9E" => '&#382;',
-                    "\x9F" => '&#376;');
+                    "\x9F" => '&#376;', );
+
                 return str_replace(
                     array_values($windows1252),
                     array_keys($windows1252),
@@ -192,17 +196,18 @@ class CliqrStudipController extends StudipController
         }
     }
 
-    # require a cid; throw a 400 otherwise
+    // require a cid; throw a 400 otherwise
     protected static function requireContext()
     {
-        $cid = self::ensureMD5(\Request::option("cid"));
+        $cid = self::ensureMD5(\Request::option('cid'));
+
         return $cid;
     }
 
-    # require ´tutor´ permission; throw a 403 otherwise
+    // require ´tutor´ permission; throw a 403 otherwise
     protected static function requireAuthorisation($cid)
     {
-        if (!$GLOBALS['perm']->have_studip_perm("tutor", $cid)) {
+        if (!$GLOBALS['perm']->have_studip_perm('tutor', $cid)) {
             throw new \Trails_Exception(403);
         }
     }
@@ -210,5 +215,15 @@ class CliqrStudipController extends StudipController
     protected function can($action, $resource, $resourceValue = null)
     {
         return $this->container['authority']->can($action, $resource, $resourceValue);
+    }
+
+    // ignore namespace of controllers
+    public function get_default_template($action)
+    {
+        $class = array_pop(explode('\\', get_class($this)));
+        $controller_name =
+            \Trails_Inflector::underscore(substr($class, 0, -10));
+
+        return $controller_name.'/'.$action;
     }
 }
