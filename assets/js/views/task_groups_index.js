@@ -1,17 +1,25 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
+import { showConfirmDialog } from '../dialog'
+
 const TaskGroupsIndexView = Backbone.View.extend({
 
-    className: 'page',
-    id: 'task-groups-index',
+    className: 'cliqr--task-groups-index',
+
     $mode: 'button',
 
     events: {
+        'click .js-cancel': 'onClickCancel',
+
         'click .js-add-task-group': 'onClickAddTaskGroup',
-        'submit form.cliqr--add-task-group-form': 'onSubmitForm',
+        'click .js-import-task-group': 'onClickImportTaskGroup',
+
         'click .js-export': 'onClickExport',
-        'click .js-remove': 'onClickRemove'
+        'click .js-duplicate': 'onClickDuplicate',
+
+
+        'submit form.cliqr--add-task-group-form': 'onSubmitForm'
     },
 
     initialize(options) {
@@ -37,8 +45,19 @@ const TaskGroupsIndexView = Backbone.View.extend({
 
     onClickAddTaskGroup(event) {
         event.preventDefault()
+        this.$mode = 'add'
+        this.render()
+    },
 
-        this.$mode = 'form'
+    onClickImportTaskGroup(event) {
+        event.preventDefault()
+        this.$mode = 'import'
+        this.render()
+    },
+
+    onClickCancel(event) {
+        event.preventDefault()
+        this.$mode = 'button'
         this.render()
     },
 
@@ -46,24 +65,29 @@ const TaskGroupsIndexView = Backbone.View.extend({
         event.preventDefault()
         const $formData = Backbone.$(event.target.closest('form')).serializeArray(),
               formData = _.reduce($formData, (memo, item) => _.tap(memo, (memo) => memo[item.name] = item.value), {})
-
+        console.log("onSubmitForm", formData)
         const newTaskGroup = this.collection.create(formData)
     },
 
     onClickRemove(event) {
         event.preventDefault()
 
-        const id = Backbone.$(event.target).closest('tr').data('taskgroupid')
+        const id = Backbone.$(event.target).closest('tr').data('taskgroupid'),
+              taskGroup = this.collection.get(id)
 
-        this.collection.get(id).destroy()
-            .then((...args) => {
-                console.log("destroyed task group:", args)
-                return null
-            })
-            .catch((e) => {
-                console.log("error on destroying task group: ", e)
-                return null
-            })
+        showConfirmDialog(
+            `Wollen Sie die Fragensammlung "${taskGroup.get('title')}" wirklich löschen?`,
+            () => {
+                taskGroup.destroy()
+                    .catch((e) => {
+                        console.log("error on destroying task group: ", e)
+                        return null
+                    })
+            }
+        )
+    },
+
+    onClickDuplicate(event) {
     },
 
     onClickExport(event) {
@@ -71,7 +95,6 @@ const TaskGroupsIndexView = Backbone.View.extend({
 
         const id = Backbone.$(event.target).closest('tr').data('taskgroupid'),
               taskGroup = this.collection.get(id)
-        console.log(`exporting task group ${id}`, taskGroup)
         const wndHandle = window.open(taskGroup.exportURL())
     }
 })

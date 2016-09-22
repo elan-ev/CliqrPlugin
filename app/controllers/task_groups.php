@@ -117,7 +117,7 @@ class TaskGroupsController extends CliqrStudipController
 
     public function import_action()
     {
-        if (!$this->can('import', 'TaskGroup', $taskGroup)) {
+        if (!$this->can('import', 'TaskGroup')) {
             throw new \Trails_Exception(403);
         }
 

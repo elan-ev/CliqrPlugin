@@ -1,12 +1,27 @@
-<header>
-  <h1>Fragensammlung: {{test.title}}</h1>
-  <p>Letzte Änderung: {{moment test.changed}}</p>
-  <p>
-    <a href="#task-groups">
-      zurück zu allen Fragensammlungen
-    </a>
-  </p>
+<header class="cliqr--page-header">
+    <nav class="cliqr--breadcrumb">
+        <ol>
+            <li>
+                <a href="#task-groups">
+                    Cliqr > Fragensammlungen
+                </a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>Fragensammlung: {{test.title}}</h1>
+
+    <nav class="cliqr--actions">
+        <ol>
+            <li>
+                <a href="#task-group/edit/{{id}}">
+                    {{icon "edit" text="Fragensammlung bearbeiten"}}
+                </a>
+            </li>
+        </ol>
+    </nav>
 </header>
+
 
 <section class="task-list-container"></section>
 <section class="task-create-container"></section>
