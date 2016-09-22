@@ -17,6 +17,7 @@ const TaskGroupsIndexView = Backbone.View.extend({
 
         'click .js-export': 'onClickExport',
         'click .js-duplicate': 'onClickDuplicate',
+        'click .js-remove': 'onClickRemove',
 
 
         'submit form.cliqr--add-task-group-form': 'onSubmitForm'
@@ -88,6 +89,17 @@ const TaskGroupsIndexView = Backbone.View.extend({
     },
 
     onClickDuplicate(event) {
+        event.preventDefault()
+
+        const id = Backbone.$(event.target).closest('tr').data('taskgroupid'),
+              taskGroup =
+
+        this.collection.get(id).duplicate()
+            .then((taskGroup) => {
+                // this.collection.once('add', () => this.$el.nextAll().last()[0].scrollIntoView())
+                this.collection.add(taskGroup)
+                return null
+            })
     },
 
     onClickExport(event) {

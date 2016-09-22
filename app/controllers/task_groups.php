@@ -138,4 +138,21 @@ class TaskGroupsController extends CliqrStudipController
 
         $this->render_json(['status' => 'OK']);
     }
+
+    public function duplicate_action($id)
+    {
+        $taskGroup = Assignment::findTaskGroup($this->cid, $id);
+
+        if (!$this->can('create', 'TaskGroup', $taskGroup)) {
+            throw new \Trails_Exception(403);
+        }
+
+        if (!$taskGroup) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        $duplicate = $taskGroup->duplicateTaskGroup();
+
+        $this->redirect('task_groups/show/'.$duplicate->id);
+    }
 }

@@ -72,7 +72,6 @@ const TaskListItemView = Backbone.View.extend({
 
     onClickDuplicate(event) {
         event.preventDefault()
-        this.listenTo(this.model.collection, 'all', console.log.bind(console, "duplicating"))
         this.model.duplicate()
             .then((task) => {
                 this.model.collection.once('add', () => this.$el.nextAll().last()[0].scrollIntoView())

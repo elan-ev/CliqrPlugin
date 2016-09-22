@@ -117,7 +117,7 @@ class Assignment extends eAssignment
         $test->title = $data['title'] ?: 'Cliqr-Fragen';
         $test->created = $now;
         $test->changed = $now;
-        $test->user_id = $GLOBALS['user']->id;
+        $test->user_id = $data['user_id'] ?: $GLOBALS['user']->id;
         $test->options = ['task_group' => 1];
         $test->store();
 
@@ -171,5 +171,20 @@ class Assignment extends eAssignment
         $end = $this->end ? new \DateTime($this->end) : PHP_MAX_INT;
 
         return $start <= $now && $now <= $end;
+    }
+
+    /**
+     * Duplicate a task group
+     *
+     * @return  the duplicated task group instance
+     */
+    public function duplicateTaskGroup()
+    {
+        $data = $this->test->toArray('title user_id');
+        $copyTxt = 'Kopie von ';
+        if (strncmp($data['title'], $copyTxt, strlen($copyTxt)) != 0) {
+            $data['title'] = $copyTxt . $data['title'];
+        }
+        return self::createTaskGroup($this->range_type, $this->range_id, $data);
     }
 }
