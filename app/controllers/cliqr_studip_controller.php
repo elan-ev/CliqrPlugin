@@ -217,6 +217,11 @@ abstract class CliqrStudipController extends \StudipController
         return $this->container['authority']->can($action, $resource, $resourceValue);
     }
 
+    protected function cannot($action, $resource, $resourceValue = null)
+    {
+        return $this->container['authority']->cannot($action, $resource, $resourceValue);
+    }
+
     // ignore namespace of controllers
     public function get_default_template($action)
     {
