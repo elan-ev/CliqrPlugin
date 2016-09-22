@@ -4,18 +4,21 @@ import _ from 'underscore'
 import Voting from './voting'
 import VotingsCollection from './votings'
 
-const actionMap = {
-    create: 'create',
-    update: 'update',
-    delete: 'destroy',
-    read: 'show'
+const actionMap = function (action) {
+    const map = {
+        create: 'create',
+        update: 'update',
+        delete: 'destroy',
+        read: 'show'
+    }
+    return map[action] || action
 }
 
 const Task = Backbone.Model.extend({
 
     sync(method, model, options) {
         _.extend(options, {
-            url: typeof model.url === 'function' ? model.url(actionMap[method]) : void 0
+            url: typeof model.url === 'function' ? model.url(actionMap(method)) : void 0
         });
         return Backbone.sync(method, model, options)
     },
@@ -46,6 +49,11 @@ const Task = Backbone.Model.extend({
 
         const did_run = votings.any(a => a.isRunning())
         return did_run ? this.STATE_IS_ACTIVE : this.STATE_WAS_ACTIVE
+    },
+
+    duplicate() {
+        const options = {}
+        return this.sync('duplicate', this, options).then((attrs) => new Task(attrs))
     }
 })
 

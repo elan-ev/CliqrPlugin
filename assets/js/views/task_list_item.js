@@ -1,5 +1,5 @@
 import Backbone from 'backbone'
-
+import { showConfirmDialog } from '../dialog'
 import Voting from '../models/voting'
 
 const decorateTaskListItem = function (model) {
@@ -23,6 +23,7 @@ const TaskListItemView = Backbone.View.extend({
 
     events: {
         'click .js-start': 'onClickStart',
+        'click .js-duplicate': 'onClickDuplicate',
         'click .js-remove': 'onClickRemove'
     },
 
@@ -42,8 +43,20 @@ const TaskListItemView = Backbone.View.extend({
 
     onClickRemove(event) {
         event.preventDefault()
-        this.model.destroy()
-        this.remove()
+        showConfirmDialog(
+            `Wollen Sie diese Frage wirklich löschen?`,
+            () => {
+                this.model.destroy()
+                    .then((...args) => {
+                        this.remove()
+                        return null
+                    })
+                    .catch((e) => {
+                        console.log("error on destroying task group: ", e)
+                        return null
+                    })
+            }
+        )
     },
 
     onClickStart(event) {
@@ -53,6 +66,17 @@ const TaskListItemView = Backbone.View.extend({
             .then((model) => {
                 const id = model.id
                 Backbone.history.navigate(`voting/${id}`, { trigger: true })
+                return null
+            })
+    },
+
+    onClickDuplicate(event) {
+        event.preventDefault()
+        this.listenTo(this.model.collection, 'all', console.log.bind(console, "duplicating"))
+        this.model.duplicate()
+            .then((task) => {
+                this.model.collection.once('add', () => this.$el.nextAll().last()[0].scrollIntoView())
+                this.model.collection.add(task)
                 return null
             })
     }

@@ -115,4 +115,22 @@ class TasksController extends CliqrStudipController
 
         $this->render_json(['status' => 'ok']);
     }
+
+    // make a copy of a task in the same task group and redirect to that copy
+    public function duplicate_action($id)
+    {
+        $task = Task::find($id);
+
+        if ($this->cannot('create', 'Task', $task)) {
+            throw new \Trails_Exception(403);
+        }
+
+        if (!$task) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        $duplicate = $task->duplicateInTaskGroup();
+
+        $this->redirect('tasks/show/'.$duplicate->id);
+    }
 }

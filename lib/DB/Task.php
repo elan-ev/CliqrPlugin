@@ -61,7 +61,6 @@ class Task extends \eAufgaben\DB\Task
 
     public function getTaskGroup()
     {
-        \Log::debug('getTaskGroup called for id: '.$this->id);
         $sql = 'SELECT ea . *
                 FROM eauf_tasks et
                 INNER JOIN eauf_test_tasks ett ON ett.task_id = et.id
@@ -79,9 +78,20 @@ class Task extends \eAufgaben\DB\Task
         return Assignment::buildExisting($st->fetch(\PDO::FETCH_ASSOC));
     }
 
+    /**
+     * Duplicate a task in its task group
+     *
+     * @return  the duplicated task instance
+     */
+    public function duplicateInTaskGroup()
+    {
+        $data = $this->toArray('type title description task user_id');
+        $taskGroup = $this->getTaskGroup();
+        return $this->createInTaskGroup($taskGroup->range_id, $taskGroup->id, $data);
+    }
+
     public function getVotings()
     {
-        \Log::debug('getVotings called for id: '.$this->id);
         $sql = 'SELECT ea . *
                 FROM eauf_tasks et
                 INNER JOIN eauf_test_tasks ett ON ett.task_id = et.id
@@ -124,10 +134,10 @@ class Task extends \eAufgaben\DB\Task
         return $result;
     }
 
-    public static function createInTaskGroup($range_id, $id, $data)
+    public function createInTaskGroup($range_id, $task_group_id, $data)
     {
-        if (!$taskGroup = Assignment::findTaskGroup($range_id, $id)) {
-            throw new \RuntimeException('Could not find task group: '.intval($id));
+        if (!$taskGroup = Assignment::findTaskGroup($range_id, $task_group_id)) {
+            throw new \RuntimeException('Could not find task group: '.intval($task_group_id));
         }
 
         $now = date('c', time());
@@ -135,7 +145,7 @@ class Task extends \eAufgaben\DB\Task
         if (!$task = self::create(
                 [
                     'type' => $data['type'],
-                    'title' => '',
+                    'title' => $data['title'] ?: '',
                     'description' => $data['description'],
                     'task' => $data['task'],
                     'created' => $now,
