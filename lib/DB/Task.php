@@ -119,6 +119,7 @@ class Task extends \eAufgaben\DB\Task
         // TODO nicht sehr performant
         if (in_array('task_group_id', $include)) {
             $result['task_group_id'] = $this->getTaskGroup()->id;
+            $result['task_group_title'] = $this->getTaskGroup()->test->title;
         }
 
         // TODO nicht sehr performant

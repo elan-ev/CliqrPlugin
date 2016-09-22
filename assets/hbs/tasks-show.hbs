@@ -1,45 +1,59 @@
-<nav>
-    <ol>
-        <li>
-            <a href="#task-groups-{{task_group_id}}">
-                zurück zur Fragensammlung
-            </a>
-        </li>
-        <li>
-            <a href="#task/edit/{{id}}">
-                Frage bearbeiten
-            </a>
-        </li>
-    </ol>
-</nav>
+<header class="cliqr--page-header">
+    <nav class="cliqr--breadcrumb">
+        <ol>
+            <li>
+                <a href="#task-groups">
+                    Cliqr > Fragensammlungen
+                </a>
+            </li>
+            <li>
+                <a href="#task-groups-{{task_group_id}}">
+                    Fragensammlung &laquo;{{task_group_title}}&raquo;
+                </a>
+            </li>
+        </ol>
+    </nav>
+</header>
 
 <main></main>
 
 <aside class="votings">
-    <h2>
-        Votings:
-    </h2>
 
-    <ol>
-        {{#each votings}}
-            <li>
-                <a href="#voting/{{id}}">
-                    <span>
-                        {{#if running}} {{icon 'play'}} {{else}} {{icon 'new/vote'}} {{/if}}
-                    </span>
-                    am {{moment start}}
-                    <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
-                </a>
-            </li>
-        {{/each}}
-    </ol>
+  TODO erst überprüfen ob man kann
+  <a href="#task/edit/{{id}}">
+  Frage bearbeiten
+  </a>
+  {{button "edit-task" "Frage bearbeiten" icon="edit"}}
 
-    <nav>
-        {{#unless_state 'is_active'}}
-            {{button "start" "Frage starten" icon="play"}}
-        {{else}}
-            {{button "stop" "Frage beenden" icon="pause"}}
-        {{/unless_state}}
+    {{#unless votings}}
+        {{button "start" "Frage starten" icon="play"}}
+    {{/unless}}
 
-    </nav>
+    {{#if votings}}
+        <h2>
+            Votings:
+        </h2>
+
+        <ol>
+            {{#each votings}}
+                <li>
+                    <a href="#voting/{{id}}">
+                        <span>
+                            {{#if running}} {{icon 'play'}} {{else}} {{icon 'new/vote'}} {{/if}}
+                        </span>
+                        am {{moment start}}
+                        <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
+                    </a>
+                </li>
+            {{/each}}
+        </ol>
+
+        <nav>
+            {{#unless_state 'is_active'}}
+                {{button "start" "Frage starten" icon="play"}}
+            {{else}}
+                {{button "stop" "Frage beenden" icon="pause"}}
+            {{/unless_state}}
+        </nav>
+    {{/if}}
 </aside>
