@@ -70,6 +70,11 @@ class TasksController extends CliqrStudipController
             throw new Cliqr\RecordNotFound();
         }
 
+        // tasks cannot be updated as soon as they have responses
+        if (count($task->responses)) {
+            throw new \Trails_Exception(409, 'Cannot update task already used.');
+        }
+
         foreach (words('title description task') as $key) {
             if (array_key_exists($key, $this->json)) {
                 $task->setValue($key, $this->json[$key]);
