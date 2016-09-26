@@ -76,7 +76,7 @@ const TasksShowView = Backbone.View.extend({
         event.preventDefault()
 
         const running = this.model.getVotings().find(a => a.isRunning())
-        running.save({ end: new Date().toISOString() })
+        running.stop()
             .then((r) => {
                 console.log("saved")
                 this.render()

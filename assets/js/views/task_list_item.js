@@ -23,6 +23,7 @@ const TaskListItemView = Backbone.View.extend({
 
     events: {
         'click .js-start': 'onClickStart',
+        'click .js-stop': 'onClickStop',
         'click .js-duplicate': 'onClickDuplicate',
         'click .js-remove': 'onClickRemove'
     },
@@ -66,6 +67,17 @@ const TaskListItemView = Backbone.View.extend({
             .then((model) => {
                 const id = model.id
                 Backbone.history.navigate(`voting/${id}`, { trigger: true })
+                return null
+            })
+    },
+
+    onClickStop(event){
+        event.preventDefault()
+
+        const running = this.model.getVotings().find(a => a.isRunning())
+        running.stop()
+            .then((r) => {
+                // nothing to do
                 return null
             })
     },

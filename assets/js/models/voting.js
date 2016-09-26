@@ -42,6 +42,10 @@ const Voting = Backbone.Model.extend({
                 this.trigger('add:response', this, newResponse)
                 return null
             })
+    },
+
+    stop() {
+        return this.save({ end: new Date().toISOString() })
     }
 })
 
