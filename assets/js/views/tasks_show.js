@@ -5,10 +5,12 @@ import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
 
 const decorateTask = function (task) {
+    const votings = task.getVotings()
     return {
         ...task.toJSON(),
         state: task.getCurrentState(),
-        votings: task.getVotings().map(function (v) {
+        editable: !votings.any((v) => v.get('responses_count')),
+        votings: votings.map(function (v) {
             return {
                 ...v.toJSON(),
                 running: v.isRunning()

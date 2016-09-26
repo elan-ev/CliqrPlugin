@@ -25,7 +25,7 @@ const TaskListView = Viewmaster.extend({
     },
 
     appendItem(model) {
-        this.appendView('.cliqr--task-list', new TaskListItemView({ model }))
+        this.appendView('.cliqr--task-list tbody', new TaskListItemView({ model }))
     },
 
     onTaskAdded(model) {

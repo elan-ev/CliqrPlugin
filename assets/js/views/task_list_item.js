@@ -17,7 +17,7 @@ const decorateTaskListItem = function (model) {
 
 const TaskListItemView = Backbone.View.extend({
 
-    tagName: 'li',
+    tagName: 'tr',
 
     className: 'cliqr--task-list-item',
 

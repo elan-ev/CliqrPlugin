@@ -1,17 +1,18 @@
 import { SafeString, escapeExpression } from 'handlebars/runtime'
 
 const button = function (klass, text, { hash } ) {
-    let { icon = false, disabled = false } = hash
+    let { icon = false, disabled = false, color = "blue" } = hash
     let icon_el = ''
     const disabledAttr = disabled ? 'disabled' : ''
 
     text = escapeExpression(text)
+    color = escapeExpression(color)
     klass = 'js-' + escapeExpression(klass)
 
     const addClasses = escapeExpression(hash['class']) || ''
 
     if (icon) {
-        icon_el = `<img src="${[STUDIP.ASSETS_URL, 'images/icons/blue/', escapeExpression(icon), '.svg'].join('')}" alt="${text}">`
+        icon_el = `<img src="${[window.STUDIP.ASSETS_URL, 'images/icons/', color, '/', escapeExpression(icon), '.svg'].join('')}" alt="${text}">`
     }
 
     return new SafeString(`

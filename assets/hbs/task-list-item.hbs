@@ -1,27 +1,27 @@
-<div class="cliqr--task-checkbox">
+<td class="cliqr--task-checkbox">
     <input type="checkbox" name="task[]" value="{{id}}">
-</div>
+</td>
 
-<div class="cliqr--task-header">
+<td class="cliqr--task-header">
     <a href="#task/show/{{id}}">
         {{description}}
     </a>
     <div class="cliqr--task-last-assignment">
         {{#if last_voting}}
-            Letztes Voting:
+            zuletzt abgestimmt:
             {{#if_state 'is_active'}} {{icon 'play' color="black"}} {{/if_state}}
             <a href="#voting/{{last_voting.id}}">{{moment last_voting.start}}</a>
         {{else}}
-            nie gestellt {{#if_state 'new'}} {{icon 'new/vote' color="black"}} {{/if_state}}
+            nie abgestimmt
         {{/if}}
     </div>
-</div>
+</td>
 
-<div class="cliqr--task-changed">
+<td class="cliqr--task-changed">
     {{moment changed}}
-</div>
+</td>
 
-<div class="cliqr--task-actions">
+<td class="cliqr--task-actions">
     {{#if_state 'is_active'}}
         {{fab "stop" "Stoppen" "pause"}}
         {{^}}
@@ -29,4 +29,4 @@
     {{/if_state}}
     {{fab "duplicate" "Duplizieren" "add/files"}}
     {{fab "remove" "Löschen" "trash"}}
-</div>
+</td>

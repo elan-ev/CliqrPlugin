@@ -1,7 +1,17 @@
-<ol class="cliqr--task-list">
-    {{#unless tasks}}
-        <li class="task-list-empty">
-            <p>Es sind keine Fragen vorhanden.</p>
-        </li>
-    {{/unless}}
-</ol>
+<table class="cliqr--task-list task-group default">
+    <thead>
+        <tr>
+            <th></th>
+            <th> Titel </th>
+            <th> letzte Änderung </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#unless tasks}}
+            <table colspan="4" class="task-list-empty">
+                <p>Es sind keine Fragen vorhanden.</p>
+            </li>
+        {{/unless}}
+    </tbody>
+</table>
