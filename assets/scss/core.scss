@@ -143,7 +143,7 @@ $headingsFontWeight:    bold;
     white-space: nowrap;
 
     ol {
-      list-decoration: none;
+      list-style: none;
       padding: 0 0 1em 0;
     }
 
@@ -176,7 +176,7 @@ $headingsFontWeight:    bold;
       right: 0;
 
       ol {
-        list-decoration: none;
+        list-style: none;
         padding: 0 0 1em 0;
       }
 
@@ -271,47 +271,18 @@ $headingsFontWeight:    bold;
 /*
 // * Task Lists */
   .cliqr--task-list {
-    width: 100%;
-    padding: 0;
-    list-decoration: none;
-
-    .cliqr--task-list-item {
-      border-color: $color-accent;
-      border-top: 1px solid;
-      padding-top: 0.5em;
-      padding-bottom: 1em;
-
-      lost-flex-container: row;
-
-      > div {
-        box-sizing: border-box;
-      }
-
-      &:last-child {
-        border-bottom: 1px solid;
-      }
-    }
-
-    .cliqr--task-checkbox {
-      lost-column: 1/24 0;
-      align-self: center;
-    }
 
     .cliqr--task-header {
-      lost-column: 15/24 1em 0;
-
       > a {
         line-height: 2.5em;
         display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         font-weight: 800;
       }
 
       .cliqr--task-last-assignment {
         line-height: 2.5em;
         margin-left: 1em;
+        margin-top: -0.8em;
         font-style: italic;
         font-size: 0.8em;
 
@@ -322,27 +293,12 @@ $headingsFontWeight:    bold;
     }
 
     .cliqr--task-changed {
-      lost-column: 3/24 1em 0;
-      align-self: center;
-
       color: color(#000000 whiteness(50%));
       font-size: 0.8em;
-
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .cliqr--task-actions {
-      lost-column: 3/24 0 0;
-      align-self: center;
-
       white-space: nowrap;
-    }
-
-    input {
-      vertical-align: middle;
-      margin: 8px 8px 8px 0;
     }
   }
 
@@ -459,8 +415,22 @@ $headingsFontWeight:    bold;
     > aside {
       lost-column: 3/12 0;
 
-      ol {
+      ol.cliqr--votings-list {
         padding: 0;
+        list-style: none;
+
+        a {
+          display: block;
+          line-height: 2.5em;
+        }
+
+        img {
+          margin-right: 0.5em;
+        }
+
+        .bubble {
+          margin-left: 0.75em;
+        }
       }
     }
   }
@@ -475,7 +445,7 @@ $headingsFontWeight:    bold;
 
     > ol {
 
-      list-decoration: none;
+      list-style: none;
       padding-left: 0;
 
       li {

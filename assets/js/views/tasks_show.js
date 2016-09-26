@@ -1,5 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
+import { showConfirmDialog } from '../dialog'
 
 import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
@@ -27,7 +28,8 @@ const TasksShowView = Backbone.View.extend({
 
     events: {
         'click .js-start': 'onClickStart',
-        'click .js-stop': 'onClickStop'
+        'click .js-stop': 'onClickStop',
+        'click .js-copy-edit': 'onClickCopyEdit'
     },
 
     taskType: null,
@@ -80,8 +82,21 @@ const TasksShowView = Backbone.View.extend({
                 this.render()
                 return null
             })
-    }
+    },
 
+    onClickCopyEdit(event) {
+        showConfirmDialog(
+            `<p>Diese Frage kann nicht mehr geändert werden, da sie schon beantwortet wurde.</p>
+             <p>Wollen Sie eine Kopie dieser Frage erstellen und bearbeiten?</p>`,
+            () => {
+                this.model.duplicate()
+                    .then((task) => {
+                        Backbone.history.navigate(`task/edit/${task.id}`, { trigger: true })
+                        return null
+                    })
+            }
+        )
+    }
 })
 
 export default TasksShowView

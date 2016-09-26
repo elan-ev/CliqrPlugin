@@ -18,12 +18,11 @@
 <main></main>
 
 <aside class="votings">
-
-  TODO erst überprüfen ob man kann
-  <a href="#task/edit/{{id}}">
-  Frage bearbeiten
-  </a>
-  {{button "edit-task" "Frage bearbeiten" icon="edit"}}
+  {{#if editable}}
+      {{linkbutton (concat "#task/edit/" id) "Frage bearbeiten" icon="edit"}}
+  {{else}}
+      {{button "copy-edit" "Frage bearbeiten" icon="exclaim-circle" color="red"}}
+  {{/if}}
 
     {{#unless votings}}
         {{button "start" "Frage starten" icon="play"}}
@@ -31,17 +30,17 @@
 
     {{#if votings}}
         <h2>
-            Votings:
+            Abstimmungen:
         </h2>
 
-        <ol>
+        <ol class="cliqr--votings-list">
             {{#each votings}}
                 <li>
                     <a href="#voting/{{id}}">
                         <span>
                             {{#if running}} {{icon 'play'}} {{else}} {{icon 'new/vote'}} {{/if}}
                         </span>
-                        am {{moment start}}
+                        {{moment start}}
                         <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
                     </a>
                 </li>
