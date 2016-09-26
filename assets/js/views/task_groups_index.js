@@ -1,7 +1,8 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-
-import { showConfirmDialog } from '../dialog'
+import { showConfirmDialog, showDialog } from '../dialog'
+import TaskGroupsCreateView from './task_groups_create'
+import TaskGroupsImportView from './task_groups_import'
 
 const TaskGroupsIndexView = Backbone.View.extend({
 
@@ -46,14 +47,17 @@ const TaskGroupsIndexView = Backbone.View.extend({
 
     onClickAddTaskGroup(event) {
         event.preventDefault()
-        this.$mode = 'add'
-        this.render()
+        const createDialog = new TaskGroupsCreateView({ collection: this.collection })
+        showDialog(createDialog.render(), { title: 'Fragensammlung erstellen' })
+            .then((closer) => createDialog.once('cancel', closer))
     },
 
     onClickImportTaskGroup(event) {
         event.preventDefault()
-        this.$mode = 'import'
-        this.render()
+
+        const importDialog = new TaskGroupsImportView({ collection: this.collection })
+        showDialog(importDialog.render(), { title: 'Fragensammlung importieren' })
+            .then((closer) => importDialog.once('cancel', closer))
     },
 
     onClickCancel(event) {
@@ -91,8 +95,7 @@ const TaskGroupsIndexView = Backbone.View.extend({
     onClickDuplicate(event) {
         event.preventDefault()
 
-        const id = Backbone.$(event.target).closest('tr').data('taskgroupid'),
-              taskGroup =
+        const id = Backbone.$(event.target).closest('tr').data('taskgroupid')
 
         this.collection.get(id).duplicate()
             .then((taskGroup) => {

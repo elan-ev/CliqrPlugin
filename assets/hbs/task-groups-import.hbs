@@ -1,0 +1,21 @@
+<form class="cliqr--import-task-group-form"
+      enctype="multipart/form-data"
+      action="{{url_for "task_groups/import"}}"
+      method="POST">
+
+    <fieldset>
+        <label class="cliqr--upload-box">
+            <input type="file" name="task-group-import-file">
+            {{icon "upload2"}}
+            <strong>Datei auswählen</strong>
+            <!-- <span class="box__dragndrop"> oder Drag and Drop</span>. -->
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <div class="button-group">
+            {{button "import-task-group" "Importieren" icon="upload2"}}
+            {{button "cancel" "Abbrechen" icon="decline"}}
+        </div>
+    </fieldset>
+</form>

@@ -185,6 +185,11 @@ class Assignment extends eAssignment
         if (strncmp($data['title'], $copyTxt, strlen($copyTxt)) != 0) {
             $data['title'] = $copyTxt . $data['title'];
         }
-        return self::createTaskGroup($this->range_type, $this->range_id, $data);
+        $duplicate = self::createTaskGroup($this->range_type, $this->range_id, $data);
+
+        // copy tasks
+        $this->findTasks()->duplicateInTaskGroup($duplicate);
+
+        return $duplicate;
     }
 }

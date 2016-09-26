@@ -134,9 +134,9 @@ class TaskGroupsController extends CliqrStudipController
         }
 
         $importer = new \Cliqr\Importer('course', $this->cid);
-        $importer->importString(file_get_contents($tmpname), $debug = true);
+        $importer->importString(file_get_contents($tmpname));
 
-        $this->render_json(['status' => 'OK']);
+        $this->redirect('');
     }
 
     public function duplicate_action($id)

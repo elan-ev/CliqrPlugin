@@ -2,7 +2,7 @@
     <h1>Fragensammlungen</h1>
 </header>
 
-<table class="task-groups">
+<table class="task-groups default">
     <thead>
         <tr>
             <th></th>
@@ -86,42 +86,6 @@
                     </td>
                 </tr>
             {{/if_mode}}
-
-            {{#if_mode "import"}}
-                <tr>
-                    <td colspan="5">
-                        <form class="cliqr--import-task-group-form"
-                              enctype="multipart/form-data"
-                              action="{{url_for "task_groups/import"}}"
-                              method="POST">
-
-                            <fieldset>
-                                <legend>Fragensammlung importieren</legend>
-
-
-                                <div class="cliqr--upload-box">
-                                    {{icon "upload2"}}
-                                    <input type="file" name="task-group-import-file" id="cliqr--task-groups-import-file">
-
-                                    <label for="cliqr--task-groups-import-file">
-                                        <strong>Datei auswählen</strong>
-                                        <!-- <span class="box__dragndrop"> oder Drag and Drop</span>. -->
-                                    </label>
-                                </div>
-
-                            </fieldset>
-
-                            <fieldset>
-                                <div class="button-group">
-                                    {{button "import-task-group" "Importieren" icon="upload2"}}
-                                    {{button "cancel" "Abbrechen" icon="decline"}}
-                                </div>
-                            </fieldset>
-                        </form>
-                    </td>
-                </tr>
-            {{/if_mode}}
-
 
         </tfoot>
 

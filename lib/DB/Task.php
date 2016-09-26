@@ -79,15 +79,17 @@ class Task extends \eAufgaben\DB\Task
     }
 
     /**
-     * Duplicate a task in its task group
+     * Duplicate a task in a task group
+     *
+     * @param $taskGroup \Cliqr\Assignment  optional; the task group to copy this task into, defaults to this task's task group
      *
      * @return  the duplicated task instance
      */
-    public function duplicateInTaskGroup()
+    public function duplicateInTaskGroup(Assignment $taskGroup = null)
     {
         $data = $this->toArray('type title description task user_id');
-        $taskGroup = $this->getTaskGroup();
-        return $this->createInTaskGroup($taskGroup->range_id, $taskGroup->id, $data);
+        $taskGroup = $taskGroup ?: $this->getTaskGroup();
+        return self::createInTaskGroup($taskGroup->range_id, $taskGroup->id, $data);
     }
 
     public function getVotings()
@@ -135,7 +137,7 @@ class Task extends \eAufgaben\DB\Task
         return $result;
     }
 
-    public function createInTaskGroup($range_id, $task_group_id, $data)
+    public static function createInTaskGroup($range_id, $task_group_id, $data)
     {
         if (!$taskGroup = Assignment::findTaskGroup($range_id, $task_group_id)) {
             throw new \RuntimeException('Could not find task group: '.intval($task_group_id));

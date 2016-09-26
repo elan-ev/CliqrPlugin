@@ -2,6 +2,7 @@ const webpack = require('webpack'),
       path = require('path'),
       postcss_autoprefixer = require('autoprefixer'),
       postcss_precss = require('precss'),
+      postcss_atroot = require('postcss-atroot'),
       postcss_lost = require('lost'),
       postcss_calc = require('postcss-calc'),
       ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -60,7 +61,7 @@ module.exports = {
             }
         ]
     },
-    postcss: [ postcss_precss, postcss_calc, postcss_autoprefixer, postcss_lost ],
+    postcss: [ postcss_atroot, postcss_precss, postcss_calc, postcss_autoprefixer, postcss_lost ],
     resolve: {
         alias: {
             jquery: path.join(__dirname, './assets/js/jquery')
