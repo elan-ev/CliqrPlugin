@@ -22,7 +22,7 @@ class PollsController extends CliqrStudipController
 
         // transform params
         // $action -> show/update, $args -> [range_id]
-        $action = Request::method() === 'POST' && !Request::submitted('login_ticket') ? 'update' : 'index';
+        $action = \Request::method() === 'POST' && !\Request::submitted('login_ticket') ? 'update' : 'index';
         $args = array($range_id);
     }
 
