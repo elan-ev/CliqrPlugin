@@ -8,20 +8,13 @@ const TaskGroupsIndexView = Backbone.View.extend({
 
     className: 'cliqr--task-groups-index',
 
-    $mode: 'button',
-
     events: {
-        'click .js-cancel': 'onClickCancel',
-
         'click .js-add-task-group': 'onClickAddTaskGroup',
         'click .js-import-task-group': 'onClickImportTaskGroup',
 
         'click .js-export': 'onClickExport',
         'click .js-duplicate': 'onClickDuplicate',
-        'click .js-remove': 'onClickRemove',
-
-
-        'submit form.cliqr--add-task-group-form': 'onSubmitForm'
+        'click .js-remove': 'onClickRemove'
     },
 
     initialize(options) {
@@ -38,8 +31,7 @@ const TaskGroupsIndexView = Backbone.View.extend({
                 return {
                     ...tg.toJSON(),
                     tasks_count: test && test.tasks ? test.tasks.length : 0
-                }}),
-            $mode: this.$mode
+                }})
         }
         this.$el.html(template(data))
         return this
@@ -58,20 +50,6 @@ const TaskGroupsIndexView = Backbone.View.extend({
         const importDialog = new TaskGroupsImportView({ collection: this.collection })
         showDialog(importDialog.render(), { title: 'Fragensammlung importieren' })
             .then((closer) => importDialog.once('cancel', closer))
-    },
-
-    onClickCancel(event) {
-        event.preventDefault()
-        this.$mode = 'button'
-        this.render()
-    },
-
-    onSubmitForm(event) {
-        event.preventDefault()
-        const $formData = Backbone.$(event.target.closest('form')).serializeArray(),
-              formData = _.reduce($formData, (memo, item) => _.tap(memo, (memo) => memo[item.name] = item.value), {})
-        console.log("onSubmitForm", formData)
-        const newTaskGroup = this.collection.create(formData)
     },
 
     onClickRemove(event) {

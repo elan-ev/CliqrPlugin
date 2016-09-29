@@ -3,7 +3,7 @@
         <ol>
             <li>
                 <a href="#task-groups">
-                    Cliqr > Fragensammlungen
+                    Cliqr
                 </a>
             </li>
             <li>
@@ -25,7 +25,7 @@
   {{/if}}
 
     {{#unless votings}}
-        {{button "start" "Frage starten" icon="play"}}
+        {{button "start" "Frage starten" icon="play" once=true}}
     {{/unless}}
 
     {{#if votings}}
@@ -49,9 +49,9 @@
 
         <nav>
             {{#unless_state 'is_active'}}
-                {{button "start" "Frage starten" icon="play"}}
+                {{button "start" "Frage starten" icon="play" once=true}}
             {{else}}
-                {{button "stop" "Frage beenden" icon="pause"}}
+                {{button "stop" "Frage beenden" icon="pause" once=true}}
             {{/unless_state}}
         </nav>
     {{/if}}

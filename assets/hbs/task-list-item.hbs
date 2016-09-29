@@ -23,10 +23,10 @@
 
 <td class="cliqr--task-actions">
     {{#if_state 'is_active'}}
-        {{fab "stop" "Stoppen" "pause"}}
+        {{fab "stop" "Stoppen" "pause" once=true}}
         {{^}}
-        {{fab "start" "Starten" "play"}}
+        {{fab "start" "Starten" "play" once=true}}
     {{/if_state}}
-    {{fab "duplicate" "Duplizieren" "add/files"}}
+    {{fab "duplicate" "Duplizieren" "add/files" once=true}}
     {{fab "remove" "Löschen" "trash"}}
 </td>

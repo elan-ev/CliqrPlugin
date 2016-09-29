@@ -1,13 +1,13 @@
 import { SafeString, escapeExpression } from 'handlebars/runtime'
 
 const fab = function (klass, text, icon, { hash }) {
-    let { disabled = false } = hash
+    let { disabled = false, once = false } = hash
     const disabledAttr = disabled ? 'disabled' : ''
 
     text = escapeExpression(text)
     klass = 'js-' + escapeExpression(klass)
 
-    const addClasses = escapeExpression(hash['class']) || ''
+    const addClasses = (escapeExpression(hash['class']) || '') + (once ? ' cliqr--click-once' : '')
 
     const icon_path =
           [window.STUDIP.ASSETS_URL, 'images/icons/blue/', escapeExpression(icon), '.svg'].join('')

@@ -174,3 +174,15 @@
     }
   }
 }
+
+.cliqr--multiple-choice-poll-view {
+  li {
+    padding: 0;
+  }
+
+  label {
+    display: block;
+    padding: .75rem 1.25rem;
+    margin: 0;
+  }
+}

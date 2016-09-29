@@ -27,15 +27,22 @@ $headingsFontWeight:    bold;
 
 /*
 // * Cliqr-Loader */
+
+#layout_content {
+  position: relative;
+}
+
 .cliqr-loader {
   line-height: 1.5em;
   color: #444;
   background: white url(data:image/gif;base64,R0lGODlhEAAQAPMAAMXFxff394qKiry8vJOTk83NzYKCgubm5qysrN7e3u7u7np6epubm7S0tKOjowAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJCAAAACwAAAAAEAAQAAAETBDISau9NZDFl2xDYGmdZCzCkQklULCCOA3oNgXsQG2FRhULAoWDIU6MGSSAR0G4ghRa7IjIUXCogqQzpRxYhi2HILsOGuJxGcNuTyIAIfkECQgADAAsAgAAAAwAEAAABFWQyWOAvJiJRVJmwWAs5IEdG7kgoAJuArAYSkAI4YIzxPAuA8KiICEWOaQPSLUIKElCY8BY4Ax0zuBvEBCwFCMAzOliIJgC0+WgMnA/CaFAeQEY1IwIACH5BAkIAA0ALAIAAAAMABAAAARTsMnZFKO4gVVoGMSyGGMgHYKoikMTpEKXiEY3LILZ3IgedpLBwVW4LTKSFTLAKpgOLUlhQZAEEIvoK9sokBaJQAFmMq5wQxfpSxjopAsAcsJQICMAIfkECQgAAAAsAgABAA0ADQAABEYQyElBCDIMshYZF5EAh9Cdi8AlgSkUUmF2yZBiGUc3BjzptIpQkigWcRUUglIwNACn5aS1GEA7r4vsBnXMUIKDZKnRfZARACH5BAkIAAwALAAAAgAQAAwAAARUkEkWBlmLjDC7Eli4CEc3IULBFaDATSXVBeDAlMmCKCYDLAaBgXEBbiSFIgbwCxEKk4EBQ2AEp4CeArFI3BiD0UsS4MTILVWARRjDQKIRr1cpatwRACH5BAUIAA0ALAAAAgAQAAwAAARTsMk51iIjzBkGaIVlCcdWGIsRaKCwCCwjLsgWuIOkAKhVTiHCxpIY5IYLJEtiTFg2hEVhcxAZAArma9lAzBiS26ugWaEM08nBJZoWMpvwILo4biIAOw==) 95% center no-repeat;
-  padding: 0.5em 20px 0.5em 0.5em;
+  padding: 0.25em 20px 0.25em 0.25em;
   border: 1px solid #ccc;
   border-radius: 8px;
-  position: relative;
-  top: 0.5em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 
 #cliqr-container {
@@ -124,6 +131,19 @@ $headingsFontWeight:    bold;
     }
   }
 
+  .cliqr--button-fab,
+  .cliqr--button {
+    &.loading {
+      img { display: none; }
+
+      &:before {
+        content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSJibGFjayI+CiAgPHBhdGggb3BhY2l0eT0iLjI1IiBkPSJNMTYgMCBBMTYgMTYgMCAwIDAgMTYgMzIgQTE2IDE2IDAgMCAwIDE2IDAgTTE2IDQgQTEyIDEyIDAgMCAxIDE2IDI4IEExMiAxMiAwIDAgMSAxNiA0Ii8+CiAgPHBhdGggZD0iTTE2IDAgQTE2IDE2IDAgMCAxIDMyIDE2IEwyOCAxNiBBMTIgMTIgMCAwIDAgMTYgNHoiPgogICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIGZyb209IjAgMTYgMTYiIHRvPSIzNjAgMTYgMTYiIGR1cj0iMC44cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPC9wYXRoPgo8L3N2Zz4K);
+        line-height: 1.3em;
+        vertical-align: middle;
+      }
+    }
+  }
+
 /*
 // * Icon */
 
@@ -137,35 +157,63 @@ $headingsFontWeight:    bold;
 // * Breadcrumb */
 
   nav.cliqr--breadcrumb {
-    display: block;
+    overflow: hidden;
     width: 100%;
-    height: 1.5em;
-    white-space: nowrap;
 
     ol {
-      list-style: none;
-      padding: 0 0 1em 0;
+      padding-left: 0;
+      line-height: 1.5em;
     }
 
     li {
-      display: inline;
-      opacity: 0.6;
+      float: left;
+      margin: 0 .5em 0 .8em;
+    }
+
+    a {
+      background: #ddd;
+      padding: .2em .8em;
+      float: left;
+      text-decoration: none;
+      color: #444;
+      position: relative;
 
       &:hover {
-        opacity: 1;
+        background: $color-accent;
+        color: $color-accent-contrast;
       }
 
-      &:after {
-        content: "→";
-        font-weight: 800;
+      &:hover::before {
+        border-color: $color-accent $color-accent $color-accent transparent;
       }
 
-      a:hover {
-        text-decoration: underline;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        margin-top: -1.5em;
+        border-width: 1.5em 0 1.5em 1em;
+        border-style: solid;
+        border-color: #ddd #ddd #ddd transparent;
+        left: -1em;
+      }
+
+      &::after {
+        content: "";
+        position:  absolute;
+        top: 50%;
+        margin-top: -1.5em;
+        border-top: 1.5em solid transparent;
+        border-bottom: 1.5em solid transparent;
+        border-left: 1em solid #ddd;
+        right: -1em;
+      }
+
+      &:hover::after {
+        border-left-color: $color-accent;
       }
     }
   }
-
   header.cliqr--page-header {
     position: relative;
     width: 100%;
@@ -473,4 +521,9 @@ $headingsFontWeight:    bold;
       lost-column: 1/12 0 0;
     }
   }
+}
+
+/*
+// * Poll View */
+#cliqr-poll-container {
 }

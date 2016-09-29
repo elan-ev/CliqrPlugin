@@ -47,7 +47,7 @@ class VotingsController extends CliqrStudipController
         }
 
         if (!$voting) {
-            throw new Cliqr\RecordNotFound();
+            throw new \Cliqr\RecordNotFound();
         }
 
         $this->render_json($voting->toJSON());
@@ -85,7 +85,7 @@ class VotingsController extends CliqrStudipController
         }
 
         if (!$voting) {
-            throw new Cliqr\RecordNotFound();
+            throw new \Cliqr\RecordNotFound();
         }
 
         // TODO: only updating the `end` for now

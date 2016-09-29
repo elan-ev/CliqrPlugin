@@ -1,16 +1,23 @@
-<nav>
-    <ol>
-        <li>
-            <a href="#task-groups-{{task_group_id}}">
-                zurück zur Fragensammlung
-            </a>
-        </li>
-        <li>
-            <a href="#task/show/{{id}}">
-                Frage ansehen
-            </a>
-        </li>
-    </ol>
-</nav>
+<header class="cliqr--page-header">
+    <nav class="cliqr--breadcrumb">
+        <ol>
+            <li>
+                <a href="#task-groups">
+                    Cliqr
+                </a>
+            </li>
+            <li>
+                <a href="#task-groups-{{task_group_id}}">
+                    Fragensammlung &laquo;{{task_group_title}}&raquo;
+                </a>
+            </li>
+            <li>
+                <a href="#task/show/{{task.id}}">
+                    Frage {{#if title}} &laquo;{{title}}&raquo; {{/if}}
+                </a>
+            </li>
+        </ol>
+    </nav>
+</header>
 
 <main></main>

@@ -64,6 +64,35 @@ class TaskGroupsController extends CliqrStudipController
         $this->render_json($taskGroup->toJSON());
     }
 
+    public function update_action($id)
+    {
+        $taskGroup = Assignment::findTaskGroup($this->cid, $id);
+
+        if (!$this->can('update', 'TaskGroup', $taskGroup)) {
+            throw new \Trails_Exception(403);
+        }
+
+        if (!$taskGroup) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        if (!$this->hasJSONContentType()) {
+            throw new \Trails_Exception(400, 'TODO: has to be JSON');
+        }
+        $json = $this->parseJSONBody();
+
+        if (!array_key_exists('title', $json)) {
+            throw new \Trails_Exception(400, 'TODO: title required');
+        }
+
+        $test = $taskGroup->test;
+        $test->title = $json['title'];
+        $test->store();
+
+        $this->render_json($taskGroup->toJSON());
+    }
+
+
     public function destroy_action($id)
     {
         $taskGroup = Assignment::findTaskGroup($this->cid, $id);

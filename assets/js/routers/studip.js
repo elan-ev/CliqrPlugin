@@ -14,6 +14,7 @@ import VotingsCollection from '../models/votings'
 
 import ArchiveView from '../views/archive'
 import ErrorView from '../views/error'
+import TaskGroupsEditView from '../views/task_groups_edit'
 import TaskGroupsIndexView from '../views/task_groups_index'
 import TaskGroupsShowView from '../views/task_groups_show'
 import TasksEditView from '../views/tasks_edit'
@@ -108,6 +109,8 @@ const StudipRouter = Backbone.Router.extend({
         'task-groups': 'taskGroups',
         'task-groups-:id': 'taskGroup',
 
+        'task-group/edit/:id': 'taskGroupEdit',
+
         'task/show/:id': 'task',
         'task/edit/:id': 'taskEdit',
 
@@ -182,6 +185,9 @@ const StudipRouter = Backbone.Router.extend({
 
     // ROUTE: '#task-groups-:id'
     taskGroup(id) { this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView) },
+
+    // ROUTE: '#task-group/edit/:id'
+    taskGroupEdit(id) { this.routeHandler(fetchTaskGroup, id, TaskGroupsEditView) },
 
     // ROUTE: '#task/show/:id'
     task(id) { this.routeHandler(fetchTask, id, TasksShowView) },

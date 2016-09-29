@@ -67,7 +67,7 @@ class TasksController extends CliqrStudipController
         }
 
         if (!$task) {
-            throw new Cliqr\RecordNotFound();
+            throw new \Cliqr\RecordNotFound();
         }
 
         // tasks cannot be updated as soon as they have responses

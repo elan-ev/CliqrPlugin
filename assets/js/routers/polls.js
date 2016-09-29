@@ -63,7 +63,7 @@ const PollsRouter = Backbone.Router.extend({
             .then((response) => {
                 this.hideLoading()
                 const page = new view(useCollection ? { collection: response } : { model: response })
-                utils.changeToPage(page, this.selector)
+                changeToPage(page, this.selector)
             })
     },
 

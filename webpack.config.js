@@ -11,8 +11,6 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
 module.exports = {
-    debug: !isProd,
-
     devtool: isProd ? 'hidden-source-map' : 'cheap-module-eval-source-map',
     context: path.join(__dirname, './assets/js'),
     entry: {
@@ -61,12 +59,11 @@ module.exports = {
             }
         ]
     },
-    postcss: [ postcss_atroot, postcss_precss, postcss_calc, postcss_autoprefixer, postcss_lost ],
     resolve: {
         alias: {
             jquery: path.join(__dirname, './assets/js/jquery')
         },
-        extensions: ['', '.js'],
+        extensions: ['.js'],
         modules: [
             path.resolve('./assets/js'),
             'node_modules'
@@ -88,7 +85,10 @@ module.exports = {
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true,
-            debug: false
+            debug: !isProd,
+            options: {
+                postcss: [ postcss_atroot, postcss_precss, postcss_calc, postcss_autoprefixer, postcss_lost ]
+            }
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {

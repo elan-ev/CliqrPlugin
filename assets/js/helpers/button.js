@@ -1,7 +1,7 @@
 import { SafeString, escapeExpression } from 'handlebars/runtime'
 
 const button = function (klass, text, { hash } ) {
-    let { icon = false, disabled = false, color = "blue" } = hash
+    let { icon = false, disabled = false, color = "blue", once = false } = hash
     let icon_el = ''
     const disabledAttr = disabled ? 'disabled' : ''
 
@@ -9,7 +9,7 @@ const button = function (klass, text, { hash } ) {
     color = escapeExpression(color)
     klass = 'js-' + escapeExpression(klass)
 
-    const addClasses = escapeExpression(hash['class']) || ''
+    const addClasses = (escapeExpression(hash['class']) || '') + (once ? ' cliqr--click-once' : '')
 
     if (icon) {
         icon_el = `<img src="${[window.STUDIP.ASSETS_URL, 'images/icons/', color, '/', escapeExpression(icon), '.svg'].join('')}" alt="${text}">`

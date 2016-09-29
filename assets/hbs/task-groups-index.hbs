@@ -35,8 +35,8 @@
                 </td>
 
                 <td>
-                    {{fab "export" "Export" "archive3" }}
-                    {{fab "duplicate" "Duplizieren" "add/files" }}
+                    {{fab "export" "Export" "archive3"}}
+                    {{fab "duplicate" "Duplizieren" "add/files" once=true}}
                     {{fab "remove" "Löschen" "trash" }}
                 </td>
             </tr>
@@ -48,44 +48,14 @@
         {{/each}}
 
         <tfoot>
-            {{#if_mode "button"}}
-                <tr>
-                    <td colspan="5">
-                        <div class="button-group">
-                            {{button "add-task-group" "Fragensammlung erstellen" icon="add"}}
-                            {{button "import-task-group" "Import" icon="upload2"}}
-                        </div>
-                    </td>
-                </tr>
-
-            {{/if_mode}}
-
-            {{#if_mode "add"}}
-                <tr>
-                    <td colspan="5">
-
-                        <form class="cliqr--add-task-group-form"
-                              method="post"
-                              accept-char="UTF-8">
-
-                            <fieldset>
-                                <legend>Fragensammlung erstellen</legend>
-                                <label for="cliqr--task-group-title">Name:</label>
-                                <div class="control-group">
-                                    <input id="cliqr--task-group-title" name="title" required>
-                                </div>
-                            </fieldset>
-
-                            <fieldset>
-                                <div class="button-group">
-                                    {{button "create" "Speichern"}}
-                                    {{button "cancel" "Abbrechen"}}
-                                </div>
-                            </fieldset>
-                        </form>
-                    </td>
-                </tr>
-            {{/if_mode}}
+            <tr>
+                <td colspan="5">
+                    <div class="button-group">
+                        {{button "add-task-group" "Fragensammlung erstellen" icon="add"}}
+                        {{button "import-task-group" "Import" icon="upload2"}}
+                    </div>
+                </td>
+            </tr>
 
         </tfoot>
 

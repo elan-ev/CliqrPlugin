@@ -4,7 +4,7 @@
             <ol>
                 <li>
                     <a href="#task-groups">
-                        Cliqr > Fragensammlungen
+                        Cliqr
                     </a>
                 </li>
                 <li>
@@ -26,7 +26,7 @@
 
 <nav>
     {{#if isRunning}}
-        {{button "stop" "Beenden"}}
+        {{button "stop" "Beenden" once=true}}
 
         <div class="appeal vote">
             <div class="url">
@@ -43,7 +43,7 @@
         </div>
 
     {{else}}
-        {{button "restart" "Noch einmal starten"}}
+        {{button "restart" "Noch einmal starten" once=true}}
 
         {{#if otherVotings}}
             <form class="default">

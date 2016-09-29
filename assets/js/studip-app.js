@@ -36,6 +36,9 @@ class StudIPCliqrApp {
 
     initStuff() {
         setTimeout( () => { Backbone.$('.self-destroy').remove() }, 5000)
+        Backbone.$(document).on('click', '.cliqr--click-once', (e) => {
+            Backbone.$(e.target).closest('button').prop('disabled', true).addClass('loading')
+        })
     }
 
     initRouters(selector) {
