@@ -3,21 +3,17 @@ import _ from 'underscore'
 
 let currentView = false
 
-let loader = false
 let timeout = false
 
 const showLoading = function () {
     timeout = setTimeout( () => {
-        loader = Backbone.$('<span class="cliqr-loader"/>')
-            .html('Loading...').prependTo('#layout_content')
-    }, 200)
+        Backbone.$(window.document.body).addClass('cliqr--loading')
+    }, 300)
 }
 
 const hideLoading = function () {
     clearTimeout(timeout)
-    if (loader) {
-        loader.remove()
-    }
+    Backbone.$(window.document.body).removeClass('cliqr--loading')
 }
 
 const userRole = (expected) => expected === window.cliqr.bootstrap.userRole

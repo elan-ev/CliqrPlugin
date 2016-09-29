@@ -25,21 +25,26 @@ const VotingsCompareView = Viewmaster.extend({
         Viewmaster.prototype.initialize.call(this)
 
         this.votings = new Votings(votings)
-        this.listenTo(this.votings, 'all', this.render)
+        this.listenTo(this.votings, 'change sync', this.render)
 
         const selectors = ['section.cliqr--voting-side-a main', 'section.cliqr--voting-side-b main']
 
         this.listenTo(this.votings, 'sync', (voting) => {
             this.setView(selectors[this.votings.indexOf(voting)], getView(voting))
+            this.refreshViews()
         })
     },
 
     template: require('../../hbs/votings-compare.hbs'),
 
     context() {
+        const votingA = this.votings.first(),
+              votingB = this.votings.last(),
+              task = votingA && votingA.getTask()
         return {
-            votingA: this.votings.first().toJSON(),
-            votingB: this.votings.last().toJSON()
+            votingA: votingA.toJSON(),
+            votingB: votingB.toJSON(),
+            task: task && task.toJSON()
         }
     }
 })

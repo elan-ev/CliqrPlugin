@@ -25,8 +25,12 @@ const Voting = Backbone.Model.extend({
     },
 
     getTask() {
-        const tasks = this.get('test').tasks
-        return new Task(_.first(tasks))
+        const test = this.get('test')
+        if (test) {
+            return new Task(_.first(test.tasks))
+        }
+
+        return null
     },
 
     isRunning() {
