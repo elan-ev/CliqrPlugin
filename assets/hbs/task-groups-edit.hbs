@@ -1,0 +1,35 @@
+<header class="cliqr--page-header">
+    <nav class="cliqr--breadcrumb">
+        <ol>
+            <li>
+                <a href="#task-groups">
+                    Cliqr
+                </a>
+            </li>
+            <li>
+                <a href="#task-groups-{{id}}">
+                    Fragensammlung &laquo;{{test.title}}&raquo;
+                </a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>Fragensammlung &laquo;{{test.title}}&raquo;</h1>
+</header>
+
+<section>
+    <form class="cliqr--task-group-edit default" method="post" accept-char="UTF-8">
+        <fieldset>
+            <legend>Fragensammlung bearbeiten</legend>
+            <label>
+                Name
+                <input type="text" name="title" required value="{{test.title}}">
+            </label>
+        </fieldset>
+
+        <footer>
+                {{button "edit-task-group" "Speichern" once=true}}
+                {{button "cancel" "Abbrechen"}}
+        </footer>
+    </form>
+</section>
