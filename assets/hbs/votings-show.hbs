@@ -22,27 +22,28 @@
     {{/user_role}}
 </header>
 
-<main></main>
-
-<nav>
-    {{#if isRunning}}
-        {{button "stop" "Beenden" once=true}}
-
-        <div class="appeal vote">
-            <div class="url">
-                Abstimmen unter
-                <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
-            </div>
-
-            {{button "show-qr-code" "QR-Code zeigen" icon="code-qr"}}
-
-            <div class="dialog" title="Abstimmen unter" style=display:none>
-                <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
-                <img class="qr" src="{{qr_code}}">
-            </div>
+{{#if isRunning}}
+    <nav class="cliqr--voting-is-running">
+        <div class="url">
+            Abstimmen unter
+            <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
         </div>
 
-    {{else}}
+        {{button "show-qr-code" "QR-Code zeigen" icon="code-qr"}}
+        <div class="dialog" title="Abstimmen unter" style=display:none>
+            <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
+            <img class="qr" src="{{qr_code}}">
+        </div>
+
+
+        {{button "stop" "Beenden" once=true}}
+    </nav>
+{{/if}}
+
+<main></main>
+
+{{#unless isRunning}}
+    <nav class="cliqr--voting-is-not-running">
         {{button "restart" "Noch einmal starten" once=true}}
 
         {{#if otherVotings}}
@@ -63,9 +64,9 @@
                             </option>
                         {{/each}}
                     </select>
-                {{fab "compare" "Vergleichen" "test"}}
+                    {{fab "compare" "Vergleichen" "test"}}
                 </fieldset>
             </form>
         {{/if}}
-    {{/if}}
-</nav>
+    </nav>
+{{/unless}}

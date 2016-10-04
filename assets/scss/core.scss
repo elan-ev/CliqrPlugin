@@ -255,20 +255,6 @@ body.cliqr--loading #layout-sidebar .sidebar-image:first-child {
     }
   }
 
-
-  .cliqr--task-groups-index {
-    fieldset {
-      border: none;
-      padding-top: 1.5em;
-      padding-bottom: 1.5em;
-    }
-
-    legend {
-      padding: 1.5em 0 0 0;
-      font-size: 1.5em;
-    }
-  }
-
   @at-root {
     .cliqr--dialog {
       fieldset {
@@ -391,16 +377,21 @@ body.cliqr--loading #layout-sidebar .sidebar-image:first-child {
       lost-column: 9/12;
     }
 
-    > nav {
+    nav.cliqr--voting-is-not-running {
       lost-column: 3/12 0;
     }
 
+    > nav.cliqr--voting-is-running + main {
+      lost-column: 12/12;
+    }
+
+    nav.cliqr--voting-is-running {
+      lost-column: 12/12;
+    }
+
+
     nav {
       fieldset {
-
-        legend {
-        }
-
         select {
           margin-top: 0;
           width: calc(100% - 35px);
@@ -409,16 +400,12 @@ body.cliqr--loading #layout-sidebar .sidebar-image:first-child {
         option[disabled] {
           font-style: italic;
         }
-
-        button {
-
-        }
       }
     }
   }
 
 /*
-// * Voting Show */
+// * Voting Compare */
 
   article.cliqr--votings-compare {
 
@@ -529,6 +516,21 @@ body.cliqr--loading #layout-sidebar .sidebar-image:first-child {
 }
 
 /*
-// * Poll View */
-#cliqr-poll-container {
+// * VotingShowView */
+body.cliqr--voting-show {
+
+  #layout_wrapper {
+    #flex-header,
+    .sticky-wrapper,
+    #tabs,
+    #layout_footer,
+    #layout-sidebar,
+    .helpbar-container {
+      display: none;
+    }
+
+    #layout_page {
+      margin: 0;
+    }
+  }
 }

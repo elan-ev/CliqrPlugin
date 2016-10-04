@@ -41,9 +41,13 @@ const VotingsShowView = Viewmaster.extend({
         this.setView('main', taskType.getAssignmentView(this.model))
     },
 
+    postRender() {
+        Backbone.$(window.document.body).addClass('cliqr--voting-show')
+    },
+
     remove() {
-        //clearInterval(this.interval)
         Backbone.View.prototype.remove.call(this)
+        Backbone.$(window.document.body).removeClass('cliqr--voting-show')
     },
 
     template: require('../../hbs/votings-show.hbs'),

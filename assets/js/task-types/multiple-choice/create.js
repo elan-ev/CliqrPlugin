@@ -16,6 +16,7 @@ const CreateView = Backbone.View.extend({
         'click .js-add': 'onClickAdd',
         'click .js-remove': 'onClickRemove',
         'submit form': 'onSubmitForm',
+        'click .js-cancel': 'onClickCancel',
 
         'keypress #task-description': 'onDescriptionUpdate',
         'change #task-description': 'onDescriptionUpdate',
@@ -75,6 +76,11 @@ const CreateView = Backbone.View.extend({
         if (this.model.isValid()) {
             this.taskGroup.trigger('newTask', this.model)
         }
+    },
+
+    onClickCancel(event) {
+        event.preventDefault()
+        Backbone.history.navigate(`/task/show/${this.model.id}`, { trigger: true })
     }
 })
 
