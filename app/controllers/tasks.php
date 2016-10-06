@@ -3,6 +3,8 @@
 namespace Cliqr;
 
 use Cliqr\DB\Task;
+use Cliqr\TaskTypes\MultipleChoice;
+use STUDIP\Markup;
 
 require_once 'cliqr_studip_controller.php';
 
@@ -32,14 +34,29 @@ class TasksController extends CliqrStudipController
             throw new \Trails_Exception(403);
         }
 
-        if (!array_key_exists('task_group_id', $this->json)) {
-            throw new \Trails_Exception(400, 'TODO: task_group_id required');
+        foreach (words('task_group_id type task description') as $key) {
+            if (!array_key_exists($key, $this->json)) {
+                throw new \Trails_Exception(400, 'TODO: '.$key.' required');
+            }
         }
 
-        // TODO sieht hier seltsam/smelly aus
-        $this->json['user_id'] = $GLOBALS['user']->id;
+        if ($this->json['type'] !== 'multiple-choice') {
+            throw new \Trails_Exception(400, 'TODO: wrong type');
+        }
 
-        $task = Task::createInTaskGroup($this->cid, $this->json['task_group_id'], $this->json);
+        /*
+        $taskType = new MultipleChoice($task);
+        $specifics = $taskType->foo($this->json['task']);
+        */
+
+        $data = [
+            'description' => Markup::markAsHtml(Markup::purify((string) $this->json['description'])),
+            'task' => $this->json['task'],
+            'type' => $this->json['type'],
+            'user_id' => $GLOBALS['user']->id
+        ];
+
+        $task = Task::createInTaskGroup($this->cid, $this->json['task_group_id'], $data);
         $this->render_json($task->toJSON());
     }
 
@@ -54,6 +71,9 @@ class TasksController extends CliqrStudipController
         if (!$task) {
             throw new \Cliqr\RecordNotFound();
         }
+
+        #$taskType = new MultipleChoice($task);
+        #var_dump($taskType->transformBeforeSave());exit;
 
         $this->render_json($task->toJSON());
     }
@@ -75,10 +95,23 @@ class TasksController extends CliqrStudipController
             throw new \Trails_Exception(409, 'Cannot update task already used.');
         }
 
-        foreach (words('title description task') as $key) {
-            if (array_key_exists($key, $this->json)) {
-                $task->setValue($key, $this->json[$key]);
-            }
+        if (array_key_exists('task', $this->json)) {
+            /*
+              $taskType = new MultipleChoice($task);
+              $specifics = $taskType->foo($this->json['task']);
+              $task->task = $specifics;
+            */
+            $task->task = $this->json['task'];
+        }
+
+        // wysiwyg description
+        if (array_key_exists('title', $this->json)) {
+            $task->title = $this->json['title'];
+        }
+
+        // wysiwyg description
+        if (array_key_exists('description', $this->json)) {
+            $task->description = Markup::markAsHtml(Markup::purify((string) $this->json['description']));
         }
 
         if ($task->isDirty()) {

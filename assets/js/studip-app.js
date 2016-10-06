@@ -5,8 +5,8 @@ import Promise from 'bluebird'
 import StudipRouter from './routers/studip'
 
 import TaskTypes from './models/task_types'
-import MultipleChoice from './task-types/multiple-choice'
-import Scales from './task-types/scales'
+import MultipleChoice from './task-types/multiple-choice/multiple-choice'
+// import Scales from './task-types/scales'
 
 import core_css from '../scss/core.scss'
 

@@ -5,8 +5,8 @@ import Promise from 'bluebird'
 import PollsRouter from './routers/polls'
 
 import TaskTypes from './models/task_types'
-import MultipleChoice from './task-types/multiple-choice'
-import Scales from './task-types/scales'
+import MultipleChoice from './task-types/multiple-choice/multiple-choice'
+// import Scales from './task-types/scales'
 
 import core_css from '../scss/core.scss'
 

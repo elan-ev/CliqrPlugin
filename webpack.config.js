@@ -11,7 +11,7 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
 module.exports = {
-    devtool: isProd ? 'hidden-source-map' : 'cheap-module-eval-source-map',
+    devtool: isProd ? '#hidden-source-map' : '#eval-source-map',
     context: path.join(__dirname, './assets/js'),
     entry: {
         studip: './studip-app.js',

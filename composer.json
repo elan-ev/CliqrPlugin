@@ -3,12 +3,14 @@
         "pimple/pimple": "v1.0.1",
         "pusher/pusher-php-server": "2.1.*",
         "kairos/phpqrcode": "dev-master",
-        "machuga/authority" : "dev-master"
+        "machuga/authority" : "dev-master",
+        "stefk/jval": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "Cliqr\\": "lib/"
         },
-        "classmap": ["app/controllers/"]
+        "classmap": ["app/controllers/"],
+        "files": ["lib/functions.php"]
     }
 }

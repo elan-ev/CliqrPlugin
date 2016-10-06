@@ -1,0 +1,42 @@
+{
+  "title": "EAufgaben MC Schema",
+  "type": "object",
+  "properties": {
+    "type": {
+        "type": "string",
+        "pattern": "single|multiple"
+    },
+    "answers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/answer"
+      }
+    }
+  },
+  "definitions": {
+    "answer": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "score": {
+          "type": "integer"
+        },
+        "feedback": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "score",
+        "feedback"
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "answers"
+  ]
+}

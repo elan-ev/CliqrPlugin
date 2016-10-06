@@ -12,25 +12,20 @@ const MCTask = Task.extend({
 
     validate({ description, task }, options) {
         if (!description || _.isEmpty(description)) {
-            return {
-                'attribute': 'description',
-                'text': 'Die Frage kann nicht leer sein.'
-            }
+            return 'Der Fragetext darf nicht leer sein.'
+        }
+
+        if (window.STUDIP.wysiwyg && description.trim() === window.STUDIP.wysiwyg.htmlMarker) {
+            return 'Der Fragetext darf nicht leer sein.'
         }
 
         if (!task) {
-            return {
-                'attribute': 'task',
-                'text': 'Task fehlt.'
-            }
+            return 'Task fehlt.'
         }
 
         const { answers = false } = task
         if (!answers || _.isEmpty(answers)) {
-            return {
-                'attribute': 'task.answers',
-                'text': 'Es wird mindestens eine Antwort benötigt.'
-            }
+            return 'Es wird mindestens eine Antwort benötigt.'
         }
 
         return null
@@ -38,18 +33,17 @@ const MCTask = Task.extend({
 
     addAnswer(data = {}, options = {}) {
         const oldTask = this.get('task')
-        const answers = [ ...oldTask.answers, { text: '', score: 0, feedback: 0, ...data  } ]
+        const answers = [ ...oldTask.answers, { text: '', score: 0, feedback: '', ...data  } ]
         this.set('task', { ...oldTask, answers }, options)
     },
 
     removeAnswer(index, options = {}) {
         const oldTask = this.get('task')
-        console.log("before", arguments, oldTask)
         const answers = [
             ...oldTask.answers.slice(0, index),
             ...oldTask.answers.slice(index + 1),
         ]
-        this.set('task', _.tap({ ...oldTask, answers }, (x) => console.log("after", x)), options)
+        this.set('task', { ...oldTask, answers })
     },
 
     updateAnswer(index, data, options = {}) {

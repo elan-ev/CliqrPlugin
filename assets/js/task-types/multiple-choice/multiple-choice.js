@@ -1,16 +1,16 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import AssignmentView from './multiple-choice/assignment'
-import CreateView from './multiple-choice/create'
-import EditView from './multiple-choice/edit'
-import PollView from './multiple-choice/poll'
-import ShowView from './multiple-choice/show'
+import AssignmentView from './assignment'
+import CreateView from './create'
+import EditView from './edit'
+import PollView from './poll'
+import ShowView from './show'
 
-import MCTask from './multiple-choice/task'
-import MCResponse from './multiple-choice/response'
+import MCTask from './task'
+import MCResponse from './response'
 
-import mc_css from './multiple-choice/multiple-choice.scss'
+import mc_css from './multiple-choice.scss'
 
 class MultipleChoice {
     constructor(task) {

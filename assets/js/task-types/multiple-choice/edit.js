@@ -1,70 +1,19 @@
-import Backbone from 'backbone'
-import _ from 'underscore'
+import FormView from './form'
 
-const EditView = Backbone.View.extend({
-
-    tagName: 'section',
+const EditView = FormView.extend({
 
     className: 'cliqr--multiple-choice-edit-view',
 
-    events: {
-        'click .js-add': 'onClickAdd',
-        'click .js-remove': 'onClickRemove',
-        'submit form': 'onSubmitForm',
-
-        'keypress #task-description': 'onDescriptionUpdate',
-        'change #task-description': 'onDescriptionUpdate',
-        'input #task-description': 'onDescriptionUpdate',
-
-        'keypress input.choice': 'onChoiceUpdate',
-        'change input.choice': 'onChoiceUpdate',
-        'input input.choice': 'onChoiceUpdate'
-    },
-
-    initialize(options) {
-        this.type = options.type
-
-        this.listenTo(this.model, 'change', this.render)
-
-        this.listenTo(this.model, 'change', (model) => {
-            console.log("model changed:", model)
-        })
-    },
-
-    render() {
-        const template = require('./multiple-choice-edit.hbs')
-        this.$el.html(template({ task: this.model.toJSON() }))
-        return this
-    },
-
-    onClickAdd(event) {
-        event.preventDefault()
-
-        this.model.addAnswer()
-    },
-
-    onClickRemove(event) {
-        event.preventDefault()
-
-        const index = parseInt(Backbone.$(event.target).closest('.choice-input').find('input[name]').attr('name').match(/\d+/)[0], 10)
-        this.model.removeAnswer(index)
-    },
-
-    onDescriptionUpdate(event) {
-        const description = Backbone.$(event.target).val()
-        this.model.set({ description }, { silent: true })
-    },
-
-    onChoiceUpdate(event) {
-        const $inputEl = Backbone.$(event.target),
-              index = parseInt($inputEl.attr('name').match(/\d+/)[0], 10),
-              text = $inputEl.val()
-        this.model.updateAnswer(index, { text })
-    },
-
     onSubmitForm(event) {
         event.preventDefault()
-        this.type.trigger('editTask', this.model)
+        if (this.model.isValid()) {
+            this.type.trigger('editTask', this.model)
+        }
+    },
+
+    onClickCancel(event) {
+        event.preventDefault()
+        Backbone.history.navigate(`/task/show/${this.model.id}`, { trigger: true })
     }
 })
 

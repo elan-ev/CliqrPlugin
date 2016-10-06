@@ -4,7 +4,7 @@
 
 <td class="cliqr--task-header">
     <a href="#task/show/{{id}}">
-        {{description}}
+        {{#if title}}{{title}}{{else}}{{strip_tags description_html}}{{/if}}
     </a>
     <div class="cliqr--task-last-assignment">
         {{#if last_voting}}

@@ -99,7 +99,7 @@ class StudIPv34Migrator
                 'type' => 'single',
                 'answers' => array_map(
                     function ($item) {
-                        return ['text' => $item, 'score' => 0, 'feedback' => null];
+                        return ['text' => $item, 'score' => 0, 'feedback' => ''];
                     },
                     $question->questiondata['options']->getArrayCopy()),
             ],

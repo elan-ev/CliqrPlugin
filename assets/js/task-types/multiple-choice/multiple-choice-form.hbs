@@ -1,0 +1,57 @@
+<form class="default" method="post" accept-char="UTF-8">
+
+    {{#if error}}
+        <div class="messagebox messagebox_error">
+            Fehler: {{error}}
+        </div>
+    {{/if}}
+
+    <fieldset>
+        <legend>Multiple-Choice-Frage</legend>
+        <label>
+            Was möchten Sie fragen?
+            <div class="cliqr--mc-description"></div>
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <legend>Antwortmöglichkeiten</legend>
+        <label>
+            Tragen Sie die Antworten ein
+
+            <div class="choices">
+                {{#each task.task.answers}}
+                    <div class="choice-input">
+                        <span class="nominal">{{nominal @index}}</span>
+
+                        <input
+                            class="choice" maxlength="100" type="text"
+                            name="answers[{{@index}}]"
+                            value="{{text}}" required>
+
+                        <span class="cliqr--mc-choice-actions">
+                            {{fab "remove" "Entfernen" "trash"}}
+                            {{fab "options" "Optionen" "tools"}}
+                        </span>
+                    </div>
+                {{/each}}
+
+                {{button "add" "Antwort hinzufügen" icon="add" class="choice-add"}}
+
+                {{#unless task.task.answers}}
+                    <div class="choices-required">
+                        <select required oninvalid="setCustomValidity('{{i18n "Mindestens eine Antwort wird benötigt."}}')"></select>
+                    </div>
+                {{/unless}}
+            </div>
+
+        </label>
+    </fieldset>
+
+    <fieldset>
+        {{button "save" "Speichern" icon="accept"}}
+        {{#if task.id}}
+            {{button "cancel" "Abbrechen" icon="decline"}}
+        {{/if}}
+    </fieldset>
+</form>

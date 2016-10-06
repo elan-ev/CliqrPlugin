@@ -118,6 +118,12 @@ class Task extends \eAufgaben\DB\Task
 
         $result = $this->toArray('id type title description task user_id created changed');
 
+        $result['description_html'] = formatReady($result['description']);
+
+        if (!$result['title']) {
+#            $result['title'] = substr(strip_tags($result['description_html']), 0, 255);
+        }
+
         // TODO nicht sehr performant
         if (in_array('task_group_id', $include)) {
             $result['task_group_id'] = $this->getTaskGroup()->id;
