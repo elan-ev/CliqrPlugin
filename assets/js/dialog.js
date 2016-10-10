@@ -1,7 +1,5 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-//import Promise from 'bluebird'
-
 
 const showConfirmDialog = function (question, yes, no = null) {
     window.STUDIP.Dialog.confirm(question, yes, no)

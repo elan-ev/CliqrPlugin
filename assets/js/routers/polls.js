@@ -1,8 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 import { changeToPage } from '../utils'
-//import Promise from 'bluebird'
-
 // import { Schema, arrayOf, normalize } from 'normalizr'
 
 import VotingsCollection from '../models/votings'

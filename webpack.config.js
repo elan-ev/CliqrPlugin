@@ -16,7 +16,7 @@ module.exports = {
     entry: {
         studip: './studip-app.js',
         polls: './polls-app.js',
-        vendor: [ 'backbone'/*, 'bluebird'*/ ]
+        vendor: [ 'backbone' ]
     },
     output: {
         path: path.join(__dirname, './static'),

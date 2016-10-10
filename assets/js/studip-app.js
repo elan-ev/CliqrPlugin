@@ -1,9 +1,7 @@
 import Backbone from 'backbone'
 import jQuery from 'jquery'
-// import Promise from 'bluebird'
 
 import StudipRouter from './routers/studip'
-
 import TaskTypes from './models/task_types'
 import MultipleChoice from './task-types/multiple-choice/multiple-choice'
 // import Scales from './task-types/scales'
@@ -21,13 +19,6 @@ class StudIPCliqrApp {
     }
 
     initBackbone() {
-        /*
-        Promise.config({
-            longStackTraces: true,
-            warnings: true
-        })
-        */
-
         Backbone.$ = jQuery
 
         Backbone.ajax = function () {

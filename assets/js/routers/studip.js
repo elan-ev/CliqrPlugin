@@ -1,6 +1,5 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-// import Promise from 'bluebird'
 // import { Schema, arrayOf, normalize, unionOf, valuesOf } from 'normalizr'
 
 import { userRole, activateNavigation, showLoading, hideLoading, changeToPage } from '../utils'

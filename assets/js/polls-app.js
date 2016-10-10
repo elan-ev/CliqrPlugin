@@ -1,6 +1,5 @@
 import Backbone from 'backbone'
 import jQuery from 'jquery'
-//import Promise from 'bluebird'
 
 import PollsRouter from './routers/polls'
 
