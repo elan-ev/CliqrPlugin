@@ -1,8 +1,15 @@
 import { SafeString, escapeExpression } from 'handlebars/runtime'
 
+const iconMaker = (color, icon, text) => {
+    return (
+        `<img class="cliqr--button-icon" src="${[window.STUDIP.ASSETS_URL, 'images/icons/', color, '/', escapeExpression(icon), '.svg'].join('')}" alt="${text}">` +
+        `<img class="cliqr--button-icon-alt" src="${[window.STUDIP.ASSETS_URL, 'images/icons/white/', escapeExpression(icon), '.svg'].join('')}" alt="">`
+    )
+}
+
 const button = function (klass, text, { hash } ) {
     let { icon = false, disabled = false, color = "blue", once = false } = hash
-    let icon_el = ''
+    let icons = ''
     const disabledAttr = disabled ? 'disabled' : ''
 
     text = escapeExpression(text)
@@ -12,12 +19,12 @@ const button = function (klass, text, { hash } ) {
     const addClasses = (escapeExpression(hash['class']) || '') + (once ? ' cliqr--click-once' : '')
 
     if (icon) {
-        icon_el = `<img src="${[window.STUDIP.ASSETS_URL, 'images/icons/', color, '/', escapeExpression(icon), '.svg'].join('')}" alt="${text}">`
+        icons = iconMaker(color, icon, text)
     }
 
     return new SafeString(`
             <button type="submit" class="button cliqr--button ${klass} ${addClasses}" name="${text}" ${disabledAttr}>
-              ${icon_el} ${text}
+              ${icons} ${text}
             </button>`)
 }
 

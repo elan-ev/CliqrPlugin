@@ -93,8 +93,8 @@ class StudIPv34Migrator
 
         $result = [
             'type' => 'multiple-choice',
-            'title' => '',
-            'description' => $questionnaire->title,
+            'title' => $questionnaire->title,
+            'description' => $question->questiondata['question'],
             'task' => [
                 'type' => 'single',
                 'answers' => array_map(
@@ -133,8 +133,8 @@ class StudIPv34Migrator
             if (!$task = Task::create(
                     [
                         'type' => 'multiple-choice',
-                        'title' => '',
-                        'description' => $question['description'],
+                        'title' => $question['title'],
+                        'description' => $question['description'] ?: $question['title'],
                         'task' => $question['task'],
                         'created' => date('c', $question['created']),
                         'changed' => date('c', $question['changed']),

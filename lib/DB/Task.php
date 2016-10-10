@@ -88,8 +88,10 @@ class Task extends \eAufgaben\DB\Task
     public function duplicateInTaskGroup(Assignment $taskGroup = null)
     {
         $data = $this->toArray('type title description task user_id');
+        $duplicate = Task::build($data);
         $taskGroup = $taskGroup ?: $this->getTaskGroup();
-        return self::createInTaskGroup($taskGroup->range_id, $taskGroup->id, $data);
+
+        return $duplicate->createInTaskGroup($taskGroup->range_id, $taskGroup->id);
     }
 
     public function getVotings()
@@ -143,29 +145,22 @@ class Task extends \eAufgaben\DB\Task
         return $result;
     }
 
-    public static function createInTaskGroup($range_id, $task_group_id, $data)
+    public function createInTaskGroup($range_id, $task_group_id)
     {
         if (!$taskGroup = Assignment::findTaskGroup($range_id, $task_group_id)) {
             throw new \RuntimeException('Could not find task group: '.intval($task_group_id));
         }
 
         $now = date('c', time());
+        $this->created = $now;
+        $this->changed = $now;
 
-        if (!$task = self::create(
-                [
-                    'type' => $data['type'],
-                    'title' => $data['title'] ?: '',
-                    'description' => $data['description'],
-                    'task' => $data['task'],
-                    'created' => $now,
-                    'changed' => $now,
-                    'user_id' => $data['user_id'],
-                ])) {
+        if (!$this->store()) {
             throw new \RuntimeException('Could not store task');
         }
 
-        $taskGroup->test->addTask($task);
+        $taskGroup->test->addTask($this);
 
-        return $task;
+        return $this;
     }
 }

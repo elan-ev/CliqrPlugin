@@ -28,6 +28,28 @@ class TasksController extends CliqrStudipController
     /* ACTIONS                                                                 */
     /***************************************************************************/
 
+    public function show_action($id)
+    {
+        $task = Task::find($id);
+
+        if (!$this->can('read', 'Task', $task)) {
+            throw new \Trails_Exception(403);
+        }
+
+        if (!$task) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        // WIP
+        #$task->created = (new \DateTime());
+        #$task->store();
+
+        #$taskType = new MultipleChoice($task);
+        #var_dump($taskType->transformBeforeSave());exit;
+
+        $this->render_json($task->toJSON());
+    }
+
     public function create_action()
     {
         if (!$this->can('create', 'Task')) {
@@ -44,48 +66,34 @@ class TasksController extends CliqrStudipController
             throw new \Trails_Exception(400, 'TODO: wrong type');
         }
 
-        /*
-        $taskType = new MultipleChoice($task);
-        $specifics = $taskType->foo($this->json['task']);
-        */
+        $task = Task::build(
+            [
+                'description' => $this->json['description'],
+                'task' => $this->json['task'],
+                'type' => $this->json['type'],
+                'user_id' => $GLOBALS['user']->id
+            ]
+        );
 
-        $data = [
-            'description' => Markup::markAsHtml(Markup::purify((string) $this->json['description'])),
-            'task' => $this->json['task'],
-            'type' => $this->json['type'],
-            'user_id' => $GLOBALS['user']->id
-        ];
-
-        $task = Task::createInTaskGroup($this->cid, $this->json['task_group_id'], $data);
-        $this->render_json($task->toJSON());
-    }
-
-    public function show_action($id)
-    {
-        $task = Task::find($id);
-
-        if (!$this->can('read', 'Task', $task)) {
-            throw new \Trails_Exception(403);
+        // TODO: use the type to get the right class
+        $taskType = new MultipleChoice();
+        $task = $taskType->transformBeforeSave($task);
+        if (!$taskType->isValid($task)) {
+            throw new \Trails_Exception(400, $taskType->validationError);
         }
 
-        if (!$task) {
-            throw new \Cliqr\RecordNotFound();
-        }
-
-        #$taskType = new MultipleChoice($task);
-        #var_dump($taskType->transformBeforeSave());exit;
+        $task->createInTaskGroup($this->cid, $this->json['task_group_id']);
 
         $this->render_json($task->toJSON());
     }
 
     public function update_action($id)
     {
+        // find it
         $task = Task::find($id);
-
-        if (!$this->can('update', 'Task', $task)) {
+        if ($this->cannot('update', 'Task', $task)) {
             throw new \Trails_Exception(403);
         }
-
         if (!$task) {
             throw new \Cliqr\RecordNotFound();
         }
@@ -95,30 +103,29 @@ class TasksController extends CliqrStudipController
             throw new \Trails_Exception(409, 'Cannot update task already used.');
         }
 
-        if (array_key_exists('task', $this->json)) {
-            /*
-              $taskType = new MultipleChoice($task);
-              $specifics = $taskType->foo($this->json['task']);
-              $task->task = $specifics;
-            */
-            $task->task = $this->json['task'];
+        foreach (words('type task description') as $key) {
+            if (!array_key_exists($key, $this->json)) {
+                throw new \Trails_Exception(400, 'TODO: '.$key.' required');
+            }
         }
 
-        // wysiwyg description
-        if (array_key_exists('title', $this->json)) {
-            $task->title = $this->json['title'];
+        if ($this->json['type'] !== 'multiple-choice') {
+            throw new \Trails_Exception(400, 'TODO: wrong type');
         }
 
-        // wysiwyg description
-        if (array_key_exists('description', $this->json)) {
-            $task->description = Markup::markAsHtml(Markup::purify((string) $this->json['description']));
+        foreach (words('task title description') as $key) {
+            if (array_key_exists($key, $this->json)) {
+                $task->$key = $this->json[$key];
+            }
         }
 
-        if ($task->isDirty()) {
-            $task->changed = date('c');
+        // TODO: use the type to get the right class
+        $taskType = new MultipleChoice();
+        $task = $taskType->transformBeforeSave($task);
+        if (!$taskType->isValid($task)) {
+            throw new \Trails_Exception(400, $taskType->validationError);
         }
 
-        // TODO: validate model
         $task->store();
 
         return $this->render_json($task->toJSON());

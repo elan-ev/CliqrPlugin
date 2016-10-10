@@ -7,54 +7,54 @@ use Studip\Markup;
 
 class MultipleChoice
 {
+    public $validationError;
 
-    private $task;
-
-    private $validationError;
-
-    public function __construct(Task $task)
+    public function isValid($task)
     {
-        $this->task = $task;
+        return !($this->validationError = $this->validate($task) ?: null);
     }
 
-    public function isValid()
+    private function validate($task)
     {
-        return !($this->validationError = $this->validate() ?: null);
-    }
+        if (!strlen($task->description)) {
+            return \Cliqr\i18n('Der Fragetext darf nicht leer sein');
+        }
 
-    private function validate()
-    {
-        if (!strlen($this->task->description)) {
+        if ($task->description === Markup::HTML_MARKER) {
             return \Cliqr\i18n('Der Fragetext darf nicht leer sein.');
         }
 
-        if ($this->task->description === Markup::HTML_MARKER) {
-            return \Cliqr\i18n('Der Fragetext darf nicht leer sein.');
-        }
-
-        if (empty($this->task->task)) {
+        if (empty($task->task)) {
             return \Cliqr\i18n('Task fehlt.');
         }
 
-        if (!array_key_exists('answers', $this->task->task) || empty($this->task->task['answers'])) {
-            return \Cliqr\i18n('Es wird mindestens eine Antwort benötigt.');
-        }
-
-        return null;
+        return $this->validateJsonSchema($task);
     }
 
-    public function transformBeforeSave()
+    public function transformBeforeSave($task)
     {
-        /*
-        $data = json_decode((string)$this->task->task);
+        // purify HTML in description
+        $task->description = Markup::markAsHtml(Markup::purify((string) $task->description));
+
+        return $task;
+    }
+
+    private function validateJsonSchema($task)
+    {
+        $mcTask = json_decode((string)$task->task);
 
         $schemaFile = __DIR__ . '/mc.json';
         $schema = json_decode(file_get_contents($schemaFile));
 
         $validator = \JVal\Validator::buildDefault();
-        $violations = $validator->validate($data, $schema, 'file://'. $schemaFile);
-        */
+        $violations = $validator->validate($mcTask, $schema, 'file://'. $schemaFile);
 
-        return $this->task;
+        if (!empty($violations)) {
+            return join(' ', array_map(function ($vltn) {
+                return $vltn['path'] . ' ' . $vltn['message'];
+            }, $violations));
+        }
+
+        return null;
     }
 }
