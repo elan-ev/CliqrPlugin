@@ -8,7 +8,8 @@
     "start": "./node_modules/.bin/webpack-dev-server --history-api-fallback --progress --port 3000",
     "build": "node build.js development",
     "buildp": "node build.js production",
-    "wds": "`npm bin`/webpack-dev-server --port 8081"
+    "wds": "`npm bin`/webpack-dev-server --port 8081",
+    "zip": "zip -r cliqr.zip app assets CliqrPlugin.php config.php lib LICENSE migrations plugin.manifest README.md static vendor"
   },
   "devDependencies": {
     "autoprefixer": "6.4.0",
