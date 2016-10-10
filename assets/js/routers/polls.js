@@ -1,9 +1,9 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 import { changeToPage } from '../utils'
-import Promise from 'bluebird'
+//import Promise from 'bluebird'
 
-import { Schema, arrayOf, normalize } from 'normalizr'
+// import { Schema, arrayOf, normalize } from 'normalizr'
 
 import VotingsCollection from '../models/votings'
 
@@ -41,6 +41,7 @@ const PollsRouter = Backbone.Router.extend({
 
         if (cliqr.bootstrap.polls) {
 
+            /*
             const pollSchema = new Schema('poll')
             const testSchema = new Schema('test')
             const taskSchema = new Schema('task')
@@ -54,6 +55,7 @@ const PollsRouter = Backbone.Router.extend({
 
             const response = normalize(cliqr.bootstrap.polls, arrayOf(pollSchema));
             console.log("normalizred", response)
+            */
         }
     },
 

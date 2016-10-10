@@ -1,7 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-import Promise from 'bluebird'
-import { Schema, arrayOf, normalize, unionOf, valuesOf } from 'normalizr'
+// import Promise from 'bluebird'
+// import { Schema, arrayOf, normalize, unionOf, valuesOf } from 'normalizr'
 
 import { userRole, activateNavigation, showLoading, hideLoading, changeToPage } from '../utils'
 
@@ -144,7 +144,7 @@ const StudipRouter = Backbone.Router.extend({
         this.selector = options.selector
 
         if (window.cliqr.bootstrap.taskGroups) {
-
+            /*
             const taskGroupSchema = new Schema('task_group')
             const testSchema = new Schema('test')
             const taskSchema = new Schema('task')
@@ -160,6 +160,7 @@ const StudipRouter = Backbone.Router.extend({
             });
             const response = normalize(window.cliqr.bootstrap.taskGroups, arrayOf(taskGroupSchema));
             console.log("normalizred", response)
+            */
         }
     },
 

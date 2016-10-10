@@ -16,11 +16,12 @@ module.exports = {
     entry: {
         studip: './studip-app.js',
         polls: './polls-app.js',
-        vendor: [ 'backbone' ]
+        vendor: [ 'backbone'/*, 'bluebird'*/ ]
     },
     output: {
         path: path.join(__dirname, './static'),
-        filename: '[name].js'
+        filename: '[name].js',
+        pathinfo: !isProd
     },
     module: {
         loaders: [
@@ -95,7 +96,7 @@ module.exports = {
                 warnings: false
             },
             output: {
-                comments: false
+                comments: !isProd
             },
             sourceMap: false
         }),

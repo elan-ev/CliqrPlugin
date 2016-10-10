@@ -1,6 +1,6 @@
 import Backbone from 'backbone'
 import jQuery from 'jquery'
-import Promise from 'bluebird'
+// import Promise from 'bluebird'
 
 import StudipRouter from './routers/studip'
 
@@ -21,10 +21,12 @@ class StudIPCliqrApp {
     }
 
     initBackbone() {
+        /*
         Promise.config({
             longStackTraces: true,
             warnings: true
         })
+        */
 
         Backbone.$ = jQuery
 
