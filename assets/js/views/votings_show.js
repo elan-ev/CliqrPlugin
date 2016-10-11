@@ -11,6 +11,7 @@ const decorateVoting = function (voting) {
     const task = voting.getTask()
     return {
         ..._.omit(voting.toJSON(), 'test'),
+        responses_count: voting.get('responses').length,
         task: task.toJSON(),
         isRunning: voting.isRunning(),
         otherVotings: _.map(_.reject(task.get('votings'), (v) => v.id === voting.id), (attrs) => { return { ...attrs, isRunning: new Voting(attrs).isRunning() } })
@@ -78,14 +79,13 @@ const VotingsShowView = Viewmaster.extend({
 
         const dialog = Backbone.$(event.target).closest('.button').next('.dialog')
 
-        Backbone.$(window.document).one('dialog-open', (event, parameters) => Backbone.$(parameters.dialog).fitText())
-
         window.STUDIP.Dialog.show(dialog.html(), {
             id: 'dialog-qr',
-            width: 550,
+            width: 650,
             height: 700,
             title: dialog.attr('title'),
-            resize: false
+            buttons: null,
+            resize: true
         })
     },
 

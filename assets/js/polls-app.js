@@ -20,11 +20,6 @@ class PollCliqrApp {
     }
 
     initBackbone() {
-        Promise.config({
-            longStackTraces: true,
-            warnings: true
-        })
-
         Backbone.$ = jQuery
 
         Backbone.ajax = function () {

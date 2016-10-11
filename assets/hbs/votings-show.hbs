@@ -1,44 +1,49 @@
-<header class="cliqr--page-header">
-    {{#user_role 'lecturer'}}
-        <nav class="cliqr--breadcrumb">
-            <ol>
-                <li>
-                    <a href="#task-groups">
-                        Cliqr
-                    </a>
-                </li>
-                <li>
-                    <a href="#task-groups-{{task.task_group_id}}">
-                        Fragensammlung &laquo;{{task.task_group_title}}&raquo;
-                    </a>
-                </li>
-                <li>
-                    <a href="#task/show/{{task.id}}">
-                        Frage {{#if task.title}} &laquo;{{task.title}}&raquo; {{/if}}
-                    </a>
-                </li>
-            </ol>
-        </nav>
-    {{/user_role}}
-</header>
-
 {{#if isRunning}}
     <nav class="cliqr--voting-is-running">
+
         <div class="url">
-            Abstimmen unter
+            Abstimmen:
             <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
         </div>
 
-        {{button "show-qr-code" "QR-Code zeigen" icon="code-qr"}}
-        <div class="dialog" title="Abstimmen unter" style=display:none>
-            <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
-            <img class="qr" src="{{qr_code}}">
+        <div class="show-qr-code">
+            {{button "show-qr-code" "QR-Code zeigen" icon="code-qr"}}
+            <div class="dialog" title="Abstimmen unter" style=display:none>
+                <a class="short" href="{{cliqr_short_url}}">{{cliqr_short_url}}</a>
+                <img class="qr" src="{{qr_code}}">
+            </div>
         </div>
 
-
-        {{button "stop" "Beenden" once=true}}
+        <div class="actions">
+            {{button "stop" "Beenden" once=true icon="stop"}}
+        </div>
     </nav>
 {{/if}}
+
+<header class="cliqr--page-header">
+    <nav class="cliqr--breadcrumb">
+        <ol>
+            <li>
+                <a href="#task-groups">
+                    Cliqr
+                </a>
+            </li>
+            <li>
+                <a href="#task-groups-{{task.task_group_id}}">
+                    Fragensammlung &laquo;{{task.task_group_title}}&raquo;
+                </a>
+            </li>
+            <li>
+                <a href="#task/show/{{task.id}}">
+                    Frage {{#if task.title}} &laquo;{{task.title}}&raquo; {{/if}}
+                </a>
+            </li>
+        </ol>
+    </nav>
+    <!-- TODO
+    <span class="cliqr--sample-size">{{responses_count}} Stimme/n</span>
+    -->
+</header>
 
 <main></main>
 
