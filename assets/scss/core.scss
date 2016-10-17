@@ -541,6 +541,7 @@ body.cliqr--loading #layout-sidebar .sidebar-image:first-child {
     nav.cliqr--voting-is-running {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
 
       border-bottom: 2px dotted #aaa;
       margin-bottom: 2em;
@@ -558,9 +559,11 @@ body.cliqr--loading #layout-sidebar .sidebar-image:first-child {
 
       div.show-qr-code {
         flex: 1;
+        text-align: right;
       }
 
       div.actions {
+        margin-left: auto;
       }
     }
 
