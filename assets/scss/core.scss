@@ -86,11 +86,11 @@ body.cliqr--loading #layout-sidebar .sidebar-image:first-child {
 
 
   .cliqr--button-fab img {
-      top: calc(($button-size - $button-icon-size) * 0.5);
+    top: calc(($button-size - $button-icon-size) * 0.5);
   }
 
   .cliqr--button img {
-      top: calc(($studip-button-height - $button-icon-size) * 0.5);
+    top: calc(($studip-button-height - $button-icon-size) * 0.5);
   }
 
   .cliqr--button-fab,
@@ -610,23 +610,23 @@ body.cliqr--voting-show {
       margin: 0;
     }
   }
+}
 
-  .ui-dialog {
-    .ui-dialog-content {
-      text-align: center;
-      padding: 0;
-    }
+.ui-dialog.cliqr--dialog-qr {
+  .ui-dialog-content {
+    text-align: center;
+    padding: 0;
+  }
 
-    .short {
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-      display: block;
-      font-size: 50px;
-    }
+  .short {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    display: block;
+    font-size: 50px;
+  }
 
-    .qr {
-      width: 493px;
-      height: 493px;
-    }
+  .qr {
+    width: 493px;
+    height: 493px;
   }
 }

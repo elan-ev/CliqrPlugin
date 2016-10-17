@@ -80,7 +80,7 @@ const VotingsShowView = Viewmaster.extend({
         const dialog = Backbone.$(event.target).closest('.button').next('.dialog')
 
         window.STUDIP.Dialog.show(dialog.html(), {
-            id: 'dialog-qr',
+            dialogClass: 'cliqr--dialog-qr',
             width: 650,
             height: 700,
             title: dialog.attr('title'),
