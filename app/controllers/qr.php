@@ -45,13 +45,11 @@ class QrController extends CliqrStudipController
 
     private function createQRCode($url, $filename)
     {
-        $enc = \QRencode::factory();
-        $enc->size = 17;
-        $enc->margin = 2;
-        // bug!
-        $enc->fore_color = 0x101010;
-
-        return $enc->encodeSVG($url, $filename);
+        $renderer = new \BaconQrCode\Renderer\Image\Svg();
+        $renderer->setHeight(256);
+        $renderer->setWidth(256);
+        $writer = new \BaconQrCode\Writer($renderer);
+        $writer->writeFile($url, $filename);
     }
 
     private function generateFilename($url)
