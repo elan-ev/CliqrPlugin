@@ -114,26 +114,20 @@ class Task extends \eAufgaben\DB\Task
         return $ret;
     }
 
-    public function toJSON($include = 'task_group_id votings')
+    public function toJSON($omits = [])
     {
-        $include = words($include);
-
         $result = $this->toArray('id type title description task user_id created changed');
 
         $result['description_html'] = formatReady($result['description']);
 
-        if (!$result['title']) {
-#            $result['title'] = substr(strip_tags($result['description_html']), 0, 255);
-        }
-
         // TODO nicht sehr performant
-        if (in_array('task_group_id', $include)) {
+        if (!in_array('task.task_group_id', $omits)) {
             $result['task_group_id'] = $this->getTaskGroup()->id;
             $result['task_group_title'] = $this->getTaskGroup()->test->title;
         }
 
         // TODO nicht sehr performant
-        if (in_array('votings', $include)) {
+        if (!in_array('task.votings', $omits)) {
             $result['votings'] = $this->getVotings()->map(function ($poll) {
                 $ret = $poll->toArray('id test_id start end active');
                 $ret['responses_count'] = Response::countBySql('assignment_id = ?', [$poll->id]);

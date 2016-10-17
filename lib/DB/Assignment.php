@@ -142,20 +142,22 @@ class Assignment extends eAssignment
         return $this->type = self::TYPE_TASK_GROUP;
     }
 
-    public function toJSON($include = 'test responses')
+    public function toJSON($omits = [])
     {
-        $include = words($include);
+        $otherOmits = array_filter($omits, function ($omit) {
+            return substr($omit, 0, strlen('assignment.')) !== 'assignment.';
+        });
 
         $result = $this->toArray('id test_id start end active');
 
         $result['is_task_group'] = $this->type == self::TYPE_TASK_GROUP;
         $result['is_voting'] = $this->type == self::TYPE_VOTING;
 
-        if (in_array('test', $include)) {
-            $result['test'] = $this->test->toJSON();
+        if (!in_array('assignment.test', $omits)) {
+            $result['test'] = $this->test->toJSON($otherOmits);
         }
 
-        if (in_array('responses', $include)) {
+        if (!in_array('assignment.responses', $omits)) {
             $result['responses'] = $this->responses->map(function ($resp) {
                 return $resp->response->getArrayCopy();
             });

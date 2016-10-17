@@ -36,6 +36,6 @@ class PollsController extends CliqrStudipController
     {
         $polls = Assignment::findVotingsAt('course', $cid, time());
 
-        return $polls->toJSON('test');
+        return $polls->toJSON(['assignment.responses']);
     }
 }

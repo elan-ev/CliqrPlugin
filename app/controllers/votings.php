@@ -35,7 +35,7 @@ class VotingsController extends CliqrStudipController
             throw new \Trails_Exception(403);
         }
 
-        $this->render_json($votings->toJSON());
+        $this->render_json($votings->toJSON(['task.votings']));
     }
 
     public function show_action($id)

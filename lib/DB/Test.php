@@ -9,12 +9,10 @@ class Test extends \eAufgaben\DB\Test
         return isset($this->options['voting']) && $this->options['voting'] == 1;
     }
 
-    public function toJSON($include = '')
+    public function toJSON($omits = [])
     {
-        $include = words($include);
-
         $result = $this->toArray('id title created changed');
-        $result['tasks'] = $this->tasks->toJSON();
+        $result['tasks'] = $this->tasks->toJSON($omits);
 
         return $result;
     }
