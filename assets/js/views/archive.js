@@ -9,7 +9,7 @@ const decorateVotings = function (votings) {
                 task: v.getTask().toJSON(),
                 responses_count: v.get('responses').length
             }
-        })
+        }).reverse()
     }
 }
 
