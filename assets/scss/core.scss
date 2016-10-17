@@ -48,6 +48,11 @@ body.cliqr--loading #layout-sidebar .sidebar-image:first-child {
 
 #cliqr-poll-container,
 #cliqr-container {
+
+  .cliqr--moment {
+    border-bottom: 1px dotted #ccc;
+  }
+
   /*
   // * Button */
 
