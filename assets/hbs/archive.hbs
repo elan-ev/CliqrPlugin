@@ -9,7 +9,7 @@
                 <div class="cliqr--archive-header">
                     <a href="#voting/{{id}}">
                         {{icon "test"}}
-                        {{task.title}}
+                        {{#if title}}{{task.title}}{{else}}{{strip_tags task.description_html}}{{/if}}
                     </a>
                 </div>
 
