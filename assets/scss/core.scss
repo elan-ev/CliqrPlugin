@@ -200,17 +200,19 @@ body.cliqr--loading #layout-sidebar .sidebar-image:first-child {
       padding-left: 0;
       line-height: 1.5em;
       list-style: none;
+      white-space: nowrap;
     }
 
     li {
-      float: left;
-      margin: 0 .5em 0 .8em;
+      // float: left;
+      display: inline-block;
+      margin: 0 .5em 0 .6em;
     }
 
     a {
       background: #ddd;
-      padding: .2em .8em;
-      float: left;
+      padding: .2em .6em;
+      // float: left;
       text-decoration: none;
       color: #444;
       position: relative;
