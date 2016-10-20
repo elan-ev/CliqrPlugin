@@ -1,4 +1,3 @@
 {
-  "presets": ["es2015-native-modules"],
-  "presets": ["es2015", "stage-0", "react"]
+    "presets": ["es2015", "stage-0"]
 }
