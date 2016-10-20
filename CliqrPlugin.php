@@ -38,8 +38,8 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $url = PluginEngine::getURL('cliqrplugin', compact('cid'), '', true);
 
         $navigation = new Navigation(_('Cliqr'), $url);
-        $navigation->setImage(Assets::image_path('icons/16/white/test.png'));
-        $navigation->setActiveImage(Assets::image_path('icons/16/black/test.png'));
+        $navigation->setImage(Icon::create('test', 'info_alt'));
+        $navigation->setActiveImage(Icon::create('test', 'info'));
 
         if ($perm->get_studip_perm($cid) === 'autor') {
             $navigation->addSubNavigation('index', new Navigation(_('Fragenarchiv'), $url.'#'));

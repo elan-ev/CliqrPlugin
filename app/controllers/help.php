@@ -14,7 +14,7 @@ class HelpController extends CliqrStudipController
     public function index_action()
     {
         global $template_factory;
-        $this->set_layout($template_factory->open('layouts/base_without_infobox'));
+        $this->set_layout($template_factory->open('layouts/base'));
 
         // set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
