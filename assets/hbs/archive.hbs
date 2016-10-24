@@ -3,25 +3,34 @@
 </header>
 
 <section class="cliqr--archive-votings">
-    <ol>
-        {{#each votings}}
-            <li>
-                <div class="cliqr--archive-header">
-                    <a href="#voting/{{id}}">
-                        {{icon "test"}}
-                        {{#if title}}{{task.title}}{{else}}{{strip_tags task.description_html}}{{/if}}
-                    </a>
-                </div>
+    <table class="default">
+        <thead>
+            <tr>
+                <th> Titel der Frage </th>
+                <th> Datum </th>
+                <th> Anzahl Antworten </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each votings}}
+                <tr>
+                    <td class="cliqr--archive-header">
+                        <a href="#voting/{{id}}">
+                            {{icon "test"}}
+                            {{#if title}}{{task.title}}{{else}}{{strip_tags task.description_html}}{{/if}}
+                        </a>
+                    </td>
 
-                <div class="cliqr--archive-date">
-                    <div> {{moment start}} </div>
-                </div>
+                    <td class="cliqr--archive-date">
+                        <div> {{moment start}} </div>
+                    </td>
 
-                <div class="cliqr--archive-bubble">
-                    <span class="bubble" data-tooltip="Frage mit {{responses_count}} abgegebenen Antworten">{{responses_count}}</span>
-                </div>
+                    <td class="cliqr--archive-bubble">
+                        <span class="bubble" data-tooltip="Frage mit {{responses_count}} abgegebenen Antworten">{{responses_count}}</span>
+                    </td>
 
-            </li>
-        {{/each}}
-    </ol>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
 </section>

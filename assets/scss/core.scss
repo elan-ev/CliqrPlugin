@@ -506,38 +506,19 @@ button.cliqr--button {
   // * Votings Archive */
   section.cliqr--archive-votings {
 
-    * {
-      box-sizing: border-box;
-    }
-
-    > ol {
-
-      list-style: none;
-      padding-left: 0;
-
-      li {
-        lost-flex-container: row;
-      }
-    }
-
     .cliqr--archive-header {
-      lost-column: 8/12 0 0;
 
       > a {
         line-height: 3em;
         display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
         white-space: nowrap;
       }
     }
 
     .cliqr--archive-date {
-      lost-column: 3/12 0 0;
     }
 
     .cliqr--archive-bubble {
-      lost-column: 1/12 0 0;
     }
   }
 
