@@ -29,7 +29,6 @@ class PollCliqrApp {
     }
 
     initStuff() {
-        setTimeout( () => { Backbone.$('.self-destroy').remove() }, 5000)
     }
 
     initRouters(selector) {
