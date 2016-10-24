@@ -1,6 +1,13 @@
-<h2>Methodische Informationen zum Einsatz von Cliqr</h2>
+<header>
+    <h2>Methodische Informationen zum Einsatz von Cliqr</h2>
+</header>
 
-<h3>Wozu ist "Cliqr" gut?</h3>
+<style>
+    article{-webkit-column-width:31.25em;-moz-column-width:31.25em;column-width:31.25em}
+</style>
+
+<article>
+    <h3>Wozu ist "Cliqr" gut?</h3>
 
     Mit Cliqr lässt sich ein so genanntes Peer Instruction nach Eric
     Mazur (2006) durchführen. Dies in eine Methode, mit der die
@@ -8,7 +15,7 @@
     Möglichkeit erhalten, ihr Verständnis über die vorgetragenen
     Lerninhalte zu überprüfen.
 
-<h3>Wie geht das?</h3>
+    <h3>Wie geht das?</h3>
 
     Der Vortragende stellt alle 20&ndash;30 Minuten eine Frage mit mehreren
     Antwortoptionen (Single-Choice-Frage) ans Plenum. Jeder
@@ -24,24 +31,28 @@
     folgende Vorgehensweise empfohlen:
 
     <ol>
-      <li>
-        &gt;80% der Studierenden haben richtig geantwortet: Der Lehrende
-        gibt vertiefende Erklärungen zu den vorgetragenen Inhalten und
-        wendet sich dann einem neuen Thema zu.
-      <li>
-        30-80% haben richtig geantwortet: Der Lehrende fordert die
-        Studierenden auf mit ihren Nachbarn über die Antwortoptionen
-        zu diskutieren, um so auf das richtige Ergebnis zu
-        kommen. Danach lässt er erneut abstimmen.
+        <li>
+            &gt;80% der Studierenden haben richtig geantwortet: Der Lehrende
+            gibt vertiefende Erklärungen zu den vorgetragenen Inhalten und
+            wendet sich dann einem neuen Thema zu.
+        </li>
 
-      <li>
-        &lt;30% der Studierenden haben richtig geantwortet: Der
-        Lehrende erläutert noch mal die vorgetragenen Inhalte und
-        lässt erneut abstimmen.
+        <li>
+            30-80% haben richtig geantwortet: Der Lehrende fordert die
+            Studierenden auf mit ihren Nachbarn über die Antwortoptionen
+            zu diskutieren, um so auf das richtige Ergebnis zu
+            kommen. Danach lässt er erneut abstimmen.
+        </li>
+
+        <li>
+            &lt;30% der Studierenden haben richtig geantwortet: Der
+            Lehrende erläutert noch mal die vorgetragenen Inhalte und
+            lässt erneut abstimmen.
+        </li>
 
     </ol>
 
-<h3>Was für Erfahrungen gibt es?</h3>
+    <h3>Was für Erfahrungen gibt es?</h3>
 
     Technologien wie Cliqr haben eine große Verbreitung in den letzten
     Jahren erfahren und viele Lehrende bedienen sich weltweit dieser
@@ -49,27 +60,31 @@
     Erfahrungen von Prof. Dr. Riegler wieder:
 
     <a href="http://www.youtube.com/watch?v=3D-QERxwN9k2I">
-      &lt;http://www.youtube.com/watch?v=3D-QERxwN9k2I&gt;
+        &lt;http://www.youtube.com/watch?v=3D-QERxwN9k2I&gt;
     </a>
 
-<h3>Weitere Informationen?</h3>
+    <h3>Weitere Informationen?</h3>
 
     <ul>
-      <li>
-        Literatur: Eric Mazur (2006) Peer Instruction: Wie man es schafft, Studenten zum Nachdenken zu bringen.
-        <a href="http://www.bmo.physik.uni-muenchen.de/~riedle/E2p/skript/Mazur_22744.pdf">
-          &lt;http://www.bmo.physik.uni-muenchen.de/~riedle/E2p/skript/Mazur_22744.pdf&gt;
-        </a>
+        <li>
+            Literatur: Eric Mazur (2006) Peer Instruction: Wie man es schafft, Studenten zum Nachdenken zu bringen.
+            <a href="http://www.bmo.physik.uni-muenchen.de/~riedle/E2p/skript/Mazur_22744.pdf">
+                &lt;http://www.bmo.physik.uni-muenchen.de/~riedle/E2p/skript/Mazur_22744.pdf&gt;
+            </a>
+        </li>
 
-      <li>
-        Literatur: Werner Stangls Arbeitsblätter
-        <a href="http://arbeitsblaetter.stangl-taller.at/KOMMUNIKATION/Feedback.shtml">
-          &lt;http://arbeitsblaetter.stangl-taller.at/KOMMUNIKATION/Feedback.shtml&gt;
-        </a>
+        <li>
+            Literatur: Werner Stangls Arbeitsblätter
+            <a href="http://arbeitsblaetter.stangl-taller.at/KOMMUNIKATION/Feedback.shtml">
+                &lt;http://arbeitsblaetter.stangl-taller.at/KOMMUNIKATION/Feedback.shtml&gt;
+            </a>
+        </li>
 
-      <li>
-        Sofern an Ihrem Standort vorhanden, fragen Sie die
-        didaktischen Berater in den Hochschul- und Mediendidaktischen
-        Einrichtungen. Diese können Sie beim Einsatz von Cliqr
-        unterstützen.
+        <li>
+            Sofern an Ihrem Standort vorhanden, fragen Sie die
+            didaktischen Berater in den Hochschul- und Mediendidaktischen
+            Einrichtungen. Diese können Sie beim Einsatz von Cliqr
+            unterstützen.
+        </li>
     </ul>
+</article>
