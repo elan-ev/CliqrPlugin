@@ -55,6 +55,7 @@ const TasksShowView = Backbone.View.extend({
     renderTaskTypeView() {
         const taskTypeView = this.taskType.getShowView()
         this.$('main').append(taskTypeView.render().$el)
+        taskTypeView.postRender && taskTypeView.postRender()
     },
 
     onClickStart(event) {

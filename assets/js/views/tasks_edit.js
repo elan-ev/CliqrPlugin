@@ -52,6 +52,7 @@ const TasksEditView = Backbone.View.extend({
     renderTaskTypeView() {
         const taskTypeView = this.taskType.getEditView()
         this.$('main').append(taskTypeView.render().$el)
+        taskTypeView.postRender && taskTypeView.postRender()
     },
 
     onClickStart(event) {

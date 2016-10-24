@@ -27,10 +27,20 @@ const PollsIndexView = Viewmaster.extend({
     },
 
     update(...args) {
+        let pollView
         this.fresh = this.collection.firstFresh()
-        this.setView('main', this.fresh ? [ createPollView(this.fresh) ] : [])
+
+        if (this.fresh) {
+            pollView = createPollView(this.fresh)
+            this.setView('main', pollView)
+        }
+
         this.refreshViews()
         this.render()
+
+        if (pollView) {
+            pollView.postRender && pollView.postRender()
+        }
     },
 
     template: require('../../hbs/polls_index.hbs'),

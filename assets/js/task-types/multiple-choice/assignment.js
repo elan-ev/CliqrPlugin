@@ -60,6 +60,11 @@ const AssignmentView = Backbone.View.extend({
         return this
     },
 
+    postRender() {
+        const Hub = window.MathJax.Hub
+        this.$('.cliqr--mc-description, td.text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
+    },
+
     enhanceChart(context) {
         this.$('.chart').remove()
 

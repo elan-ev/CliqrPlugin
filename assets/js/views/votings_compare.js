@@ -30,8 +30,10 @@ const VotingsCompareView = Viewmaster.extend({
         const selectors = ['section.cliqr--voting-side-a main', 'section.cliqr--voting-side-b main']
 
         this.listenTo(this.votings, 'sync', (voting) => {
-            this.setView(selectors[this.votings.indexOf(voting)], getView(voting))
+            const view = getView(voting)
+            this.setView(selectors[this.votings.indexOf(voting)], view)
             this.refreshViews()
+            view.postRender && view.postRender()
         })
     },
 

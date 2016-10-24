@@ -26,6 +26,11 @@ const ShowView = Backbone.View.extend({
         const template = require('./multiple-choice-show.hbs')
         this.$el.html(template(decorateTask(this.model)))
         return this
+    },
+
+    postRender() {
+        const Hub = window.MathJax.Hub
+        this.$('.cliqr--mc-description, td.text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
     }
 })
 

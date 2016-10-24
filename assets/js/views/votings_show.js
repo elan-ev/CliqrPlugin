@@ -44,6 +44,10 @@ const VotingsShowView = Viewmaster.extend({
 
     postRender() {
         Backbone.$(window.document.body).addClass('cliqr--voting-show')
+        const mainViews = this.getViews('main')
+        if (mainViews.length) {
+            mainViews[0].postRender && mainViews[0].postRender()
+        }
     },
 
     remove() {

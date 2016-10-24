@@ -64,6 +64,7 @@ const TasksAddView = Backbone.View.extend({
             _.each(this.$creatorViews, (view, id) => view.$el.hide())
             if (selectedView) {
                 this.$('main').append(selectedView.render().$el.show())
+                selectedView.postRender && selectedView.postRender()
             }
         }
     },
