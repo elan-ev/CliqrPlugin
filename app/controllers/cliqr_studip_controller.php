@@ -19,18 +19,10 @@ abstract class CliqrStudipController extends \StudipController
     {
         $abs_base = $GLOBALS['ABSOLUTE_URI_STUDIP'];
 
-        // Fallback to HTTP for uos
-        // TODO remove me ASAP
-        if (0 === strncasecmp($abs_base, 'https', 5)) {
-            if (stripos($abs_base, 'uos.de') !== false || stripos($abs_base, 'uni-osnabrueck.de') !== false) {
-                $abs_base = 'http'.substr($abs_base, 5);
-            }
-        }
-
         // force an absolute URL
         \URLHelper::setBaseUrl($abs_base);
 
-        $url = current(explode('?', $this->url_for('polls', $cid)));
+        $url = current(explode('?', $this->url_for('polls', $cid))) . '?cancel_login=1';
 
         // reset to the default set in plugins.php
         \URLHelper::setBaseUrl($GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP']);
