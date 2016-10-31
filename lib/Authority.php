@@ -56,7 +56,9 @@ class Authority extends \Authority\Authority
 
         // ***** RESPONSE ****
         $this->allow('create', 'Response', function ($self) {
-            return $GLOBALS['perm']->have_studip_perm('autor', $this->container['cid']);
+            // creating responses may be unauthorized
+            return true;
+            // return $GLOBALS['perm']->have_studip_perm('autor', $this->container['cid']);
         });
     }
 }
