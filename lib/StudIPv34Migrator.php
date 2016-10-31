@@ -34,10 +34,12 @@ class StudIPv34Migrator
 
     private function getActivations()
     {
-        if (!$plugin = \PluginEngine::getPlugin('CliqrPlugin')) {
-            throw new \RuntimeException('Could not find active CliqrPlugin');
+        $pluginInfo = \PluginManager::getInstance()->getPluginInfo('CliqrPlugin');
+        if (is_null($pluginInfo)) {
+            return [];
+            // TODO throw new \RuntimeException('Could not find active CliqrPlugin');
         }
-        $id = $plugin->getPluginId();
+        $id = $pluginInfo['id'];
 
         $dbh = \DBManager::get();
         $stmt = $dbh->prepare('SELECT poiid FROM plugins_activated WHERE pluginid = ?');
