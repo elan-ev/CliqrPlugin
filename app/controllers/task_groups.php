@@ -106,6 +106,15 @@ class TaskGroupsController extends CliqrStudipController
         }
 
         $test = $taskGroup->test;
+        $tasks = $test->tasks;
+
+        foreach ($tasks as $task) {
+            foreach ($task->getVotings() as $voting) {
+                $voting->test->delete();
+            }
+            $task->delete();
+        }
+
         $test->delete();
 
         $this->render_json(['status' => 'OK']);
