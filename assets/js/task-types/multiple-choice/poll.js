@@ -1,9 +1,10 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
+import Viewmaster from '../../views/viewmaster'
+
 const decorateContext = function (response, voting) {
-    const task = voting.getTask(),
-          json = voting.toJSON()
+    const task = voting.getTask()
     return {
         response: response.toJSON(),
         voting: _.omit(voting.toJSON(), 'task'),
@@ -13,7 +14,7 @@ const decorateContext = function (response, voting) {
     }
 }
 
-const PollView = Backbone.View.extend({
+const PollView = Viewmaster.extend({
 
     className: 'cliqr--multiple-choice-poll-view',
 
@@ -23,17 +24,18 @@ const PollView = Backbone.View.extend({
 
 
     initialize(options) {
+        Viewmaster.prototype.initialize.call(this)
+
         this.voting = options.voting
     },
 
-    remove() {
-        Backbone.View.prototype.remove.call(this)
+    template: require('./multiple-choice-poll.hbs'),
+
+    context() {
+        return decorateContext(this.model, this.voting)
     },
 
-    render() {
-        const template = require('./multiple-choice-poll.hbs')
-        this.$el.html(template(decorateContext(this.model, this.voting)))
-        return this
+    postRender() {
     },
 
     onSubmitForm(event) {
