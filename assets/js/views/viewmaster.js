@@ -417,8 +417,12 @@ var Viewmaster = Backbone.View.extend({
             view.remove();
         });
         return this;
-    }
+    },
 
+    clearViews: function(sel) {
+        const views = this.getViews(sel) || []
+        views.forEach(view => view.remove())
+    }
 });
 
 export default Viewmaster
