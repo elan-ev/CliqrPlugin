@@ -111,6 +111,10 @@
         padding: 0 .5em;
       }
 
+      .choice-input  + .choice-input {
+        margin-top: 0.5em;
+      }
+
       .choice-input input {
         display: inline-block;
       }
