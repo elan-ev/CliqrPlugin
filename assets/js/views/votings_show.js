@@ -40,6 +40,10 @@ const VotingsShowView = Viewmaster.extend({
               taskType = taskTypes.getTaskType(task)
 
         this.setView('main', taskType.getAssignmentView(this.model))
+
+        if (this.model.isRunning()) {
+            this.interval = setInterval( () => this.model.fetch(), 2000)
+        }
     },
 
     postRender() {
