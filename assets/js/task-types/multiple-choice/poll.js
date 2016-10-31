@@ -36,6 +36,8 @@ const PollView = Viewmaster.extend({
     },
 
     postRender() {
+        const Hub = window.MathJax.Hub
+        this.$('.description, .text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
     },
 
     onSubmitForm(event) {
