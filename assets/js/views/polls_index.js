@@ -33,6 +33,8 @@ const PollsIndexView = Viewmaster.extend({
         if (this.fresh) {
             pollView = createPollView(this.fresh)
             this.setView('main', pollView)
+        } else {
+            this.clearViews('main')
         }
 
         this.refreshViews()
