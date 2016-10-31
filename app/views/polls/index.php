@@ -42,9 +42,7 @@
         <script src="<?= $ASSETS ?>vendor/tether/dist/js/tether.min.js"></script>
         <script src="<?= $ASSETS ?>vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
-        <script src="<?= $ASSETS ?>js/vendor/jquery.fittext.js"></script>
-        <script src="<?= $ASSETS ?>js/vendor/jquery.elastic.js"></script>
-
+        <script src="<?= \Assets::javascript_path('mathjax/MathJax.js?config=TeX-AMS_HTML,default') ?>"></script>
 
         <? if (TRUE || WDS ) { ?>
             <link charset="utf-8" href="http://localhost:8081/bundle.css" rel="stylesheet" media="screen, print">

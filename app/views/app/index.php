@@ -5,8 +5,6 @@ $this->set_layout($template_factory->open('layouts/base'));
 $PLGNURL = $plugin->getPluginURL();
 $ASSETS = $PLGNURL . '/assets/';
 #PageLayout::addStylesheet($ASSETS . 'css/questions/styles.css');
-PageLayout::addScript($ASSETS . 'js/vendor/jquery.fittext.js');
-PageLayout::addScript($ASSETS . 'js/vendor/jquery.elastic.js');
 
 PageLayout::addHeadElement('script', array(), '
 var cliqr = {
