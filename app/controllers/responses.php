@@ -14,8 +14,6 @@ class ResponsesController extends CliqrStudipController
     {
         parent::before_filter($action, $args);
 
-        $this->cid = self::requireContext();
-
         if (in_array($action, words('create'))) {
             if (!$this->hasJSONContentType()) {
                 throw new \Trails_Exception(400, 'TODO: has to be JSON');
@@ -34,15 +32,15 @@ class ResponsesController extends CliqrStudipController
             throw new \Trails_Exception(403);
         }
 
-        // ensure voting_id, task_id and the response's content
-        foreach (words('voting_id task_id response') as $key) {
+        // ensure cid voting_id, task_id and the response's content
+        foreach (words('course_id voting_id task_id response') as $key) {
             if (!array_key_exists($key, $this->json)) {
                 throw new \Trails_Exception(400, 'Could not create response');
             }
         }
 
         // try to find the voting
-        if (!$assignment = Assignment::findVoting($this->cid, $this->json['voting_id'])) {
+        if (!$assignment = Assignment::findVoting($this->json['course_id'], $this->json['voting_id'])) {
             throw new \Trails_Exception(400, 'Could not create response');
         }
 

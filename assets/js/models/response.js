@@ -19,7 +19,7 @@ const Response = Backbone.Model.extend({
 
     url(action) {
         let id = this.id != null ? '/' + this.id : ''
-        return cliqr.config.PLUGIN_URL + ('responses/' + action + id + '?cid=') + cliqr.config.CID
+        return cliqr.config.PLUGIN_URL + 'responses/' + action + id
     }
 })
 
