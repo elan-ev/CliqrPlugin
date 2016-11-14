@@ -14,6 +14,7 @@ $color-accent-contrast: #ffffff !default;
 $studip-button-height: 28px;
 $button-size: 44px;
 $button-icon-size: 16px;
+$button-icon-size-header: 32px;
 
 $bubble-font-size: 12px !default;
 $bubble-color: #ffffff !default;
@@ -103,8 +104,17 @@ button.cliqr--button-fab {
   margin: 0;
   padding: 0;
 
+  &.cliqr--flat {
+    border: none;
+    background-color: transparent;
+  }
+
   & + & {
     margin-left: 8px;
+  }
+
+  &.cliqr--flat + &.cliqr--flat {
+    margin-left: 0px;
   }
 
   transition: box-shadow 0.3s;
@@ -216,6 +226,17 @@ button.cliqr--button {
     vertical-align: middle;
   }
 
+  a > img.cliqr--icon {
+    margin-right: 0.25em;
+  }
+
+  h1 > img.cliqr--icon {
+    width: $button-icon-size-header;
+    height: $button-icon-size-header;
+    vertical-align: bottom;
+  }
+
+
   /*
   // * Breadcrumb */
 
@@ -309,16 +330,35 @@ button.cliqr--button {
     tbody {
       tr {
         line-height: 3em;
+        font-size: 1.1em;
       }
 
-      a {
-        font-weight: 800;
-        line-height: 3em;
-        display: block;
+      td {
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 40em;
       }
 
       td:last-child {
+        text-align: right;
         white-space: nowrap;
+      }
+
+      td.cliqr--empty {
+        text-align: left;
+      }
+
+      a {
+        line-height: 3em;
+        display: block;
+
+        &.cliqr--task-group-title {
+          font-weight: 800;
+        }
+
+        &.cliqr--task-group-changed {
+          color: color($color-accent whiteness(30%));
+        }
       }
     }
   }
@@ -375,10 +415,16 @@ button.cliqr--button {
   .cliqr--task-list {
 
     .cliqr--task-header {
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 40em;
+
+
       > a {
         line-height: 2.5em;
         display: block;
         font-weight: 800;
+        font-size: 1.1em;
       }
 
       .cliqr--task-last-assignment {
@@ -395,11 +441,11 @@ button.cliqr--button {
     }
 
     .cliqr--task-changed {
-      color: color(#000000 whiteness(50%));
-      font-size: 0.8em;
+      color: color($color-accent whiteness(50%));
     }
 
     .cliqr--task-actions {
+      text-align: right;
       white-space: nowrap;
     }
   }
@@ -597,7 +643,7 @@ button.cliqr--button {
       fieldset {
         select {
           margin-top: 0;
-          width: calc(100% - 35px);
+          width: calc(100% - 50px);
         }
 
         option[disabled] {
