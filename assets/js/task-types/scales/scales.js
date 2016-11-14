@@ -17,18 +17,6 @@ class Scales {
         this.task = task
     }
 
-    get id() {
-        return 'scales'
-    }
-
-    get icon() {
-        return 'code'
-    }
-
-    get name() {
-        return 'TODO: Skalen'
-    }
-
     // Ansicht eines Votings einer Frage
     getAssignmentView(voting) {
         return new AssignmentView({ model: this.task, voting, type: this })

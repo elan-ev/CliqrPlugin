@@ -31,13 +31,7 @@ const TasksAddView = Viewmaster.extend({
             $mode: this.$mode,
             $selectedType: this.$selectedType,
             taskTypes: taskTypes.map(t => {
-                const instance = new (t.get('class'))
-                return {
-                    id: t.id,
-                    name: instance.name,
-                    icn: instance.icon,
-                    selected: t.id === this.$selectedType
-                }
+                return { ...t.toJSON(), selected: t.id === this.$selectedType }
             })
         }
     },

@@ -2,10 +2,6 @@ import Backbone from 'backbone'
 import jQuery from 'jquery'
 
 import StudipRouter from './routers/studip'
-import TaskTypes from './models/task_types'
-import MultipleChoice from './task-types/multiple-choice/multiple-choice'
-import Scales from './task-types/scales/scales'
-
 import core_css from '../scss/core.scss'
 
 class StudIPCliqrApp {
@@ -13,7 +9,6 @@ class StudIPCliqrApp {
         this.initBackbone()
         this.initStuff()
         this.initRouters(selector)
-        this.initTaskTypes()
 
         Backbone.history.start()
     }
@@ -35,11 +30,6 @@ class StudIPCliqrApp {
 
     initRouters(selector) {
         let router = new StudipRouter({ selector })
-    }
-
-    initTaskTypes() {
-        TaskTypes.add({ id: 'multiple-choice', class: MultipleChoice })
-        TaskTypes.add({ id: 'scales', class: Scales })
     }
 }
 

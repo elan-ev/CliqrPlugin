@@ -1,6 +1,10 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
+import MultipleChoice from '../task-types/multiple-choice/multiple-choice'
+import Scales from '../task-types/scales/scales'
+
+
 const TaskTypesCollection = Backbone.Collection.extend({
 
     getTaskType(task) {
@@ -14,5 +18,19 @@ const TaskTypesCollection = Backbone.Collection.extend({
 })
 
 const taskTypes = new TaskTypesCollection()
+
+taskTypes.add({
+    id: 'multiple-choice',
+    name: 'Multiple Choice',
+    icon: 'assessment',
+    class: MultipleChoice
+})
+
+taskTypes.add({
+    id: 'scales',
+    name: 'Skalen',
+    icon: 'code',
+    class: Scales
+})
 
 export default taskTypes

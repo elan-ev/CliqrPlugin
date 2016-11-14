@@ -17,18 +17,6 @@ class MultipleChoice {
         this.task = task
     }
 
-    get id() {
-        return 'multiple-choice'
-    }
-
-    get icon() {
-        return 'assessment'
-    }
-
-    get name() {
-        return 'Multiple Choice'
-    }
-
     // Ansicht eines Votings einer Frage
     getAssignmentView(voting) {
         return new AssignmentView({ model: this.task, voting, type: this })
