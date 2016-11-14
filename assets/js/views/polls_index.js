@@ -18,31 +18,32 @@ const PollsIndexView = Viewmaster.extend({
     },
 
     fresh: null,
+    pollView: null,
 
     initialize(options) {
         Viewmaster.prototype.initialize.call(this)
         this.listenTo(this.collection, 'newResponse', this.onNewResponse)
-        this.listenTo(this.collection, 'all', this.update)
-        this.update()
+        this.listenTo(this.collection, 'add:response', this.update)
+        // this.listenTo(this.collection, 'all', console.log)
+        this.update("initialize")
     },
 
     update(...args) {
+        // console.log("polls_index::update", args)
+
         let pollView
         this.fresh = this.collection.firstFresh()
 
         if (this.fresh) {
-            pollView = createPollView(this.fresh)
-            this.setView('main', pollView)
+            this.pollView = createPollView(this.fresh)
+            this.setView('main', this.pollView)
         } else {
             this.clearViews('main')
         }
 
         this.refreshViews()
         this.render()
-
-        if (pollView) {
-            pollView.postRender && pollView.postRender()
-        }
+        this.postRender()
     },
 
     template: require('../../hbs/polls_index.hbs'),
@@ -54,12 +55,25 @@ const PollsIndexView = Viewmaster.extend({
         }
     },
 
+    afterTemplate() {
+        // console.log("afterTemplate")
+    },
+
+    postRender() {
+        if (this.pollView) {
+            this.pollView.postRender && this.pollView.postRender()
+        }
+    },
+
+
     onClickRefresh(event) {
         event.preventDefault()
         window.location.reload(true)
     },
 
     onNewResponse(response, voting) {
+        this.clearViews('main')
+        this.refreshViews()
         voting.addResponse(response)
     }
 })
