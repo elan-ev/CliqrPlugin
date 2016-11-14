@@ -8,12 +8,12 @@
             </li>
             <li>
                 <a href="#task-groups-{{task.task_group_id}}">
-                    Fragensammlung &laquo;{{task.task_group_title}}&raquo;
+                    Fragensammlung &laquo;{{shorten task.task_group_title 40}}&raquo;
                 </a>
             </li>
             <li>
                 <a href="#task/show/{{task.id}}">
-                    Frage {{#if task.title}} &laquo;{{task.title}}&raquo; {{/if}}
+                    Frage {{#if task.title}} &laquo;{{shorten task.title 40}}&raquo; {{/if}}
                 </a>
             </li>
         </ol>

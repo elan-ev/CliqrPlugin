@@ -6,6 +6,7 @@
 
 <td class="cliqr--task-header">
     <a href="#task/show/{{id}}">
+        {{icon "assessment"}}
         {{#if title}}{{title}}{{else}}{{strip_tags description_html}}{{/if}}
     </a>
     <div class="cliqr--task-last-assignment">
@@ -20,15 +21,17 @@
 </td>
 
 <td class="cliqr--task-changed">
-    {{moment changed}}
+    <a href="#task/show/{{id}}">
+        {{moment changed}}
+    </a>
 </td>
 
 <td class="cliqr--task-actions">
     {{#if_state 'is_active'}}
-        {{fab "stop" "Stoppen" "pause" once=true}}
+        {{fab "stop" "Stoppen" "pause" once=true flat=true}}
         {{^}}
-        {{fab "start" "Starten" "play" once=true}}
+        {{fab "start" "Starten" "play" once=true flat=true}}
     {{/if_state}}
-    {{fab "duplicate" "Duplizieren" "add/files" once=true}}
-    {{fab "remove" "Löschen" "trash"}}
+    {{fab "duplicate" "Duplizieren" "add/files" once=true flat=true}}
+    {{fab "remove" "Löschen" "trash" flat=true}}
 </td>

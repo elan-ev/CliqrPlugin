@@ -35,8 +35,9 @@ const changeToPage = function (view, selector) {
     currentView = view
     Backbone.$(window).scrollTop(0)
     const container = getContainer(selector)
-    container.prepend(view.render().$el)
-    return typeof view.postRender === 'function' ? view.postRender() : void 0
+    container.prepend(view.$el)
+    view.render()
+    view.postRender &&  view.postRender()
 }
 
 export { showLoading, hideLoading, userRole, getContainer, activateNavigation, changeToPage }

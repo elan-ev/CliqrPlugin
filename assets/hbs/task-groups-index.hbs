@@ -23,29 +23,38 @@
                 </td>
 
                 <td>
-                    <a href="#task-groups-{{id}}">
+                    <a class="cliqr--task-group-title" href="#task-groups-{{id}}">
+                        {{icon "folder-full"}}
                         {{test.title}}
                     </a>
                 </td>
 
                 <td>
-                    <span class="bubble" data-tooltip="Fragensammlung mit {{tasks_count}} Frage/n">{{tasks_count}}</span>
+                    <a href="#task-groups-{{id}}">
+                        <span class="bubble" data-tooltip="Fragensammlung mit {{tasks_count}} Frage/n">{{tasks_count}}</span>
+                    </a>
                 </td>
 
                 <td>
-                    {{moment test.changed}}
+                    <a class="cliqr--task-group-changed" href="#task-groups-{{id}}">
+                        {{moment test.changed}}
+                    </a>
                 </td>
 
                 <td>
-                    {{fab "export" "Export" "archive3"}}
-                    {{fab "duplicate" "Duplizieren" "add/files" once=true}}
-                    {{fab "remove" "Löschen" "trash" }}
+                    {{fab "export" "Export" "archive3" flat=true}}
+                    {{fab "duplicate" "Duplizieren" "add/files" once=true flat=true}}
+                    {{fab "remove" "Löschen" "trash" flat=true}}
                 </td>
             </tr>
 
         {{else}}
             <tr>
-                <td class="cliqr--empty" colspan="5"> Es sind keine Fragensammlungen vorhanden.</td>
+                <td class="cliqr--empty" colspan="5">
+                    <p>
+                        Es sind keine Fragensammlungen vorhanden.
+                    </p>
+                </td>
             </tr>
         {{/each}}
 
@@ -53,7 +62,11 @@
             <tr>
                 <td colspan="5">
                     <div class="button-group">
-                        {{button "add-task-group" "Fragensammlung erstellen" icon="add"}}
+                        {{#if taskGroups}}
+                            {{button "add-task-group" "Fragensammlung erstellen" icon="add"}}
+                            {{^}}
+                            {{button "add-task-group" "Fragensammlung erstellen" icon="add" color="red"}}
+                        {{/if}}
                         {{button "import-task-group" "Import" icon="upload2"}}
                     </div>
                 </td>

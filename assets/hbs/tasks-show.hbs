@@ -8,7 +8,8 @@
             </li>
             <li>
                 <a href="#task-groups-{{task_group_id}}">
-                    Fragensammlung &laquo;{{task_group_title}}&raquo;
+                    {{icon "folder-full" color="black"}}
+                    Fragensammlung &laquo;{{shorten task_group_title 40}}&raquo;
                 </a>
             </li>
         </ol>
@@ -38,7 +39,7 @@
                 <li>
                     <a href="#voting/{{id}}">
                         <span>
-                            {{#if running}} {{icon 'play'}} {{else}} {{icon 'new/vote'}} {{/if}}
+                            {{#if running}} {{icon 'play'}} {{else}} {{icon 'vote'}} {{/if}}
                         </span>
                         {{moment start}}
                         <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
