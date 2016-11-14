@@ -1,0 +1,43 @@
+{
+    "title": "EAufgaben Scales Schema",
+    "type": "object",
+    "properties": {
+        "statements": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$ref": "#/definitions/statement"
+            }
+        },
+        "lrange_value": {
+            "type": "integer"
+        },
+        "hrange_value": {
+            "type": "integer"
+        },
+        "lrange_label": {
+            "type": ["string", "null"]
+        },
+        "hrange_label": {
+            "type": ["string", "null"]
+        }
+    },
+    "definitions": {
+        "statement": {
+            "type": "object",
+            "properties": {
+                "text": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "text"
+            ]
+        }
+    },
+    "required": [
+        "statements",
+        "lrange_value",
+        "hrange_value"
+    ]
+}

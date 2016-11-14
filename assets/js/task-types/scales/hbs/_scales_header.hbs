@@ -1,0 +1,20 @@
+<header>
+    <div class="cliqr--scales-description">{{{description_html}}}</div>
+
+    {{#with task}}
+        <div class="cliqr--scales-range">
+
+            auf einer Skala von
+
+            <span class="cliqr--scales-label">
+                {{#if lrange_label}} {{lrange_value}} ({{lrange_label}}) {{else}} {{lrange_value}} {{/if}}
+            </span>
+
+            bis
+
+            <span class="cliqr--scales-label">
+                {{#if hrange_label}} {{hrange_value}} ({{hrange_label}}) {{else}} {{hrange_value}} {{/if}}
+            </span>
+        </div>
+    {{/with}}
+</header>

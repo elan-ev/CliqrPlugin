@@ -1,5 +1,5 @@
 import Backbone from 'backbone'
-import Viewmaster from '../../views/viewmaster'
+import Viewmaster from '../../../views/viewmaster'
 
 const WysiwygComponent = Viewmaster.extend({
 
@@ -17,8 +17,6 @@ const WysiwygComponent = Viewmaster.extend({
 
         this.key = options.key
         this.listenTo(this.model, `change:${this.key}`, this.onModelChange)
-
-        // window.CKEDITOR && window.CKEDITOR.on('instanceCreated',  (c) => console.log("created", c.editor))
     },
 
     remove() {
@@ -35,7 +33,7 @@ const WysiwygComponent = Viewmaster.extend({
         }
     },
 
-    template: require('./component-wysiwyg.hbs'),
+    template: require('../hbs/component-wysiwyg.hbs'),
 
     context() {
         return {
@@ -55,12 +53,19 @@ const WysiwygComponent = Viewmaster.extend({
         if (element) {
             this.editor = element.getEditor()
             this.editor.on('change', this.onEditorChange, this)
+            this.editor.once('focus', this.onEditorFocus, this)
         }
     },
 
     onEditorChange({ editor }) {
         this.model.set(this.key, editor.getData(), { silent: true })
-        // console.log(this.model.get(this.key))
+    },
+
+    onEditorFocus({ editor }) {
+        // expand toolbar on focus
+        if (this.$('.cke_toolbox_collapser_min').length) {
+            editor.execCommand('toolbarCollapse')
+        }
     },
 
     onTextUpdate(event) {

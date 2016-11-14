@@ -1,0 +1,101 @@
+<form class="default" method="post" accept-char="UTF-8">
+
+    <fieldset>
+        <legend>Skalen</legend>
+        <p>
+            Teilnehmer können Aussagen auf einer Skala bewerten.
+        </p>
+        <p>
+            Geeignet für:
+        </p>
+        <ul>
+            <li>
+                Fragen mit numerischen Antworten
+            </li>
+            <li>
+                wenn Teilnehmer etwas bewerten sollen
+            </li>
+            <li>
+                Generieren von Statistiken
+            </li>
+        </ul>
+    </fieldset>
+
+    {{#if error}}
+        <div class="messagebox messagebox_error">
+            Fehler: {{error}}
+        </div>
+    {{/if}}
+
+    <fieldset>
+        <legend> Was möchten Sie fragen? </legend>
+        <label>
+            <div class="cliqr--scales-description"></div>
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <legend>Aussagen</legend>
+        <label>
+            Tragen Sie die Aussage/n ein
+
+            <div class="choices">
+                {{#each task.task.statements}}
+                    <div class="choice-input">
+                        <input
+                            class="choice" maxlength="100" type="text"
+                            name="statements[{{@index}}]"
+                            value="{{text}}" required>
+
+                        <span class="cliqr--scales-choice-actions">
+                            {{fab "remove" "Entfernen" "trash"}}
+                        </span>
+                    </div>
+                {{/each}}
+
+                {{button "add" "Aussage hinzufügen" icon="add" class="choice-add"}}
+
+                {{#unless task.task.statements}}
+                    <div class="choices-required">
+                        <select required oninvalid="setCustomValidity('{{i18n "Mindestens eine Aussage wird benötigt."}}')"></select>
+                    </div>
+                {{/unless}}
+            </div>
+
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <legend>Skalenenden</legend>
+        <label>
+            {{#with task.task}}
+            <div class="cliqr--scales-range">
+
+                <div>
+                    <label class="undecorated">
+                        <span> Minimum </span>
+                        <input class="cliqr--scales-lrange" maxlength="4" type="number" value="{{lrange_value}}" max="{{lrange_max}}">
+                    </label>
+                    <input class="cliqr--scales-llabel" maxlength="50" placeholder="Beschriftung (optional)" type="text" value="{{lrange_label}}">
+                </div>
+
+                <div>
+                    <label class="undecorated">
+                        <span> Maximum </span>
+                        <input class="cliqr--scales-hrange" maxlength="4" type="number" value="{{hrange_value}}" min="{{hrange_min}}">
+                    </label>
+                    <input class="cliqr--scales-hlabel" maxlength="50" placeholder="Beschriftung (optional)" type="text" value="{{hrange_label}}">
+                </div>
+
+            </div>
+            {{/with}}
+        </label>
+    </fieldset>
+
+    <footer>
+        {{button "save" "Speichern" icon="accept"}}
+        {{#if task.id}}
+            {{button "cancel" "Abbrechen" icon="decline"}}
+        {{/if}}
+    </footer>
+</form>

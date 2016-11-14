@@ -5,7 +5,7 @@ namespace Cliqr\TaskTypes;
 use Cliqr\DB\Task;
 use Studip\Markup;
 
-class MultipleChoice extends TaskType
+class Scales extends TaskType
 {
 
     protected function validate($task)
@@ -22,7 +22,15 @@ class MultipleChoice extends TaskType
             return \Cliqr\i18n('Task fehlt.');
         }
 
-        return $this->validateJsonSchema($task);
+        if ($violation = $this->validateJsonSchema($task)) {
+            return $violation;
+        }
+
+        if ($task->task['lrange_value'] >= $task->task['hrange_value']) {
+            return \Cliqr\i18n('Das Minimum muss kleiner als das Maximum sein.');
+        }
+
+        return null;
     }
 
     public function transformBeforeSave($task)
@@ -37,7 +45,7 @@ class MultipleChoice extends TaskType
     {
         $mcTask = json_decode((string)$task->task);
 
-        $schemaFile = __DIR__ . '/mc.json';
+        $schemaFile = __DIR__ . '/scales.json';
         $schema = json_decode(file_get_contents($schemaFile));
 
         $validator = \JVal\Validator::buildDefault();

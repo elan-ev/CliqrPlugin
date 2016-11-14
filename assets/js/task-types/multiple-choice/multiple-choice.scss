@@ -3,8 +3,8 @@
 
   .cliqr--multiple-choice-assignment-view {
 
-    $chartColor1: #3389b7;
-    $chartColor2: #96c7e1;
+    $chartColor1: #a9b6cb;
+    $chartColor2: #28497c;
     $color-detail: #000;
 
     .cliqr--mc-description {
@@ -138,6 +138,11 @@
   }
 
   .cliqr--multiple-choice-poll-view {
+
+    .description {
+      font-size: 2em;
+    }
+
     li {
       padding: 0;
     }
