@@ -29,6 +29,7 @@
              }};
         </script>
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.2.1/rangeslider.min.css" integrity="sha256-S6p5z6bvs2VqkMZwBeBfRARsc3kToRslSBxY0ueBY8U=" crossorigin="anonymous" />
     </head>
     <body>
 
@@ -41,6 +42,8 @@
         <script src="<?= $ASSETS ?>vendor/jquery/dist/jquery.min.js"></script>
         <script src="<?= $ASSETS ?>vendor/tether/dist/js/tether.min.js"></script>
         <script src="<?= $ASSETS ?>vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.2.1/rangeslider.min.js" integrity="sha256-m1d+U813zD9X9LX/Wb7Q1oH4XiVmqo6uk6kcA2zv7ug=" crossorigin="anonymous"></script>
 
         <script src="<?= \Assets::javascript_path('mathjax/MathJax.js?config=TeX-AMS_HTML,default') ?>"></script>
 
