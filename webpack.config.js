@@ -16,12 +16,14 @@ module.exports = {
     entry: {
         studip: './studip-app.js',
         polls: './polls-app.js',
-        vendor: [ 'backbone' ]
+        // vendor: [ 'backbone' ]
     },
     output: {
         path: path.join(__dirname, './static'),
+        chunkFilename: '[name].chunk.js',
         filename: '[name].js',
-        pathinfo: !isProd
+        pathinfo: !isProd,
+        publicPath: isProd ? undefined : 'http://localhost:8081/'
     },
     module: {
         loaders: [
@@ -79,11 +81,13 @@ module.exports = {
         new webpack.ProvidePlugin({
             Promise: 'imports?this=>global!exports?global.Promise!es6-promise'
         }),
+        /*
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: Infinity,
             filename: 'vendor.bundle.js'
         }),
+        */
         new webpack.LoaderOptionsPlugin({
             minimize: true,
             debug: !isProd,
