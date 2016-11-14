@@ -3,7 +3,6 @@
 namespace Cliqr;
 
 use Cliqr\DB\Task;
-use Cliqr\TaskTypes\MultipleChoice;
 use STUDIP\Markup;
 
 require_once 'cliqr_studip_controller.php';
@@ -40,13 +39,6 @@ class TasksController extends CliqrStudipController
             throw new \Cliqr\RecordNotFound();
         }
 
-        // WIP
-        #$task->created = (new \DateTime());
-        #$task->store();
-
-        #$taskType = new MultipleChoice($task);
-        #var_dump($taskType->transformBeforeSave());exit;
-
         $this->render_json($task->toJSON());
     }
 
@@ -62,7 +54,8 @@ class TasksController extends CliqrStudipController
             }
         }
 
-        if ($this->json['type'] !== 'multiple-choice') {
+        $knownTypes = $this->getKnownTypes();
+        if (!isset($knownTypes[$this->json['type']])) {
             throw new \Trails_Exception(400, 'TODO: wrong type');
         }
 
@@ -75,12 +68,7 @@ class TasksController extends CliqrStudipController
             ]
         );
 
-        // TODO: use the type to get the right class
-        $taskType = new MultipleChoice();
-        $task = $taskType->transformBeforeSave($task);
-        if (!$taskType->isValid($task)) {
-            throw new \Trails_Exception(400, $taskType->validationError);
-        }
+        $task = $this->validateTask($this->json['type'], $task);
 
         $task->createInTaskGroup($this->cid, $this->json['task_group_id']);
 
@@ -109,7 +97,8 @@ class TasksController extends CliqrStudipController
             }
         }
 
-        if ($this->json['type'] !== 'multiple-choice') {
+        $knownTypes = $this->getKnownTypes();
+        if (!isset($knownTypes[$this->json['type']])) {
             throw new \Trails_Exception(400, 'TODO: wrong type');
         }
 
@@ -119,12 +108,7 @@ class TasksController extends CliqrStudipController
             }
         }
 
-        // TODO: use the type to get the right class
-        $taskType = new MultipleChoice();
-        $task = $taskType->transformBeforeSave($task);
-        if (!$taskType->isValid($task)) {
-            throw new \Trails_Exception(400, $taskType->validationError);
-        }
+        $task = $this->validateTask($this->json['type'], $task);
 
         $task->store();
 
@@ -172,5 +156,30 @@ class TasksController extends CliqrStudipController
         $duplicate = $task->duplicateInTaskGroup();
 
         $this->redirect('tasks/show/'.$duplicate->id);
+    }
+
+    private function getKnownTypes()
+    {
+        return [
+            'multiple-choice' => '\\Cliqr\\TaskTypes\\MultipleChoice',
+            'scales' => '\\Cliqr\\TaskTypes\\Scales'
+        ];
+    }
+
+    private function getTaskType($type)
+    {
+        $knownTypes = $this->getKnownTypes();
+        $klass = $knownTypes[$type];
+        return new $klass();
+    }
+
+    private function validateTask($type, $task)
+    {
+        $taskType = $this->getTaskType($type);
+        $task = $taskType->transformBeforeSave($task);
+        if (!$taskType->isValid($task)) {
+            throw new \Trails_Exception(400, $taskType->validationError);
+        }
+        return $task;
     }
 }
