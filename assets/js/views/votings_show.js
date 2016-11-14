@@ -57,6 +57,9 @@ const VotingsShowView = Viewmaster.extend({
     remove() {
         Viewmaster.prototype.remove.call(this)
 
+        if (this.interval) {
+            clearInterval(this.interval)
+        }
         Backbone.$(window.document.body).removeClass('cliqr--voting-show')
     },
 
