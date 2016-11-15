@@ -12,7 +12,7 @@ class AppController extends CliqrStudipController
     {
         parent::before_filter($action, $args);
 
-        $this->cid = self::requireContext();
+        $this->cid = $this->requireContext();
 
         if (\Navigation::hasItem('/course/cliqr')) {
             \Navigation::activateItem('/course/cliqr/index');

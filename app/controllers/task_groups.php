@@ -13,7 +13,7 @@ class TaskGroupsController extends CliqrStudipController
     {
         parent::before_filter($action, $args);
 
-        $this->cid = self::requireContext();
+        $this->cid = $this->requireContext();
     }
 
     /***************************************************************************/

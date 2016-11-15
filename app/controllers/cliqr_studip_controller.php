@@ -189,9 +189,13 @@ abstract class CliqrStudipController extends \StudipController
     }
 
     // require a cid; throw a 400 otherwise
-    protected static function requireContext()
+    protected function requireContext()
     {
         $cid = self::ensureMD5(\Request::option('cid'));
+
+        if (!$this->plugin->isActivated($cid)) {
+            throw new \Trails_Exception(404);
+        }
 
         return $cid;
     }

@@ -13,7 +13,7 @@ class TasksController extends CliqrStudipController
     {
         parent::before_filter($action, $args);
 
-        $this->cid = self::requireContext();
+        $this->cid = $this->requireContext();
 
         if (in_array($action, words('create update'))) {
             if (!$this->hasJSONContentType()) {
