@@ -1,12 +1,13 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
+import Viewmaster from '../../views/viewmaster'
+
 const decorateTask = function (task, voting = null) {
     const task_id = task.get('id'),
           votes = tallyVotes(task, voting),
           json = voting.toJSON(),
           votes_total = _.reduce(votes, (sum, n) => { return sum + n }, 0)
-
 
     return {
         ...json,
@@ -32,35 +33,42 @@ const tallyVotes = function (task, voting) {
         counts[i] = 0
     }
     return _.reduce(voting && voting.get('responses'), (memo, response) => {
-        _.each(response.answer, (answer) => memo[answer]++)
+        _.each(response.answer, answer => memo[answer]++)
         return memo
     }, counts)
 }
 
-const AssignmentView = Backbone.View.extend({
+const AssignmentView =  Viewmaster.extend({
 
     tagName: 'section',
 
     className: 'cliqr--multiple-choice-assignment-view',
 
     initialize(options) {
+        Viewmaster.prototype.initialize.call(this)
+
         this.voting = options.voting
     },
 
-    render() {
-        const template = require('./multiple-choice-assignment.hbs'),
-              context = decorateTask(this.model, this.voting)
+    template: require('./multiple-choice-assignment.hbs'),
 
-        this.$el.html(template(context))
+    context() {
+        return decorateTask(this.model, this.voting)
+    },
 
+    afterTemplate() {
         if (!this.voting.isRunning()) {
-            this.enhanceChart(context)
+//            this.enhanceChart(this.context())
         }
 
-        return this
     },
 
     postRender() {
+        console.log("postRender", this.voting.isRunning())
+        if (!this.voting.isRunning()) {
+            this.enhanceChart(this.context())
+        }
+
         const Hub = window.MathJax.Hub
         this.$('.cliqr--mc-description, td.text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
     },
