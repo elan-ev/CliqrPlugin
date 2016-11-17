@@ -36,10 +36,19 @@ const VotingsShowView = Viewmaster.extend({
 
         this.listenTo(this.model, 'change', this.render)
 
-        const task = this.model.getTask(),
-              taskType = taskTypes.getTaskType(task)
+        const task = this.model.getTask()
 
-        this.setView('main', taskType.getAssignmentView(this.model))
+        taskTypes.fetchTaskType(task)
+            .then(taskType => {
+                const view = taskType.getAssignmentView(this.model)
+                this.setView('main', view)
+                this.refreshViews()
+
+                _.invoke([view], 'postRender')
+
+                return null
+            })
+
 
         if (this.model.isRunning()) {
             this.interval = setInterval( () => this.model.fetch(), 2000)
@@ -48,10 +57,7 @@ const VotingsShowView = Viewmaster.extend({
 
     postRender() {
         Backbone.$(window.document.body).addClass('cliqr--voting-show')
-        const mainViews = this.getViews('main')
-        if (mainViews.length) {
-            mainViews[0].postRender && mainViews[0].postRender()
-        }
+        _.invoke(this.getViews('main'), 'postRender')
     },
 
     remove() {

@@ -1,13 +1,11 @@
-import Backbone from 'backbone'
 import _ from 'underscore'
-
 import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
 
 const createPollView = function (voting) {
-    const taskType = taskTypes.getTaskType(voting.getTask())
-    return taskType.getPollView(voting).render()
- }
+    return taskTypes.fetchTaskType(voting.getTask())
+        .then(taskType => taskType.getPollView(voting))
+}
 
 const PollsIndexView = Viewmaster.extend({
 
@@ -22,28 +20,31 @@ const PollsIndexView = Viewmaster.extend({
 
     initialize(options) {
         Viewmaster.prototype.initialize.call(this)
+
         this.listenTo(this.collection, 'newResponse', this.onNewResponse)
         this.listenTo(this.collection, 'add:response', this.update)
-        // this.listenTo(this.collection, 'all', console.log)
-        this.update("initialize")
+        this.update()
     },
 
-    update(...args) {
-        // console.log("polls_index::update", args)
+    update() {
 
-        let pollView
         this.fresh = this.collection.firstFresh()
 
         if (this.fresh) {
-            this.pollView = createPollView(this.fresh)
-            this.setView('main', this.pollView)
+            createPollView(this.fresh)
+                .then(pollView => {
+                    this.pollView = pollView
+                    this.setView('main', this.pollView)
+                    this.refreshViews()
+                    this.render()
+                    this.postRender()
+                })
         } else {
             this.clearViews('main')
+            this.refreshViews()
+            this.render()
+            this.postRender()
         }
-
-        this.refreshViews()
-        this.render()
-        this.postRender()
     },
 
     template: require('../../hbs/polls_index.hbs'),
@@ -55,14 +56,8 @@ const PollsIndexView = Viewmaster.extend({
         }
     },
 
-    afterTemplate() {
-        // console.log("afterTemplate")
-    },
-
     postRender() {
-        if (this.pollView) {
-            this.pollView.postRender && this.pollView.postRender()
-        }
+        _.invoke([this.pollView], 'postRender')
     },
 
 

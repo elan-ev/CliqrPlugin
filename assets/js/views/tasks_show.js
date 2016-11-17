@@ -2,6 +2,8 @@ import Backbone from 'backbone'
 import _ from 'underscore'
 import { showConfirmDialog } from '../dialog'
 
+import Viewmaster from './viewmaster'
+
 import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
 
@@ -20,7 +22,7 @@ const decorateTask = function (task) {
     }
 }
 
-const TasksShowView = Backbone.View.extend({
+const TasksShowView = Viewmaster.extend({
 
     tagName: 'article',
 
@@ -35,27 +37,26 @@ const TasksShowView = Backbone.View.extend({
     taskType: null,
 
     initialize() {
-        //this.interval = setInterval( () => this.model.fetch(), 2000)
+        Viewmaster.prototype.initialize.call(this)
 
-        this.taskType = taskTypes.getTaskType(this.model)
+        taskTypes.fetchTaskType(this.model)
+            .then(taskType => {
+                this.taskType = taskType
+
+                const view = this.taskType.getShowView()
+                this.setView('main', view)
+                this.refreshViews()
+
+                _.invoke([view], 'postRender')
+
+                return null
+            })
     },
 
-    remove() {
-        //clearInterval(this.interval)
-        Backbone.View.prototype.remove.call(this)
-    },
+    template: require('../../hbs/tasks-show.hbs'),
 
-    render() {
-        const template = require('../../hbs/tasks-show.hbs')
-        this.$el.html(template({ ...decorateTask(this.model) }))
-        this.renderTaskTypeView()
-        return this
-    },
-
-    renderTaskTypeView() {
-        const taskTypeView = this.taskType.getShowView()
-        this.$('main').append(taskTypeView.render().$el)
-        taskTypeView.postRender && taskTypeView.postRender()
+    context() {
+        return { ...decorateTask(this.model) }
     },
 
     onClickStart(event) {
@@ -68,7 +69,7 @@ const TasksShowView = Backbone.View.extend({
                 return null
             })
             .catch((response) => {
-                console.log("TODO catch", response)
+                console.log('TODO catch', response)
                 return null
             })
     },
@@ -79,7 +80,6 @@ const TasksShowView = Backbone.View.extend({
         const running = this.model.getVotings().find(a => a.isRunning())
         running.stop()
             .then((r) => {
-                console.log("saved")
                 this.render()
                 return null
             })

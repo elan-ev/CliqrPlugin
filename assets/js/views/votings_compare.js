@@ -8,8 +8,10 @@ import Viewmaster from './viewmaster'
 
 
 const getView = function (model) {
-    const taskType = taskTypes.getTaskType(model.getTask())
-    return taskType.getAssignmentView(model)
+    return taskTypes.fetchTaskType(model.getTask())
+        .then(taskType => {
+            return taskType.getAssignmentView(model)
+        })
 }
 
 const VotingsCompareView = Viewmaster.extend({
@@ -18,23 +20,31 @@ const VotingsCompareView = Viewmaster.extend({
 
     className: 'cliqr--votings-compare',
 
-    events: {
-    },
-
     initialize({ votings }) {
         Viewmaster.prototype.initialize.call(this)
 
         this.votings = new Votings(votings)
+        const ids = this.votings.pluck('id'),
+            selectors = _.object(
+                ids,
+                [ 'section.cliqr--voting-side-a main'
+                  , 'section.cliqr--voting-side-b main' ])
+
         this.listenTo(this.votings, 'change sync', this.render)
 
-        const selectors = ['section.cliqr--voting-side-a main', 'section.cliqr--voting-side-b main']
+        this.listenTo(this.votings, 'sync', voting => {
+            const viewSelector = selectors[voting.id]
+            getView(voting).then(view => {
+                this.setView(viewSelector, view)
+                this.refreshViews( { force: true })
 
-        this.listenTo(this.votings, 'sync', (voting) => {
-            const view = getView(voting)
-            this.setView(selectors[this.votings.indexOf(voting)], view)
-            this.refreshViews()
-            view.postRender && view.postRender()
+                _.invoke([view], 'postRender')
+
+                return null
+            })
         })
+
+        this.votings.invoke('fetch')
     },
 
     template: require('../../hbs/votings-compare.hbs'),

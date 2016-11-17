@@ -1,7 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 import { showLoading, hideLoading } from '../utils'
-
+import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
 
@@ -18,41 +18,36 @@ const decorateTask = function (task) {
     }
 }
 
-const TasksEditView = Backbone.View.extend({
+const TasksEditView = Viewmaster.extend({
 
     tagName: 'article',
 
     className: 'cliqr--tasks-edit',
 
-    events: {
-    },
-
     taskType: null,
 
-    initialize() {
-        //this.interval = setInterval( () => this.model.fetch(), 2000)
+    initialize(options) {
+        Viewmaster.prototype.initialize.call(this)
 
-        this.taskType = taskTypes.getTaskType(this.model)
+        taskTypes.fetchTaskType(this.model)
+            .then(taskType => {
+                this.taskType = taskType
+                this.listenTo(this.taskType, 'editTask', this.onEditTask)
 
-        this.listenTo(this.taskType, 'editTask', this.onEditTask);
+                const view = this.taskType.getEditView()
+                this.setView('main', view)
+                this.refreshViews()
+
+                _.invoke([view], 'postRender')
+
+                return null
+            })
     },
 
-    remove() {
-        //clearInterval(this.interval)
-        Backbone.View.prototype.remove.call(this)
-    },
+    template: require('../../hbs/tasks-edit.hbs'),
 
-    render() {
-        const template = require('../../hbs/tasks-edit.hbs')
-        this.$el.html(template({ ...decorateTask(this.model) }))
-        this.renderTaskTypeView()
-        return this
-    },
-
-    renderTaskTypeView() {
-        const taskTypeView = this.taskType.getEditView()
-        this.$('main').append(taskTypeView.render().$el)
-        taskTypeView.postRender && taskTypeView.postRender()
+    context() {
+        return decorateTask(this.model)
     },
 
     onClickStart(event) {
@@ -65,7 +60,7 @@ const TasksEditView = Backbone.View.extend({
                 return null
             })
             .catch((response) => {
-                console.log("TODO catch", response)
+                console.log('TODO catch', response)
                 return null
             })
     },
@@ -76,7 +71,6 @@ const TasksEditView = Backbone.View.extend({
         const running = this.model.getVotings().find(a => a.isRunning())
         running.save({ end: new Date().toISOString() })
             .then((r) => {
-                console.log("saved")
                 this.render()
                 return null
             })
@@ -94,7 +88,7 @@ const TasksEditView = Backbone.View.extend({
                 return null
             })
             .catch((error) => {
-                console.log("caught an error while editing task", this.model)
+                console.log('caught an error while editing task', this.model)
                 hideLoading()
                 return null
             })

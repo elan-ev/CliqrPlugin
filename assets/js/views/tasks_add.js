@@ -40,9 +40,15 @@ const TasksAddView = Viewmaster.extend({
         if (this.$selectedType !== id) {
             this.$selectedType = id
 
-            const type = taskTypes.getTaskType(this.$selectedType)
-            this.setView('main', type.getCreateView(this.model))
-            this.refreshViews()
+            taskTypes.fetchTaskType(this.$selectedType)
+                .then(type => {
+                    const view = type.getCreateView(this.model)
+                    this.setView('main', view)
+                    this.refreshViews()
+                    _.invoke([view], 'postRender')
+
+                    return null
+                })
         }
     },
 
