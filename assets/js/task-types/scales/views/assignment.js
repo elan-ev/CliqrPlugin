@@ -1,3 +1,4 @@
+/*global require*/
 import _ from 'underscore'
 import Viewmaster from '../../../views/viewmaster'
 import StatementView from './statement'
