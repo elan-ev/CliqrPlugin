@@ -7,9 +7,7 @@ import core_css from '../scss/core.scss'
 class PollCliqrApp {
     constructor(selector) {
         this.initBackbone()
-        this.initStuff()
         this.initRouters(selector)
-        this.initTaskTypes()
 
         Backbone.history.start()
     }
@@ -21,9 +19,6 @@ class PollCliqrApp {
             const xhr = Backbone.$.ajax.apply(Backbone.$, arguments)
             return Promise.resolve(xhr)
         }
-    }
-
-    initStuff() {
     }
 
     initRouters(selector) {
