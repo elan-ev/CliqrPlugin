@@ -71,10 +71,8 @@ const fetchVoting = function (id) {
         .then( () => voting )
 }
 
-const fetchTwoVotings = function (ids) {
-    return Promise.resolve(
-        _.times(2, (i) => _.tap(new Voting({ id: ids[i] }), (v) => v.fetch()) )
-    )
+const fetchTwoVotings = function ([ id1, id2 ]) {
+    return Promise.resolve( [ new Voting({ id: id1 }), new Voting({ id: id2 }) ] )
 }
 
 const fetchTask = function (id) {
@@ -199,7 +197,7 @@ const StudipRouter = Backbone.Router.extend({
     voting(id) { this.routeHandler(fetchVoting, id, VotingsShowView) },
 
     // ROUTE: '#compare/:v1/:v2'
-    votingCompare(v1, v2) { this.routeHandler(fetchTwoVotings, [v1, v2], VotingsCompareView, 'votings') },
+    votingCompare(v1, v2) { this.routeHandler(fetchTwoVotings, [ v1, v2 ], VotingsCompareView, 'votings') },
 
     // ROUTE: '#archive'
     archive() { this.routeHandler(fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive') }
