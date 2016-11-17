@@ -124,12 +124,12 @@ const StudipRouter = Backbone.Router.extend({
     routeHandler(fetcher, id, view, useCollection = 'model', ...rest) {
         showLoading()
         return fetcher(id)
-            .then((response) => {
+            .then(response => {
                 hideLoading()
                 activateNavigation(...rest)
                 return changeToPage(new view({ [useCollection]: response }), this.selector)
             })
-            .catch((error) => {
+            .catch(error => {
                 const status = error && error.status
                 if (status === 403) {
                     hideLoading()
