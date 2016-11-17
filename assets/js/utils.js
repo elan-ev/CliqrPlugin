@@ -37,7 +37,7 @@ const changeToPage = function (view, selector) {
     const container = getContainer(selector)
     container.prepend(view.$el)
     view.render()
-    view.postRender &&  view.postRender()
+    _.invoke([view], 'postRender')
 }
 
 export { showLoading, hideLoading, userRole, getContainer, activateNavigation, changeToPage }
