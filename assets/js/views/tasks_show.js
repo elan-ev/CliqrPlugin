@@ -87,8 +87,7 @@ const TasksShowView = Viewmaster.extend({
 
     onClickCopyEdit(event) {
         showConfirmDialog(
-            `<p>Diese Frage kann nicht mehr geändert werden, da sie schon beantwortet wurde.</p>
-             <p>Wollen Sie eine Kopie dieser Frage erstellen und bearbeiten?</p>`,
+            "Diese Frage kann nicht mehr geändert werden, da sie schon beantwortet wurde.\nWollen Sie eine Kopie dieser Frage erstellen und bearbeiten?",
             () => {
                 this.model.duplicate()
                     .then((task) => {
