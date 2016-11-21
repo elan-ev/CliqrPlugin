@@ -59,7 +59,7 @@ const TaskGroupsIndexView = Backbone.View.extend({
               taskGroup = this.collection.get(id)
 
         showConfirmDialog(
-            `Wollen Sie die Fragensammlung "${taskGroup.get('title')}" wirklich löschen?`,
+            `Wollen Sie die Fragensammlung "${taskGroup.get('test').title}" wirklich löschen?`,
             () => {
                 taskGroup.destroy()
                     .catch((e) => {
