@@ -2,8 +2,10 @@
 
 namespace Cliqr\DB;
 
-class Task extends \eAufgaben\DB\Task
+class Task extends \eAufgaben\Task
 {
+    use ConfigureTrait;
+
     public function startTask($range, $start = null, $end = null, $user_id = null)
     {
         $now = date('c');

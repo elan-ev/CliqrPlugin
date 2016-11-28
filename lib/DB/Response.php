@@ -2,8 +2,10 @@
 
 namespace Cliqr\DB;
 
-class Response extends \eAufgaben\DB\Response
+class Response extends \eAufgaben\Response
 {
+    use ConfigureTrait;
+
     public function toJSON($include = '')
     {
         $include = words($include);

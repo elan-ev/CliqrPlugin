@@ -2,8 +2,10 @@
 
 namespace Cliqr\DB;
 
-class TestTask extends \eAufgaben\DB\TestTask
+class TestTask extends \eAufgaben\TestTask
 {
+    use ConfigureTrait;
+
     public function toJSON($include = '')
     {
         $include = words($include);

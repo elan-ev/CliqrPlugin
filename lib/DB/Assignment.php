@@ -2,10 +2,12 @@
 
 namespace Cliqr\DB;
 
-use eAufgaben\DB\Assignment as eAssignment;
+use eAufgaben\Assignment as eAssignment;
 
 class Assignment extends eAssignment
 {
+    use ConfigureTrait;
+
     const TYPE_VOTING = 'cliqr:voting';
     const TYPE_TASK_GROUP = 'cliqr:task-group';
 

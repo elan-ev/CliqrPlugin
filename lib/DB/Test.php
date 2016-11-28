@@ -2,8 +2,10 @@
 
 namespace Cliqr\DB;
 
-class Test extends \eAufgaben\DB\Test
+class Test extends \eAufgaben\Test
 {
+    use ConfigureTrait;
+
     public function toJSON($omits = [])
     {
         $result = $this->toArray('id title created changed');
