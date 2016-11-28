@@ -12,7 +12,6 @@ import Voting from '../models/voting'
 import VotingsCollection from '../models/votings'
 
 import ArchiveView from '../views/archive'
-import ErrorView from '../views/error'
 import TaskGroupsEditView from '../views/task_groups_edit'
 import TaskGroupsIndexView from '../views/task_groups_index'
 import TaskGroupsShowView from '../views/task_groups_show'
