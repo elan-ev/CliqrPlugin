@@ -45,7 +45,7 @@ const TasksAddView = Viewmaster.extend({
                     const view = type.getCreateView(this.model)
                     this.setView('main', view)
                     this.refreshViews()
-                    _.invoke([view], 'postRender')
+                    view && _.invoke([view], 'postRender')
 
                     return null
                 })

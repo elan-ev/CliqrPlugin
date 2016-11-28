@@ -38,7 +38,8 @@ const AssignmentView = Viewmaster.extend({
         const Hub = window.MathJax.Hub
         this.$('.cliqr--scales-description, td.text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
 
-        _.invoke(this.getViews('.cliqr--scales-statements'), 'postRender')
+        const views = this.getViews('.cliqr--scales-statements')
+        views && _.invoke(views, 'postRender')
     }
 })
 

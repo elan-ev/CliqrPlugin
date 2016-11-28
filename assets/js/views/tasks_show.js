@@ -47,7 +47,7 @@ const TasksShowView = Viewmaster.extend({
                 this.setView('main', view)
                 this.refreshViews()
 
-                _.invoke([view], 'postRender')
+                view && _.invoke([view], 'postRender')
 
                 return null
             })

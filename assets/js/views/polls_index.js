@@ -57,7 +57,7 @@ const PollsIndexView = Viewmaster.extend({
     },
 
     postRender() {
-        _.invoke([this.pollView], 'postRender')
+        this.pollView && _.invoke([this.pollView], 'postRender')
     },
 
 
