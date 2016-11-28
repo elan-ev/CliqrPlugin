@@ -34,7 +34,10 @@ const VotingsShowView = Viewmaster.extend({
     initialize() {
         Viewmaster.prototype.initialize.call(this)
 
-        this.listenTo(this.model, 'change', this.render)
+        this.listenTo(this.model, 'change', (obj) => {
+            this.render()
+            this.postRender()
+        })
 
         const task = this.model.getTask()
 
