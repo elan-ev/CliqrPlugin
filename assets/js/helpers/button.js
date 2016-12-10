@@ -30,4 +30,4 @@ const button = function (klass, text, { hash } ) {
             </button>`)
 }
 
-export default button
+module.exports = button

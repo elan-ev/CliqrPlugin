@@ -6,4 +6,4 @@ const nominal = function (index) {
     return String.fromCharCode(charCodeA + parseInt(index, 10) % 26)
 }
 
-export default nominal
+module.exports = nominal

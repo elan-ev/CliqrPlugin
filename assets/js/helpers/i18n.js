@@ -5,4 +5,4 @@ const i18n = function (text, { hash }) {
     return new SafeString(text)
 }
 
-export default i18n
+module.exports = i18n
