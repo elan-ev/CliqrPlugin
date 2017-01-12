@@ -39,39 +39,46 @@ class StudIPv34Migrator
             return [];
             // TODO throw new \RuntimeException('Could not find active CliqrPlugin');
         }
-        $id = $pluginInfo['id'];
+        $pluginId = $pluginInfo['id'];
 
         $dbh = \DBManager::get();
         $stmt = $dbh->prepare('SELECT poiid FROM plugins_activated WHERE pluginid = ?');
-        $stmt->execute([$id]);
+        $stmt->execute([$pluginId]);
 
         return $stmt->fetchAll();
     }
 
     private function migrateActivation($activation)
     {
-        if ($matched = preg_match('/^(sem|inst)(.+)$/', $activation['poiid'], $matches)) {
-            $questions = $this->migrateCliqrQuestions($matches[2]);
+        if (preg_match('/^(sem|inst)(.+)$/', $activation['poiid'], $matches)) {
+            $questions = $this->findCliqrQuestions($matches[2]);
             if (count($questions)) {
                 $tasks = $this->transformCliqrQuestions($matches[1], $matches[2], $questions);
                 if ($this->debug) {
-                    var_dump(array_map(function ($t) {
-                        return [
-                                    'task' => json_encode(studip_utf8encode($t->toArray())),
-                                    'tests' => json_encode(studip_utf8encode($t->tests->toArray())),
-                                    'assignments' => json_encode(studip_utf8encode($t->tests[0]->assignments->toArray())),
-                                    'responses' => json_encode(studip_utf8encode($t->responses->toArray())), ];
-                    },  $tasks));
+                    var_dump(
+                        array_map(
+                            function ($task) {
+                                return [
+                                    'task' => json_encode(studip_utf8encode($task->toArray())),
+                                    'tests' => json_encode(studip_utf8encode($task->tests->toArray())),
+                                    'assignments' => json_encode(
+                                        studip_utf8encode($task->tests[0]->assignments->toArray())
+                                    ),
+                                    'responses' => json_encode(studip_utf8encode($task->responses->toArray())), ];
+                            },
+                            $tasks
+                        )
+                    );
                 }
             }
         }
     }
 
-    private function migrateCliqrQuestions($poiid)
+    private function findCliqrQuestions($poiid)
     {
-        $range_id = md5('cliqr-'.$poiid);
+        $rangeId = md5('cliqr-'.$poiid);
 
-        $assignments = \QuestionnaireAssignment::findBySQL('range_id = ?', [$range_id]);
+        $assignments = \QuestionnaireAssignment::findBySQL('range_id = ?', [$rangeId]);
         $questions = [];
         foreach ($assignments as $assignment) {
             $questions[] = $this->migrateCliqrQuestion($assignment);
@@ -85,7 +92,8 @@ class StudIPv34Migrator
         $questionnaire = $assignment->questionnaire;
 
         if (count($questionnaire->questions) !== 1) {
-            throw new \RuntimeException('Questionnaire should have a single question but had: '.count($questionnaire->questions));
+            throw new \RuntimeException('Questionnaire should have a single question but had: '.
+                                        count($questionnaire->questions));
         }
 
         $question = $questionnaire->questions[0];
@@ -103,7 +111,8 @@ class StudIPv34Migrator
                     function ($item) {
                         return ['text' => $item, 'score' => 0, 'feedback' => ''];
                     },
-                    $question->questiondata['options']->getArrayCopy()),
+                    $question->questiondata['options']->getArrayCopy()
+                ),
             ],
             'user_id' => $questionnaire->user_id,
             'created' => $questionnaire->mkdate,
@@ -123,25 +132,24 @@ class StudIPv34Migrator
         return $result;
     }
 
-    private function transformCliqrQuestions($type, $range_id, $questions)
+    private function transformCliqrQuestions($type, $rangeId, $questions)
     {
-        $range_type = $type === 'sem' ? 'course' : 'institute';
+        $rangeType = $type === 'sem' ? 'course' : 'institute';
         $results = [];
 
-        $defaultAssignment = Assignment::createTaskGroup($range_type, $range_id);
+        $defaultAssignment = Assignment::createTaskGroup($rangeType, $rangeId);
         $defaultTest = $defaultAssignment->test;
 
         foreach ($questions as $question) {
-            if (!$task = Task::create(
-                    [
-                        'type' => 'multiple-choice',
-                        'title' => $question['title'],
-                        'description' => $question['description'] ?: $question['title'],
-                        'task' => $question['task'],
-                        'created' => date('c', $question['created']),
-                        'changed' => date('c', $question['changed']),
-                        'user_id' => $question['user_id'],
-                    ])) {
+            if (!$task = Task::create([
+                                          'type' => 'multiple-choice',
+                                          'title' => $question['title'],
+                                          'description' => $question['description'] ?: $question['title'],
+                                          'task' => $question['task'],
+                                          'created' => date('c', $question['created']),
+                                          'changed' => date('c', $question['changed']),
+                                          'user_id' => $question['user_id'],
+                                      ])) {
                 throw new \RuntimeException('Could not store task');
             }
 
@@ -151,20 +159,21 @@ class StudIPv34Migrator
             // anlegen von Response-Objekten
             if (isset($question['options']['startdate'])) {
                 $assignment = $task->startTask(
-                    [$range_type, $range_id],
+                    [$rangeType, $rangeId],
                     $question['options']['startdate'],
-                    $question['options']['stopdate']);
+                    $question['options']['stopdate']
+                );
 
-                $responses = [];
-                foreach ($question['options']['answers'] as $answer_id => $count) {
+                foreach ($question['options']['answers'] as $answerId => $count) {
                     for ($i = 0; $i < $count; ++$i) {
                         Response::create(
                             [
                                 'assignment_id' => $assignment->id,
                                 'task_id' => $task->id,
                                 'user_id' => '',
-                                'response' => ['answer' => [$answer_id]],
-                            ]);
+                                'response' => ['answer' => [$answerId]],
+                            ]
+                        );
                     }
                 }
             }
