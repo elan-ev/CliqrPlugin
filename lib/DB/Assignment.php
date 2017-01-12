@@ -2,7 +2,7 @@
 
 namespace Cliqr\DB;
 
-use eAufgaben\Assignment as eAssignment;
+use eTask\Assignment as eAssignment;
 
 class Assignment extends eAssignment
 {
@@ -76,10 +76,10 @@ class Assignment extends eAssignment
     public function countTasks()
     {
         $sql = 'SELECT COUNT(*)
-                FROM eauf_assignments ea
-                INNER JOIN eauf_test_tasks ett
+                FROM etask_assignments ea
+                INNER JOIN etask_test_tasks ett
                 USING ( test_id )
-                INNER JOIN eauf_tasks et ON ett.task_id = et.id
+                INNER JOIN etask_tasks et ON ett.task_id = et.id
                 WHERE ea.id = ?
                 ORDER BY ett.position ASC';
 
@@ -92,10 +92,10 @@ class Assignment extends eAssignment
     public function findTasks()
     {
         $sql = 'SELECT et.*
-                FROM eauf_assignments ea
-                INNER JOIN eauf_test_tasks ett
+                FROM etask_assignments ea
+                INNER JOIN etask_test_tasks ett
                 USING ( test_id )
-                INNER JOIN eauf_tasks et ON ett.task_id = et.id
+                INNER JOIN etask_tasks et ON ett.task_id = et.id
                 WHERE ea.id = ?
                 ORDER BY ett.position ASC';
 

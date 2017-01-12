@@ -2,7 +2,7 @@
 
 namespace Cliqr\DB;
 
-class Attempt extends \eAufgaben\Attempt
+class Attempt extends \eTask\Attempt
 {
     use ConfigureTrait;
 

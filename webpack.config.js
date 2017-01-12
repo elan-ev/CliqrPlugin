@@ -11,7 +11,7 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
 module.exports = {
-    devtool: isProd ? '#hidden-source-map' : '#eval-source-map',
+    devtool: isProd ? 'source-map' : '#eval-source-map',
     context: path.join(__dirname, './assets/js'),
     entry: {
         studip: './studip-app.js',
@@ -102,7 +102,7 @@ module.exports = {
             output: {
                 comments: !isProd
             },
-            sourceMap: false
+            sourceMap: true
         }),
         new webpack.DefinePlugin({
             'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }

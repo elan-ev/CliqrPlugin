@@ -2,7 +2,7 @@
 
 namespace Cliqr\DB;
 
-class Test extends \eAufgaben\Test
+class Test extends \eTask\Test
 {
     use ConfigureTrait;
 

@@ -1,5 +1,5 @@
 {
-  "title": "EAufgaben MC Schema",
+  "title": "eTask MC Schema",
   "type": "object",
   "properties": {
     "type": {

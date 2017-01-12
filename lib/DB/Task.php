@@ -2,7 +2,7 @@
 
 namespace Cliqr\DB;
 
-class Task extends \eAufgaben\Task
+class Task extends \eTask\Task
 {
     use ConfigureTrait;
 
@@ -64,9 +64,9 @@ class Task extends \eAufgaben\Task
     public function getTaskGroup()
     {
         $sql = 'SELECT ea . *
-                FROM eauf_tasks et
-                INNER JOIN eauf_test_tasks ett ON ett.task_id = et.id
-                INNER JOIN eauf_assignments ea ON ea.test_id = ett.test_id
+                FROM etask_tasks et
+                INNER JOIN etask_test_tasks ett ON ett.task_id = et.id
+                INNER JOIN etask_assignments ea ON ea.test_id = ett.test_id
                 WHERE et.id = ? AND ea.type = ?
                 ORDER BY start, id';
         $st = \DBManager::get()->prepare($sql);
@@ -99,9 +99,9 @@ class Task extends \eAufgaben\Task
     public function getVotings()
     {
         $sql = 'SELECT ea . *
-                FROM eauf_tasks et
-                INNER JOIN eauf_test_tasks ett ON ett.task_id = et.id
-                INNER JOIN eauf_assignments ea ON ea.test_id = ett.test_id
+                FROM etask_tasks et
+                INNER JOIN etask_test_tasks ett ON ett.task_id = et.id
+                INNER JOIN etask_assignments ea ON ea.test_id = ett.test_id
                 WHERE et.id = ? AND ea.type = ?
                 ORDER BY start, id';
         $st = \DBManager::get()->prepare($sql);

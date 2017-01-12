@@ -2,7 +2,7 @@
 
 namespace Cliqr\DB;
 
-class Response extends \eAufgaben\Response
+class Response extends \eTask\Response
 {
     use ConfigureTrait;
 

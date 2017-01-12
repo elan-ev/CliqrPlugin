@@ -2,7 +2,7 @@
 namespace Cliqr\DB;
 
 /**
- * eAufgaben TODO
+ * eTask TODO
  */
 trait ConfigureTrait
 {
