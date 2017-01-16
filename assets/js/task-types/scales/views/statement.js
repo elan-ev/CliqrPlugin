@@ -39,7 +39,15 @@ const StatementView = Viewmaster.extend({
 
     magic() {
         if (window.document.contains(this.el)) {
-            histogramView(this.$('svg')[0], this.responses(), this.statement.lrange_value, this.statement.hrange_value)
+            const svgEls = this.$('svg')
+            if (svgEls.length) {
+                histogramView(
+                    svgEls[0],
+                    this.responses(),
+                    this.statement.lrange_value,
+                    this.statement.hrange_value
+                )
+            }
         }
     },
 

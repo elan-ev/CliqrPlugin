@@ -9,6 +9,10 @@ const histogramView = function (element, data, lrange, hrange) {
         const width = Backbone.$(element).width() - margin.left - margin.right
         const height = Backbone.$(element).height() - margin.top - margin.bottom
 
+        if (width <= 0) {
+            return
+        }
+
         const g = select(element)
               .append('g')
               .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
