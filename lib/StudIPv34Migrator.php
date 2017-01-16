@@ -21,9 +21,7 @@ class StudIPv34Migrator
         try {
             $dbh->beginTransaction();
 
-            foreach ($this->getActivations() as $activation) {
-                $this->migrateActivation($activation);
-            }
+            $this->migrateActivations();
 
             $this->debug ? $dbh->rollBack() : $dbh->commit();
         } catch (\Exception $e) {
@@ -32,12 +30,30 @@ class StudIPv34Migrator
         }
     }
 
+    // ***** PRIVATE HELPERS *****
+    private function migrateActivations()
+    {
+        $activations = $this->getActivations();
+
+        foreach ($activations as $activation) {
+            if (!$range = $this->getRangeFromActivation($activation)) {
+                continue;
+            }
+            foreach ($this->getQuestionnaires($range) as $questionnaire) {
+                $task = $this->migrateQuestionnaire($range, $questionnaire);
+                if ($this->debug) {
+                    $this->printTask($task);
+                }
+                $this->unassignQuestionnaire($questionnaire, $range);
+            }
+        }
+    }
+
     private function getActivations()
     {
         $pluginInfo = \PluginManager::getInstance()->getPluginInfo('CliqrPlugin');
         if (is_null($pluginInfo)) {
             return [];
-            // TODO throw new \RuntimeException('Could not find active CliqrPlugin');
         }
         $pluginId = $pluginInfo['id'];
 
@@ -45,52 +61,76 @@ class StudIPv34Migrator
         $stmt = $dbh->prepare('SELECT poiid FROM plugins_activated WHERE pluginid = ?');
         $stmt->execute([$pluginId]);
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(\PDO::FETCH_COLUMN);
     }
 
-    private function migrateActivation($activation)
+    private function getRangeFromActivation($activation)
     {
-        if (preg_match('/^(sem|inst)(.+)$/', $activation['poiid'], $matches)) {
-            $questions = $this->findCliqrQuestions($matches[2]);
-            if (count($questions)) {
-                $tasks = $this->transformCliqrQuestions($matches[1], $matches[2], $questions);
-                if ($this->debug) {
-                    var_dump(
-                        array_map(
-                            function ($task) {
-                                return [
-                                    'task' => json_encode(studip_utf8encode($task->toArray())),
-                                    'tests' => json_encode(studip_utf8encode($task->tests->toArray())),
-                                    'assignments' => json_encode(
-                                        studip_utf8encode($task->tests[0]->assignments->toArray())
-                                    ),
-                                    'responses' => json_encode(studip_utf8encode($task->responses->toArray())), ];
-                            },
-                            $tasks
-                        )
-                    );
-                }
-            }
-        }
-    }
-
-    private function findCliqrQuestions($poiid)
-    {
-        $rangeId = md5('cliqr-'.$poiid);
-
-        $assignments = \QuestionnaireAssignment::findBySQL('range_id = ?', [$rangeId]);
-        $questions = [];
-        foreach ($assignments as $assignment) {
-            $questions[] = $this->migrateCliqrQuestion($assignment);
+        if (!preg_match('/^(sem|inst)(.+)$/', $activation, $matches)) {
+            return null;
         }
 
-        return $questions;
+        return [
+            $matches[1] === 'sem' ? 'course' : 'institute',
+            $matches[2]
+        ];
     }
 
-    private function migrateCliqrQuestion($assignment)
+    private function getQuestionnaires($range)
     {
-        $questionnaire = $assignment->questionnaire;
+        return array_map(
+            function ($assignment) {
+                return $assignment->questionnaire;
+            },
+            \QuestionnaireAssignment::findBySQL('range_id = ?', [ md5('cliqr-'.$range[1]) ])
+        );
+    }
 
+
+    private function migrateQuestionnaire($range, \Questionnaire $questionnaire)
+    {
+        $question = $this->extractQuestion($questionnaire);
+        $task = $this->findOrCreateTask($questionnaire, $question);
+
+        $taskGroup = $this->getDefaultTaskGroup($range);
+        $defaultTest = $taskGroup->test;
+
+        $defaultTest->addTask($task);
+
+        // anlegen von Response-Objekten
+        if ($questionnaire->startdate) {
+            $voting = $task->startTask($range, $questionnaire->startdate, $questionnaire->stopdate);
+            $this->createResponses($question, $task, $voting);
+        }
+
+        $taskGroup->store();
+        $defaultTest->store();
+
+        return $task;
+    }
+
+    private function getDefaultTaskGroup($range)
+    {
+        list($rangeType, $rangeId) = $range;
+
+        switch (count($taskGroups = Assignment::findTaskGroups($rangeId))) {
+            case 0:
+                $taskGroup = Assignment::createTaskGroup($rangeType, $rangeId);
+                break;
+
+            case 1:
+                $taskGroup = $taskGroups[0];
+                break;
+
+            default:
+                throw new \RuntimeException('There cannot be more than 1 task groups already.');
+        }
+
+        return $taskGroup;
+    }
+
+    private function extractQuestion($questionnaire)
+    {
         if (count($questionnaire->questions) !== 1) {
             throw new \RuntimeException('Questionnaire should have a single question but had: '.
                                         count($questionnaire->questions));
@@ -101,11 +141,20 @@ class StudIPv34Migrator
             throw new \RuntimeException('Only Votes can be migrated.');
         }
 
-        $result = [
-            'type' => 'multiple-choice',
-            'title' => $questionnaire->title,
-            'description' => $question->questiondata['question'],
-            'task' => [
+        return $question;
+    }
+
+    private function findOrCreateTask(\Questionnaire $questionnaire, \QuestionnaireQuestion $question)
+    {
+        if ($this->isQuestionETaskCompatible($question)) {
+            // this question was already partially migrated to eTask
+            // just return the task
+
+            $task = $question->etask;
+        } else {
+            // migrate question into a task compatible with eTask
+
+            $taskTask = [
                 'type' => 'single',
                 'answers' => array_map(
                     function ($item) {
@@ -113,75 +162,78 @@ class StudIPv34Migrator
                     },
                     $question->questiondata['options']->getArrayCopy()
                 ),
-            ],
-            'user_id' => $questionnaire->user_id,
-            'created' => $questionnaire->mkdate,
-            'changed' => $questionnaire->chdate,
-            'options' => [
-                'questionnaire_id' => $questionnaire->id,
-                'startdate' => $questionnaire->startdate,
-                'stopdate' => $questionnaire->stopdate,
-                'answers' => array_reduce($question->answers->getArrayCopy(), function ($memo, $answer) {
-                    ++$memo[$answer->answerdata['answers'] - 1];
+            ];
 
-                    return $memo;
-                }, []),
-            ],
-        ];
+            $taskData = [
+                'type' => 'multiple-choice',
+                'title' => $questionnaire->title,
+                'description' => $question->questiondata['question'] ?: $questionnaire->title,
+                'task' => $taskTask,
+                'user_id' => $questionnaire->user_id,
+                'created' => date('c', $questionnaire->mkdate),
+                'changed' => date('c', $questionnaire->chdate)
+            ];
 
-        return $result;
-    }
-
-    private function transformCliqrQuestions($type, $rangeId, $questions)
-    {
-        $rangeType = $type === 'sem' ? 'course' : 'institute';
-        $results = [];
-
-        $defaultAssignment = Assignment::createTaskGroup($rangeType, $rangeId);
-        $defaultTest = $defaultAssignment->test;
-
-        foreach ($questions as $question) {
-            if (!$task = Task::create([
-                                          'type' => 'multiple-choice',
-                                          'title' => $question['title'],
-                                          'description' => $question['description'] ?: $question['title'],
-                                          'task' => $question['task'],
-                                          'created' => date('c', $question['created']),
-                                          'changed' => date('c', $question['changed']),
-                                          'user_id' => $question['user_id'],
-                                      ])) {
+            if (!$task = Task::create($taskData)) {
                 throw new \RuntimeException('Could not store task');
-            }
-
-            $defaultTest->addTask($task);
-            $results[] = $task;
-
-            // anlegen von Response-Objekten
-            if (isset($question['options']['startdate'])) {
-                $assignment = $task->startTask(
-                    [$rangeType, $rangeId],
-                    $question['options']['startdate'],
-                    $question['options']['stopdate']
-                );
-
-                foreach ($question['options']['answers'] as $answerId => $count) {
-                    for ($i = 0; $i < $count; ++$i) {
-                        Response::create(
-                            [
-                                'assignment_id' => $assignment->id,
-                                'task_id' => $task->id,
-                                'user_id' => '',
-                                'response' => ['answer' => [$answerId]],
-                            ]
-                        );
-                    }
-                }
             }
         }
 
-        $defaultAssignment->store();
-        $defaultTest->store();
+        return $task;
+    }
 
-        return $results;
+    private function isQuestionETaskCompatible(\QuestionnaireQuestion $question)
+    {
+        return isset($question['etask_task_id']);
+    }
+
+    private function createResponses(\QuestionnaireQuestion $question, Task $task, Assignment $voting)
+    {
+        $alreadyMigrated = $this->isQuestionETaskCompatible($question);
+
+        $answers = array_reduce(
+            $question->answers->getArrayCopy(),
+            function ($memo, $answer) use ($alreadyMigrated) {
+                ++$memo[$answer->answerdata['answers'] - $alreadyMigrated ? 0 : 1];
+
+                return $memo;
+            },
+            []
+        );
+
+        foreach ($answers as $answerId => $count) {
+            for ($i = 0; $i < $count; ++$i) {
+                Response::create(
+                    [
+                        'assignment_id' => $voting->id,
+                        'task_id' => $task->id,
+                        'user_id' => '',
+                        'response' => ['answer' => [ $answerId ]],
+                    ]
+                );
+            }
+        }
+    }
+
+    private function printTask(Task $task)
+    {
+        var_dump(
+            [
+                'task' => json_encode(($task->toArray())),
+                'tests' => json_encode(($task->tests->toArray())),
+                'assignments' => json_encode(
+                    studip_utf8encode($task->tests[0]->assignments->toArray())
+                ),
+                'responses' => json_encode(studip_utf8encode($task->responses->toArray()))
+            ]
+        );
+    }
+
+    private function unassignQuestionnaire(\Questionnaire $questionnaire, $range)
+    {
+        list($rangeType, $rangeId) = $range;
+        $sql = 'DELETE FROM questionnaire_assignments WHERE questionnaire_id = ? AND range_type = ? AND range_id = ?';
+        $stmt = \DBManager::get()->prepare($sql);
+        $stmt->execute([ $questionnaire->id, $rangeType, md5('cliqr-'.$rangeId) ]);
     }
 }
