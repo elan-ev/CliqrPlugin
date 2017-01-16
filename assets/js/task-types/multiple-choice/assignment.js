@@ -44,10 +44,12 @@ const AssignmentView =  Viewmaster.extend({
 
     className: 'cliqr--multiple-choice-assignment-view',
 
-    initialize(options) {
+    initialize({ voting }) {
         Viewmaster.prototype.initialize.call(this)
 
-        this.voting = options.voting
+        this.voting = voting
+
+        this.listenTo(this.voting, 'change', this.render)
     },
 
     template: require('./multiple-choice-assignment.hbs'),
@@ -58,13 +60,11 @@ const AssignmentView =  Viewmaster.extend({
 
     afterTemplate() {
         if (!this.voting.isRunning()) {
-//            this.enhanceChart(this.context())
+            this.postRender()
         }
-
     },
 
     postRender() {
-        console.log("postRender", this.voting.isRunning())
         if (!this.voting.isRunning()) {
             this.enhanceChart(this.context())
         }
@@ -79,7 +79,7 @@ const AssignmentView =  Viewmaster.extend({
         const width = 150,
               data = context.answers,
               max = _.max(_.pluck(data, 'votes_count')),
-              widths = _.map(data, (d) => max > 0 ? d.votes_count / max * width : 0)
+              widths = _.map(data, d => max > 0 ? d.votes_count / max * width : 0)
 
         this.$('.graph').append(function (index) {
             if (!data[index].votes_count) {
