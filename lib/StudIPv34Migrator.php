@@ -150,7 +150,7 @@ class StudIPv34Migrator
             // this question was already partially migrated to eTask
             // just return the task
 
-            $task = $question->etask;
+            $task = Task::find($question->etask_task_id);
         } else {
             // migrate question into a task compatible with eTask
 
