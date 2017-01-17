@@ -194,7 +194,7 @@ class StudIPv34Migrator
         $answers = array_reduce(
             $question->answers->getArrayCopy(),
             function ($memo, $answer) use ($alreadyMigrated) {
-                ++$memo[$answer->answerdata['answers'] - $alreadyMigrated ? 0 : 1];
+                ++$memo[$answer->answerdata['answers'] - ($alreadyMigrated ? 0 : 1)];
 
                 return $memo;
             },
