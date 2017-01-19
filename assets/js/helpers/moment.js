@@ -12,4 +12,4 @@ const moment_helper = function (n) {
     return new SafeString(`<span class="cliqr--moment" data-tooltip="${date.toLocaleString()}">${taDate}</span>`)
 }
 
-module.exports = moment_helper
+export default moment_helper

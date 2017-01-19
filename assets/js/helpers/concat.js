@@ -5,4 +5,4 @@ const concat = function (...args) {
     return new SafeString(args.join(''))
 }
 
-module.exports = concat
+export default concat

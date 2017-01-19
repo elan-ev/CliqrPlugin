@@ -9,4 +9,4 @@ const icon = function (icon, { hash } ) {
     return new SafeString(`<img class="cliqr--icon" src="${icon_path}" alt="${text}" title="${text}">`)
 }
 
-module.exports = icon
+export default icon

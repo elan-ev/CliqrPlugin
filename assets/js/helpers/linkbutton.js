@@ -19,4 +19,4 @@ const linkbutton = function (href, text, { hash } ) {
             </a>`)
 }
 
-module.exports = linkbutton
+export default linkbutton

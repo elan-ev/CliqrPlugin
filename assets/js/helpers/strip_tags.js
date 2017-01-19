@@ -7,4 +7,4 @@ const strip_tags = function (html) {
     return new SafeString(div.textContent || div.innerText || '')
 }
 
-module.exports = strip_tags
+export default strip_tags

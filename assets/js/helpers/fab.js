@@ -28,4 +28,4 @@ const fab = function (klass, text, icon, { hash }) {
             </button>`)
 }
 
-module.exports = fab
+export default fab
