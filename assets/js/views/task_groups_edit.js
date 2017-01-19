@@ -21,7 +21,7 @@ const TaskGroupsEditView = Backbone.View.extend({
     },
 
     initialize(option) {
-        console.log(this.model)
+        // console.log(this.model)
     },
 
     render() {

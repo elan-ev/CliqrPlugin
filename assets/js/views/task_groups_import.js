@@ -24,12 +24,12 @@ const TaskGroupsImportView = Backbone.View.extend({
     },
 
     initialize(options) {
-        console.log("initializing")
+        // console.log("initializing")
     },
 
     remove() {
         Backbone.View.prototype.remove.call(this)
-        console.log("removing")
+        // console.log("removing")
     },
 
     render() {

@@ -47,7 +47,7 @@ const FormView = Viewmaster.extend({
     },
 
     afterTemplate() {
-        console.log("rendered")
+        // console.log("rendered")
     },
 
     onClickAdd(event) {
