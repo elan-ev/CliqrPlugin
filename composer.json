@@ -1,4 +1,5 @@
 {
+    "license": "GPL-2.0+",
     "require": {
         "pimple/pimple": "v1.0.1",
         "pusher/pusher-php-server": "2.1.*",
