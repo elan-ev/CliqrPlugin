@@ -96,12 +96,7 @@ module.exports = {
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            output: {
-                comments: !isProd
-            },
+            comments: !isProd,
             sourceMap: true
         }),
         new webpack.DefinePlugin({
