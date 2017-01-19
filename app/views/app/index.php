@@ -11,6 +11,7 @@ var cliqr = {
   bootstrap: ' . json_encode(studip_utf8encode($json))  . ',
   config: {
     PLUGIN_URL : "' . htmlReady(current(explode('?', $controller->url_for('')))) . '"
+  , ASSETS_URL : "' . htmlReady($PLGNURL) . '/"
   , CID        : "' . htmlReady($cid) . '"
   , SHORT_URL  : "' . htmlReady($short_url) . '"
 }};');
