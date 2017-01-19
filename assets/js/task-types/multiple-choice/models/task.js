@@ -1,5 +1,5 @@
 import _ from 'underscore'
-import Task from '../../models/task'
+import Task from '../../../models/task'
 
 const MCTask = Task.extend({
     defaults: {

@@ -1,7 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import Viewmaster from '../../views/viewmaster'
+import Viewmaster from '../../../views/viewmaster'
 
 const decorateTask = function (task, voting = null) {
     const task_id = task.get('id'),
@@ -52,7 +52,7 @@ const AssignmentView =  Viewmaster.extend({
         this.listenTo(this.voting, 'change', this.render)
     },
 
-    template: require('./multiple-choice-assignment.hbs'),
+    template: require('../hbs/multiple-choice-assignment.hbs'),
 
     context() {
         return decorateTask(this.model, this.voting)

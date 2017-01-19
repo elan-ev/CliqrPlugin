@@ -17,6 +17,7 @@ const WysiwygComponent = Viewmaster.extend({
 
         this.key = options.key
         this.listenTo(this.model, `change:${this.key}`, this.onModelChange)
+        // window.CKEDITOR && window.CKEDITOR.on('instanceCreated',  (c) => console.log("created", c.editor))
     },
 
     remove() {

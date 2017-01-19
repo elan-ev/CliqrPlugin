@@ -1,7 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import Viewmaster from '../../views/viewmaster'
+import Viewmaster from '../../../views/viewmaster'
 import WysiwygComponent from './component-wysiwyg'
 
 const FormView = Viewmaster.extend({
@@ -36,7 +36,7 @@ const FormView = Viewmaster.extend({
         this.listenTo(this.model, 'invalid', () => this.render({ force: true }))
     },
 
-    template: require('./multiple-choice-form.hbs'),
+    template: require('../hbs/multiple-choice-form.hbs'),
 
     context() {
         return {

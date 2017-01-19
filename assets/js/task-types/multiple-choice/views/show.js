@@ -23,7 +23,7 @@ const ShowView = Backbone.View.extend({
     className: 'cliqr--multiple-choice-show-view',
 
     render() {
-        const template = require('./multiple-choice-show.hbs')
+        const template = require('../hbs/multiple-choice-show.hbs')
         this.$el.html(template(decorateTask(this.model)))
         return this
     },

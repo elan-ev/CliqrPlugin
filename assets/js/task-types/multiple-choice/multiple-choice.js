@@ -1,14 +1,14 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import AssignmentView from './assignment'
-import CreateView from './create'
-import EditView from './edit'
-import PollView from './poll'
-import ShowView from './show'
+import AssignmentView from './views/assignment'
+import CreateView from './views/create'
+import EditView from './views/edit'
+import PollView from './views/poll'
+import ShowView from './views/show'
 
-import MCTask from './task'
-import MCResponse from './response'
+import MCTask from './models/task'
+import MCResponse from './models/response'
 
 import mc_css from './multiple-choice.scss'
 

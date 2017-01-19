@@ -1,7 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import Viewmaster from '../../views/viewmaster'
+import Viewmaster from '../../../views/viewmaster'
 
 const decorateContext = function (response, voting) {
     const task = voting.getTask()
@@ -29,7 +29,7 @@ const PollView = Viewmaster.extend({
         this.voting = options.voting
     },
 
-    template: require('./multiple-choice-poll.hbs'),
+    template: require('../hbs/multiple-choice-poll.hbs'),
 
     context() {
         return decorateContext(this.model, this.voting)
