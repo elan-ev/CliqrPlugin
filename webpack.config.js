@@ -73,13 +73,13 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.NoErrorsPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new ExtractTextPlugin({
             filename: 'bundle.css',
             allChunks: false
         }),
         new webpack.ProvidePlugin({
-            Promise: 'imports?this=>global!exports?global.Promise!es6-promise'
+            Promise: 'imports-loader?this=>global!exports-loader?global.Promise!es6-promise'
         }),
         /*
         new webpack.optimize.CommonsChunkPlugin({
