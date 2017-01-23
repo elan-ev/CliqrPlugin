@@ -5,19 +5,6 @@ import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
 
-const decorateTask = function (task) {
-    return {
-        ...task.toJSON(),
-        state: task.getCurrentState(),
-        votings: task.getVotings().map(function (v) {
-            return {
-                ...v.toJSON(),
-                running: v.isRunning()
-            }
-        })
-    }
-}
-
 const TasksEditView = Viewmaster.extend({
 
     tagName: 'article',
@@ -47,7 +34,15 @@ const TasksEditView = Viewmaster.extend({
     template: require('../../hbs/tasks-edit.hbs'),
 
     context() {
-        return decorateTask(this.model)
+        const task = this.model.toJSON()
+        return {
+            breadcrumb: {
+                task_group_id: task.task_group_id,
+                task_group_title: task.task_group_title,
+                task_id: task.id,
+                task_title: task.title
+            }
+        }
     },
 
     onClickStart(event) {

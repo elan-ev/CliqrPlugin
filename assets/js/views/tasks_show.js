@@ -7,18 +7,23 @@ import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
 
-const decorateTask = function (task) {
-    const votings = task.getVotings()
+const decorateTask = function (model) {
+    const votings = model.getVotings()
+    const task = model.toJSON()
     return {
-        ...task.toJSON(),
-        state: task.getCurrentState(),
+        task,
+        state: model.getCurrentState(),
         editable: !votings.any((v) => v.get('responses_count')),
         votings: votings.map(function (v) {
             return {
                 ...v.toJSON(),
                 running: v.isRunning()
             }
-        })
+        }),
+        breadcrumb: {
+            task_group_id: task.task_group_id,
+            task_group_title: task.task_group_title
+        }
     }
 }
 

@@ -8,12 +8,6 @@ import Viewmaster from './viewmaster'
 import TaskListView from './task_list'
 import TasksAddView from './tasks_add'
 
-const decorateTaskGroup = function (model) {
-    return {
-        ...model.toJSON()
-    }
-}
-
 const TaskGroupsShowView = Viewmaster.extend({
 
     className: 'page task-groups-show',
@@ -37,7 +31,7 @@ const TaskGroupsShowView = Viewmaster.extend({
     template: require('../../hbs/task-groups-show.hbs'),
 
     context() {
-        return decorateTaskGroup(this.model)
+        return this.model.toJSON()
     },
 
     onNewTask(task) {

@@ -11,9 +11,17 @@
     </a>
     <div class="cliqr--task-last-assignment">
         {{#if last_voting}}
-            zuletzt abgestimmt:
-            {{#if_state 'is_active'}} {{icon 'play' color="black"}} {{/if_state}}
-            <a href="#voting/{{last_voting.id}}">{{moment last_voting.start}}</a>
+            {{#if_state 'is_active'}}
+                <span class="cliqr--task-last-assignment-active">
+                    {{icon 'play' color="red"}}
+                    <a href="#voting/{{last_voting.id}}">
+                        {{moment last_voting.start label="Läuft gerade"}}
+                    </a>
+                </span>
+        {{else}}
+                zuletzt abgestimmt
+                <a href="#voting/{{last_voting.id}}">{{moment last_voting.start}}</a>
+            {{/if_state}}
         {{else}}
             nie abgestimmt
         {{/if}}

@@ -1,11 +1,12 @@
 #cliqr-container,
 #cliqr-poll-container {
 
-  .cliqr--multiple-choice-assignment-view {
 
-    $chartColor1: #a9b6cb;
-    $chartColor2: #28497c;
-    $color-detail: #000;
+  $chartColor: #ffbd33;
+  $chartColor2: #f26e00;
+  $color-diminished: #999999;
+
+  .cliqr--multiple-choice-assignment-view {
 
     .cliqr--mc-description {
       font-weight: 400;
@@ -18,42 +19,38 @@
       overflow: hidden;
       border-collapse: collapse;
 
+      td {
+        padding-top: .75em;
+      }
 
       .nominal {
-        color: #999;
-        font-size: 0.7em;
+        color: $color-diminished;
         width: 1em;
       }
 
-      .text {
-        padding-left: 0.25em;
-      }
-
-      .graph, .count, .percent {
-        padding-left: 0.5em;
+      .text, .graph, .percent {
+        padding-left: 0.75em;
       }
     }
 
     .chart {
       display: inline-block;
-      background-color: $chartColor2;
+      background-color: $chartColor;
+      box-shadow: 1px 1px 1px 0px $chartColor2;
 
-      background-image: linear-gradient(to right, $chartColor1, $chartColor2);
-      background-repeat: repeat-x;
-
-      height: 1em;
+      height: 1.5em;
       margin-left: 0.5em;
-      vertical-align: text-top;
-      border: 1px solid #232323;
+      vertical-align: middle;
     }
 
     .count {
-      color: $chartColor1;
+      padding-left: 0.25em;
+      color: $chartColor2;
+      text-align: right;
     }
 
     .percent {
-      font-size: 0.66em;
-      color: $color-detail;
+      color: $color-diminished;
     }
   }
 
@@ -71,15 +68,17 @@
       overflow: hidden;
       border-collapse: collapse;
 
+      td {
+        padding-top: .75em;
+      }
 
       .nominal {
-        color: #999;
-        font-size: 0.7em;
+        color: $color-diminished;
         width: 1em;
       }
 
       .text {
-        padding-left: 0.25em;
+        padding-left: 0.75em;
       }
     }
   }
@@ -114,7 +113,6 @@
         line-height: 30px;
         display: inline-block;
         background-color: #e7ebf1;
-        vertical-align: middle;
         padding: 0 .5em;
       }
 

@@ -19,18 +19,6 @@ const ArchiveView = Backbone.View.extend({
 
     className: 'cliqr--archive',
 
-    events: {
-    },
-
-    initialize(options) {
-        //this.interval = setInterval( () => this.model.fetch(), 2000)
-    },
-
-    remove() {
-        //clearInterval(this.interval)
-        Backbone.View.prototype.remove.call(this)
-    },
-
     render() {
         const template = require('../../hbs/archive.hbs')
         this.$el.html(template(decorateVotings(this.collection)))

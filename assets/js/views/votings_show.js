@@ -8,13 +8,26 @@ import taskTypes from '../models/task_types'
 import Viewmaster from './viewmaster'
 
 const decorateVoting = function (voting) {
-    const task = voting.getTask()
+    const task = voting.getTask().toJSON(),
+          otherVotings = _.map(
+              _.reject( task.votings, v => v.id === voting.id ),
+              attrs => {
+                  return { ...attrs, isRunning: new Voting(attrs).isRunning() }
+              }
+          )
+
     return {
         ..._.omit(voting.toJSON(), 'test'),
         responses_count: voting.get('responses').length,
-        task: task.toJSON(),
+        task,
         isRunning: voting.isRunning(),
-        otherVotings: _.map(_.reject(task.get('votings'), (v) => v.id === voting.id), (attrs) => { return { ...attrs, isRunning: new Voting(attrs).isRunning() } })
+        otherVotings,
+        breadcrumb: {
+            task_group_id: task.task_group_id,
+            task_group_title: task.task_group_title,
+            task_id: task.id,
+            task_title: task.title
+        }
     }
 }
 

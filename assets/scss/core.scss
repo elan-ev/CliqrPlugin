@@ -10,6 +10,7 @@
 
 $color-accent: #28497c !default;
 $color-accent-contrast: #ffffff !default;
+$color-activity: #ffbd33 !default;
 
 $studip-button-height: 28px;
 $button-size: 44px;
@@ -239,68 +240,107 @@ button.cliqr--button {
 
   /*
   // * Breadcrumb */
-
   nav.cliqr--breadcrumb {
+
+    $breadcrumb-background: #899ab9;
+    $breadcrumb-background-activity: #ffbd33;
+
+    $breadcrumb-color: #ffffff;
+    $breadcrumb-color-activity: #000000;
+
     overflow: hidden;
     width: 100%;
 
     ol {
-      padding-left: 0;
-      line-height: 1.5em;
-      list-style: none;
-      white-space: nowrap;
-    }
-
-    li {
-      // float: left;
       display: inline-block;
-      margin: 0 .5em 0 .6em;
-    }
+      font-size: 16px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
 
-    a {
-      background: #ddd;
-      padding: .2em .6em;
-      // float: left;
-      text-decoration: none;
-      color: #444;
-      position: relative;
+      > li {
+        float: left;
+        margin-top: 10px;
 
-      &:hover {
-        background: $color-accent;
-        color: $color-accent-contrast;
-      }
+        &:first-child {
+          a {
+            padding-left: 15px;
+            &:before {
+              border: none;
+            }
+          }
+        }
 
-      &:hover::before {
-        border-color: $color-accent $color-accent $color-accent transparent;
-      }
+        a {
+          color: $breadcrumb-color;
+          display: block;
+          background: $breadcrumb-background;
+          position: relative;
+          height: 40px;
+          line-height: 40px;
+          padding: 0 10px 0 10px;
+          text-align: center;
+          margin-right: 23px;
+          transition: background-color .25s, margin .125s;
 
-      &::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        margin-top: -1.5em;
-        border-width: 1.5em 0 1.5em 1em;
-        border-style: solid;
-        border-color: #ddd #ddd #ddd transparent;
-        left: -1em;
-      }
+          &:before, &:after {
+            border: 0 solid $breadcrumb-background;
+            border-width: 20px 10px;
+            content: '';
+            height: 0;
+            position: absolute;
+            top: 0;
+            width: 0;
+            transition: border-color .25s;
+          }
 
-      &::after {
-        content: "";
-        position:  absolute;
-        top: 50%;
-        margin-top: -1.5em;
-        border-top: 1.5em solid transparent;
-        border-bottom: 1.5em solid transparent;
-        border-left: 1em solid #ddd;
-        right: -1em;
-      }
+          &:before {
+            left: -20px;
+            border-left-color: transparent;
+          }
 
-      &:hover::after {
-        border-left-color: $color-accent;
+          &:after {
+            left: 100%;
+            border-color: transparent;
+            border-left-color: $breadcrumb-background;
+          }
+
+          img:nth-of-type(2) {
+            display: none;
+          }
+
+          &:hover {
+            background-color: $breadcrumb-background-activity;
+            color: $breadcrumb-color-activity;
+            margin-left: 10px;
+            margin-right: 35px;
+
+            &:before {
+              border-color: $breadcrumb-background-activity;
+              border-left-color: transparent;
+            }
+
+            &:after {
+              border-left-color: $breadcrumb-background-activity;
+            }
+
+            img:nth-of-type(1) {
+              display: none;
+            }
+
+            img:nth-of-type(2) {
+              display: inline;
+            }
+          }
+        }
+
+        img {
+          vertical-align: text-bottom;
+        }
       }
     }
   }
+
   header.cliqr--page-header {
     position: relative;
     width: 100%;
@@ -437,6 +477,12 @@ button.cliqr--button {
         img {
           height: 16px;
         }
+      }
+
+      .cliqr--task-last-assignment-active a {
+        vertical-align: middle;
+        font-style: normal;
+        color: red;
       }
     }
 

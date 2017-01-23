@@ -1,24 +1,5 @@
 <header class="cliqr--page-header">
-    <nav class="cliqr--breadcrumb">
-        <ol>
-            <li>
-                <a href="#task-groups">
-                    Cliqr
-                </a>
-            </li>
-            <li>
-                <a href="#task-groups-{{task_group_id}}">
-                    Fragensammlung &laquo;{{shorten task_group_title 40}}&raquo;
-                </a>
-            </li>
-            <li>
-                <a href="#task/show/{{id}}">
-                    Frage {{#if title}} &laquo;{{shorten title 40}}&raquo; {{/if}}
-                </a>
-            </li>
-        </ol>
-    </nav>
-
+    {{> breadcrumb breadcrumb}}
     <h1>Frage bearbeiten</h1>
 </header>
 

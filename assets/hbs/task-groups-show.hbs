@@ -1,14 +1,5 @@
 <header class="cliqr--page-header">
-    <nav class="cliqr--breadcrumb">
-        <ol>
-            <li>
-                <a href="#task-groups">
-                    Cliqr
-                </a>
-            </li>
-        </ol>
-    </nav>
-
+    {{> breadcrumb}}
     <h1>
         {{icon "folder-full" color="black"}}
         Fragensammlung: {{shorten test.title 40}}

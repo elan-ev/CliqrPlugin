@@ -1,26 +1,12 @@
 <header class="cliqr--page-header">
-    <nav class="cliqr--breadcrumb">
-        <ol>
-            <li>
-                <a href="#task-groups">
-                    Cliqr
-                </a>
-            </li>
-            <li>
-                <a href="#task-groups-{{task_group_id}}">
-                    {{icon "folder-full" color="black"}}
-                    Fragensammlung &laquo;{{shorten task_group_title 40}}&raquo;
-                </a>
-            </li>
-        </ol>
-    </nav>
+    {{> breadcrumb breadcrumb }}
 </header>
 
 <main></main>
 
 <aside class="votings">
   {{#if editable}}
-      {{linkbutton (concat "#task/edit/" id) "Frage bearbeiten" icon="edit"}}
+      {{linkbutton (concat "#task/edit/" task.id) "Frage bearbeiten" icon="edit"}}
   {{else}}
       {{button "copy-edit" "Frage bearbeiten" icon="exclaim-circle" color="red"}}
   {{/if}}

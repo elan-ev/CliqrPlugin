@@ -5,8 +5,13 @@ import Task from '../models/task'
 import TaskCollection from '../models/tasks'
 
 const decorateTaskGroup = function (model) {
+    const taskGroup = model.toJSON()
     return {
-        ...model.toJSON()
+        ...taskGroup,
+        breadcrumb: {
+            task_group_id: taskGroup.id,
+            task_group_title: taskGroup.test.title
+        }
     }
 }
 

@@ -1,0 +1,28 @@
+<nav class="cliqr--breadcrumb">
+    <ol>
+        <li>
+            <a href="#task-groups">
+                Cliqr
+            </a>
+        </li>
+        {{#if task_group_id}}
+            <li>
+                <a href="#task-groups-{{task_group_id}}">
+                    {{icon "folder-full" color="white"}}
+                    {{icon "folder-full" color="black"}}
+                    Fragensammlung &laquo;{{shorten task_group_title 40}}&raquo;
+                </a>
+            </li>
+        {{/if}}
+
+        {{#if task_id}}
+            <li>
+                <a href="#task/show/{{task_id}}">
+                    {{icon "assessment" color="white"}}
+                    {{icon "assessment" color="black"}}
+                    Frage {{#if task_title}} &laquo;{{shorten task_title 40}}&raquo; {{/if}}
+                </a>
+            </li>
+        {{/if}}
+    </ol>
+</nav>

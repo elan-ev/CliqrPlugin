@@ -52,11 +52,21 @@ const VotingsCompareView = Viewmaster.extend({
     context() {
         const votingA = this.votings.first(),
               votingB = this.votings.last(),
-              task = votingA && votingA.getTask()
+              taskModel = votingA && votingA.getTask(),
+              task = taskModel && taskModel.toJSON(),
+              breadcrumb = task &&
+              {
+                  task_group_id: task.task_group_id,
+                  task_group_title: task.task_group_title,
+                  task_id: task.id,
+                  task_title: task.title
+              }
+
         return {
             votingA: votingA.toJSON(),
             votingB: votingB.toJSON(),
-            task: task && task.toJSON()
+            task,
+            breadcrumb
         }
     }
 })

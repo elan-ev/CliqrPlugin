@@ -1,23 +1,5 @@
 <header class="cliqr--page-header">
-    <nav class="cliqr--breadcrumb">
-        <ol>
-            <li>
-                <a href="#task-groups">
-                    Cliqr
-                </a>
-            </li>
-            <li>
-                <a href="#task-groups-{{task.task_group_id}}">
-                    Fragensammlung &laquo;{{shorten task.task_group_title 40}}&raquo;
-                </a>
-            </li>
-            <li>
-                <a href="#task/show/{{task.id}}">
-                    Frage {{#if task.title}} &laquo;{{shorten task.title 40}}&raquo; {{/if}}
-                </a>
-            </li>
-        </ol>
-    </nav>
+    {{> breadcrumb breadcrumb}}
 
     <h1>Abstimmungen vergleichen</h1>
 </header>
