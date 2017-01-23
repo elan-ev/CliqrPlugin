@@ -29,7 +29,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.html$/,
-                loader: 'file',
+                loader: 'file-loader',
                 query: {
                     name: '[name].[ext]'
                 }
