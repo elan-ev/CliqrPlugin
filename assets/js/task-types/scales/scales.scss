@@ -14,21 +14,16 @@
 
     .cliqr--scales-statements {
       margin-top: 1em;
-      list-style: none;
-      padding-left: 0;
 
-      div.text {
+      li {
         font-size: 2em;
         line-height: 2;
+        padding-bottom: 1em;
       }
     }
 
     .bar {
       fill: #28497c;
-    }
-
-    .tick text {
-      // transform: translateY(10px) rotate(90deg);
     }
   }
 

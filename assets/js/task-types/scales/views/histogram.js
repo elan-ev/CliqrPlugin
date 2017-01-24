@@ -1,9 +1,11 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-const histogramView = function (element, data, lrange, hrange) {
+const histogramView = function ($statementElement, data, lrange, hrange) {
     require.ensure([ '../../../d3.min' ], function (require) {
         const { histogram, axisBottom, select, scaleLinear } = require('../../../d3.min')
+
+        const element = $statementElement.find('svg')[0]
 
         const margin = { top: 20, right: 20, bottom: 30, left: 20 }
         const width = Backbone.$(element).width() - margin.left - margin.right
