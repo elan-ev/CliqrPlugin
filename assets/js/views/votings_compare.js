@@ -36,7 +36,7 @@ const VotingsCompareView = Viewmaster.extend({
             const viewSelector = selectors[voting.id]
             getView(voting).then(view => {
                 this.setView(viewSelector, view)
-                this.refreshViews( { force: true })
+                this.refreshViews()
 
                 view && _.invoke([view], 'postRender')
 

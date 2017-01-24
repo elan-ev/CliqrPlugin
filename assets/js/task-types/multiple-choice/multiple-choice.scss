@@ -1,6 +1,9 @@
 #cliqr-container,
 #cliqr-poll-container {
 
+  .cliqr--votings-compare .cliqr--multiple-choice-assignment-view h1 {
+    display: none;
+  }
 
   $chartColor: #ffbd33;
   $chartColor2: #f26e00;

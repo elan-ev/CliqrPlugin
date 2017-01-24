@@ -33,7 +33,7 @@ const StatementView = Viewmaster.extend({
 
     afterTemplate() {
         if (!this.model.isRunning()) {
-            this.magic()
+            // this.magic()
         }
     },
 

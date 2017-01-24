@@ -1,6 +1,10 @@
 #cliqr-container,
 #cliqr-poll-container {
 
+  .cliqr--votings-compare .cliqr--scales-assignment-view h1 {
+    display: none;
+  }
+
   .cliqr--scales-assignment-view {
 
     $chartColor1: #a9b6cb;

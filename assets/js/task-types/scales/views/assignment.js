@@ -23,6 +23,7 @@ const AssignmentView = Viewmaster.extend({
                 index
             }))
         })
+        this.refreshViews()
     },
 
     template: require('../hbs/assignment.hbs'),
