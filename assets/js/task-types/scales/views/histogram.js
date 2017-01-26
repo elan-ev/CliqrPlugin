@@ -3,24 +3,26 @@ import _ from 'underscore'
 
 const histogramView = function ($statementElement, data, lrange, hrange) {
     require.ensure([ '../../../d3.min' ], function (require) {
-        const { histogram, axisBottom, select, scaleLinear } = require('../../../d3.min')
+        const { axisBottom, deviation, histogram, quantile, scaleLinear, select } = require('../../../d3.min')
 
-        const element = $statementElement.find('svg')[0]
-
-        const margin = { top: 20, right: 20, bottom: 30, left: 20 }
-        const width = Backbone.$(element).width() - margin.left - margin.right
-        const height = Backbone.$(element).height() - margin.top - margin.bottom
+        const element = $statementElement.find('svg')[0],
+              margin = { top: 20, right: 20, bottom: 30, left: 20 },
+              width = Backbone.$(element).width() - margin.left - margin.right,
+              height = Backbone.$(element).height() - margin.top - margin.bottom,
+              pad0 = 10,
+              height0 = height - pad0
 
         if (width <= 0) {
             return
         }
 
+        data.sort()
+        const quantiles = { min: _.first(data), low: quantile(data, .25), median: quantile(data, .5), high: quantile(data, .75), max: _.last(data) }
+
         const g = select(element)
               .append('g')
+              .attr('class', 'histogram')
               .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-
-        //lrange = -10
-        //hrange = 99
 
         let thresholds = hrange - lrange + 1
         let domain, small = false
@@ -32,47 +34,39 @@ const histogramView = function ($statementElement, data, lrange, hrange) {
             domain = [ lrange, hrange ]
             thresholds = 10
         }
-        const x = scaleLinear()
-              .domain(domain)
-              .rangeRound([ 0, width ])
 
-        const d3histogram = histogram().domain(x.domain()).thresholds(thresholds)
+        const x = scaleLinear().domain(domain).rangeRound([ 0, width ]),
+              d3histogram = histogram().domain(x.domain()).thresholds(thresholds),
+              bins = d3histogram(data),
+              y = scaleLinear()
+              .domain([ 0, _.max(_.pluck(bins, 'length')) ])
+              .range([ height0, 0 ])
 
-        const bins = d3histogram(data)
+        if (quantiles.min !== quantiles.max) {
+            boxPlot(x, quantiles, g);
+        }
 
-        const y = scaleLinear()
-            .domain([ 0, _.max(_.pluck(bins, 'length')) ])
-            .range([ height, 0 ])
-
-        /*
-          g.append('text')
-          .text(`Durchschnitt: ${mean(data)}`)
-          .attr('transform', 'translate('+ 0 +',' + (height + 30) + ')')
-        */
-
-        const half = (x(bins[0].x1) - x(bins[0].x0)) / 2
-
-        const bar = g.selectAll('.bar')
-            .data(bins)
-            .enter().append('g')
-            .attr('class', 'bar')
-            .attr('transform', d => `translate(${x(d.x0) - (small ? half : 0)},${y(d.length)})`)
+        const half = (x(bins[0].x1) - x(bins[0].x0)) / 2,
+              bar = g.selectAll('.bar')
+              .data(bins)
+              .enter().append('g')
+              .attr('class', 'bar')
+              .attr('transform', d => `translate(${x(d.x0) - (small ? half : 0)},${y(d.length)})`)
 
         bar.append('rect')
             .attr('x', 1)
+            .attr('y', pad0)
             .attr('width', x(bins[0].x1) - x(bins[0].x0))
-            .attr('height', d => height - y(d.length))
+            .attr('height', d => height0 - y(d.length))
 
         bar.append('text')
-            .attr('y', '1em')
+            .attr('dy', '1em')
+            .attr('y', pad0)
             .attr('x', (x(bins[0].x1) - x(bins[0].x0)) / 2)
             .attr('text-anchor', 'middle')
-        // TODO
-            .attr('fill', '#ffffff')
             .text(d => d.length || '')
 
         const axis = axisBottom(x)
-
 
         if (!small) {
             // x.nice()
@@ -84,13 +78,75 @@ const histogramView = function ($statementElement, data, lrange, hrange) {
             .attr('class', 'axis axis--x')
             .attr('transform', 'translate('+ 0 +',' + height + ')')
             .call(axis)
-            /*
-            .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-65)");
-            */
+
+
+        function boxPlot(x, quantiles, g) {
+            const bp = g.append('g').attr('class', 'box-plot')
+
+            bp.append('line')
+                .attr('class', 'center')
+                .attr('x1', x(quantiles.min))
+                .attr('y1', -10)
+                .attr('x2', x(quantiles.max))
+                .attr('y2', -10)
+
+            bp.append('rect')
+                .attr('class', 'box')
+                .attr('x', x(quantiles.low))
+                .attr('y', -20)
+                .attr('width', x(quantiles.high) - x(quantiles.low))
+                .attr('height', 20)
+
+            bp.append('line')
+                .attr('class', 'median')
+                .attr('x1', x(quantiles.median))
+                .attr('y1', -20)
+                .attr('x2', x(quantiles.median))
+                .attr('y2', 0)
+
+            bp.append('line')
+                .attr('class', 'whisker')
+                .attr('x1', x(quantiles.min))
+                .attr('y1', -20)
+                .attr('x2', x(quantiles.min))
+                .attr('y2', 0)
+
+            bp.append('line')
+                .attr('class', 'whisker')
+                .attr('x1', x(quantiles.max))
+                .attr('y1', -20)
+                .attr('x2', x(quantiles.max))
+                .attr('y2', 0)
+
+            bp.append('text')
+                .attr('class', 'box')
+                .text(quantiles.median)
+                .attr('dy', '.3em')
+                .attr('dx', '-.3em')
+                .attr('x', x(quantiles.median))
+                .attr('y', -10)
+                .attr('text-anchor', 'end')
+
+            bp.append('text')
+                .attr('class', 'box')
+                .text(quantiles.low)
+                .attr('dy', '1em')
+                .attr('dx', '-.3em')
+                .attr('x', x(quantiles.low))
+                .attr('y', -10)
+                .attr('text-anchor', 'end')
+
+            bp.append('text')
+                .attr('class', 'box')
+                .text(quantiles.high)
+                .attr('dy', '1em')
+                .attr('dx', '.3em')
+                .attr('x', x(quantiles.high))
+                .attr('y', -10)
+                .attr('text-anchor', 'start')
+        }
+
+
     }, 'scales-histogram')
 }
 

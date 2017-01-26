@@ -271,6 +271,12 @@ button.cliqr--button {
           }
         }
 
+        &:first-child {
+          a:hover {
+            margin-left: 0;
+          }
+        }
+
         a {
           color: $breadcrumb-color;
           display: block;
@@ -281,7 +287,7 @@ button.cliqr--button {
           padding: 0 10px 0 10px;
           text-align: center;
           margin-right: 23px;
-          transition: background-color .25s, margin .125s;
+          transition: background-color .25s, margin .125s ease-in;
 
           &:before, &:after {
             border: 0 solid $breadcrumb-background;

@@ -1,3 +1,10 @@
+$chartColor1: #a9b6cb;
+$chartColor2: #28497c;
+$color-activity80: #ffbd33;
+$color-activity100: #f26e00;
+
+$color-detail: #000;
+
 #cliqr-container,
 #cliqr-poll-container {
 
@@ -6,10 +13,6 @@
   }
 
   .cliqr--scales-assignment-view {
-
-    $chartColor1: #a9b6cb;
-    $chartColor2: #28497c;
-    $color-detail: #000;
 
     .cliqr--scales-description {
       font-weight: 400;
@@ -26,8 +29,41 @@
       }
     }
 
-    .bar {
-      fill: #28497c;
+    svg {
+
+      .bar {
+        fill: $color-activity80;
+
+        text {
+          fill: black;
+        }
+      }
+
+      line.center {
+        stroke: black;
+        stroke-width: 2px;
+        stroke-dasharray: 3,3;
+      }
+
+      line.median {
+        stroke: black;
+        stroke-width: 2px;
+      }
+
+      line.whisker {
+        stroke: black;
+        stroke-width: 1px;
+      }
+
+      rect.box {
+        fill: white;
+        stroke: black;
+        stroke-width: 1px;
+      }
+
+      text.box {
+        font-size: 10px;
+      }
     }
   }
 
