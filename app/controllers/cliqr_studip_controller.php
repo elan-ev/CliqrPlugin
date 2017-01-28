@@ -30,7 +30,7 @@ abstract class CliqrStudipController extends \StudipController
         return $url;
     }
 
-    public function url_for($to)
+    public function url_for($to = '')
     {
         $args = func_get_args();
 
