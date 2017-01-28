@@ -34,6 +34,10 @@ const TaskGroupsShowView = Viewmaster.extend({
         return this.model.toJSON()
     },
 
+    postRender() {
+        this.eachView((sel, v) => { v && v.postRender && v.postRender() })
+    },
+
     onNewTask(task) {
         this.tasks.create({ ...task.attributes, task_group_id: this.model.id },
                           { success: (...args) => {
