@@ -10,10 +10,7 @@ import TasksAddView from './tasks_add'
 
 const TaskGroupsShowView = Viewmaster.extend({
 
-    className: 'page task-groups-show',
-
-    events: {
-    },
+    className: 'task-groups-show',
 
     tasks: null,
 

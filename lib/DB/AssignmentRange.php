@@ -2,7 +2,9 @@
 
 namespace Cliqr\DB;
 
-class AssignmentRange extends \etask\AssignmentRange
+use eTask\AssignmentRange as eAssignmentRange;
+
+class AssignmentRange extends eAssignmentRange
 {
     use ConfigureTrait;
 
