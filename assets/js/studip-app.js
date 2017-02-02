@@ -1,9 +1,11 @@
-import "./public-path.js"
+import './public-path.js'
+
+import core_css from '../scss/core.scss'
+
 import Backbone from 'backbone'
 import jQuery from 'jquery'
 
 import StudipRouter from './routers/studip'
-import core_css from '../scss/core.scss'
 
 class StudIPCliqrApp {
     constructor(selector) {
