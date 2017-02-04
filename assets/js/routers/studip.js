@@ -15,6 +15,7 @@ import ArchiveView from '../views/archive'
 import TaskGroupsEditView from '../views/task_groups_edit'
 import TaskGroupsIndexView from '../views/task_groups_index'
 import TaskGroupsShowView from '../views/task_groups_show'
+import TasksCreateView from '../views/tasks_create'
 import TasksEditView from '../views/tasks_edit'
 import TasksShowView from '../views/tasks_show'
 import VotingsCompareView from '../views/votings_compare'
@@ -107,6 +108,7 @@ const StudipRouter = Backbone.Router.extend({
         'task-group/edit/:id': 'taskGroupEdit',
 
         'task/show/:id': 'task',
+        'task/create/:id': 'taskCreate',
         'task/edit/:id': 'taskEdit',
 
         'compare/:v1/:v2': 'votingCompare',
@@ -187,6 +189,9 @@ const StudipRouter = Backbone.Router.extend({
 
     // ROUTE: '#task/show/:id'
     task(id) { this.routeHandler(fetchTask, id, TasksShowView) },
+
+    // ROUTE: '#task/create/:id'
+    taskCreate(id) { this.routeHandler(fetchTaskGroup, id, TasksCreateView) },
 
     // ROUTE: '#task/edit/:id'
     taskEdit(id) { this.routeHandler(fetchTask, id, TasksEditView) },

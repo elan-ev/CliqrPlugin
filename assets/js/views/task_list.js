@@ -21,7 +21,10 @@ const TaskListView = Viewmaster.extend({
     template: require('../../hbs/task-list.hbs'),
 
     context() {
-        return { tasks: this.collection.toJSON() }
+        return {
+            taskGroup: this.model.toJSON(),
+            tasks: this.collection.toJSON()
+        }
     },
 
     appendItem(model) {

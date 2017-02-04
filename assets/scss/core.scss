@@ -504,7 +504,12 @@ button.cliqr--button {
 
   /*
   // * Task Creator */
-  .tasks-add {
+  .cliqr--tasks-create {
+    header p {
+      font-size: 1.5em;
+      line-height: 2;
+    }
+
     ul.task-types {
       padding: 0;
 

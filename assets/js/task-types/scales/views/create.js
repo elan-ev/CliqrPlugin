@@ -1,3 +1,4 @@
+import Backbone from 'backbone'
 import FormView from './form'
 
 const CreateView = FormView.extend({
@@ -7,8 +8,13 @@ const CreateView = FormView.extend({
     onSubmitForm(event) {
         event.preventDefault()
         if (this.model.isValid()) {
-            this.taskGroup.trigger('newTask', this.model)
+            this.trigger('newTask', this.model)
         }
+    },
+
+    onClickCancel(event) {
+        event.preventDefault()
+        this.trigger('cancel')
     }
 })
 
