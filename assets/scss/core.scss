@@ -95,6 +95,9 @@ button.cliqr--button {
   img {
     top: calc(($studip-button-height - $button-icon-size) * 0.5);
   }
+  &.cliqr--button-important {
+    font-weight: 800;
+  }
 }
 
 button.cliqr--button-fab {
