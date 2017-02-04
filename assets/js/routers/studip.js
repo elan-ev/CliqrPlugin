@@ -1,15 +1,6 @@
 import Backbone from 'backbone'
-import _ from 'underscore'
-// import { Schema, arrayOf, normalize, unionOf, valuesOf } from 'normalizr'
 
 import { userRole, activateNavigation, showLoading, hideLoading, changeToPage } from '../utils'
-
-import Task from '../models/task'
-import TaskGroup from '../models/task_group'
-import TaskGroupsCollection from '../models/task_groups'
-import TasksCollection from '../models/tasks'
-import Voting from '../models/voting'
-import VotingsCollection from '../models/votings'
 
 import ArchiveView from '../views/archive'
 import TaskGroupsEditView from '../views/task_groups_edit'
@@ -21,82 +12,7 @@ import TasksShowView from '../views/tasks_show'
 import VotingsCompareView from '../views/votings_compare'
 import VotingsShowView from '../views/votings_show'
 
-// instantiate then remove bootstrapped
-const bootstrapTaskGroups = function () {
-    const taskGroups = new TaskGroupsCollection(window.cliqr.bootstrap.taskGroups)
-    delete(window.cliqr.bootstrap.taskGroups)
-    return taskGroups
-}
-
-// instantiate then remove bootstrapped
-const bootstrapTasks = function () {
-    const taskGroups = bootstrapTaskGroups()
-    const tasks = _.flatten(_.filter(taskGroups.pluck('tasks')))
-    return new TasksCollection(tasks)
-}
-
-const bootstrapLastVotings = function () {
-    const lastVotings = new VotingsCollection(window.cliqr.bootstrap.lastVotings || [])
-    delete(window.cliqr.bootstrap.lastVotings)
-    return lastVotings
-}
-
-const fetchTaskGroups = function () {
-    if (window.cliqr.bootstrap.taskGroups) {
-        return Promise.resolve(bootstrapTaskGroups())
-    }
-
-    const taskGroups = new TaskGroupsCollection()
-    return taskGroups.fetch()
-        .then((...args) => taskGroups)
-}
-
-const fetchTaskGroup = function (id) {
-    let taskGroup
-    if (window.cliqr.bootstrap.taskGroups) {
-        taskGroup = bootstrapTaskGroups().get(id)
-        if (taskGroup) {
-            return Promise.resolve(taskGroup)
-        }
-    }
-
-    taskGroup = new TaskGroup({ id })
-    return taskGroup.fetch()
-        .then( () => taskGroup )
-}
-
-const fetchVoting = function (id) {
-    const voting = new Voting({ id })
-    return voting.fetch()
-        .then( () => voting )
-}
-
-const fetchTwoVotings = function ([ id1, id2 ]) {
-    return Promise.resolve( [ new Voting({ id: id1 }), new Voting({ id: id2 }) ] )
-}
-
-const fetchTask = function (id) {
-    let task
-    if (window.cliqr.bootstrap.taskGroups) {
-        task = bootstrapTasks().get(id)
-        if (task) {
-            return Promise.resolve(task)
-        }
-    }
-
-    task = new Task({ id })
-    return task.fetch().then( () => task )
-}
-
-const fetchLastVotings = function () {
-    if (window.cliqr.bootstrap.lastVotings) {
-        return Promise.resolve(bootstrapLastVotings())
-    }
-
-    const lastVotings = new VotingsCollection()
-    return lastVotings.fetch()
-        .then((...args) => lastVotings)
-}
+import { fetchTaskGroups, fetchTaskGroup, fetchTask, fetchVoting, fetchTwoVotings, fetchLastVotings } from './studip-fetcher'
 
 const StudipRouter = Backbone.Router.extend({
 
@@ -139,26 +55,6 @@ const StudipRouter = Backbone.Router.extend({
 
     initialize(options) {
         this.selector = options.selector
-
-        if (window.cliqr.bootstrap.taskGroups) {
-            /*
-            const taskGroupSchema = new Schema('task_group')
-            const testSchema = new Schema('test')
-            const taskSchema = new Schema('task')
-            const votingSchema = new Schema('voting')
-            taskSchema.define({
-                votings: arrayOf(votingSchema)
-            })
-            testSchema.define({
-                tasks: arrayOf(taskSchema)
-            })
-            taskGroupSchema.define({
-                test: testSchema
-            });
-            const response = normalize(window.cliqr.bootstrap.taskGroups, arrayOf(taskGroupSchema));
-            console.log("normalizred", response)
-            */
-        }
     },
 
     // ROUTE: ''
@@ -177,7 +73,7 @@ const StudipRouter = Backbone.Router.extend({
     taskGroups() {
         this.routeHandler(fetchTaskGroups, null, TaskGroupsIndexView, 'collection')
             .catch((...args) => {
-                console.log("caught:", args)
+                alert('caught:', args)
             })
     },
 
