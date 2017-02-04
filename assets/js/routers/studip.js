@@ -165,11 +165,11 @@ const StudipRouter = Backbone.Router.extend({
     redirectByAuthorization() {
 
         if (userRole('student')) {
-            this.navigate('#archive', { trigger: true, replace: true })
+            this.navigate('archive', { trigger: true, replace: true })
         }
 
         else {
-            this.navigate('#task-groups', { trigger: true, replace: true })
+            this.navigate('task-groups', { trigger: true, replace: true })
         }
     },
 
