@@ -1,5 +1,5 @@
 import Backbone from 'backbone'
-import _ from 'underscore'
+
 import { showLoading, hideLoading } from '../utils'
 import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
@@ -18,14 +18,17 @@ const TasksEditView = Viewmaster.extend({
 
         taskTypes.fetchTaskType(this.model)
             .then(taskType => {
-                this.taskType = taskType
-                this.listenTo(this.taskType, 'editTask', this.onEditTask)
+                const oldViews = this.getViews('main')
+                if (oldViews) {
+                    oldViews.forEach(v => this.stopListening(v))
+                }
 
-                const view = this.taskType.getEditView()
+                const view = taskType.getEditView()
+                this.listenTo(view, 'editTask', this.onEditTask)
+                this.listenTo(view, 'cancel', this.onCancel)
                 this.setView('main', view)
-                this.refreshViews()
-
-                view && _.invoke([view], 'postRender')
+                this.render()
+                view && view.postRender && view.postRender()
 
                 return null
             })
@@ -87,6 +90,9 @@ const TasksEditView = Viewmaster.extend({
                 hideLoading()
                 return null
             })
+    },
+    onCancel(model) {
+        Backbone.history.navigate(`task/show/${model.id}`, { trigger: true })
     }
 })
 

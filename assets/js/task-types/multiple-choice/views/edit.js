@@ -1,3 +1,4 @@
+import Backbone from 'backbone'
 import FormView from './form'
 
 const EditView = FormView.extend({
@@ -7,13 +8,13 @@ const EditView = FormView.extend({
     onSubmitForm(event) {
         event.preventDefault()
         if (this.model.isValid()) {
-            this.type.trigger('editTask', this.model)
+            this.trigger('editTask', this.model)
         }
     },
 
     onClickCancel(event) {
         event.preventDefault()
-        Backbone.history.navigate(`/task/show/${this.model.id}`, { trigger: true })
+        this.trigger('cancel', this.model)
     }
 })
 
