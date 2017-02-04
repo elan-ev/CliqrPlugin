@@ -103,8 +103,7 @@ const StudipRouter = Backbone.Router.extend({
         '': 'redirectByAuthorization',
 
         'task-groups': 'taskGroups',
-        'task-groups-:id': 'taskGroup',
-
+        'task-groups/show/:id': 'taskGroup',
         'task-group/edit/:id': 'taskGroupEdit',
 
         'task/show/:id': 'task',
@@ -180,7 +179,7 @@ const StudipRouter = Backbone.Router.extend({
             })
     },
 
-    // ROUTE: '#task-groups-:id'
+    // ROUTE: '#task-groups/show/:id'
     taskGroup(id) { this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView) },
 
     // ROUTE: '#task-group/edit/:id'

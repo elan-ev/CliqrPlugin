@@ -45,12 +45,12 @@ const TaskGroupsEditView = Backbone.View.extend({
 
         this.model.save(formData)
             .then((taskGroup) => {
-                Backbone.history.navigate(`#task-groups-${this.model.id}`, { trigger: true })
+                Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true })
             })
     },
 
     onClickCancel() {
-        Backbone.history.navigate(`#task-groups-${this.model.id}`, { trigger: true })
+        Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true })
     }
 })
 
