@@ -21,7 +21,7 @@ const fab = function (klass, text, icon, { hash }) {
     const color = 'blue'
 
     return new SafeString(`
-            <button type="submit" class="button cliqr--button-fab ${klass} ${addClasses}"
+            <button type="button" class="button cliqr--button-fab ${klass} ${addClasses}"
                     name="${text}" ${disabledAttr}
                     data-tooltip="${text}">
                 ${iconMaker(color, escapeExpression(icon), text)}

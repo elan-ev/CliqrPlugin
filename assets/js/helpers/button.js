@@ -8,7 +8,7 @@ const iconMaker = (color, icon, text) => {
 }
 
 const button = function (klass, text, { hash } ) {
-    let { icon = false, disabled = false, color = "blue", once = false } = hash
+    let { icon = false, disabled = false, color = 'blue', once = false, type = 'button' } = hash
     let icons = ''
     const disabledAttr = disabled ? 'disabled' : ''
 
@@ -25,7 +25,7 @@ const button = function (klass, text, { hash } ) {
     }
 
     return new SafeString(`
-            <button type="submit" class="button cliqr--button ${klass} ${addClasses}" name="${text}" ${disabledAttr}>
+            <button type="${type}" class="button cliqr--button ${klass} ${addClasses}" name="${text}" ${disabledAttr}>
               ${icons} ${text}
             </button>`)
 }
