@@ -1,5 +1,6 @@
 function shorten(text, length) {
-    return !text || text.length <= length ? text : '' + text.slice(0, length - 2) + '[…]'
+    const strText = '' + text
+    return strText.length <= length ? strText : '' + strText.slice(0, length - 2) + '[…]'
 }
 
 export default shorten
