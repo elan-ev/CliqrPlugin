@@ -620,6 +620,9 @@ button.cliqr--button {
   section.cliqr--archive-votings {
 
     .cliqr--archive-header {
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 35em;
 
       > a {
         line-height: 3em;
