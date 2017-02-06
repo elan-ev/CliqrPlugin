@@ -42,11 +42,11 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $navigation->setActiveImage(Icon::create('test', 'info'));
 
         if ($perm->get_studip_perm($cid) === 'autor') {
-            $navigation->addSubNavigation('index', new Navigation(_('Fragenarchiv'), $url.'#'));
+            $navigation->addSubNavigation('index', new Navigation(_('Beendete Abstimmungen'), $url.'#'));
         } else {
-            $navigation->addSubNavigation('index', new Navigation(_('Fragen'), $url.'#'));
+            $navigation->addSubNavigation('index', new Navigation(_('Fragensammlungen'), $url.'#task-groups'));
 
-            $navigation->addSubNavigation('archive', new Navigation(_('Archiv'), $url.'#archive'));
+            $navigation->addSubNavigation('archive', new Navigation(_('Beendete Abstimmungen'), $url.'#archive'));
 
             $url = PluginEngine::getURL('cliqrplugin', compact('cid'), 'help', true);
             $navigation->addSubNavigation('help', new Navigation(_('Methodische Informationen'), $url));
