@@ -4,6 +4,14 @@ import { showConfirmDialog, showDialog } from '../dialog'
 import TaskGroupsCreateView from './task_groups_create'
 import TaskGroupsImportView from './task_groups_import'
 
+const latestChange = taskGroup => {
+    const test = taskGroup.get('test') || {}
+    const tasks = test.tasks || []
+    const latestTaskChanges = _.map(_.pluck(tasks, 'changed'), d => new Date(d))
+
+    return _.max(latestTaskChanges.concat(new Date(test.changed)))
+}
+
 const TaskGroupsIndexView = Backbone.View.extend({
 
     className: 'cliqr--task-groups-index',
@@ -17,20 +25,20 @@ const TaskGroupsIndexView = Backbone.View.extend({
         'click .js-remove': 'onClickRemove'
     },
 
-    initialize(options) {
+    initialize() {
         this.listenTo(this.collection, 'change', this.render)
         this.listenTo(this.collection, 'update', this.render)
     },
 
     render() {
         const template = require('../../hbs/task-groups-index.hbs')
-        //this.collection.sort()
         const data = {
-            taskGroups: this.collection.map((tg) => {
-                const test = tg.get('test')
+            taskGroups: this.collection.map((taskGroup) => {
+                const test = taskGroup.get('test')
                 return {
-                    ...tg.toJSON(),
-                    tasks_count: test && test.tasks ? test.tasks.length : 0
+                    ...taskGroup.toJSON(),
+                    tasks_count: test && test.tasks ? test.tasks.length : 0,
+                    changed: latestChange(taskGroup)
                 }})
         }
         this.$el.html(template(data))
