@@ -11,7 +11,7 @@ const FormView = Viewmaster.extend({
     events: {
         'click .js-add': 'onClickAdd',
         'click .js-remove': 'onClickRemove',
-        'click .js-save': 'onSubmitForm',
+        'submit form': 'onSubmitForm',
         'click .js-cancel': 'onClickCancel',
 
         'keypress input.choice': 'onChoiceUpdate',
