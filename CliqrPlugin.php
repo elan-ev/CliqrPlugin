@@ -131,7 +131,11 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 
     private function initializeCourse()
     {
-        $course = Course::find($this->config['cid']);
+        if (!$cid = $this->config['cid']) {
+            return;
+        }
+
+        $course = Course::find($cid);
         $datafields = DatafieldEntryModel::findByModel(
             $course,
             $this->config['datafield_first_run_complete_id']
@@ -144,8 +148,8 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         if (!$initialized) {
 
             // create default task group
-            if (!count(Assignment::findTaskGroups($course->id))) {
-                Assignment::createTaskGroup('course', $course->id);
+            if (!count(Assignment::findTaskGroups($cid))) {
+                Assignment::createTaskGroup('course', $cid);
             }
 
             $firstRunComplete->content = 1;
