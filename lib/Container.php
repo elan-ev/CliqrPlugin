@@ -6,8 +6,14 @@ class Container extends \Pimple
 {
     public function __construct()
     {
+        $this->setupConstants();
         $this->setupAuthorization();
         $this->setupConfigPhp();
+    }
+
+    protected function setupConstants()
+    {
+        $this['datafield_first_run_complete_id'] = 'f827bdf3f27b7d8001332fab89f1ed29';
     }
 
     protected function setupAuthorization()

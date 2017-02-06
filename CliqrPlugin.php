@@ -3,6 +3,8 @@
 // require composer autoloader
 require __DIR__.'/vendor/autoload.php';
 
+use Cliqr\DB\Assignment;
+
 class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 {
     public function __construct()
@@ -20,6 +22,8 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $this->config = self::setupConfig();
 
         $this->observeQuestions();
+
+        $this->initializeCourse();
     }
 
     private function setupNavigation()
@@ -122,6 +126,30 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             require_once 'lib/QuestionPusher.php';
             $pusher = new \Cliqr\QuestionPusher($this->config, $this->getContext());
             $pusher->observeNotifications();
+        }
+    }
+
+    private function initializeCourse()
+    {
+        $course = Course::find($this->config['cid']);
+        $datafields = DatafieldEntryModel::findByModel(
+            $course,
+            $this->config['datafield_first_run_complete_id']
+        );
+        if (count($datafields) !== 1) {
+            throw RuntimeException('Missing Cliqr First Run Datafield');
+        }
+        $firstRunComplete = $datafields[0];
+        $initialized = !!$firstRunComplete->content;
+        if (!$initialized) {
+
+            // create default task group
+            if (!count(Assignment::findTaskGroups($course->id))) {
+                Assignment::createTaskGroup('course', $course->id);
+            }
+
+            $firstRunComplete->content = 1;
+            $firstRunComplete->store();
         }
     }
 }

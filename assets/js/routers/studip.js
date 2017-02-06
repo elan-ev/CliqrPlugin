@@ -16,6 +16,10 @@ import { fetchTaskGroups, fetchTaskGroup, fetchTask, fetchVoting, fetchTwoVoting
 
 const StudipRouter = Backbone.Router.extend({
 
+    initialize(options) {
+        this.selector = options.selector
+    },
+
     routes: {
         '': 'redirectByAuthorization',
 
@@ -32,7 +36,6 @@ const StudipRouter = Backbone.Router.extend({
         'voting/:id': 'voting',
 
         'archive': 'archive'
-
     },
 
     routeHandler(fetcher, id, view, useCollection = 'model', ...rest) {
@@ -53,10 +56,6 @@ const StudipRouter = Backbone.Router.extend({
             })
     },
 
-    initialize(options) {
-        this.selector = options.selector
-    },
-
     // ROUTE: ''
     redirectByAuthorization() {
 
@@ -65,17 +64,16 @@ const StudipRouter = Backbone.Router.extend({
         }
 
         else {
-            this.navigate('task-groups', { trigger: true, replace: true })
+            if (window.cliqr.bootstrap.taskGroups.length === 1) {
+                this.navigate(`task-groups/show/${window.cliqr.bootstrap.taskGroups[0].id}`, { trigger: true, replace: true })
+            } else {
+                this.navigate('task-groups', { trigger: true, replace: true })
+            }
         }
     },
 
     // ROUTE: '#task-groups'
-    taskGroups() {
-        this.routeHandler(fetchTaskGroups, null, TaskGroupsIndexView, 'collection')
-            .catch((...args) => {
-                alert('caught:', args)
-            })
-    },
+    taskGroups() { this.routeHandler(fetchTaskGroups, null, TaskGroupsIndexView, 'collection') },
 
     // ROUTE: '#task-groups/show/:id'
     taskGroup(id) { this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView) },
