@@ -21,7 +21,7 @@ var cliqr = {
 <div id="cliqr-container"></div>
 <?= $this->render_partial('_noscript') ?>
 
-<? if (TRUE || WDS ) { ?>
+<? if (constant('WDS_ACTIVATED')) { ?>
     <link charset="utf-8" href="http://localhost:8081/bundle.css" rel="stylesheet" media="screen, print">
     <script charset="utf-8" src="http://localhost:8081/studip.js"></script>
 <? } else { ?>
