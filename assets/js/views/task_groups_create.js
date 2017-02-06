@@ -11,10 +11,6 @@ const TaskGroupsCreateView = Viewmaster.extend({
         'click .js-cancel': 'onClickCancel'
     },
 
-    initialize() {
-        Viewmaster.prototype.initialize.call(this)
-    },
-
     template: require('../../hbs/task-groups-create.hbs'),
 
     onClickCreate(event) {

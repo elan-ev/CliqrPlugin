@@ -1,5 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
+import Viewmaster from './viewmaster'
 
 import Task from '../models/task'
 import TaskCollection from '../models/tasks'
@@ -15,38 +16,33 @@ const decorateTaskGroup = function (model) {
     }
 }
 
-const TaskGroupsEditView = Backbone.View.extend({
+const TaskGroupsEditView = Viewmaster.extend({
 
     tagName: 'article',
     className: 'cliqr--task-groups-show',
 
     events: {
-        'click .js-edit-task-group': 'onClickEditTaskGroup',
+        'submit form': 'onClickEditTaskGroup',
         'click .js-cancel': 'onClickCancel'
     },
 
-    initialize(option) {
-        // console.log(this.model)
-    },
+    template: require('../../hbs/task-groups-edit.hbs'),
 
-    render() {
-        const template = require('../../hbs/task-groups-edit.hbs')
-        this.$el.html(template({ ...decorateTaskGroup(this.model) }))
-        return this
+    context() {
+        return decorateTaskGroup(this.model)
     },
 
     onClickEditTaskGroup(event) {
         event.preventDefault()
-        const $formData = Backbone.$(event.target.closest('form')).serializeArray(),
-              formData = _.reduce(
-                  $formData,
-                  (memo, item) => _.tap(memo, (memo) => memo[item.name] = item.value),
-                  {})
 
-        this.model.save(formData)
-            .then((taskGroup) => {
-                Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true })
-            })
+        const title = this.$('form')[0].title.value.trim()
+
+        if (!title.length) {
+            return
+        }
+
+        this.model.save({ title })
+            .then(() => Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true }))
     },
 
     onClickCancel() {
