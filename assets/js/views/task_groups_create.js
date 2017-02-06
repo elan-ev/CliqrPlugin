@@ -1,35 +1,32 @@
-import Backbone from 'backbone'
-import _ from 'underscore'
+import Viewmaster from './viewmaster'
 
-const TaskGroupsCreateView = Backbone.View.extend({
+const TaskGroupsCreateView = Viewmaster.extend({
 
     tagName: 'article',
 
     className: 'cliqr--task-groups-create',
 
     events: {
-        'click .js-create': 'onClickCreate',
+        'submit form': 'onClickCreate',
         'click .js-cancel': 'onClickCancel'
     },
 
-    render() {
-        const template = require('../../hbs/task-groups-create.hbs')
-        this.$el.html(template(this.collection.toJSON()))
-        return this
+    initialize() {
+        Viewmaster.prototype.initialize.call(this)
     },
+
+    template: require('../../hbs/task-groups-create.hbs'),
 
     onClickCreate(event) {
         event.preventDefault()
-        const $formData = Backbone.$(event.target.closest('form')).serializeArray(),
-              formData = _.reduce(
-                  $formData,
-                  (memo, item) => _.tap(memo, (memo) => memo[item.name] = item.value),
-                  {})
-        this.collection.create(formData, {
-            success: (args) => {
-                this.trigger('cancel', event, this)
-            }
-        })
+
+        const title = this.$('form')[0].title.value.trim()
+
+        if (!title.length) {
+            return
+        }
+
+        this.collection.create({ title }, { success: () => { this.trigger('cancel', event, this) } })
     },
 
     onClickCancel(event) {
