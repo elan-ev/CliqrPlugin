@@ -1,5 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
+
+import Viewmaster from './viewmaster'
 import { showConfirmDialog, showDialog } from '../dialog'
 import TaskGroupsCreateView from './task_groups_create'
 import TaskGroupsImportView from './task_groups_import'
@@ -12,7 +14,7 @@ const latestChange = taskGroup => {
     return _.max(latestTaskChanges.concat(new Date(test.changed)))
 }
 
-const TaskGroupsIndexView = Backbone.View.extend({
+const TaskGroupsIndexView = Viewmaster.extend({
 
     className: 'cliqr--task-groups-index',
 
@@ -26,13 +28,17 @@ const TaskGroupsIndexView = Backbone.View.extend({
     },
 
     initialize() {
+        Viewmaster.prototype.initialize.call(this)
+
         this.listenTo(this.collection, 'change', this.render)
         this.listenTo(this.collection, 'update', this.render)
     },
 
-    render() {
-        const template = require('../../hbs/task-groups-index.hbs')
-        const data = {
+    template: require('../../hbs/task-groups-index.hbs'),
+
+
+    context() {
+        return {
             taskGroups: this.collection.map((taskGroup) => {
                 const test = taskGroup.get('test')
                 return {
@@ -41,8 +47,6 @@ const TaskGroupsIndexView = Backbone.View.extend({
                     changed: latestChange(taskGroup)
                 }})
         }
-        this.$el.html(template(data))
-        return this
     },
 
     onClickAddTaskGroup(event) {

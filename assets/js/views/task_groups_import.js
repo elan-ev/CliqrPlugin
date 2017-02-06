@@ -1,6 +1,5 @@
-import Backbone from 'backbone'
 import _ from 'underscore'
-
+import Viewmaster from './viewmaster'
 import { showLoading } from '../utils'
 
 const cancel = function (e) {
@@ -8,7 +7,7 @@ const cancel = function (e) {
     e.preventDefault()
 }
 
-const TaskGroupsImportView = Backbone.View.extend({
+const TaskGroupsImportView = Viewmaster.extend({
 
     tagName: 'article',
 
@@ -23,19 +22,10 @@ const TaskGroupsImportView = Backbone.View.extend({
         'drop .cliqr--upload-box': 'onDropFile'
     },
 
-    initialize(options) {
-        // console.log("initializing")
-    },
+    template: require('../../hbs/task-groups-import.hbs'),
 
-    remove() {
-        Backbone.View.prototype.remove.call(this)
-        // console.log("removing")
-    },
-
-    render() {
-        const template = require('../../hbs/task-groups-import.hbs')
-        this.$el.html(template(this.collection.toJSON()))
-        return this
+    context() {
+        return this.collection.toJSON()
     },
 
     onClickCancel(event) {

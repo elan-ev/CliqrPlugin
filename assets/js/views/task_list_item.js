@@ -1,4 +1,6 @@
 import Backbone from 'backbone'
+
+import Viewmaster from './viewmaster'
 import { showConfirmDialog } from '../dialog'
 import Voting from '../models/voting'
 
@@ -15,7 +17,7 @@ const decorateTaskListItem = function (model) {
     }
 }
 
-const TaskListItemView = Backbone.View.extend({
+const TaskListItemView = Viewmaster.extend({
 
     tagName: 'tr',
 
@@ -29,17 +31,15 @@ const TaskListItemView = Backbone.View.extend({
     },
 
     initialize() {
+        Viewmaster.prototype.initialize.call(this)
+
         this.listenTo(this.model, 'change', this.render)
     },
 
-    remove() {
-        Backbone.View.prototype.remove.call(this)
-    },
+    template: require('../../hbs/task-list-item.hbs'),
 
-    render() {
-        const template = require('../../hbs/task-list-item.hbs')
-        this.$el.html(template(decorateTaskListItem(this.model)))
-        return this
+    context() {
+        return decorateTaskListItem(this.model)
     },
 
     onClickRemove(event) {
