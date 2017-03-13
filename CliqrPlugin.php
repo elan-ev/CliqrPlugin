@@ -141,7 +141,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             $this->config['datafield_first_run_complete_id']
         );
         if (count($datafields) !== 1) {
-            throw RuntimeException('Missing Cliqr First Run Datafield');
+            throw new RuntimeException('Missing Cliqr First Run Datafield');
         }
         $firstRunComplete = $datafields[0];
         $initialized = !!$firstRunComplete->content;
