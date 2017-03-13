@@ -7,6 +7,7 @@ use eTask\Assignment as eAssignment;
 class Assignment extends eAssignment
 {
     use ConfigureTrait;
+    use CreatedChangedTrait;
 
     const TYPE_VOTING = 'cliqr:voting';
     const TYPE_TASK_GROUP = 'cliqr:task-group';
@@ -72,6 +73,16 @@ class Assignment extends eAssignment
     }
 
     // ***** INSTANCE METHODS
+
+    public function getStart()
+    {
+        return date('c', strtotime($this->content['start']));
+    }
+
+    public function getEnd()
+    {
+        return date('c', strtotime($this->content['end']));
+    }
 
     public function countTasks()
     {

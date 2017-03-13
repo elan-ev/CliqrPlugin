@@ -5,6 +5,7 @@ namespace Cliqr\DB;
 class Test extends \eTask\Test
 {
     use ConfigureTrait;
+    use CreatedChangedTrait;
 
     public function toJSON($omits = [])
     {

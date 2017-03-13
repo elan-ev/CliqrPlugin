@@ -5,6 +5,7 @@ namespace Cliqr\DB;
 class Task extends \eTask\Task
 {
     use ConfigureTrait;
+    use CreatedChangedTrait;
 
     public function startTask($range, $start = null, $end = null, $user_id = null)
     {
