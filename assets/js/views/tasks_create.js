@@ -1,5 +1,4 @@
 import Backbone from 'backbone'
-import _ from 'underscore'
 
 import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'

@@ -16,16 +16,12 @@
 
         {{#each taskGroups}}
             <tr data-taskgroupid={{id}}>
-                <td>
-                    <!--
-                    <input type="checkbox">
-                    -->
-                </td>
+                <td> </td>
 
                 <td>
                     <a class="cliqr--task-group-title" href="#task-groups/show/{{id}}">
                         {{icon "folder-full"}}
-                        {{test.title}}
+                        {{title}}
                     </a>
                 </td>
 
@@ -37,7 +33,7 @@
 
                 <td>
                     <a class="cliqr--task-group-changed" href="#task-groups/show/{{id}}">
-                        {{moment changed}}
+                        {{moment last_change}}
                     </a>
                 </td>
 

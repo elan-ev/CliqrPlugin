@@ -22,7 +22,19 @@ const TaskGroup = Backbone.Model.extend({
 
     url(action) {
         let id = this.id != null ? '/' + this.id : ''
-        return cliqr.config.PLUGIN_URL + ('task_groups/' + action + id + '?cid=') + cliqr.config.CID
+        const url = [
+            window.cliqr.config.PLUGIN_URL,
+            'task_groups/',
+            action,
+            id,
+            '?cid=' + window.cliqr.config.CID
+        ]
+
+        if (action === 'show') {
+            url.push('&include=tasks')
+        }
+
+        return url.join('')
     },
 
     duplicate() {

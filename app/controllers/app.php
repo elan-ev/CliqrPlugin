@@ -43,8 +43,11 @@ class AppController extends CliqrStudipController
     private function getTaskGroupsJSON($cid)
     {
         $taskGroups = Assignment::findTaskGroups($cid);
-
-        return $taskGroups->toJSON();
+        return $taskGroups->map(
+            function ($tg) {
+                return $tg->getTaskGroupJSON();
+            }
+        );
     }
 
     private function getLastVotingsJSON($cid)

@@ -8,7 +8,7 @@ const TaskGroupsCollection = Backbone.Collection.extend({
     model: TaskGroup,
 
     url() {
-        return cliqr.config.PLUGIN_URL + 'task_groups?cid=' + cliqr.config.CID
+        return window.cliqr.config.PLUGIN_URL + 'task_groups?cid=' + window.cliqr.config.CID
     },
 
     comparator() {

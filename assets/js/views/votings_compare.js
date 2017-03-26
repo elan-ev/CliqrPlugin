@@ -1,11 +1,9 @@
-import Backbone from 'backbone'
 import _ from 'underscore'
 
 import taskTypes from '../models/task_types'
 import Votings from '../models/votings'
 
 import Viewmaster from './viewmaster'
-
 
 const getView = function (model) {
     return taskTypes.fetchTaskType(model.getTask())
@@ -25,10 +23,10 @@ const VotingsCompareView = Viewmaster.extend({
 
         this.votings = new Votings(votings)
         const ids = this.votings.pluck('id'),
-            selectors = _.object(
-                ids,
-                [ 'section.cliqr--voting-side-a main'
-                  , 'section.cliqr--voting-side-b main' ])
+              selectors = _.object(
+                  ids,
+                  [ 'section.cliqr--voting-side-a main'
+                    , 'section.cliqr--voting-side-b main' ])
 
         this.listenTo(this.votings, 'change sync', this.render)
 
@@ -38,7 +36,7 @@ const VotingsCompareView = Viewmaster.extend({
                 this.setView(viewSelector, view)
                 this.refreshViews()
 
-                view && _.invoke([view], 'postRender')
+                view && view.postRender && view.postRender()
 
                 return null
             })

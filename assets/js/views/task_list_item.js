@@ -4,19 +4,6 @@ import Viewmaster from './viewmaster'
 import { showConfirmDialog } from '../dialog'
 import Voting from '../models/voting'
 
-const decorateTaskListItem = function (model) {
-
-    const votings = model.getVotings()
-
-    return {
-        ...model.toJSON(),
-        votings_count: votings.length,
-        last_voting: votings.length ? votings.last().toJSON() : null,
-        state: model.getCurrentState(),
-        $mode: 'show'
-    }
-}
-
 const TaskListItemView = Viewmaster.extend({
 
     tagName: 'tr',
@@ -39,7 +26,14 @@ const TaskListItemView = Viewmaster.extend({
     template: require('../../hbs/task-list-item.hbs'),
 
     context() {
-        return decorateTaskListItem(this.model)
+        const votings = this.model.getVotings()
+
+        return {
+            ...this.model.toJSON(),
+            votings_count: votings.length,
+            last_voting: votings.length ? votings.last().toJSON() : null,
+            state: this.model.getCurrentState()
+        }
     },
 
     onClickRemove(event) {
@@ -48,11 +42,11 @@ const TaskListItemView = Viewmaster.extend({
             `Wollen Sie diese Frage wirklich löschen?`,
             () => {
                 this.model.destroy()
-                    .then((...args) => {
+                    .then(() => {
                         this.remove()
                         return null
                     })
-                    .catch((e) => {
+                    .catch(e => {
                         console.log("error on destroying task group: ", e)
                         return null
                     })
@@ -64,19 +58,18 @@ const TaskListItemView = Viewmaster.extend({
         event.preventDefault()
         const vtng = new Voting({ task_id: this.model.id })
         vtng.save()
-            .then((model) => {
-                const id = model.id
-                Backbone.history.navigate(`voting/${id}`, { trigger: true })
+            .then(model => {
+                Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
                 return null
             })
     },
 
-    onClickStop(event){
+    onClickStop(event) {
         event.preventDefault()
 
         const running = this.model.getVotings().find(a => a.isRunning())
         running.stop()
-            .then((r) => {
+            .then(() => {
                 // nothing to do
                 return null
             })
@@ -85,7 +78,7 @@ const TaskListItemView = Viewmaster.extend({
     onClickDuplicate(event) {
         event.preventDefault()
         this.model.duplicate()
-            .then((task) => {
+            .then(task => {
                 this.model.collection.once('add', () => this.$el.nextAll().last()[0].scrollIntoView())
                 this.model.collection.add(task)
                 return null

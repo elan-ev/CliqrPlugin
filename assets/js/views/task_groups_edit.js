@@ -1,20 +1,5 @@
 import Backbone from 'backbone'
-import _ from 'underscore'
 import Viewmaster from './viewmaster'
-
-import Task from '../models/task'
-import TaskCollection from '../models/tasks'
-
-const decorateTaskGroup = function (model) {
-    const taskGroup = model.toJSON()
-    return {
-        ...taskGroup,
-        breadcrumb: {
-            task_group_id: taskGroup.id,
-            task_group_title: taskGroup.test.title
-        }
-    }
-}
 
 const TaskGroupsEditView = Viewmaster.extend({
 
@@ -29,7 +14,14 @@ const TaskGroupsEditView = Viewmaster.extend({
     template: require('../../hbs/task-groups-edit.hbs'),
 
     context() {
-        return decorateTaskGroup(this.model)
+        const taskGroup = this.model.toJSON()
+        return {
+            ...taskGroup,
+            breadcrumb: {
+                task_group_id: taskGroup.id,
+                task_group_title: taskGroup.test.title
+            }
+        }
     },
 
     onClickEditTaskGroup(event) {

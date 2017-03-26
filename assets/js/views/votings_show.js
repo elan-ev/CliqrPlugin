@@ -1,7 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import Task from '../models/task'
 import Voting from '../models/voting'
 import taskTypes from '../models/task_types'
 
@@ -47,7 +46,7 @@ const VotingsShowView = Viewmaster.extend({
     initialize() {
         Viewmaster.prototype.initialize.call(this)
 
-        this.listenTo(this.model, 'change', (obj) => {
+        this.listenTo(this.model, 'change', () => {
             this.render()
             this.postRender()
         })
@@ -60,7 +59,7 @@ const VotingsShowView = Viewmaster.extend({
                 this.setView('main', view)
                 this.refreshViews()
 
-                view && _.invoke([view], 'postRender')
+                view && view.postRender && view.postRender()
 
                 return null
             })
@@ -103,9 +102,8 @@ const VotingsShowView = Viewmaster.extend({
         const task_id = this.model.getTask().id,
               vtng = new Voting({ task_id })
         vtng.save()
-            .then((model) => {
-                const voting_id = model.id
-                Backbone.history.navigate(`voting/${voting_id}`, { trigger: true })
+            .then(model => {
+                Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
                 return null
             })
     },

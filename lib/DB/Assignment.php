@@ -207,4 +207,23 @@ class Assignment extends eAssignment
 
         return $duplicate;
     }
+
+    public function getTaskGroupJSON($includeTasks = false)
+    {
+        $test = $this->test;
+
+        if ($includeTasks) {
+            $tasks = $test->tasks->toJSON();
+        } else {
+            $tasks = $test->getTaskIds();
+        }
+
+        return [
+            'id' => $this->id,
+            'title' => $test->title,
+            'last_change' => $test->getLastChange()->format('c'),
+            'tasks_count' => $test->countTasks(),
+            'tasks' => $tasks
+        ];
+    }
 }

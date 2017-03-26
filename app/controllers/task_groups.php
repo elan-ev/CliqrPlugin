@@ -27,7 +27,13 @@ class TaskGroupsController extends CliqrStudipController
         }
 
         $taskGroups = Assignment::findTaskGroups($this->cid);
-        $this->render_json($taskGroups->toJSON());
+        $this->render_json(
+            $taskGroups->map(
+                function ($tg) {
+                    return $tg->getTaskGroupJSON();
+                }
+            )
+        );
     }
 
     public function show_action($id)
@@ -42,7 +48,10 @@ class TaskGroupsController extends CliqrStudipController
             throw new \Cliqr\RecordNotFound();
         }
 
-        $this->render_json($taskGroup->toJSON());
+        $includes = explode(',', \Request::get('include', ''));
+        $json = $taskGroup->getTaskGroupJSON(in_array('tasks', $includes));
+
+        $this->render_json($json);
     }
 
     public function create_action()

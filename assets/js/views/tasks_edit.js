@@ -52,12 +52,11 @@ const TasksEditView = Viewmaster.extend({
         event.preventDefault()
         const vtng = new Voting({ task_id: this.model.id })
         vtng.save()
-            .then((model) => {
-                const id = model.id
-                Backbone.history.navigate(`voting/${id}`, { trigger: true })
+            .then(model => {
+                Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
                 return null
             })
-            .catch((response) => {
+            .catch(response => {
                 console.log('TODO catch', response)
                 return null
             })
@@ -68,7 +67,7 @@ const TasksEditView = Viewmaster.extend({
 
         const running = this.model.getVotings().find(a => a.isRunning())
         running.save({ end: new Date().toISOString() })
-            .then((r) => {
+            .then(() => {
                 this.render()
                 return null
             })
@@ -80,13 +79,13 @@ const TasksEditView = Viewmaster.extend({
         showLoading()
 
         this.model.save()
-            .then((response) => {
+            .then(() => {
                 Backbone.history.navigate(`task/show/${this.model.id}`, { trigger: true })
                 hideLoading()
                 return null
             })
-            .catch((error) => {
-                console.log('caught an error while editing task', this.model)
+            .catch(error => {
+                console.log('caught an error while editing task', this.model, error)
                 hideLoading()
                 return null
             })

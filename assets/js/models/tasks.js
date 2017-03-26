@@ -12,7 +12,7 @@ const TasksCollection = Backbone.Collection.extend({
     },
 
     comparator(task) {
-        return task.get('changed')
+        return parseInt(task.get('id'), 10)
     }
 })
 

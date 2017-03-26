@@ -7,26 +7,6 @@ import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
 
-const decorateTask = function (model) {
-    const votings = model.getVotings()
-    const task = model.toJSON()
-    return {
-        task,
-        state: model.getCurrentState(),
-        editable: !votings.any((v) => v.get('responses_count')),
-        votings: votings.map(function (v) {
-            return {
-                ...v.toJSON(),
-                running: v.isRunning()
-            }
-        }),
-        breadcrumb: {
-            task_group_id: task.task_group_id,
-            task_group_title: task.task_group_title
-        }
-    }
-}
-
 const TasksShowView = Viewmaster.extend({
 
     tagName: 'article',
@@ -61,19 +41,34 @@ const TasksShowView = Viewmaster.extend({
     template: require('../../hbs/tasks-show.hbs'),
 
     context() {
-        return { ...decorateTask(this.model) }
+        const votings = this.model.getVotings()
+        const task = this.model.toJSON()
+        return {
+            task,
+            state: this.model.getCurrentState(),
+            editable: !votings.any((v) => v.get('responses_count')),
+            votings: votings.map(function (v) {
+                return {
+                    ...v.toJSON(),
+                    running: v.isRunning()
+                }
+            }),
+            breadcrumb: {
+                task_group_id: task.task_group_id,
+                task_group_title: task.task_group_title
+            }
+        }
     },
 
     onClickStart(event) {
         event.preventDefault()
         const vtng = new Voting({ task_id: this.model.id })
         vtng.save()
-            .then((model) => {
-                const id = model.id
-                Backbone.history.navigate(`voting/${id}`, { trigger: true })
+            .then(model => {
+                Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
                 return null
             })
-            .catch((response) => {
+            .catch(response => {
                 console.log('TODO catch', response)
                 return null
             })
@@ -84,18 +79,18 @@ const TasksShowView = Viewmaster.extend({
 
         const running = this.model.getVotings().find(a => a.isRunning())
         running.stop()
-            .then((r) => {
+            .then(() => {
                 this.render()
                 return null
             })
     },
 
-    onClickCopyEdit(event) {
+    onClickCopyEdit() {
         showConfirmDialog(
             "Diese Frage kann nicht mehr geändert werden, da sie schon beantwortet wurde.\nWollen Sie eine Kopie dieser Frage erstellen und bearbeiten?",
             () => {
                 this.model.duplicate()
-                    .then((task) => {
+                    .then(task => {
                         Backbone.history.navigate(`task/edit/${task.id}`, { trigger: true })
                         return null
                     })

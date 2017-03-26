@@ -1,7 +1,3 @@
-import Backbone from 'backbone'
-import _ from 'underscore'
-
-import Task from '../models/task'
 import TaskCollection from '../models/tasks'
 
 import Viewmaster from './viewmaster'
@@ -16,7 +12,7 @@ const TaskGroupsShowView = Viewmaster.extend({
     initialize() {
         Viewmaster.prototype.initialize.call(this)
 
-        this.tasks = new TaskCollection(this.model.get('test').tasks)
+        this.tasks = new TaskCollection(this.model.get('tasks'))
         this.setView('.task-list-container', new TaskListView({ collection: this.tasks, model: this.model }))
     },
 
