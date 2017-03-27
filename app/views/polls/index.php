@@ -48,7 +48,7 @@
 
         <script src="<?= \Assets::javascript_path('mathjax/MathJax.js?config=TeX-AMS_HTML,default') ?>"></script>
 
-        <? if (constant('WDS_ACTIVATED')) { ?>
+        <? if (defined('WDS_ACTIVATED') && constant('WDS_ACTIVATED')) { ?>
             <link charset="utf-8" href="http://localhost:8081/bundle.css" rel="stylesheet" media="screen, print">
             <script charset="utf-8" src="http://localhost:8081/polls.js"></script>
         <? } else { ?>
