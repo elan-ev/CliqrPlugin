@@ -2,6 +2,8 @@ import Backbone from 'backbone'
 
 import { userRole, activateNavigation, showLoading, hideLoading, changeToPage } from '../utils'
 
+import showError from '../error'
+
 import ArchiveView from '../views/archive'
 import TaskGroupsEditView from '../views/task_groups_edit'
 import TaskGroupsIndexView from '../views/task_groups_index'
@@ -44,7 +46,8 @@ const StudipRouter = Backbone.Router.extend({
             .then(response => {
                 hideLoading()
                 activateNavigation(...rest)
-                return changeToPage(new view({ [useCollection]: response }), this.selector)
+                const page = new view({ [useCollection]: response })
+                return changeToPage(page, this.selector)
             })
             .catch(error => {
                 const status = error && error.status
@@ -52,6 +55,7 @@ const StudipRouter = Backbone.Router.extend({
                     hideLoading()
                     return this.navigate('', { trigger: true, replace: true })
                 }
+                showError('Could not route URL', error)
                 throw error
             })
     },

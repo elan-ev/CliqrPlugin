@@ -1,6 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 import { showConfirmDialog } from '../dialog'
+import showError from '../error'
 
 import Viewmaster from './viewmaster'
 
@@ -36,6 +37,9 @@ const TasksShowView = Viewmaster.extend({
 
                 return null
             })
+            .catch(error => {
+                showError('Could not fetch type of task', error)
+            })
     },
 
     template: require('../../hbs/tasks-show.hbs'),
@@ -69,7 +73,7 @@ const TasksShowView = Viewmaster.extend({
                 return null
             })
             .catch(response => {
-                console.log('TODO catch', response)
+                showError('Could not start voting', response)
                 return null
             })
     },
@@ -83,6 +87,10 @@ const TasksShowView = Viewmaster.extend({
                 this.render()
                 return null
             })
+            .catch(response => {
+                showError('Could not stop voting', response)
+                return null
+            })
     },
 
     onClickCopyEdit() {
@@ -92,6 +100,10 @@ const TasksShowView = Viewmaster.extend({
                 this.model.duplicate()
                     .then(task => {
                         Backbone.history.navigate(`task/edit/${task.id}`, { trigger: true })
+                        return null
+                    })
+                    .catch(error => {
+                        showError('Error while copying task', error)
                         return null
                     })
             }
