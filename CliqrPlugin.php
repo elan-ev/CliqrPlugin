@@ -115,9 +115,12 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     // setup Stud.IP navigation and title
     private function setupStudipNavigation($action = null)
     {
-        // set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
-        PageLayout::setTitle($_SESSION['SessSemName']['header_line'].' - '._('Cliqr'));
+
+        $headerLine = is_callable('Context::getHeaderLine')
+                    ? Context::getHeaderLine()
+                    : $_SESSION['SessSemName']['header_line'];
+        PageLayout::setTitle($headerLine.' - '._('Cliqr'));
     }
 
     public function observeQuestions()
