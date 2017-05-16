@@ -19,7 +19,7 @@ const TaskGroupsEditView = Viewmaster.extend({
             ...taskGroup,
             breadcrumb: {
                 task_group_id: taskGroup.id,
-                task_group_title: taskGroup.test.title
+                task_group_title: taskGroup.title
             }
         }
     },

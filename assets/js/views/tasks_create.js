@@ -1,5 +1,7 @@
 import Backbone from 'backbone'
 
+import showError from '../error'
+
 import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
 import TaskCollection from '../models/tasks'
@@ -21,8 +23,7 @@ const TasksCreateView = Viewmaster.extend({
 
     initialize(options) {
         Viewmaster.prototype.initialize.call(this)
-
-        this.tasks = new TaskCollection(this.model.get('test').tasks)
+        this.tasks = new TaskCollection(this.model.get('tasks'))
     },
 
     context() {
