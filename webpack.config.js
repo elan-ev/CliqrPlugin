@@ -1,10 +1,5 @@
 const webpack = require('webpack'),
       path = require('path'),
-      postcss_autoprefixer = require('autoprefixer'),
-      postcss_precss = require('precss'),
-      postcss_atroot = require('postcss-atroot'),
-      postcss_lost = require('lost'),
-      postcss_calc = require('postcss-calc'),
       ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const nodeEnv = process.env.NODE_ENV || 'development';
@@ -15,42 +10,47 @@ module.exports = {
     context: path.join(__dirname, './assets/js'),
     entry: {
         studip: './studip-app.js',
-        polls: './polls-app.js',
-        // vendor: [ 'backbone' ]
+        polls: './polls-app.js'
     },
     output: {
         path: path.join(__dirname, './static'),
         chunkFilename: '[name].chunk.js',
         filename: '[name].js',
         pathinfo: !isProd,
-        publicPath: isProd ? undefined : 'http://localhost:8081/'
+        publicPath: isProd ? undefined : 'https://localhost:8081/'
     },
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.html$/,
-                loader: 'file-loader',
-                query: {
-                    name: '[name].[ext]'
-                }
-            },
-            {
-                test:   /assets\/scss\/.+\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallbackLoader: 'style-loader',
-                    loader: 'css-loader?-url!postcss-loader'
+                test: /assets\/scss\/.+\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: { url: false, importLoaders: 1 }
+                        },
+                        'postcss-loader'
+                    ]
                 })
             },
             {
-                test:   /assets\/js\/.+\.scss$/,
-                loader: 'style-loader!css-loader!postcss-loader'
+                test: /assets\/js\/.+\.scss$/,
+                use: [
+                    'style-loader',
+                    { loader: 'css-loader', options: { importLoaders: 1 } },
+                    'postcss-loader'
+                ]
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
-                loaders: [
-                    'babel-loader'
-                ]
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        cacheDirectory: true
+                    }
+                }
             },
             {
                 test: /\.hbs$/,
@@ -78,19 +78,10 @@ module.exports = {
             filename: 'bundle.css',
             allChunks: false
         }),
-        /*
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: Infinity,
-            filename: 'vendor.bundle.js'
-        }),
-        */
         new webpack.LoaderOptionsPlugin({
             minimize: true,
             debug: !isProd,
-            options: {
-                postcss: [ postcss_atroot, postcss_precss, postcss_calc, postcss_autoprefixer, postcss_lost ]
-            }
+            options: { }
         }),
         new webpack.optimize.UglifyJsPlugin({
             comments: !isProd,
@@ -101,7 +92,8 @@ module.exports = {
         })
     ],
     devServer: {
-        contentBase: './assets/js'
+        contentBase: './assets/js',
+        https: true
         // hot: true
     }
 };
