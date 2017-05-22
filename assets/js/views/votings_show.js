@@ -1,6 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
+import showError from '../error'
 import Voting from '../models/voting'
 import taskTypes from '../models/task_types'
 
@@ -63,6 +64,9 @@ const VotingsShowView = Viewmaster.extend({
 
                 return null
             })
+            .catch(error => {
+                showError('Could not fetch task type', error)
+            })
 
 
         if (this.model.isRunning()) {
@@ -105,6 +109,9 @@ const VotingsShowView = Viewmaster.extend({
             .then(model => {
                 Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
                 return null
+            })
+            .catch(error => {
+                showError('Could not restart voting', error)
             })
     },
 

@@ -1,5 +1,6 @@
 import Backbone from 'backbone'
 
+import showError from '../error'
 import { showLoading, hideLoading } from '../utils'
 import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
@@ -32,6 +33,9 @@ const TasksEditView = Viewmaster.extend({
 
                 return null
             })
+            .catch(error => {
+                showError('Could not fetch task type', error)
+            })
     },
 
     template: require('../../hbs/tasks-edit.hbs'),
@@ -56,9 +60,8 @@ const TasksEditView = Viewmaster.extend({
                 Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
                 return null
             })
-            .catch(response => {
-                console.log('TODO catch', response)
-                return null
+            .catch(error => {
+                showError('Could not start voting', error)
             })
     },
 
@@ -70,6 +73,9 @@ const TasksEditView = Viewmaster.extend({
             .then(() => {
                 this.render()
                 return null
+            })
+            .catch(error => {
+                showError('Could not stop voting', error)
             })
     },
 
@@ -85,9 +91,8 @@ const TasksEditView = Viewmaster.extend({
                 return null
             })
             .catch(error => {
-                console.log('caught an error while editing task', this.model, error)
                 hideLoading()
-                return null
+                showError('Could not edit task', error)
             })
     },
     onCancel(model) {

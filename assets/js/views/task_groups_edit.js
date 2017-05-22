@@ -1,4 +1,6 @@
 import Backbone from 'backbone'
+
+import showError from '../error'
 import Viewmaster from './viewmaster'
 
 const TaskGroupsEditView = Viewmaster.extend({
@@ -36,6 +38,9 @@ const TaskGroupsEditView = Viewmaster.extend({
         this.model.save({ title })
             .then(() => {
                 Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true })
+            })
+            .catch(error => {
+                showError('Could not edit task group', error)
             })
     },
 

@@ -1,5 +1,6 @@
 import Backbone from 'backbone'
 
+import showError from '../error'
 import Viewmaster from './viewmaster'
 import { showConfirmDialog } from '../dialog'
 import Voting from '../models/voting'
@@ -47,8 +48,7 @@ const TaskListItemView = Viewmaster.extend({
                         return null
                     })
                     .catch(e => {
-                        console.log("error on destroying task group: ", e)
-                        return null
+                        showError('Could not remove task group', error)
                     })
             }
         )
@@ -62,6 +62,9 @@ const TaskListItemView = Viewmaster.extend({
                 Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
                 return null
             })
+            .catch(error => {
+                showError('Could not start voting', error)
+            })
     },
 
     onClickStop(event) {
@@ -73,6 +76,9 @@ const TaskListItemView = Viewmaster.extend({
                 // nothing to do
                 return null
             })
+            .catch(error => {
+                showError('Could not stop voting', error)
+            })
     },
 
     onClickDuplicate(event) {
@@ -82,6 +88,9 @@ const TaskListItemView = Viewmaster.extend({
                 this.model.collection.once('add', () => this.$el.nextAll().last()[0].scrollIntoView())
                 this.model.collection.add(task)
                 return null
+            })
+            .catch(error => {
+                showError('Could not duplicate task', error)
             })
     }
 })

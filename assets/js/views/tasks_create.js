@@ -59,6 +59,9 @@ const TasksCreateView = Viewmaster.extend({
 
                     return null
                 })
+                .catch(error => {
+                    showError('Could not fetch task type', error)
+                })
         }
     },
 

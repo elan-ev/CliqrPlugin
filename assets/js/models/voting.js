@@ -1,6 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
+import showError from '../error'
 import Task from './task'
 
 const actionMap = {
@@ -45,6 +46,9 @@ const Voting = Backbone.Model.extend({
             .then(response => {
                 this.trigger('add:response', this, newResponse)
                 return null
+            })
+            .catch(error => {
+                showError('Could not add response, error')
             })
     },
 

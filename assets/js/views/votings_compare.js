@@ -1,5 +1,6 @@
 import _ from 'underscore'
 
+import showError from '../error'
 import taskTypes from '../models/task_types'
 import Votings from '../models/votings'
 
@@ -40,6 +41,9 @@ const VotingsCompareView = Viewmaster.extend({
                     view && view.postRender && view.postRender()
 
                     return null
+                })
+                .catch(error => {
+                    showError('Could not fetch task type', error)
                 })
         })
 
