@@ -32,14 +32,15 @@ const VotingsCompareView = Viewmaster.extend({
 
         this.listenTo(this.votings, 'sync', voting => {
             const viewSelector = selectors[voting.id]
-            getView(voting).then(view => {
-                this.setView(viewSelector, view)
-                this.refreshViews()
+            getView(voting)
+                .then(view => {
+                    this.setView(viewSelector, view)
+                    this.refreshViews()
 
-                view && view.postRender && view.postRender()
+                    view && view.postRender && view.postRender()
 
-                return null
-            })
+                    return null
+                })
         })
 
         this.votings.invoke('fetch')

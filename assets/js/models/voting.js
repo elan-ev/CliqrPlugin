@@ -42,7 +42,7 @@ const Voting = Backbone.Model.extend({
 
     addResponse(newResponse) {
         newResponse.save({ course_id: cliqr.config.CID })
-            .then((response) => {
+            .then(response => {
                 this.trigger('add:response', this, newResponse)
                 return null
             })

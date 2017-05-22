@@ -74,7 +74,6 @@ const TasksShowView = Viewmaster.extend({
             })
             .catch(response => {
                 showError('Could not start voting', response)
-                return null
             })
     },
 
@@ -89,7 +88,6 @@ const TasksShowView = Viewmaster.extend({
             })
             .catch(response => {
                 showError('Could not stop voting', response)
-                return null
             })
     },
 
@@ -104,7 +102,6 @@ const TasksShowView = Viewmaster.extend({
                     })
                     .catch(error => {
                         showError('Error while copying task', error)
-                        return null
                     })
             }
         )

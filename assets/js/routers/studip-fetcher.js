@@ -26,7 +26,7 @@ export const fetchTaskGroups = function () {
 
     const taskGroups = new TaskGroupsCollection()
     return taskGroups.fetch()
-        .then(() => taskGroups)
+        .then( () => taskGroups )
 }
 
 export const fetchTaskGroup = function (id) {
@@ -47,7 +47,8 @@ export const fetchTwoVotings = function ([ id1, id2 ]) {
 
 export const fetchTask = function (id) {
     const task = new Task({ id })
-    return task.fetch().then( () => task )
+    return task.fetch()
+        .then( () => task )
 }
 
 export const fetchLastVotings = function () {
@@ -57,5 +58,5 @@ export const fetchLastVotings = function () {
 
     const lastVotings = new VotingsCollection()
     return lastVotings.fetch()
-        .then(() => lastVotings)
+        .then( () => lastVotings )
 }

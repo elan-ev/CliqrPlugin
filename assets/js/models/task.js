@@ -53,7 +53,8 @@ const Task = Backbone.Model.extend({
 
     duplicate() {
         const options = {}
-        return this.sync('duplicate', this, options).then((attrs) => new Task(attrs))
+        return this.sync('duplicate', this, options)
+            .then(attrs => new Task(attrs))
     }
 })
 

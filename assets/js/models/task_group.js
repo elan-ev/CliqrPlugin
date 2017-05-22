@@ -39,7 +39,8 @@ const TaskGroup = Backbone.Model.extend({
 
     duplicate() {
         const options = {}
-        return this.sync('duplicate', this, options).then((attrs) => new TaskGroup(attrs))
+        return this.sync('duplicate', this, options)
+            .then(attrs => new TaskGroup(attrs))
     },
 
     exportURL() {

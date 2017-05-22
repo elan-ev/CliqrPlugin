@@ -1,7 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 import { changeToPage } from '../utils'
-// import { Schema, arrayOf, normalize } from 'normalizr'
 
 import VotingsCollection from '../models/votings'
 
@@ -36,31 +35,12 @@ const PollsRouter = Backbone.Router.extend({
 
     initialize(options) {
         this.selector = options.selector
-
-        if (cliqr.bootstrap.polls) {
-
-            /*
-            const pollSchema = new Schema('poll')
-            const testSchema = new Schema('test')
-            const taskSchema = new Schema('task')
-
-            pollSchema.define({
-                test: testSchema
-            })
-            testSchema.define({
-                tasks: arrayOf(taskSchema)
-            })
-
-            const response = normalize(cliqr.bootstrap.polls, arrayOf(pollSchema));
-            console.log("normalizred", response)
-            */
-        }
     },
 
     routeHandler(fetcher, id, view, useCollection = false) {
         this.showLoading()
         fetcher(id)
-            .then((response) => {
+            .then(response => {
                 this.hideLoading()
                 const page = new view(useCollection ? { collection: response } : { model: response })
                 changeToPage(page, this.selector)

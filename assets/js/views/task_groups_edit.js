@@ -34,7 +34,9 @@ const TaskGroupsEditView = Viewmaster.extend({
         }
 
         this.model.save({ title })
-            .then(() => Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true }))
+            .then(() => {
+                Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true })
+            })
     },
 
     onClickCancel() {
