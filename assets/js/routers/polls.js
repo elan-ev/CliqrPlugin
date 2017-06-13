@@ -45,6 +45,10 @@ const PollsRouter = Backbone.Router.extend({
                 const page = new view(useCollection ? { collection: response } : { model: response })
                 changeToPage(page, this.selector)
             })
+            .catch(error => {
+                console.log('Caught an error', error)
+                // TODO
+            })
     },
 
     // ROUTE: ''

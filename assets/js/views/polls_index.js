@@ -39,6 +39,10 @@ const PollsIndexView = Viewmaster.extend({
                     this.render()
                     this.postRender()
                 })
+                .catch(error => {
+                    console.log('Caught an error', error)
+                    // TODO
+                })
         } else {
             this.clearViews('main')
             this.refreshViews()
