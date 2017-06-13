@@ -117,10 +117,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     {
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
 
-        $headerLine = is_callable('Context::getHeaderLine')
-                    ? Context::getHeaderLine()
-                    : $_SESSION['SessSemName']['header_line'];
-        PageLayout::setTitle($headerLine.' - '._('Cliqr'));
+        PageLayout::setTitle($this->config['header_line'].' - '._('Cliqr'));
     }
 
     public function observeQuestions()

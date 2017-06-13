@@ -7,6 +7,7 @@ class Container extends \Pimple
     public function __construct()
     {
         $this->setupConstants();
+        $this->setupStudip();
         $this->setupAuthorization();
         $this->setupConfigPhp();
     }
@@ -16,14 +17,30 @@ class Container extends \Pimple
         $this['datafield_first_run_complete_id'] = 'f827bdf3f27b7d8001332fab89f1ed29';
     }
 
-    protected function setupAuthorization()
+    protected function setupStudip()
     {
         $this['current_user'] = function ($c) {
             return $GLOBALS['user'];
         };
 
-        $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
+        if (is_callable('\\Context::getId')) {
+            $this['cid'] = \Context::getId();
+        } else {
+            $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
+        }
 
+        $headerLine = '';
+        if (is_callable('\\Context::getHeaderLine')) {
+            $headerLine = \Context::get() ? \Context::getHeaderLine() : '';
+        } else {
+            $headerLine = $_SESSION['SessSemName']['header_line'];
+        }
+
+        $this['header_line'] = $headerLine;
+    }
+
+    protected function setupAuthorization()
+    {
         $this['authority'] = function ($c) {
             return new Authority($c, $c['current_user']);
         };
