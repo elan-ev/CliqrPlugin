@@ -128,7 +128,7 @@ button.cliqr--button-fab {
   box-shadow: 0 0 8px 0px rgba(0,0,0,0.0), inset 0 0 0 0px $color-accent;
 
   &:hover {
-    box-shadow: 0 0 8px 0px rgba(0,0,0,0.7), inset 0 0 0 calc($button-size / 2px) $color-accent;
+    box-shadow: 0 0 8px 0px rgba(0,0,0,0.7), inset 0 0 0 calc($button-size / 2) $color-accent;
     background-color: transparent;
   }
   img {
@@ -268,6 +268,7 @@ button.cliqr--button {
         float: left;
         margin-top: 10px;
 
+        /*
         &:first-child {
           a {
             padding-left: 15px;
@@ -282,6 +283,7 @@ button.cliqr--button {
             margin-left: 0;
           }
         }
+       */
 
         a {
           color: $breadcrumb-color;
@@ -308,13 +310,13 @@ button.cliqr--button {
 
           &:before {
             left: -20px;
-            border-left-color: transparent;
+            border-left-color: transparent !important;
           }
 
           &:after {
             left: 100%;
-            border-color: transparent;
-            border-left-color: $breadcrumb-background;
+            border-color: transparent !important;
+            border-left-color: $breadcrumb-background !important;
           }
 
           img:nth-of-type(2) {
@@ -328,12 +330,12 @@ button.cliqr--button {
             margin-right: 35px;
 
             &:before {
-              border-color: $breadcrumb-background-activity;
-              border-left-color: transparent;
+              border-color: $breadcrumb-background-activity !important;
+              border-left-color: transparent !important;
             }
 
             &:after {
-              border-left-color: $breadcrumb-background-activity;
+              border-left-color: $breadcrumb-background-activity !important;
             }
 
             img:nth-of-type(1) {
@@ -587,24 +589,29 @@ button.cliqr--button {
     }
 
     > main {
-      lost-column: 9/12 0 0;
+      lost-column: 8/12 0 0;
       padding-right: 30px;
       box-sizing: border-box;
     }
 
     > aside {
-      lost-column: 3/12 0;
+      lost-column: 4/12 0;
       box-sizing: border-box;
 
       ol.cliqr--votings-list {
         padding: 0;
         list-style: none;
 
+        li {
+          margin-bottom: 0.75em;
+          margin-left: 1em;
+        }
+
         a {
           display: block;
           line-height: 2.5em;
           white-space: nowrap;
-          font-size: 0.8em;
+          font-size: 0.9em;
         }
 
         img {
@@ -652,7 +659,7 @@ button.cliqr--button {
     }
 
     > main {
-      lost-column: 9/12 0 0;
+      lost-column: 8/12 0 0;
     }
 
     > footer {
@@ -665,7 +672,7 @@ button.cliqr--button {
     }
 
     nav.cliqr--voting-is-not-running {
-      lost-column: 3/12 0 0;
+      lost-column: 4/12 0 0;
     }
 
     nav.cliqr--voting-is-running {

@@ -56,7 +56,7 @@ const TasksShowView = Viewmaster.extend({
                     ...v.toJSON(),
                     running: v.isRunning()
                 }
-            }),
+            }).reverse(),
             breadcrumb: {
                 task_group_id: task.task_group_id,
                 task_group_title: task.task_group_title

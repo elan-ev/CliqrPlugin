@@ -20,26 +20,33 @@
             Abstimmungen:
         </h2>
 
+        <nav>
+          {{#unless_state 'is_active'}}
+              {{button "start" "Abstimmung starten" icon="play" once=true}}
+          {{else}}
+              {{button "stop" "Abstimmung beenden" icon="pause" once=true color="red"}}
+          {{/unless_state}}
+        </nav>
+
         <ol class="cliqr--votings-list">
             {{#each votings}}
                 <li>
                     <a href="#voting/{{id}}">
-                        <span>
-                            {{#if running}} {{icon 'play'}} {{else}} {{icon 'vote'}} {{/if}}
-                        </span>
-                        {{moment start}}
+                        {{#if running}}
+                            <span>
+                                {{icon 'play' color='red'}}
+                            </span>
+                            {{moment start label="läuft gerade"}}
+                        {{else}}
+                            <span>
+                                {{icon 'vote'}}
+                            </span>
+                            {{moment start}}
+                        {{/if}}
                         <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
                     </a>
                 </li>
             {{/each}}
         </ol>
-
-        <nav>
-            {{#unless_state 'is_active'}}
-                {{button "start" "Abstimmung starten" icon="play" once=true}}
-            {{else}}
-                {{button "stop" "Abstimmung beenden" icon="pause" once=true}}
-            {{/unless_state}}
-        </nav>
     {{/if}}
 </aside>
