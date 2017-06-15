@@ -152,8 +152,16 @@ class TaskGroupsController extends CliqrStudipController
             $this->response->add_header('Pragma', 'no-cache');
             $this->response->add_header('Cache-Control', 'no-store, no-cache, must-revalidate');
         }
+        $filename = preg_replace(
+            '/[^a-zA-Z0-9-_.]+/', '-',
+            sprintf(
+                'cliqr-tasks-%s.%s.json',
+                $taskGroup->test->title,
+                $taskGroup->range_id
+            )
+        );
 
-        $this->response->add_header('Content-Disposition', 'attachment;filename="task-group-1.json"');
+        $this->response->add_header('Content-Disposition', 'attachment;filename="'.$filename.'"');
         $this->response->add_header('Content-Description', 'File Transfer');
         $this->response->add_header('Content-Transfer-Encoding', 'binary');
         $this->response->add_header('Content-Type', 'application/json;charset=utf-8');
