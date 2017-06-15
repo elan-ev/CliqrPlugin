@@ -1,8 +1,12 @@
 {
     "extends": "eslint:recommended",
-    "ecmaFeatures": {
-        "modules": true,
-        "experimentalObjectRestSpread": true
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "modules": true,
+            "experimentalObjectrestspread": true
+        }
     },
     "env": {
         "browser": true,
@@ -27,8 +31,5 @@
         "strict": 0,
         "space-before-blocks": [2, "always"],
         "space-before-function-paren": [2, {"anonymous":"always","named":"never"}]
-    },
-    "plugins": [
-
-    ]
+    }
 }
