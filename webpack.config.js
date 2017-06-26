@@ -74,6 +74,7 @@ module.exports = {
     },
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.optimize.ModuleConcatenationPlugin(),
         new ExtractTextPlugin({
             filename: 'bundle.css',
             allChunks: false
