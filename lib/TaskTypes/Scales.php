@@ -10,7 +10,7 @@ class Scales extends TaskType
 
     protected function validate($task)
     {
-        if (!strlen($task->description)) {
+        if (!mb_strlen($task->description)) {
             return \Cliqr\i18n('Der Fragetext darf nicht leer sein');
         }
 

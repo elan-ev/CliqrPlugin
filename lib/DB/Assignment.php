@@ -158,7 +158,7 @@ class Assignment extends eAssignment
     public function toJSON($omits = [])
     {
         $otherOmits = array_filter($omits, function ($omit) {
-            return substr($omit, 0, strlen('assignment.')) !== 'assignment.';
+            return mb_substr($omit, 0, mb_strlen('assignment.')) !== 'assignment.';
         });
 
         $result = $this->toArray('id test_id start end active');
@@ -197,7 +197,7 @@ class Assignment extends eAssignment
     {
         $data = $this->test->toArray('title user_id');
         $copyTxt = 'Kopie von ';
-        if (strncmp($data['title'], $copyTxt, strlen($copyTxt)) != 0) {
+        if (strncmp($data['title'], $copyTxt, mb_strlen($copyTxt)) != 0) {
             $data['title'] = $copyTxt . $data['title'];
         }
         $duplicate = self::createTaskGroup($this->range_type, $this->range_id, $data);
