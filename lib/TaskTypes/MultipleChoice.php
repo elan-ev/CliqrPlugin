@@ -28,7 +28,7 @@ class MultipleChoice extends TaskType
     public function transformBeforeSave($task)
     {
         // purify HTML in description
-        $task->description = Markup::markAsHtml(Markup::purify((string) $task->description));
+        $task->description = Markup::purifyHtml((string) $task->description);
 
         return $task;
     }
