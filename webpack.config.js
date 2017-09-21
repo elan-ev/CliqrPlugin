@@ -36,11 +36,10 @@ module.exports = {
             },
             {
                 test: /assets\/js\/.+\.scss$/,
-                use: [
-                    'style-loader',
-                    { loader: 'css-loader', options: { importLoaders: 1 } },
-                    'postcss-loader'
-                ]
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'postcss-loader']
+                })
             },
             {
                 test: /\.js$/,
