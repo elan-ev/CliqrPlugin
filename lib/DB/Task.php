@@ -5,35 +5,28 @@ namespace Cliqr\DB;
 class Task extends \eTask\Task
 {
     use ConfigureTrait;
-    use CreatedChangedTrait;
 
-    public function startTask($range, $start = null, $end = null, $user_id = null)
+    public function startTask($range, $start = null, $end = null, $userId = null)
     {
-        $now = date('c');
+        $now = time();
 
-        list($range_type, $range_id) = $range;
+        list($rangeType, $rangeId) = $range;
 
         if (!isset($start)) {
             $start = $now;
-        } elseif (is_numeric($start)) {
-            $start = date('c', $start);
         }
 
-        if (is_numeric($end)) {
-            $end = date('c', $end);
-        }
-
-        if (!isset($user_id)) {
-            $user_id = $this->user_id;
+        if (!isset($userId)) {
+            $userId = $this->user_id;
         }
 
         if (!$test = Test::create(
                 [
-                    'title' => _('Cliqr-Frage vom ').$start,
+                    'title' => _('Cliqr-Frage vom ').date('c', $start),
                     'description' => '',
-                    'user_id' => $user_id,
-                    'created' => $now,
-                    'changed' => $now,
+                    'user_id' => $userId,
+                    'mkdate' => $now,
+                    'chdate' => $now,
                     'option' => ['voting' => 1],
                 ])) {
             throw new \RuntimeException('Could not store test');
@@ -45,8 +38,8 @@ class Task extends \eTask\Task
         $assignment->setData(
             [
                 'test_id' => $test->id,
-                'range_type' => $range_type,
-                'range_id' => $range_id,
+                'range_type' => $rangeType,
+                'range_id' => $rangeId,
                 'type' => Assignment::TYPE_VOTING,
                 'start' => $start,
                 'end' => $end,
@@ -70,28 +63,28 @@ class Task extends \eTask\Task
                 INNER JOIN etask_assignments ea ON ea.test_id = ett.test_id
                 WHERE et.id = ? AND ea.type = ?
                 ORDER BY start, id';
-        $st = \DBManager::get()->prepare($sql);
-        $st->execute([$this->id, Assignment::TYPE_TASK_GROUP]);
+        $stmt = \DBManager::get()->prepare($sql);
+        $stmt->execute([$this->id, Assignment::TYPE_TASK_GROUP]);
 
-        $rowCount = $st->rowCount();
+        $rowCount = $stmt->rowCount();
         if ($rowCount !== 1) {
             throw new \RuntimeException('Task "'.$this->id.'" has "'.$rowCount.'" Task Groups but must have exactly one.');
         }
 
-        return Assignment::buildExisting($st->fetch(\PDO::FETCH_ASSOC));
+        return Assignment::buildExisting($stmt->fetch(\PDO::FETCH_ASSOC));
     }
 
     /**
-     * Duplicate a task in a task group
+     * Duplicate a task in a task group.
      *
      * @param $taskGroup \Cliqr\Assignment  optional; the task group to copy this task into, defaults to this task's task group
      *
-     * @return  the duplicated task instance
+     * @return the duplicated task instance
      */
     public function duplicateInTaskGroup(Assignment $taskGroup = null)
     {
         $data = $this->toArray('type title description task user_id');
-        $duplicate = Task::build($data);
+        $duplicate = self::build($data);
         $taskGroup = $taskGroup ?: $this->getTaskGroup();
 
         return $duplicate->createInTaskGroup($taskGroup->range_id, $taskGroup->id);
@@ -105,12 +98,12 @@ class Task extends \eTask\Task
                 INNER JOIN etask_assignments ea ON ea.test_id = ett.test_id
                 WHERE et.id = ? AND ea.type = ?
                 ORDER BY start, id';
-        $st = \DBManager::get()->prepare($sql);
-        $st->execute([$this->id, Assignment::TYPE_VOTING]);
+        $stmt = \DBManager::get()->prepare($sql);
+        $stmt->execute([$this->id, Assignment::TYPE_VOTING]);
 
         $ret = new \SimpleORMapCollection();
         $ret->setClassName(Assignment::class);
-        while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $ret[] = Assignment::buildExisting($row);
         }
 
@@ -119,7 +112,10 @@ class Task extends \eTask\Task
 
     public function toJSON($omits = [])
     {
-        $result = $this->toArray('id type title description task user_id created changed');
+        $result = $this->toArray('id type title description task user_id');
+
+        $result['mkdate'] = date('c', $this->mkdate);
+        $result['chdate'] = date('c', $this->chdate);
 
         $result['description_html'] = formatReady($result['description']);
 
@@ -132,7 +128,9 @@ class Task extends \eTask\Task
         // TODO nicht sehr performant
         if (!in_array('task.votings', $omits)) {
             $result['votings'] = $this->getVotings()->map(function ($poll) {
-                $ret = $poll->toArray('id test_id start end active');
+                $ret = $poll->toArray('id test_id active');
+                $ret['start'] = date('c', $poll->start);
+                $ret['end'] = date('c', $poll->end);
                 $ret['responses_count'] = Response::countBySql('assignment_id = ?', [$poll->id]);
 
                 return $ret;
@@ -142,15 +140,13 @@ class Task extends \eTask\Task
         return $result;
     }
 
-    public function createInTaskGroup($range_id, $task_group_id)
+    public function createInTaskGroup($rangeId, $taskGroupId)
     {
-        if (!$taskGroup = Assignment::findTaskGroup($range_id, $task_group_id)) {
-            throw new \RuntimeException('Could not find task group: '.intval($task_group_id));
+        if (!$taskGroup = Assignment::findTaskGroup($rangeId, $taskGroupId)) {
+            throw new \RuntimeException('Could not find task group: '.intval($taskGroupId));
         }
 
-        $now = date('c', time());
-        $this->created = $now;
-        $this->changed = $now;
+        $this->mkdate = $this->chdate = time();
 
         if (!$this->store()) {
             throw new \RuntimeException('Could not store task');

@@ -66,7 +66,7 @@ class VotingsController extends CliqrStudipController
         if ($task = Task::find($this->json['task_id'])) {
             // TODO: Rechteprüfung
 
-            $stopped_count = Assignment::stopAllVotings('course', $this->cid);
+            Assignment::stopAllVotings('course', $this->cid);
 
             $voting = $task->startTask(['course', $this->cid], time(), time() + 2 * 60 * 60);
 
@@ -88,11 +88,17 @@ class VotingsController extends CliqrStudipController
             throw new \Cliqr\RecordNotFound();
         }
 
-        // TODO: only updating the `end` for now
         if (!array_key_exists('end', $this->json)) {
             throw new \Trails_Exception(400, 'TODO: end required');
         }
-        $voting->end = $this->json['end'];
+        $end = $this->json['end'];
+
+        $regexp = '/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/';
+        if (!filter_var($end, FILTER_VALIDATE_REGEXP, ['options' => compact('regexp')])) {
+            throw new \Trails_Exception(400, 'end must be an ISO 8601 date formatted string');
+        }
+
+        $voting->end = $end;
 
         // TODO: validate model
         $voting->store();

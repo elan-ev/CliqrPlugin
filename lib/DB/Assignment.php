@@ -7,7 +7,6 @@ use eTask\Assignment as eAssignment;
 class Assignment extends eAssignment
 {
     use ConfigureTrait;
-    use CreatedChangedTrait;
 
     const TYPE_VOTING = 'cliqr:voting';
     const TYPE_TASK_GROUP = 'cliqr:task-group';
@@ -37,11 +36,9 @@ class Assignment extends eAssignment
 
     public static function findVotingsAt($range_type, $range_id, $time)
     {
-        $now = date('c', $time);
-
         return  \SimpleORMapCollection::createFromArray(self::findBySQL(
             'type = ? AND range_type = ? AND range_id = ? AND start <= ? AND (? <= end OR end IS NULL) ORDER BY start ASC',
-            [self::TYPE_VOTING, $range_type, $range_id, $now, $now]));
+            [self::TYPE_VOTING, $range_type, $range_id, $time, $time]));
     }
 
     public static function findOldVotings($range_type, $range_id)
@@ -66,23 +63,13 @@ class Assignment extends eAssignment
         $votings = self::findVotingsAt($range_type, $range_id, $now);
 
         return $votings->each(function ($voting) use ($now) {
-            $voting->end = date('c', $now);
+            $voting->end = $now;
 
             return $voting->store() ?: 0;
         });
     }
 
     // ***** INSTANCE METHODS
-
-    public function getStart()
-    {
-        return date('c', strtotime($this->content['start']));
-    }
-
-    public function getEnd()
-    {
-        return date('c', strtotime($this->content['end']));
-    }
 
     public function countTasks()
     {
@@ -124,12 +111,12 @@ class Assignment extends eAssignment
 
     public function createTaskGroup($range_type, $range_id, $data = [])
     {
-        $now = date('c', time());
+        $now = time();
 
         $test = new Test();
         $test->title = $data['title'] ?: 'Cliqr-Fragen';
-        $test->created = $now;
-        $test->changed = $now;
+        $test->mkdate = $now;
+        $test->chdate = $now;
         $test->user_id = $data['user_id'] ?: $GLOBALS['user']->id;
         $test->options = ['task_group' => 1];
         $test->store();
@@ -161,7 +148,9 @@ class Assignment extends eAssignment
             return mb_substr($omit, 0, mb_strlen('assignment.')) !== 'assignment.';
         });
 
-        $result = $this->toArray('id test_id start end active');
+        $result = $this->toArray('id test_id active');
+        $result['start'] = date('c', $this->start);
+        $result['end'] = date('c', $this->end);
 
         $result['is_task_group'] = $this->type == self::TYPE_TASK_GROUP;
         $result['is_voting'] = $this->type == self::TYPE_VOTING;
@@ -181,24 +170,24 @@ class Assignment extends eAssignment
 
     public function isRunning()
     {
-        $start = new \DateTime($this->start);
-        $now = new \DateTime();
-        $end = $this->end ? new \DateTime($this->end) : PHP_MAX_INT;
+        $start = $this->start;
+        $now = time();
+        $end = $this->end ?: PHP_MAX_INT;
 
         return $start <= $now && $now <= $end;
     }
 
     /**
-     * Duplicate a task group
+     * Duplicate a task group.
      *
-     * @return  the duplicated task group instance
+     * @return the duplicated task group instance
      */
     public function duplicateTaskGroup()
     {
         $data = $this->test->toArray('title user_id');
         $copyTxt = 'Kopie von ';
         if (strncmp($data['title'], $copyTxt, mb_strlen($copyTxt)) != 0) {
-            $data['title'] = $copyTxt . $data['title'];
+            $data['title'] = $copyTxt.$data['title'];
         }
         $duplicate = self::createTaskGroup($this->range_type, $this->range_id, $data);
 
@@ -221,9 +210,9 @@ class Assignment extends eAssignment
         return [
             'id' => $this->id,
             'title' => $test->title,
-            'last_change' => $test->getLastChange()->format('c'),
+            'last_change' => date('c', $test->getLastChange()),
             'tasks_count' => $test->countTasks(),
-            'tasks' => $tasks
+            'tasks' => $tasks,
         ];
     }
 }

@@ -48,13 +48,13 @@ class Importer
             'task' => DB\Task::class,
         ];
 
-        $now = date('c');
+        $now = time();
         $baseAttrs = [
             'range_type' => $this->range_type,
             'range_id' => $this->range_id,
             'user_id' => $GLOBALS['user']->id,
-            'created' => $now,
-            'changed' => $now,
+            'mkdate' => $now,
+            'chdate' => $now,
         ];
 
         foreach ($this->import['entities'] as $id => $entity) {
@@ -65,7 +65,6 @@ class Importer
         }
 
         foreach ($this->import['entities'] as $id => $entity) {
-
             // var_dump("relate $id/".$this->imported[$id]->id);
 
             $sormObject = $this->imported[$id];

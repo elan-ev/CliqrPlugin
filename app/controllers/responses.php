@@ -49,15 +49,15 @@ class ResponsesController extends CliqrStudipController
             throw new \Trails_Exception(400, 'Could not create response');
         }
 
-        $now = date('c');
+        $now = time();
         $response = Response::create(
             [
                 'assignment_id' => $this->json['voting_id'],
                 'task_id' => $this->json['task_id'],
                 'user_id' => '', // !!!
                 'response' => $this->json['response'],
-                'created' => $now,
-                'changed' => $now,
+                'mkdate' => $now,
+                'chdate' => $now,
                 'options' => [],
             ]);
 

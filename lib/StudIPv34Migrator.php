@@ -5,7 +5,6 @@ namespace Cliqr;
 use Cliqr\DB\Assignment;
 use Cliqr\DB\Response;
 use Cliqr\DB\Task;
-use Cliqr\DB\Test;
 
 class StudIPv34Migrator
 {
@@ -72,7 +71,7 @@ class StudIPv34Migrator
 
         return [
             $matches[1] === 'sem' ? 'course' : 'institute',
-            $matches[2]
+            $matches[2],
         ];
     }
 
@@ -82,10 +81,9 @@ class StudIPv34Migrator
             function ($assignment) {
                 return $assignment->questionnaire;
             },
-            \QuestionnaireAssignment::findBySQL('range_id = ?', [ md5('cliqr-'.$range[1]) ])
+            \QuestionnaireAssignment::findBySQL('range_id = ?', [md5('cliqr-'.$range[1])])
         );
     }
-
 
     private function migrateQuestionnaire($range, \Questionnaire $questionnaire)
     {
@@ -170,8 +168,8 @@ class StudIPv34Migrator
                 'description' => $question->questiondata['question'] ?: $questionnaire->title,
                 'task' => $taskTask,
                 'user_id' => $questionnaire->user_id,
-                'created' => date('c', $questionnaire->mkdate),
-                'changed' => date('c', $questionnaire->chdate)
+                'mkdate' => $questionnaire->mkdate,
+                'chdate' => $questionnaire->chdate,
             ];
 
             if (!$task = Task::create($taskData)) {
@@ -208,7 +206,7 @@ class StudIPv34Migrator
                         'assignment_id' => $voting->id,
                         'task_id' => $task->id,
                         'user_id' => '',
-                        'response' => ['answer' => [ $answerId ]],
+                        'response' => ['answer' => [$answerId]],
                     ]
                 );
             }
@@ -224,7 +222,7 @@ class StudIPv34Migrator
                 'assignments' => json_encode(
                     studip_utf8encode($task->tests[0]->assignments->toArray())
                 ),
-                'responses' => json_encode(studip_utf8encode($task->responses->toArray()))
+                'responses' => json_encode(studip_utf8encode($task->responses->toArray())),
             ]
         );
     }
@@ -234,6 +232,6 @@ class StudIPv34Migrator
         list($rangeType, $rangeId) = $range;
         $sql = 'DELETE FROM questionnaire_assignments WHERE questionnaire_id = ? AND range_type = ? AND range_id = ?';
         $stmt = \DBManager::get()->prepare($sql);
-        $stmt->execute([ $questionnaire->id, $rangeType, md5('cliqr-'.$rangeId) ]);
+        $stmt->execute([$questionnaire->id, $rangeType, md5('cliqr-'.$rangeId)]);
     }
 }
