@@ -22,7 +22,7 @@ const histogramView = function ($statementElement, data, lrange, hrange) {
         const g = select(element)
               .append('g')
               .attr('class', 'histogram')
-              .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+              .attr('transform', `translate(${margin.left},${margin.top})`)
 
         let thresholds = hrange - lrange + 1
         let domain, small = false
@@ -76,7 +76,7 @@ const histogramView = function ($statementElement, data, lrange, hrange) {
 
         g.append('g')
             .attr('class', 'axis axis--x')
-            .attr('transform', 'translate('+ 0 +',' + height + ')')
+            .attr('transform', `translate(0, ${height})`)
             .call(axis)
 
 
