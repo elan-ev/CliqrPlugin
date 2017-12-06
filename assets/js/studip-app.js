@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 import './public-path.js'
 
 import core_css from '../scss/core.scss'
