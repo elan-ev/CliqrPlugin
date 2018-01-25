@@ -43,7 +43,7 @@
                 {{#each task.task.statements}}
                     <div class="choice-input">
                         <input
-                            class="choice" maxlength="100" type="text"
+                            class="choice no-hint" maxlength="100" type="text"
                             name="statements[{{@index}}]"
                             value="{{text}}" required>
 
@@ -74,17 +74,17 @@
                 <div>
                     <label class="undecorated">
                         <span> Minimum </span>
-                        <input class="cliqr--scales-lrange" maxlength="4" type="number" value="{{lrange_value}}" max="{{lrange_max}}">
+                        <input class="cliqr--scales-lrange no-hint" maxlength="4" type="number" value="{{lrange_value}}" max="{{lrange_max}}">
                     </label>
-                    <input class="cliqr--scales-llabel" maxlength="50" placeholder="Beschriftung (optional)" type="text" value="{{lrange_label}}">
+                    <input class="cliqr--scales-llabel no-hint" maxlength="50" placeholder="Beschriftung (optional)" type="text" value="{{lrange_label}}">
                 </div>
 
                 <div>
                     <label class="undecorated">
                         <span> Maximum </span>
-                        <input class="cliqr--scales-hrange" maxlength="4" type="number" value="{{hrange_value}}" min="{{hrange_min}}">
+                        <input class="cliqr--scales-hrange no-hint" maxlength="4" type="number" value="{{hrange_value}}" min="{{hrange_min}}">
                     </label>
-                    <input class="cliqr--scales-hlabel" maxlength="50" placeholder="Beschriftung (optional)" type="text" value="{{hrange_label}}">
+                    <input class="cliqr--scales-hlabel no-hint" maxlength="50" placeholder="Beschriftung (optional)" type="text" value="{{hrange_label}}">
                 </div>
 
             </div>

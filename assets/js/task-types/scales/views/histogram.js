@@ -3,7 +3,7 @@ import _ from 'underscore'
 
 const histogramView = function ($statementElement, data, lrange, hrange) {
     require.ensure([ '../../../d3.min' ], function (require) {
-        const { axisBottom, histogram, quantile, scaleLinear, select } = require('../../../d3.min').d3
+        const { axisBottom, histogram, quantile, scaleLinear, select } = require('../../../d3.min')
 
         const element = $statementElement.find('svg')[0],
               margin = { top: 20, right: 20, bottom: 30, left: 20 },

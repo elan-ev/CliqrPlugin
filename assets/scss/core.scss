@@ -82,6 +82,22 @@ body.cliqr--loading #layout-sidebar .sidebar-image
 /*
 // * Button */
 
+button.cliqr--button.active {
+  background-color: $color-accent;
+  color: $color-accent-contrast;
+  outline: 0;
+
+  &:hover {
+    img:first-child {
+      opacity: 1;
+    }
+
+    img:last-child {
+      opacity: 0;
+    }
+  }
+}
+
 button.cliqr--button-with-icon {
   padding-left: calc(15px + $button-icon-size);
 }
@@ -409,10 +425,6 @@ button.cliqr--button {
         &.cliqr--task-group-title {
           font-weight: 800;
         }
-
-        &.cliqr--task-group-changed {
-          color: color($color-accent whiteness(30%));
-        }
       }
     }
   }
@@ -500,10 +512,6 @@ button.cliqr--button {
       }
     }
 
-    .cliqr--task-changed {
-      color: color($color-accent whiteness(50%));
-    }
-
     .cliqr--task-actions {
       text-align: right;
       white-space: nowrap;
@@ -533,11 +541,6 @@ button.cliqr--button {
 
         button img {
           vertical-align: middle;
-        }
-
-        button:hover {
-          background-color: color($color-accent-contrast blackness(20%));
-          color: $color-accent;
         }
       }
 
