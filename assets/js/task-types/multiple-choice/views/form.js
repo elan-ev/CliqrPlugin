@@ -7,7 +7,9 @@ import WysiwygComponent from './component-wysiwyg'
 const subtypes = [
     { id: 'custom', text: 'Individuell' },
     { id: 'yesno', text: 'Ja·Nein' },
-    { id: 'truefalse', text: 'Wahr·Falsch' }
+    { id: 'truefalse', text: 'Wahr·Falsch' },
+    { id: 'evaluation', text: 'Evaluation' },
+    { id: 'grading', text: 'Benotung' }
 ]
 
 const FormView = Viewmaster.extend({
@@ -15,7 +17,7 @@ const FormView = Viewmaster.extend({
     tagName: 'section',
 
     $selectedSubtype: 'custom',
-    $customChoices: null,
+    $custom: null,
 
     events: {
         'click .js-add': 'onClickAdd',
@@ -115,29 +117,39 @@ const FormView = Viewmaster.extend({
 
         if (oldSubtype === 'custom') {
             // store custom choices
-            this.$customChoices = this.model.getAnswers()
+            this.$custom = { ...this.model.attributes }
         }
 
         switch (newSubtype) {
 
         case 'custom':
-            this.model.setAnswers(this.$customChoices)
+            this.model.set({ ...this.$custom })
             break;
 
         case 'yesno':
-            this.model.clearAnswers()
-            this.model.addAnswer({ text: 'ja'})
-            this.model.addAnswer({ text: 'nein'})
+            this.fillWithSubtype(['ja', 'nein'])
             break;
 
         case 'truefalse':
-            this.model.clearAnswers()
-            this.model.addAnswer({ text: 'wahr'})
-            this.model.addAnswer({ text: 'falsch'})
+            this.fillWithSubtype(['wahr', 'falsch'])
             break;
+
+        case 'evaluation':
+            this.fillWithSubtype(['trifft voll zu', 'trifft eher zu', 'weder noch', 'trifft eher nicht zu', 'trifft gar nicht zu'])
+            break;
+
+        case 'grading':
+            this.fillWithSubtype([ 'sehr gut', 'gut', 'befriedigend', 'ausreichend', 'mangelhaft', 'ungenügend' ])
+            break
         }
 
         this.render()
+    },
+
+    fillWithSubtype(choices) {
+        this.model.clearAnswers()
+        this.model.setSelectType('single')
+        choices.forEach(text => this.model.addAnswer({ text }))
     }
 })
 
