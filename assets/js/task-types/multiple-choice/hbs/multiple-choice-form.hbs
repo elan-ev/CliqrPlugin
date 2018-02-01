@@ -16,6 +16,18 @@
 
     <fieldset>
         <legend>Antwortmöglichkeiten</legend>
+
+        <div class="cliqr--mc-subtypes button-group">
+          {{#each subtypes}}
+            {{#if selected}}
+              {{button (concat "type-" id) text class="active"}}
+            {{/if}}
+            {{^if selected}}
+            {{button (concat "type-" id) text}}
+            {{/if}}
+          {{/each}}
+        </div>
+
         <label>
             Tragen Sie die Antworten ein
 
@@ -45,7 +57,15 @@
                     </div>
                 {{/unless}}
             </div>
+        </label>
+    </fieldset>
 
+    <fieldset class="collapsable collapsed">
+        <legend>Optionen</legend>
+
+        <label>
+            <input type="checkbox" name="select-type" value="multi"{{#unless singleSelect}} checked{{/unless}}>
+            Nutzer dürfen mehr als eine Antwort ankreuzen
         </label>
     </fieldset>
 

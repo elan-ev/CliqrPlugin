@@ -6,9 +6,13 @@
 <nav>
     <ul class="task-types">
         {{#each taskTypes as |type|}}
-            <li class="{{#if type.selected}}selected{{/if}}">
-                <button class="button js-add-question" data-typeid="{{type.id}}">
-                    <img class="cliqr--task-types-icon" src="{{../STUDIP.ASSETS_URL}}/images/icons/{{#if type.selected}}white{{else}}blue{{/if}}/{{type.icon}}.svg">
+            <li>
+                <button type="button" class="button cliqr--button  cliqr--button-with-icon js-add-question {{#if type.selected}}active{{/if}}"
+                        data-typeid="{{type.id}}">
+                    <img class="cliqr--task-types-icon"
+                         src="{{../STUDIP.ASSETS_URL}}/images/icons/{{#if type.selected}}white{{else}}blue{{/if}}/{{type.icon}}.svg">
+                    <img class="cliqr--task-types-icon"
+                         src="{{../STUDIP.ASSETS_URL}}/images/icons/{{#if type.selected}}blue{{else}}white{{/if}}/{{type.icon}}.svg">
                     {{name}}
                 </button>
             </li>

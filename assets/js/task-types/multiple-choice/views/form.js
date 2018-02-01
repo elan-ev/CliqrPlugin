@@ -4,9 +4,18 @@ import _ from 'underscore'
 import Viewmaster from '../../../views/viewmaster'
 import WysiwygComponent from './component-wysiwyg'
 
+const subtypes = [
+    { id: 'custom', text: 'Individuell' },
+    { id: 'yesno', text: 'Ja·Nein' },
+    { id: 'truefalse', text: 'Wahr·Falsch' }
+]
+
 const FormView = Viewmaster.extend({
 
     tagName: 'section',
+
+    $selectedSubtype: 'custom',
+    $customChoices: null,
 
     events: {
         'click .js-add': 'onClickAdd',
@@ -16,7 +25,11 @@ const FormView = Viewmaster.extend({
 
         'keypress input.choice': 'onChoiceUpdate',
         'change input.choice': 'onChoiceUpdate',
-        'input input.choice': 'onChoiceUpdate'
+        'input input.choice': 'onChoiceUpdate',
+
+        'change input[name="select-type"]': 'onChangeMultiSingle',
+
+        'click .cliqr--mc-subtypes button': 'onSelectSubtype'
     },
 
     initialize(options) {
@@ -42,7 +55,12 @@ const FormView = Viewmaster.extend({
         return {
             taskGroup: this.taskGroup && this.taskGroup.toJSON(),
             task: this.model.toJSON(),
-            error: this.model.validationError || null
+            error: this.model.validationError || null,
+            singleSelect: this.model.getSelectType() === 'single',
+            $selectedSubtype: this.$selectedSubtype,
+            subtypes: subtypes.map(subtype => {
+                return { ...subtype, selected: subtype.id === this.$selectedSubtype }
+            })
         }
     },
 
@@ -68,6 +86,58 @@ const FormView = Viewmaster.extend({
               index = parseInt($inputEl.attr('name').match(/\d+/)[0], 10),
               text = $inputEl.val()
         this.model.updateAnswer(index, { text })
+    },
+
+    onChangeMultiSingle({ target }) {
+        const type = Backbone.$(target).prop('checked') ? 'multiple' : 'single'
+        this.model.setSelectType(type)
+    },
+
+    onSelectSubtype({ target }) {
+        const classSubtype = [...target.classList].filter(item => item.match(/^js-type-/))
+        if (!classSubtype.length) {
+            return
+        }
+        const subtype = classSubtype[0].substr(8)
+        if (subtypes.some(type => type.id === subtype)) {
+            this.selectSubtype(subtype)
+        }
+    },
+
+    selectSubtype(newSubtype) {
+        const oldSubtype = this.$selectedSubtype
+
+        if (newSubtype === oldSubtype) {
+            return
+        }
+
+        this.$selectedSubtype = newSubtype
+
+        if (oldSubtype === 'custom') {
+            // store custom choices
+            this.$customChoices = this.model.getAnswers()
+        }
+
+        switch (newSubtype) {
+
+        case 'custom':
+            this.model.setAnswers(this.$customChoices)
+            break;
+
+        case 'yesno':
+            this.model.clearAnswers()
+            this.model.addAnswer({ text: 'ja'})
+            this.model.addAnswer({ text: 'nein'})
+            break;
+
+        case 'truefalse':
+            this.model.clearAnswers()
+            this.model.addAnswer({ text: 'wahr'})
+            this.model.addAnswer({ text: 'falsch'})
+            break;
+        }
+
+        this.render()
     }
 })
 

@@ -44,7 +44,7 @@ class MultipleChoice {
 
     createTask(data) {
         const task = new MCTask()
-        _.times(2, () => task.addAnswer())
+        _.times(4, () => task.addAnswer())
         return task
     }
 

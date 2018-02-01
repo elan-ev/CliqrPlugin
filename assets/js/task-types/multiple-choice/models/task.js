@@ -55,6 +55,28 @@ const MCTask = Task.extend({
             ...oldTask.answers.slice(index + 1)
         ]
         this.set('task', { ...oldTask, answers }, { silent: true })
+    },
+
+    getAnswers() {
+        return this.get('task').answers
+    },
+
+    setAnswers(answers) {
+        this.set('task', { ...this.get('task'), answers }, { silent: true })
+    },
+
+    clearAnswers() {
+        this.setAnswers([])
+    },
+
+    setSelectType(type) {
+        if (type === 'single' || type === 'multiple') {
+            this.set('task', { ...this.get('task'), type }, { silent: true })
+        }
+    },
+
+    getSelectType() {
+        return this.get('task').type
     }
 })
 
