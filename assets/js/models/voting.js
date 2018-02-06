@@ -16,13 +16,13 @@ const Voting = Backbone.Model.extend({
     sync(method, model, options) {
         _.extend(options, {
             url: typeof model.url === 'function' ? model.url(actionMap[method]) : void 0
-        });
+        })
         return Backbone.sync(method, model, options)
     },
 
     url(action) {
         let id = this.id != null ? '/' + this.id : ''
-        return cliqr.config.PLUGIN_URL + ('votings/' + action + id + '?cid=') + cliqr.config.CID
+        return window.cliqr.config.PLUGIN_URL + ('votings/' + action + id + '?cid=') + window.cliqr.config.CID
     },
 
     getTask() {
@@ -35,14 +35,19 @@ const Voting = Backbone.Model.extend({
     },
 
     isRunning() {
+        if (this.has('is_running')) {
+            return this.get('is_running')
+        }
+
         const start = new Date(this.get('start')).valueOf(),
               end = new Date(this.get('end')).valueOf() || Infinity,
               now = new Date().valueOf()
+
         return start <= now && now <= end
     },
 
     addResponse(newResponse) {
-        newResponse.save({ course_id: cliqr.config.CID })
+        newResponse.save({ course_id: window.cliqr.config.CID })
             .then(response => {
                 this.trigger('add:response', this, newResponse)
                 return null

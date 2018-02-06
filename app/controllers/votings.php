@@ -68,7 +68,10 @@ class VotingsController extends CliqrStudipController
 
             Assignment::stopAllVotings('course', $this->cid);
 
-            $voting = $task->startTask(['course', $this->cid], time(), time() + 2 * 60 * 60);
+            $now = time();
+            $startTime = intval($now / 60 ) * 60;
+            $endTime = $startTime + 2 * 60 * 60;
+            $voting = $task->startTask(['course', $this->cid], $startTime, $endTime);
 
             return $this->render_json($voting->toJSON());
         }

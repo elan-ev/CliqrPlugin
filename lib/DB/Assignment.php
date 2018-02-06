@@ -151,6 +151,7 @@ class Assignment extends eAssignment
         $result = $this->toArray('id test_id active');
         $result['start'] = date('c', $this->start);
         $result['end'] = date('c', $this->end);
+        $result['is_running'] = $this->isRunning();
 
         $result['is_task_group'] = $this->type == self::TYPE_TASK_GROUP;
         $result['is_voting'] = $this->type == self::TYPE_VOTING;
