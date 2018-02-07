@@ -43,7 +43,7 @@ class Assignment extends eAssignment
 
     public static function findOldVotings($range_type, $range_id)
     {
-        $now = date('c', time());
+        $now = time();
 
         return  \SimpleORMapCollection::createFromArray(self::findBySQL(
             'type = ? AND range_type = ? AND range_id = ? AND end < ? ORDER BY end DESC',
