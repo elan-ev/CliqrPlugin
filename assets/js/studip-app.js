@@ -1,13 +1,20 @@
-import "babel-polyfill";
-
+import 'babel-polyfill'
 import './public-path.js'
-
-import core_css from '../scss/core.scss'
-
 import Backbone from 'backbone'
 import jQuery from 'jquery'
 
+import Raven from 'raven-js'
+
+import core_css from '../scss/core.scss'
 import StudipRouter from './routers/studip'
+
+Raven
+    .config('https://a879a81910984614afcb9cb19aff7727@sentry.io/255435')
+    .install()
+
+window.onunhandledrejection = function (evt) {
+    window.Raven.captureException(evt.reason)
+}
 
 class StudIPCliqrApp {
     constructor(selector) {
@@ -38,4 +45,6 @@ class StudIPCliqrApp {
     }
 }
 
-const app = new StudIPCliqrApp('#cliqr-container')
+Raven.context(function () {
+    const app = new StudIPCliqrApp('#cliqr-container')
+})

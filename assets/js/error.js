@@ -1,5 +1,7 @@
+import Raven from 'raven-js'
+
 export default function showError(errorMessage, data) {
-    console.log(data)
+    console.error(errorMessage, data)
     window.STUDIP.Dialog.show(errorMessage)
-    debugger
+    Raven.captureException(`errorMessage: ${JSON.stringify(data)}`)
 }

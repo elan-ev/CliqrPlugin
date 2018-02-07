@@ -53,7 +53,7 @@ const Voting = Backbone.Model.extend({
                 return null
             })
             .catch(error => {
-                showError('Could not add response, error')
+                showError('Could not add response', error)
             })
     },
 

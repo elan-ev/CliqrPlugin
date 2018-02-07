@@ -29,6 +29,7 @@
     "postcss-loader": "2.0.10",
     "postcss-scss": "1.0.3",
     "precss": "3.1.0",
+    "raven-js": "^3.22.1",
     "style-loader": "0.19.1",
     "timeago.js": "3.0.2",
     "webpack": "3.10.0",
