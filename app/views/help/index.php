@@ -9,11 +9,11 @@
 <article>
     <h3>Wozu ist "Cliqr" gut?</h3>
 
-    Mit Cliqr lässt sich ein so genanntes Peer Instruction nach Eric
-    Mazur (2006) durchführen. Dies in eine Methode, mit der die
+    Mit Cliqr lÃ¤sst sich ein so genanntes Peer Instruction nach Eric
+    Mazur (2006) durchfÃ¼hren. Dies in eine Methode, mit der die
     Studierenden in Vorlesungen besser eingebunden werden und die
-    Möglichkeit erhalten, ihr Verständnis über die vorgetragenen
-    Lerninhalte zu überprüfen.
+    MÃ¶glichkeit erhalten, ihr VerstÃ¤ndnis Ã¼ber die vorgetragenen
+    Lerninhalte zu Ã¼berprÃ¼fen.
 
     <h3>Wie geht das?</h3>
 
@@ -21,40 +21,40 @@
     Antwortoptionen (Single-Choice-Frage) ans Plenum. Jeder
     Studierende ist aufgefordert, diese Frage zu beantworten. Seine
     Antwort wird mit Cliqr statistisch erfasst, d.h. der Lehrende
-    sieht nur, welche Antwortoptionen das Plenum präferiert. Zur
+    sieht nur, welche Antwortoptionen das Plenum prÃ¤feriert. Zur
     Beantwortung der Frage verwenden die Studierenden ein
-    mitgebrachtes internetfähiges Endgerät, z.B. ihr Mobiltelefon, ein
+    mitgebrachtes internetfÃ¤higes EndgerÃ¤t, z.B. ihr Mobiltelefon, ein
     Tablet oder ein Notebook und stimmen auf einer Website ab. Je
-    nachdem, ob das Plenum überwiegend auf die richtige Antwort
-    getippt hat oder ob eher die falschen Antwortoptionen gewählt
-    wurden, führt der Lehrende seine Lehre fort.  Es wird die
+    nachdem, ob das Plenum Ã¼berwiegend auf die richtige Antwort
+    getippt hat oder ob eher die falschen Antwortoptionen gewÃ¤hlt
+    wurden, fÃ¼hrt der Lehrende seine Lehre fort.  Es wird die
     folgende Vorgehensweise empfohlen:
 
     <ol>
         <li>
             &gt;80% der Studierenden haben richtig geantwortet: Der Lehrende
-            gibt vertiefende Erklärungen zu den vorgetragenen Inhalten und
+            gibt vertiefende ErklÃ¤rungen zu den vorgetragenen Inhalten und
             wendet sich dann einem neuen Thema zu.
         </li>
 
         <li>
             30-80% haben richtig geantwortet: Der Lehrende fordert die
-            Studierenden auf mit ihren Nachbarn über die Antwortoptionen
+            Studierenden auf mit ihren Nachbarn Ã¼ber die Antwortoptionen
             zu diskutieren, um so auf das richtige Ergebnis zu
-            kommen. Danach lässt er erneut abstimmen.
+            kommen. Danach lÃ¤sst er erneut abstimmen.
         </li>
 
         <li>
             &lt;30% der Studierenden haben richtig geantwortet: Der
-            Lehrende erläutert noch mal die vorgetragenen Inhalte und
-            lässt erneut abstimmen.
+            Lehrende erlÃ¤utert noch mal die vorgetragenen Inhalte und
+            lÃ¤sst erneut abstimmen.
         </li>
 
     </ol>
 
-    <h3>Was für Erfahrungen gibt es?</h3>
+    <h3>Was fÃ¼r Erfahrungen gibt es?</h3>
 
-    Technologien wie Cliqr haben eine große Verbreitung in den letzten
+    Technologien wie Cliqr haben eine groÃŸe Verbreitung in den letzten
     Jahren erfahren und viele Lehrende bedienen sich weltweit dieser
     Methode. Exemplarisch gibt der nachfolgende Film (3 Minuten) die
     Erfahrungen von Prof. Dr. Riegler wieder:
@@ -74,7 +74,7 @@
         </li>
 
         <li>
-            Literatur: Werner Stangls Arbeitsblätter
+            Literatur: Werner Stangls ArbeitsblÃ¤tter
             <a href="http://arbeitsblaetter.stangl-taller.at/KOMMUNIKATION/Feedback.shtml">
                 &lt;http://arbeitsblaetter.stangl-taller.at/KOMMUNIKATION/Feedback.shtml&gt;
             </a>
@@ -83,8 +83,8 @@
         <li>
             Sofern an Ihrem Standort vorhanden, fragen Sie die
             didaktischen Berater in den Hochschul- und Mediendidaktischen
-            Einrichtungen. Diese können Sie beim Einsatz von Cliqr
-            unterstützen.
+            Einrichtungen. Diese kÃ¶nnen Sie beim Einsatz von Cliqr
+            unterstÃ¼tzen.
         </li>
     </ul>
 </article>
