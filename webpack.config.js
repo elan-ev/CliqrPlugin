@@ -22,6 +22,16 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /assets\/scss\/.+\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: { url: false, importLoaders: 1 }
+                    }
+                ]
+            },
+            {
                 test: /assets\/scss\/.+\.scss$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',

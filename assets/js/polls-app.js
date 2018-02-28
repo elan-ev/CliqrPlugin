@@ -13,7 +13,7 @@ Raven
     .install()
 
 window.onunhandledrejection = function (evt) {
-    window.Raven.captureException(evt.reason)
+    Raven.captureException(evt.reason)
 }
 
 class PollCliqrApp {
