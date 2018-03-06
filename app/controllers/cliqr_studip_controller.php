@@ -87,7 +87,7 @@ abstract class CliqrStudipController extends \StudipController
     {
         $body = file_get_contents('php://input');
 
-        return self::utf8decode(json_decode($body, true));
+        return studip_utf8decode(json_decode($body, true));
     }
 
     /**
@@ -113,79 +113,6 @@ abstract class CliqrStudipController extends \StudipController
         }
 
         return $id;
-    }
-
-    /**
-     * Encodes a string or array from UTF-8 to Stud.IP encoding
-     * (WINDOWS-1252/ISO-8859-1 with numeric HTML-ENTITIES).
-     *
-     * @stolenfrom Stud.IP v2.4
-     *
-     * @param mixed $data a string in UTF-8 or an array with all strings encoded in utf-8
-     *
-     * @return string the string in WINDOWS-1252/HTML-ENTITIES
-     */
-    public static function utf8decode($data)
-    {
-        if (is_array($data)) {
-            $new_data = array();
-            foreach ($data as $key => $value) {
-                $key = studip_utf8decode($key);
-                $new_data[$key] = $value = self::utf8decode($value);
-            }
-
-            return $new_data;
-        } elseif (is_string($data)) {
-            if (!preg_match('/[\200-\377]/', $data)) {
-                return $data;
-            } else {
-                $windows1252 = array(
-                    "\x80" => '&#8364;',
-                    "\x81" => '&#65533;',
-                    "\x82" => '&#8218;',
-                    "\x83" => '&#402;',
-                    "\x84" => '&#8222;',
-                    "\x85" => '&#8230;',
-                    "\x86" => '&#8224;',
-                    "\x87" => '&#8225;',
-                    "\x88" => '&#710;',
-                    "\x89" => '&#8240;',
-                    "\x8A" => '&#352;',
-                    "\x8B" => '&#8249;',
-                    "\x8C" => '&#338;',
-                    "\x8D" => '&#65533;',
-                    "\x8E" => '&#381;',
-                    "\x8F" => '&#65533;',
-                    "\x90" => '&#65533;',
-                    "\x91" => '&#8216;',
-                    "\x92" => '&#8217;',
-                    "\x93" => '&#8220;',
-                    "\x94" => '&#8221;',
-                    "\x95" => '&#8226;',
-                    "\x96" => '&#8211;',
-                    "\x97" => '&#8212;',
-                    "\x98" => '&#732;',
-                    "\x99" => '&#8482;',
-                    "\x9A" => '&#353;',
-                    "\x9B" => '&#8250;',
-                    "\x9C" => '&#339;',
-                    "\x9D" => '&#65533;',
-                    "\x9E" => '&#382;',
-                    "\x9F" => '&#376;', );
-
-                return str_replace(
-                    array_values($windows1252),
-                    array_keys($windows1252),
-                    utf8_decode(mb_encode_numericentity(
-                                    $data,
-                                    array(0x100, 0xffff, 0, 0xffff),
-                                    'UTF-8'
-                                ))
-                );
-            }
-        } else {
-            return $data;
-        }
     }
 
     // require a cid; throw a 400 otherwise

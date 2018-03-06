@@ -47,7 +47,7 @@ const TaskListItemView = Viewmaster.extend({
                         this.remove()
                         return null
                     })
-                    .catch(e => {
+                    .catch(error => {
                         showError('Could not remove task group', error)
                     })
             }

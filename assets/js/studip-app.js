@@ -12,8 +12,11 @@ Raven
     .config('https://a879a81910984614afcb9cb19aff7727@sentry.io/255435')
     .install()
 
-window.onunhandledrejection = function (evt) {
-    Raven.captureException(evt.reason)
+window.onunhandledrejection = function (event) {
+    Raven.captureException(
+        new Error('Unhandled promise rejection'),
+        { extra: event }
+    )
 }
 
 class StudIPCliqrApp {
