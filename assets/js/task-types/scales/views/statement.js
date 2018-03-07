@@ -38,7 +38,7 @@ const StatementView = Viewmaster.extend({
     },
 
     magic() {
-        if (window.document.contains(this.el)) {
+        if (window.document.body.contains(this.el)) {
             histogramView(
                 this.$el,
                 this.responses(),

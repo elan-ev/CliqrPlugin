@@ -41,7 +41,7 @@ const PollView = Viewmaster.extend({
         const Hub = window.MathJax.Hub
         this.$('.description, .text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
 
-        if (window.document.contains(this.el)) {
+        if (window.document.body.contains(this.el)) {
             _.each(this.$('input[type="range"]'), (range) => {
                 const $range = Backbone.$(range),
                     ruler = $range.parent().find('.rangeslider__ruler').get(0),
