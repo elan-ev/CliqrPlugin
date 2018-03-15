@@ -4,11 +4,11 @@
     ],
     "presets": [
         ["env", {
+            "modules": false,
             "targets": {
                 "browsers": ["last 2 versions", "android>=4.4", "safari>=9"]
             },
-            "modules": false,
-            "useBuiltins": true,
+            "useBuiltins": "usage",
             "debug": true
         }]
     ]
