@@ -1,4 +1,4 @@
-import 'babel-polyfill'
+import '@babel/polyfill'
 import './public-path.js'
 import Backbone from 'backbone'
 import jQuery from 'jquery'

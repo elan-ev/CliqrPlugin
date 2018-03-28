@@ -1,15 +1,15 @@
 {
     "plugins": [
-        "transform-object-rest-spread",
+        "@babel/plugin-proposal-object-rest-spread"
     ],
     "presets": [
-        ["env", {
+        ["@babel/env", {
             "modules": false,
             "targets": {
                 "browsers": ["last 2 versions", "android>=4.4", "safari>=9"]
             },
             "useBuiltins": "usage",
-            "debug": true
+            "loose": true
         }]
     ]
 }

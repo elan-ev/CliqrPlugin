@@ -22,10 +22,10 @@ var cliqr = {
 <?= $this->render_partial('_noscript') ?>
 
 <? if (defined('WDS_ACTIVATED') && constant('WDS_ACTIVATED')) { ?>
-    <link charset="utf-8" href="https://localhost:8081/bundle.css" rel="stylesheet" media="screen, print">
+    <link charset="utf-8" href="https://localhost:8081/studip.css" rel="stylesheet" media="screen, print">
     <script charset="utf-8" src="https://localhost:8081/studip.js"></script>
 <? } else { ?>
-    <link charset="utf-8" href="<?= $PLGNURL ?>/static/bundle.css" rel="stylesheet" media="screen, print">
+    <link charset="utf-8" href="<?= $PLGNURL ?>/static/studip.css" rel="stylesheet" media="screen, print">
     <script charset="utf-8" src="<?= $PLGNURL ?>/static/studip.js"></script>
 <? } ?>
 <!-- END CLIQR PAGE -->

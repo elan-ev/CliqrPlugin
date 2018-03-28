@@ -1,5 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
     context: path.join(__dirname, './assets/js'),
@@ -17,7 +19,8 @@ module.exports = {
             {
                 test: /assets\/scss\/.+\.scss$/,
                 use: [
-                    { loader: 'style-loader' },
+                    MiniCssExtractPlugin.loader,
+                    //{ loader: 'style-loader' },
                     {
                         loader: 'css-loader',
                         options: {
@@ -31,6 +34,7 @@ module.exports = {
             {
                 test: /assets\/js\/.+\.scss$/,
                 use: [
+                    // MiniCssExtractPlugin.loader,
                     { loader: 'style-loader' },
                     {
                         loader: 'css-loader',
@@ -73,10 +77,13 @@ module.exports = {
                     helperDirs: [ path.join(__dirname, './assets/js/helpers') ]
                 }
             }
-        })
-    ],
-    devServer: {
-        contentBase: './assets/js',
-        https: true
-    }
+        }),
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        }),
+        new OptimizeCSSAssetsPlugin()
+    ]
 }
