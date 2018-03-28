@@ -10,11 +10,11 @@
     "zip": "zip -r cliqr.zip app assets CliqrPlugin.php config.php lib LICENSE migrations plugin.manifest README.md static vendor"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.40",
-    "@babel/core": "7.0.0-beta.40",
+    "@babel/cli": "7.0.0-beta.42",
+    "@babel/core": "7.0.0-beta.42",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.42",
-    "@babel/polyfill": "7.0.0-beta.40",
-    "@babel/preset-env": "7.0.0-beta.40",
+    "@babel/polyfill": "7.0.0-beta.42",
+    "@babel/preset-env": "7.0.0-beta.42",
     "autoprefixer": "8.1.0",
     "babel-loader": "^8.0.0-beta.0",
     "backbone": "1.3.3",
