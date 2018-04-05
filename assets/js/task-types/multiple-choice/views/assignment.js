@@ -7,22 +7,34 @@ const decorateTask = function (task, voting = null) {
     const task_id = task.get('id'),
           votes = tallyVotes(task, voting),
           json = voting.toJSON(),
-          votes_total = _.reduce(votes, (sum, n) => { return sum + n }, 0)
+          votes_total = _.reduce(votes, (sum, n) => { return sum + n }, 0),
+          isSingleSelect = task.get('task')['type'] === 'single',
+          responses_total = voting.get('responses').length
 
     return {
         ...json,
         task: _.first(json.test.tasks),
         isRunning: voting.isRunning(),
-        answers: _.map(task.get('task').answers,
-                       function (nswr, i) {
-                           return {
-                               ...nswr,
-                               id: `${task_id}-${i}`,
-                               isCorrect: !!nswr.score,
-                               votes_count: votes[i],
-                               percent: votes_total ? Math.floor(votes[i] / votes_total * 100) : 0
-                           }}),
-        isSingleSelect: task.get('task')['type'] === 'single',
+        answers: _.map(
+            task.get('task').answers,
+            function (nswr, i) {
+                let percent = 0
+
+                if (isSingleSelect && votes_total) {
+                    percent = votes[i] / votes_total
+                } else if (!isSingleSelect && responses_total) {
+                    percent = votes[i] / responses_total
+                }
+
+                return {
+                    ...nswr,
+                    id: `${task_id}-${i}`,
+                    isCorrect: !!nswr.score,
+                    votes_count: votes[i],
+                    percent: Math.floor(percent * 100)
+                }
+            }),
+        isSingleSelect,
         votes_count: votes_total
     }
 }
