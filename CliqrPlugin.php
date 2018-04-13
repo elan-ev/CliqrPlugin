@@ -144,9 +144,8 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             throw new RuntimeException('Missing Cliqr First Run Datafield');
         }
         $firstRunComplete = $datafields[0];
-        $initialized = !!$firstRunComplete->content;
+        $initialized = (bool) $firstRunComplete->content;
         if (!$initialized) {
-
             // create default task group
             if (!count(Assignment::findTaskGroups($cid))) {
                 Assignment::createTaskGroup('course', $cid);
