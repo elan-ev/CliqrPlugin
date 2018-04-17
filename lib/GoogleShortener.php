@@ -26,6 +26,8 @@ require_once 'Shortener.php';
 
 class GoogleShortener implements Shortener
 {
+    private $config;
+
     public function __construct($container)
     {
         $this->config = $container['ini']['google'];

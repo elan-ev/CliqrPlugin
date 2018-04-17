@@ -6,6 +6,10 @@ use Cliqr\DB\Assignment;
 
 require_once 'cliqr_studip_controller.php';
 
+/**
+ * @property string $cid
+ * @property array $json
+ */
 class PollsController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)

@@ -6,6 +6,8 @@ class Exporter
 {
     const VERSION = '1.0';
 
+    private $export;
+
     public function __construct()
     {
         $this->export = [
@@ -23,7 +25,7 @@ class Exporter
 
     private function encodeID(\SimpleORMap $sormObject)
     {
-        return md5(get_class($sormObject).'-'.json_encode($sormObject->id));
+        return md5(get_class($sormObject).'-'.json_encode($sormObject->getId()));
     }
 
     private function encodeTaskGroup(DB\Assignment $taskGroup)

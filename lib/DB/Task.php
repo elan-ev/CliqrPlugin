@@ -2,6 +2,18 @@
 
 namespace Cliqr\DB;
 
+/**
+ * @property string $id the id
+ * @property string $type
+ * @property string $title
+ * @property string $description
+ * @property string $task
+ * @property string $user_id
+ * @property int $mkdate
+ * @property int $chdate
+ * @property \SimpleORMapCollection $tests has_many Tests
+ * @property \SimpleORMapCollection $responses has_many Responses
+ */
 class Task extends \eTask\Task
 {
     use ConfigureTrait;
@@ -20,15 +32,18 @@ class Task extends \eTask\Task
             $userId = $this->user_id;
         }
 
-        if (!$test = Test::create(
-                [
-                    'title' => _('Cliqr-Frage vom ').date('c', $start),
-                    'description' => '',
-                    'user_id' => $userId,
-                    'mkdate' => $now,
-                    'chdate' => $now,
-                    'option' => ['voting' => 1],
-                ])) {
+        /** @var \Cliqr\DB\Test $test */
+        $test = Test::create(
+            [
+                'title' => _('Cliqr-Frage vom ').date('c', $start),
+                'description' => '',
+                'user_id' => $userId,
+                'mkdate' => $now,
+                'chdate' => $now,
+                'option' => ['voting' => 1],
+            ]
+        );
+        if (!$test) {
             throw new \RuntimeException('Could not store test');
         }
 
@@ -63,6 +78,7 @@ class Task extends \eTask\Task
                 INNER JOIN etask_assignments ea ON ea.test_id = ett.test_id
                 WHERE et.id = ? AND ea.type = ?
                 ORDER BY start, id';
+        /** @var \PDOStatement $stmt */
         $stmt = \DBManager::get()->prepare($sql);
         $stmt->execute([$this->id, Assignment::TYPE_TASK_GROUP]);
 
@@ -77,13 +93,14 @@ class Task extends \eTask\Task
     /**
      * Duplicate a task in a task group.
      *
-     * @param $taskGroup \Cliqr\Assignment  optional; the task group to copy this task into, defaults to this task's task group
+     * @param \Cliqr\DB\Assignment $taskGroup optional; the task group to copy this task into, defaults to this task's task group
      *
-     * @return the duplicated task instance
+     * @return Task the duplicated task instance
      */
     public function duplicateInTaskGroup(Assignment $taskGroup = null)
     {
         $data = $this->toArray('type title description task user_id');
+        /** @var Task $duplicate */
         $duplicate = self::build($data);
         $taskGroup = $taskGroup ?: $this->getTaskGroup();
 
@@ -98,6 +115,7 @@ class Task extends \eTask\Task
                 INNER JOIN etask_assignments ea ON ea.test_id = ett.test_id
                 WHERE et.id = ? AND ea.type = ?
                 ORDER BY start, id';
+        /** @var \PDOStatement $stmt */
         $stmt = \DBManager::get()->prepare($sql);
         $stmt->execute([$this->id, Assignment::TYPE_VOTING]);
 

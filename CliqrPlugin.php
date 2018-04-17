@@ -7,6 +7,8 @@ use Cliqr\DB\Assignment;
 
 class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 {
+    public $config;
+
     public function __construct()
     {
         parent::__construct();

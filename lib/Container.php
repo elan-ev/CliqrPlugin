@@ -6,6 +6,7 @@ class Container extends \Pimple
 {
     public function __construct()
     {
+        parent::__construct();
         $this->setupConstants();
         $this->setupStudip();
         $this->setupAuthorization();

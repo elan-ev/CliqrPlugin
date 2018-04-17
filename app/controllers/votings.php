@@ -7,6 +7,10 @@ use Cliqr\DB\Task;
 
 require_once 'cliqr_studip_controller.php';
 
+/**
+ * @property string $cid
+ * @property array $json
+ */
 class VotingsController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)
@@ -63,13 +67,15 @@ class VotingsController extends CliqrStudipController
             throw new \Trails_Exception(400, 'TODO: task_id required');
         }
 
-        if ($task = Task::find($this->json['task_id'])) {
+        /** @var Task $task */
+        $task = Task::find($this->json['task_id']);
+        if ($task) {
             // TODO: Rechteprüfung
 
             Assignment::stopAllVotings('course', $this->cid);
 
             $now = time();
-            $startTime = intval($now / 60 ) * 60;
+            $startTime = intval($now / 60) * 60;
             $endTime = $startTime + 2 * 60 * 60;
             $voting = $task->startTask(['course', $this->cid], $startTime, $endTime);
 

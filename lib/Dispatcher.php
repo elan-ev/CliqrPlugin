@@ -11,9 +11,9 @@ class Dispatcher extends \Trails_Dispatcher
      * instance of that controller. If an error occures, an exception will be
      * thrown.
      *
-     * @param  string            the relative controller path
+     * @param  string $controller  the relative controller path
      *
-     * @return TrailsController an instance of that controller
+     * @return \Trails_Controller an instance of that controller
      */
     public function load_controller($controller)
     {

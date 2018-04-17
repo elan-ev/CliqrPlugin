@@ -7,6 +7,9 @@ use Cliqr\DB\Test;
 
 require_once 'cliqr_studip_controller.php';
 
+/**
+ * @property string $cid
+ */
 class TaskGroupsController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)

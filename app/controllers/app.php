@@ -6,6 +6,11 @@ require_once 'cliqr_studip_controller.php';
 
 use Cliqr\DB\Assignment;
 
+/**
+ * @property string $cid
+ * @property string $short_url
+ * @property array $json
+ */
 class AppController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)

@@ -3,10 +3,13 @@
 namespace Cliqr;
 
 use Cliqr\DB\Task;
-use STUDIP\Markup;
 
 require_once 'cliqr_studip_controller.php';
 
+/**
+ * @property string $cid
+ * @property array $json
+ */
 class TasksController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)
@@ -29,6 +32,7 @@ class TasksController extends CliqrStudipController
 
     public function show_action($id)
     {
+        /** @var Task $task */
         $task = Task::find($id);
 
         if (!$this->can('read', 'Task', $task)) {
@@ -59,14 +63,18 @@ class TasksController extends CliqrStudipController
             throw new \Trails_Exception(400, 'TODO: wrong type');
         }
 
-        $task = Task::build(
-            [
-                'description' => $this->json['description'],
-                'task' => $this->json['task'],
-                'type' => $this->json['type'],
-                'user_id' => $GLOBALS['user']->id
-            ]
-        );
+        $data = [
+            'description' => $this->json['description'],
+            'task' => $this->json['task'],
+            'type' => $this->json['type'],
+            'user_id' => $GLOBALS['user']->id,
+        ];
+
+        if (array_key_exists('title', $this->json)) {
+            $data['title'] = $this->json['title'];
+        }
+
+        $task = Task::build($data);
 
         $task = $this->validateTask($this->json['type'], $task);
 
@@ -78,6 +86,7 @@ class TasksController extends CliqrStudipController
     public function update_action($id)
     {
         // find it
+        /** @var Task $task */
         $task = Task::find($id);
         if ($this->cannot('update', 'Task', $task)) {
             throw new \Trails_Exception(403);
@@ -117,6 +126,7 @@ class TasksController extends CliqrStudipController
 
     public function destroy_action($id)
     {
+        /** @var Task $task */
         $task = Task::find($id);
 
         if (!$this->can('create', 'Task', $task)) {
@@ -143,6 +153,7 @@ class TasksController extends CliqrStudipController
     // make a copy of a task in the same task group and redirect to that copy
     public function duplicate_action($id)
     {
+        /** @var Task $task */
         $task = Task::find($id);
 
         if ($this->cannot('create', 'Task', $task)) {
@@ -162,7 +173,7 @@ class TasksController extends CliqrStudipController
     {
         return [
             'multiple-choice' => '\\Cliqr\\TaskTypes\\MultipleChoice',
-            'scales' => '\\Cliqr\\TaskTypes\\Scales'
+            'scales' => '\\Cliqr\\TaskTypes\\Scales',
         ];
     }
 
@@ -170,6 +181,7 @@ class TasksController extends CliqrStudipController
     {
         $knownTypes = $this->getKnownTypes();
         $klass = $knownTypes[$type];
+
         return new $klass();
     }
 
@@ -180,6 +192,7 @@ class TasksController extends CliqrStudipController
         if (!$taskType->isValid($task)) {
             throw new \Trails_Exception(400, $taskType->validationError);
         }
+
         return $task;
     }
 }

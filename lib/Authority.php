@@ -4,6 +4,8 @@ namespace Cliqr;
 
 class Authority extends \Authority\Authority
 {
+    private $container;
+
     public function __construct($container, $currentUser, $dispatcher = null)
     {
         parent::__construct($currentUser, $dispatcher);

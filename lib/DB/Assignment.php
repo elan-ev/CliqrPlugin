@@ -4,6 +4,19 @@ namespace Cliqr\DB;
 
 use eTask\Assignment as eAssignment;
 
+/**
+ * @property string $id
+ * @property string $test_id
+ * @property string $range_type
+ * @property string $range_id
+ * @property string $type
+ * @property int $start
+ * @property int $end
+ * @property int $active
+ * @property array $options
+ * @property \Cliqr\DB\Test $test
+ * @property \SimpleORMapCollection $responses
+ */
 class Assignment extends eAssignment
 {
     use ConfigureTrait;
@@ -81,6 +94,7 @@ class Assignment extends eAssignment
                 WHERE ea.id = ?
                 ORDER BY ett.position ASC';
 
+        /** @var \PDOStatement $st */
         $st = \DBManager::get()->prepare($sql);
         $st->execute([$this->id]);
 
@@ -97,6 +111,7 @@ class Assignment extends eAssignment
                 WHERE ea.id = ?
                 ORDER BY ett.position ASC';
 
+        /** @var \PDOStatement $st */
         $st = \DBManager::get()->prepare($sql);
         $st->execute([$this->id]);
 
@@ -109,7 +124,7 @@ class Assignment extends eAssignment
         return $ret;
     }
 
-    public function createTaskGroup($range_type, $range_id, $data = [])
+    public static function createTaskGroup($range_type, $range_id, $data = [])
     {
         $now = time();
 
@@ -173,7 +188,7 @@ class Assignment extends eAssignment
     {
         $start = $this->start;
         $now = time();
-        $end = $this->end ?: PHP_MAX_INT;
+        $end = $this->end ?: PHP_INT_MAX;
 
         return $start <= $now && $now <= $end;
     }
@@ -181,7 +196,7 @@ class Assignment extends eAssignment
     /**
      * Duplicate a task group.
      *
-     * @return the duplicated task group instance
+     * @return Assignment the duplicated task group instance
      */
     public function duplicateTaskGroup()
     {
@@ -203,7 +218,7 @@ class Assignment extends eAssignment
         $test = $this->test;
 
         if ($includeTasks) {
-            $tasks = $test->tasks->toJSON();
+            $tasks = $test->tasks->sendMessage('toJSON', []);
         } else {
             $tasks = $test->getTaskIds();
         }

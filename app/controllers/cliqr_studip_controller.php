@@ -2,6 +2,10 @@
 
 namespace Cliqr;
 
+/**
+ * @property \CliqrPlugin $plugin
+ * @property \Pimple $container
+ */
 abstract class CliqrStudipController extends \StudipController
 {
     public function before_filter(&$action, &$args)
@@ -20,12 +24,12 @@ abstract class CliqrStudipController extends \StudipController
         $abs_base = $GLOBALS['ABSOLUTE_URI_STUDIP'];
 
         // force an absolute URL
-        \URLHelper::setBaseUrl($abs_base);
+        \URLHelper::setBaseURL($abs_base);
 
         $url = current(explode('?', $this->url_for('polls', $cid))) . '?cancel_login=1';
 
         // reset to the default set in plugins.php
-        \URLHelper::setBaseUrl($GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP']);
+        \URLHelper::setBaseURL($GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP']);
 
         return $url;
     }
@@ -56,7 +60,7 @@ abstract class CliqrStudipController extends \StudipController
     /**
      * Return the Content-Type of the HTTP request.
      *
-     * @return string the content type
+     * @return string|null the content type
      */
     private function contentType()
     {
@@ -94,7 +98,7 @@ abstract class CliqrStudipController extends \StudipController
      * Exception handler called when the performance of an action raises an
      * exception.
      *
-     * @param  object     the thrown exception
+     * @param  object $exception the thrown exception
      */
     public function rescue($exception)
     {

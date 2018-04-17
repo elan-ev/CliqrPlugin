@@ -4,6 +4,9 @@ namespace Cliqr;
 
 class QuestionPusher
 {
+    private $config;
+    private $cid;
+
     public function __construct($config, $cid)
     {
         $this->config = $config;

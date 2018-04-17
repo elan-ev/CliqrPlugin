@@ -8,6 +8,8 @@ use Cliqr\DB\Task;
 
 class StudIPv34Migrator
 {
+    private $debug;
+
     public function __construct($debug = false)
     {
         $this->debug = $debug;
@@ -57,6 +59,7 @@ class StudIPv34Migrator
         $pluginId = $pluginInfo['id'];
 
         $dbh = \DBManager::get();
+        /** @var \PDOStatement $stmt */
         $stmt = $dbh->prepare('SELECT poiid FROM plugins_activated WHERE pluginid = ?');
         $stmt->execute([$pluginId]);
 
@@ -231,6 +234,7 @@ class StudIPv34Migrator
     {
         list($rangeType, $rangeId) = $range;
         $sql = 'DELETE FROM questionnaire_assignments WHERE questionnaire_id = ? AND range_type = ? AND range_id = ?';
+        /** @var \PDOStatement $stmt */
         $stmt = \DBManager::get()->prepare($sql);
         $stmt->execute([$questionnaire->id, $rangeType, md5('cliqr-'.$rangeId)]);
     }

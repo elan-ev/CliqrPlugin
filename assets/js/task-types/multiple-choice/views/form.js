@@ -1,7 +1,9 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
+import stripTags from '../../../helpers/strip_tags'
 import Viewmaster from '../../../views/viewmaster'
+import TextInputComponent from './component-text-input'
 import WysiwygComponent from './component-wysiwyg'
 
 const subtypes = [
@@ -40,14 +42,21 @@ const FormView = Viewmaster.extend({
         this.type = options.type
         this.taskGroup = options.taskGroup
 
+        const titleInput = new TextInputComponent({
+            model: this.model,
+            key: 'title',
+            placeholderKey: 'description'
+        })
+
         const wysiwyg = new WysiwygComponent({
             model: this.model,
             key: 'description'
         })
 
+        this.setView('.cliqr--mc-title', titleInput)
         this.setView('.cliqr--mc-description', wysiwyg)
 
-        this.listenTo(this.model, 'change', this.render)
+        this.listenTo(this.model, 'change:task', this.render)
         this.listenTo(this.model, 'invalid', () => this.render({ force: true }))
     },
 
@@ -64,10 +73,6 @@ const FormView = Viewmaster.extend({
                 return { ...subtype, selected: subtype.id === this.$selectedSubtype }
             })
         }
-    },
-
-    afterTemplate() {
-        // console.log("rendered")
     },
 
     onClickAdd(event) {

@@ -1,10 +1,12 @@
 import Backbone from 'backbone'
 import Viewmaster from '../../../views/viewmaster'
+import template from '../hbs/component-wysiwyg.hbs'
 
 const WysiwygComponent = Viewmaster.extend({
-
     tagName: 'div',
     className: 'cliqr--component-wysiwyg',
+
+    template,
 
     events: {
         'keypress textarea': 'onTextUpdate',
@@ -35,8 +37,6 @@ const WysiwygComponent = Viewmaster.extend({
         }
     },
 
-    template: require('../hbs/component-wysiwyg.hbs'),
-
     context() {
         return {
             key: this.key,
@@ -60,7 +60,7 @@ const WysiwygComponent = Viewmaster.extend({
     },
 
     onEditorChange({ editor }) {
-        this.model.set(this.key, editor.getData(), { silent: true })
+        this.model.set(this.key, editor.getData())
     },
 
     onEditorFocus({ editor }) {
@@ -71,13 +71,13 @@ const WysiwygComponent = Viewmaster.extend({
     },
 
     onTextUpdate(event) {
-        const value = Backbone.$(event.target).val()
-        this.model.set(this.key, value, { silent: true })
-        // console.log(this.model.get(this.key))
+        this.model.set(this.key, Backbone.$(event.target).val())
     },
 
-    onModelChange(...args) {
-        this.render()
+    onModelChange(model, newDescription) {
+        if (newDescription !== this.model.get(this.key)) {
+            this.render()
+        }
     }
 })
 

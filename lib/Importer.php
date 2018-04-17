@@ -6,6 +6,11 @@ class Importer
 {
     const VERSION = '1.0';
 
+    private $range_type;
+    private $range_id;
+    private $import;
+    private $imported;
+
     public function __construct($range_type, $range_id)
     {
         $this->range_type = $range_type;

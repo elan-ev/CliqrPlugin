@@ -8,6 +8,9 @@ use Cliqr\DB\TestTask;
 
 require_once 'cliqr_studip_controller.php';
 
+/**
+ * @property array $json
+ */
 class ResponsesController extends CliqrStudipController
 {
     public function before_filter(&$action, &$args)
@@ -50,6 +53,7 @@ class ResponsesController extends CliqrStudipController
         }
 
         $now = time();
+        /** @var Response $response */
         $response = Response::create(
             [
                 'assignment_id' => $this->json['voting_id'],
