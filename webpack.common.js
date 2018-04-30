@@ -58,7 +58,7 @@ module.exports = {
             },
             {
                 test: /\.hbs$/,
-                use: [ { loader: 'handlebars-loader' } ]
+                use: [{ loader: 'handlebars-loader' }]
             }
         ]
     },
@@ -66,24 +66,30 @@ module.exports = {
         alias: {
             jquery: path.join(__dirname, './assets/js/jquery')
         },
-        extensions: [ '.js' ],
-        modules: [ path.resolve('./assets/js'), 'node_modules' ]
+        extensions: ['.js'],
+        modules: [path.resolve('./assets/js'), 'node_modules']
     },
     plugins: [
         new webpack.LoaderOptionsPlugin({
             options: {
                 handlebarsLoader: {
                     partialDirs: path.join(__dirname, './assets/hbs'),
-                    helperDirs: [ path.join(__dirname, './assets/js/helpers') ]
+                    helperDirs: [path.join(__dirname, './assets/js/helpers')]
                 }
             }
         }),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: "[name].css",
-            chunkFilename: "[id].css"
+            filename: '[name].css',
+            chunkFilename: '[id].css'
         }),
-        new OptimizeCSSAssetsPlugin()
+        new OptimizeCSSAssetsPlugin({
+            cssProcessorOptions: {
+                discardComments: {
+                    removeAll: true
+                }
+            }
+        })
     ]
 }

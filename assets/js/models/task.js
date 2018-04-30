@@ -19,13 +19,13 @@ const Task = Backbone.Model.extend({
     sync(method, model, options) {
         _.extend(options, {
             url: typeof model.url === 'function' ? model.url(actionMap(method)) : void 0
-        });
+        })
         return Backbone.sync(method, model, options)
     },
 
     url(action) {
         let id = this.id != null ? '/' + this.id : ''
-        return cliqr.config.PLUGIN_URL + ('tasks/' + action + id + '?cid=') + cliqr.config.CID
+        return window.cliqr.config.PLUGIN_URL + ('tasks/' + action + id + '?cid=') + window.cliqr.config.CID
     },
 
     getVotings() {

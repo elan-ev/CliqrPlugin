@@ -3,7 +3,7 @@ import Task from '../../../models/task'
 
 const MCTask = Task.extend({
     defaults: {
-        type:  'multiple-choice',
+        type: 'multiple-choice',
         task: {
             type: 'single',
             answers: []
