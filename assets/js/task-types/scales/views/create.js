@@ -1,10 +1,9 @@
-import Backbone from 'backbone'
 import FormView from './form'
 
 const CreateView = FormView.extend({
-
     className: 'cliqr--scales-create-view',
 
+    // eslint-disable-line no-unused-vars
     onSubmitForm(event) {
         event.preventDefault()
         if (this.model.isValid()) {

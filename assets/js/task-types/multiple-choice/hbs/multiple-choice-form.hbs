@@ -13,7 +13,7 @@
             <div class="cliqr--mc-description"></div>
         </label>
         <label>
-            Titel der Frage in der Listendarstellung
+            Titel der Frage (wird in Listendarstellungen verwendet)
             <div class="cliqr--mc-title"></div>
         </label>
     </fieldset>
@@ -22,14 +22,14 @@
         <legend>Antwortmöglichkeiten</legend>
 
         <div class="cliqr--mc-subtypes button-group">
-          {{#each subtypes}}
-            {{#if selected}}
-              {{button (concat "type-" id) text class="active"}}
-            {{/if}}
-            {{^if selected}}
-            {{button (concat "type-" id) text}}
-            {{/if}}
-          {{/each}}
+            {{#each subtypes}}
+                {{#if selected}}
+                    {{button (concat "type-" id) text class="active"}}
+                {{/if}}
+                {{^if selected}}
+                    {{button (concat "type-" id) text}}
+                {{/if}}
+            {{/each}}
         </div>
 
         <label>

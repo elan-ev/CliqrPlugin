@@ -42,8 +42,9 @@ class Scales {
         return new PollView({ model: this.createResponse(voting), voting, type: this })
     }
 
-    createTask(data) {
+    createTask() {
         const task = new ScalesTask()
+        task.set('description', 'Bewerten Sie bitte die folgende(n) Aussage(n)')
         _.times(1, () => task.addStatement())
         return task
     }

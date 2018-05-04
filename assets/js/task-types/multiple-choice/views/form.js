@@ -1,7 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-import stripTags from '../../../helpers/strip_tags'
 import Viewmaster from '../../../views/viewmaster'
 import TextInputComponent from './component-text-input'
 import WysiwygComponent from './component-wysiwyg'

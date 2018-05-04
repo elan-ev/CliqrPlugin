@@ -5,10 +5,12 @@
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "sourceType": "module"
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
     },
     "rules": {
-        "array-bracket-spacing": [2, "always"],
         "comma-dangle": [2, "never"],
         "eol-last": 2,
         "indent": [

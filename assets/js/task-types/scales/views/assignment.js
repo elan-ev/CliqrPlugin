@@ -1,9 +1,10 @@
-/*global require*/
 import _ from 'underscore'
 import Viewmaster from '../../../views/viewmaster'
 import StatementView from './statement'
+import template from '../hbs/assignment.hbs'
 
 const AssignmentView = Viewmaster.extend({
+    template,
 
     tagName: 'section',
 
@@ -17,16 +18,17 @@ const AssignmentView = Viewmaster.extend({
         const task = _.omit(this.model.get('task'), 'statements')
 
         _.each(this.model.get('task').statements, (statement, index) => {
-            this.appendView('.cliqr--scales-statements', new StatementView({
-                model: this.voting,
-                statement: { ...task, ...statement },
-                index
-            }))
+            this.appendView(
+                '.cliqr--scales-statements',
+                new StatementView({
+                    model: this.voting,
+                    statement: { ...task, ...statement },
+                    index
+                })
+            )
         })
         this.refreshViews()
     },
-
-    template: require('../hbs/assignment.hbs'),
 
     context() {
         return {
@@ -37,7 +39,9 @@ const AssignmentView = Viewmaster.extend({
 
     postRender() {
         const Hub = window.MathJax.Hub
-        this.$('.cliqr--scales-description, td.text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
+        this.$('.cliqr--scales-description, td.text').each((index, element) =>
+            Hub.Queue(['Typeset', Hub, element])
+        )
 
         const views = this.getViews('.cliqr--scales-statements')
         views && _.invoke(views, 'postRender')

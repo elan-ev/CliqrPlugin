@@ -1,5 +1,6 @@
 import Backbone from 'backbone'
 
+import TextInputComponent from './component-text-input'
 import Viewmaster from '../../../views/viewmaster'
 import WysiwygComponent from './component-wysiwyg'
 
@@ -39,14 +40,20 @@ const FormView = Viewmaster.extend({
         this.type = options.type
         this.taskGroup = options.taskGroup
 
+        const titleInput = new TextInputComponent({
+            model: this.model,
+            key: 'title'
+        })
+
         const wysiwyg = new WysiwygComponent({
             model: this.model,
             key: 'description'
         })
 
+        this.setView('.cliqr--scales-title', titleInput)
         this.setView('.cliqr--scales-description', wysiwyg)
 
-        this.listenTo(this.model, 'change', this.render)
+        this.listenTo(this.model, 'change:task', this.render)
         this.listenTo(this.model, 'invalid', () => this.render({ force: true }))
     },
 

@@ -13,13 +13,21 @@ const ScalesTask = Task.extend({
         }
     },
 
-    validate({ description, task }, options) {
+    validate({ title, description, task }, options) {
+        if (!title || _.isEmpty(title)) {
+            return 'Der Titel darf nicht leer sein.'
+        }
+
         if (!description || _.isEmpty(description)) {
             return 'Der Fragetext darf nicht leer sein.'
         }
 
+        if (!description || _.isEmpty(description)) {
+            return 'Die Aufgabenbeschreibung darf nicht leer sein.'
+        }
+
         if (window.STUDIP.wysiwyg && description.trim() === window.STUDIP.wysiwyg.htmlMarker) {
-            return 'Der Fragetext darf nicht leer sein.'
+            return 'Die Aufgabenbeschreibung darf nicht leer sein.'
         }
 
         if (!task) {
