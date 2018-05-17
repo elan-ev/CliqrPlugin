@@ -3,54 +3,61 @@ import _ from 'underscore'
 const KEY = 'cliqr.model.IDList'
 const DECAY_TIME = 60 * 60 * 24 * 1000
 
-const fetch = function () {
-    const item = window.localStorage.getItem(KEY)
-    if (item === null) {
-        return {}
-    } else {
-        return JSON.parse(item)
-    }
-}
+let memoryStore = {}
 
-const save = function (ids) {
-    window.localStorage.setItem(KEY, JSON.stringify(ids))
-    return ids
-}
-
-const removeStaleIDs = function (old_ids) {
-    const best_before = Date.now() - DECAY_TIME
-    const ids = {}
-    for (let id in old_ids) {
-        let timestamp = new Date(old_ids[id]).valueOf()
-        if (timestamp >= best_before) {
-            ids[id] = old_ids[id]
+const unpickle = function() {
+    try {
+        const fromStorage = window.localStorage.getItem(KEY)
+        if (fromStorage) {
+            memoryStore = JSON.parse(fromStorage)
         }
-    }
-    return ids
+    } catch (e) {}
+
+    return memoryStore
+}
+
+const pickle = function(ids) {
+    try {
+        window.localStorage.setItem(KEY, JSON.stringify(ids))
+    } catch (e) {}
+}
+
+const isStale = function(item) {
+    const decay = Date.now() - DECAY_TIME
+    const timestamp = new Date(item).valueOf()
+    return timestamp < decay
 }
 
 class IDList {
-
     constructor() {
-        _.compose(save, removeStaleIDs, fetch)()
+        this.ids = _.reduce(
+            unpickle(),
+            (memo, value, key) => {
+                if (!isStale(value)) {
+                    memo[key] = value
+                }
+                return memo
+            },
+            {}
+        )
     }
 
     add(poll) {
-        var ids = fetch()
-        ids[poll.id] = poll.get('start')
-        save(ids)
+        this.ids[poll.id] = poll.get('start')
+        pickle(this.ids)
+
         return this
     }
 
     remove(poll) {
-        var ids = fetch()
-        delete ids[poll.id]
-        save(ids)
+        delete this.ids[poll.id]
+        pickle(this.ids)
+
         return this
     }
 
     test(poll) {
-        return fetch()[poll.id] === poll.get('start')
+        return this.ids[poll.id] === poll.get('start')
     }
 }
 
