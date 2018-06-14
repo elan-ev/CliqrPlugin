@@ -157,4 +157,10 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             $firstRunComplete->store();
         }
     }
+
+    public static function onEnable($pluginId)
+    {
+        // enable nobody role by default
+        \RolePersistence::assignPluginRoles($pluginId, array(7));
+    }
 }

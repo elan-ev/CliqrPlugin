@@ -3,21 +3,8 @@ import './public-path.js'
 import Backbone from 'backbone'
 import jQuery from 'jquery'
 
-import Raven from 'raven-js'
-
 import core_css from '../scss/core.scss'
 import PollsRouter from './routers/polls'
-
-Raven
-    .config('https://a879a81910984614afcb9cb19aff7727@sentry.io/255435')
-    .install()
-
-window.onunhandledrejection = function (event) {
-    Raven.captureException(
-        new Error('Unhandled promise rejection'),
-        { extra: event }
-    )
-}
 
 class PollCliqrApp {
     constructor(selector) {
@@ -41,6 +28,4 @@ class PollCliqrApp {
     }
 }
 
-Raven.context(function () {
-    const app = new PollCliqrApp('#cliqr-poll-container')
-})
+const app = new PollCliqrApp('#cliqr-poll-container')
