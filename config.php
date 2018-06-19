@@ -15,6 +15,9 @@ class = \Cliqr\BasicShortener
 ;file = lib/GoogleShortener.php
 ;class = \Cliqr\GoogleShortener
 
+;file = lib/YourlsShortener.php
+;class = \Cliqr\YourlsShortener
+
 [basicshortener]
 url = http://vt.uos.de/shorten.php?longurl=%s
 
@@ -23,6 +26,13 @@ url = http://vt.uos.de/shorten.php?longurl=%s
 ; INSERT your google api key here, see:
 ;   https://developers.google.com/url-shortener/v1/getting_started#APIKey
 ;api_key = <MY-GOOGLE-KEY>
+
+[yourls]
+endpoint = https://<yourls-domain>/yourls-api.php
+;use either username and password or provide an api key
+username =
+password =
+api_key =
 
 [pusher]
 ;key = <MY-PUSHER-KEY>
