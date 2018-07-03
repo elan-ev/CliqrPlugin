@@ -34,12 +34,8 @@ class StudIPv34Migrator
     // ***** PRIVATE HELPERS *****
     private function migrateActivations()
     {
-        $activations = $this->getActivations();
-
-        foreach ($activations as $activation) {
-            if (!$range = $this->getRangeFromActivation($activation)) {
-                continue;
-            }
+        $ranges = $this->getActivatedRanges();
+        foreach ($ranges as $range) {
             foreach ($this->getQuestionnaires($range) as $questionnaire) {
                 $task = $this->migrateQuestionnaire($range, $questionnaire);
                 if ($this->debug) {
@@ -48,6 +44,51 @@ class StudIPv34Migrator
                 $this->unassignQuestionnaire($questionnaire, $range);
             }
         }
+    }
+
+    private function getActivatedRanges()
+    {
+        // Stud.IP v4.2+
+        if (is_callable([\StudipVersion::class, 'getStudipVersion']) &&
+            !\StudipVersion::olderThan('4.2')
+        ) {
+            return $this->getActivations42();
+        }
+
+        // older than v4.2
+        $activations = $this->getActivations();
+        $ranges = [];
+        foreach ($activations as $activation) {
+            if ($range = $this->getRangeFromActivation($activation)) {
+                $ranges[] = $range;
+            }
+        }
+
+        return $ranges;
+    }
+
+    private function getActivations42()
+    {
+        $pluginInfo = \PluginManager::getInstance()->getPluginInfo('CliqrPlugin');
+        if (is_null($pluginInfo)) {
+            return [];
+        }
+        $pluginId = $pluginInfo['id'];
+
+        $dbh = \DBManager::get();
+        /** @var \PDOStatement $stmt */
+        $stmt = $dbh->prepare(
+            'SELECT CASE range_type '.
+            'WHEN "sem" THEN "course" '.
+            'WHEN "inst" THEN "institute" '.
+            'END as range_type2, range_id '.
+            'FROM plugins_activated '.
+            'WHERE pluginid = ? AND range_type IN ("sem", "inst")'
+        );
+
+        $stmt->execute([$pluginId]);
+
+        return $stmt->fetchAll(\PDO::FETCH_NUM);
     }
 
     private function getActivations()
