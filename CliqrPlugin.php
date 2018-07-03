@@ -163,4 +163,24 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         // enable nobody role by default
         \RolePersistence::assignPluginRoles($pluginId, array(7));
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    public function getMetadata()
+    {
+        $metadata = parent::getMetadata();
+
+        if (version_compare($GLOBALS['SOFTWARE_VERSION'], '4', '>=')) {
+            foreach ($metadata as $key => $value) {
+                if (is_string($value)) {
+                    $metadata[$key] = utf8_encode($value);
+                }
+            }
+        }
+
+        return $metadata;
+    }
 }

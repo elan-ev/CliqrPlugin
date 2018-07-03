@@ -1,3 +1,4 @@
+<? ob_start(); ?>
 <header>
     <h2>Methodische Informationen zum Einsatz von Cliqr</h2>
 </header>
@@ -88,3 +89,5 @@
         </li>
     </ul>
 </article>
+
+<?= studip_utf8decode(ob_get_clean())  ?>
