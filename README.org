@@ -104,74 +104,12 @@ found 0 vulnerabilities
 
 Jetzt kann es mit dem Kompilieren losgehen:
 
-#+BEGIN_SRC bash :results drawer :async
+#+BEGIN_SRC bash :results silent :async
 npm run build-prod
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
-
-> studip-plugin-cliqr@2.0.0 build-prod /tmp/CliqrPlugin
-> webpack --config webpack.prod.js --mode production
-
-Hash: 367aca1846d3be0e9967
-Version: webpack 4.12.0
-Time: 17804ms
-Built at: 2018-07-04 11:59:40
-                                 Asset      Size  Chunks             Chunk Names
-                             studip.js   204 KiB       4  [emitted]  studip
-             task-type.scales.chunk.js  44.8 KiB       0  [emitted]  task-type.scales
-             scales-histogram.chunk.js  46.6 KiB       2  [emitted]  scales-histogram
-                             polls.css  15.6 KiB       3  [emitted]  polls
-                              polls.js   152 KiB       3  [emitted]  polls
-                            studip.css  15.6 KiB       4  [emitted]  studip
-    task-type.multiple-choice.chunk.js  37.9 KiB       1  [emitted]  task-type.multiple-choice
-         task-type.scales.chunk.js.map   114 KiB       0  [emitted]  task-type.scales
-task-type.multiple-choice.chunk.js.map  96.7 KiB       1  [emitted]  task-type.multiple-choice
-         scales-histogram.chunk.js.map   118 KiB       2  [emitted]  scales-histogram
-                          polls.js.map   753 KiB       3  [emitted]  polls
-                         studip.js.map   893 KiB       4  [emitted]  studip
- [14] ./error.js 137 bytes {3} {4} [built]
- [37] ./utils.js 1.34 KiB {3} {4} [built]
- [57] ./models/votings.js + 1 modules 2.77 KiB {3} {4} [built]
-      | ./models/votings.js 770 bytes [built]
-      | ./models/id_list.js 2.01 KiB [built]
-[106] (webpack)/buildin/global.js 489 bytes {3} {4} [built]
-[107] ./jquery.js 29 bytes {3} {4} [built]
-[163] ../scss/core.scss 39 bytes {3} {4} [built]
-[164] ./public-path.js 198 bytes {3} {4} [built]
-[371] ./polls-app.js + 2 modules 5.64 KiB {3} [built]
-      | ./polls-app.js 1.59 KiB [built]
-      | ./routers/polls.js 2.17 KiB [built]
-      | ./views/polls_index.js 1.82 KiB [built]
-[372] ./studip-app.js + 19 modules 42.7 KiB {4} [built]
-      | ./views/tasks_show.js 3.57 KiB [built]
-      | ./studip-app.js 1.86 KiB [built]
-      | ./views/archive.js 1.19 KiB [built]
-      | ./routers/studip-fetcher.js 2.69 KiB [built]
-      | ./views/votings_show.js 4.39 KiB [built]
-      | ./views/task_groups_index.js 2.96 KiB [built]
-      | ./views/votings_compare.js 1.89 KiB [built]
-      | ./routers/studip.js 4.15 KiB [built]
-      | ./views/tasks_edit.js 2.77 KiB [built]
-      | ./views/task_groups_show.js 787 bytes [built]
-      | ./views/task_groups_edit.js 1.93 KiB [built]
-      | ./views/tasks_create.js 3.51 KiB [built]
-      | ./views/task_list.js 971 bytes [built]
-      | ./models/tasks.js 375 bytes [built]
-      | ./views/task_groups_import.js 2.04 KiB [built]
-      |     + 5 hidden modules
-[375] ../hbs/votings-show.hbs 7.74 KiB {4} [built]
-[376] ../hbs/votings-compare.hbs 2.9 KiB {4} [built]
-[379] ../hbs/tasks-show.hbs 6.38 KiB {4} [built]
-[380] ../hbs/tasks-edit.hbs 775 bytes {4} [built]
-[381] ../hbs/tasks-create.hbs 3.36 KiB {4} [built]
-[382] ../hbs/task-groups-show.hbs 1.69 KiB {4} [built]
-    + 401 hidden modules
-Child mini-css-extract-plugin ../../node_modules/css-loader/index.js??ref--4-1!../../node_modules/postcss-loader/lib/index.js!../scss/core.scss:
-    [1] /tmp/CliqrPlugin/node_modules/css-loader??ref--4-1!/tmp/CliqrPlugin/node_modules/postcss-loader/lib!../scss/core.scss 21.7 KiB {0} [built]
-        + 1 hidden module
-:END:
+: 02489b7c9b930ee3cd3a74488fa2c4b3
 
 Zum Schluß muss noch das Stud.IP-Plugin gepackt werden:
 
