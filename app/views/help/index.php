@@ -4,7 +4,7 @@
 </header>
 
 <style>
-    article{-webkit-column-width:31.25em;-moz-column-width:31.25em;column-width:31.25em}
+article{-webkit-column-width:31.25em;-moz-column-width:31.25em;column-width:31.25em}
 </style>
 
 <article>
@@ -60,8 +60,8 @@
     Methode. Exemplarisch gibt der nachfolgende Film (3 Minuten) die
     Erfahrungen von Prof. Dr. Riegler wieder:
 
-    <a href="http://www.youtube.com/watch?v=3D-QERxwN9k2I">
-        &lt;http://www.youtube.com/watch?v=3D-QERxwN9k2I&gt;
+    <a href="https://www.youtube.com/watch?v=pq9LV1Oj3gs">
+        &lt;https://www.youtube.com/watch?v=pq9LV1Oj3gs&gt;
     </a>
 
     <h3>Weitere Informationen?</h3>
