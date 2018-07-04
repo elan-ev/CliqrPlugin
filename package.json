@@ -4,8 +4,8 @@
   "private": true,
   "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   "scripts": {
-    "build": "webpack --config webpack.dev.js --mode development",
-    "buildp": "webpack --config webpack.prod.js --mode production",
+    "build-dev": "webpack --config webpack.dev.js --mode development",
+    "build-prod": "webpack --config webpack.prod.js --mode production",
     "wds": "webpack-dev-server --progress --config webpack.dev.js --mode development",
     "zip": "zip -r cliqr.zip app assets CliqrPlugin.php config.php lib LICENSE migrations plugin.manifest README.md static vendor"
   },
