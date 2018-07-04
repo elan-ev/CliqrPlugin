@@ -66,6 +66,7 @@ Sobald man /Stud.IP Cliqr/ ausgecheckt hat:
 
 #+BEGIN_SRC bash :dir /tmp :results silent
 git clone -q https://github.com/luniki/CliqrPlugin.git
+cd CliqrPlugin
 #+END_SRC
 
 muss [[https://getcomposer.org][Composer]], ein PHP Dependency Manager, installiert werden:

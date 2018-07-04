@@ -67,6 +67,7 @@ Um *Stud.IP Cliqr* selbst zu kompilieren, benötigt man:
 Sobald man *Stud.IP Cliqr* ausgecheckt hat:
 
     git clone -q https://github.com/luniki/CliqrPlugin.git
+    cd CliqrPlugin
 
 muss [Composer](https://getcomposer.org), ein PHP Dependency Manager, installiert werden:
 
