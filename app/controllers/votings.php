@@ -107,7 +107,7 @@ class VotingsController extends CliqrStudipController
             throw new \Trails_Exception(400, 'end must be an ISO 8601 date formatted string');
         }
 
-        $voting->end = $end;
+        $voting->end = strtotime($end);
 
         // TODO: validate model
         $voting->store();
