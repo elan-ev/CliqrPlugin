@@ -15,7 +15,6 @@ const TasksCreateView = Viewmaster.extend({
     $selectedType: null,
 
     events: {
-        'click .js-show-chooser': 'onClickShowChooser',
         'click .js-add-question': 'onClickAddQuestion'
     },
 
@@ -79,16 +78,11 @@ const TasksCreateView = Viewmaster.extend({
         Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true })
     },
 
-    onClickShowChooser(event) {
-        event.preventDefault()
-
-        this.render()
-    },
-
     onClickAddQuestion(event) {
         event.preventDefault()
 
         const id = Backbone.$(event.target).closest('.js-add-question').data('typeid')
+
         this.selectTypeCreator(id)
     }
 })

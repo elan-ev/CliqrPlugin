@@ -6,20 +6,17 @@
         </div>
     {{/if}}
 
-    <fieldset>
-        <legend>Multiple-Choice-Frage</legend>
-        <label>
-            Was möchten Sie fragen?
-            <div class="cliqr--mc-description"></div>
-        </label>
-        <label>
-            Titel der Frage (wird in Listendarstellungen verwendet)
-            <div class="cliqr--mc-title"></div>
-        </label>
-    </fieldset>
+    <label>
+        <span>Was möchten Sie fragen?</span>
+        <div class="cliqr--mc-description"></div>
+    </label>
+    <label>
+        <span>Titel der Frage</span> (wird in Listendarstellungen verwendet)
+        <div class="cliqr--mc-title"></div>
+    </label>
 
-    <fieldset>
-        <legend>Antwortmöglichkeiten</legend>
+    <label>
+        <span>Antwortmöglichkeiten</span>
 
         <div class="cliqr--mc-subtypes button-group">
             {{#each subtypes}}
@@ -31,40 +28,40 @@
                 {{/if}}
             {{/each}}
         </div>
+    </label>
 
-        <label>
-            Tragen Sie die Antworten ein
+    <label>
+        <span>Tragen Sie die Antworten ein</span>
 
-            <div class="choices">
-                {{#each task.task.answers}}
-                    <div class="choice-input">
-                        <span class="nominal">{{nominal @index}}</span>
+        <div class="choices">
+            {{#each task.task.answers}}
+                <div class="choice-input">
+                    <span class="nominal">{{nominal @index}}</span>
 
-                        <input
-                            class="choice no-hint" maxlength="100" type="text"
-                            name="answers[{{@index}}]"
-                            value="{{text}}" required>
+                    <input
+                        class="choice no-hint" maxlength="100" type="text"
+                        name="answers[{{@index}}]"
+                        value="{{text}}" required>
 
-                        <span class="cliqr--mc-choice-actions">
-                            {{fab "remove" "Entfernen" "trash"}}
-                            <!-- {{fab "upload" "Bild hochladen" "upload"}} -->
-                            <!-- {{fab "options" "Optionen" "tools"}} -->
-                        </span>
-                    </div>
-                {{/each}}
+                    <span class="cliqr--mc-choice-actions">
+                        {{fab "remove" "Entfernen" "trash"}}
+                        <!-- {{fab "upload" "Bild hochladen" "upload"}} -->
+                        <!-- {{fab "options" "Optionen" "tools"}} -->
+                    </span>
+                </div>
+            {{/each}}
 
-                {{button "add" "Antwort hinzufügen" icon="add" class="choice-add"}}
+            {{button "add" "Antwort hinzufügen" icon="add" class="choice-add"}}
 
-                {{#unless task.task.answers}}
-                    <div class="choices-required">
-                        <select required oninvalid="setCustomValidity('{{i18n "Mindestens eine Antwort wird benötigt."}}')"></select>
-                    </div>
-                {{/unless}}
-            </div>
-        </label>
-    </fieldset>
+            {{#unless task.task.answers}}
+                <div class="choices-required">
+                    <select required oninvalid="setCustomValidity('{{i18n "Mindestens eine Antwort wird benötigt."}}')"></select>
+                </div>
+            {{/unless}}
+        </div>
+    </label>
 
-    <fieldset class="collapsable collapsed">
+    <fieldset class="collapsable collapsed cliqr--multiple-choice-options">
         <legend>Optionen</legend>
 
         <label>

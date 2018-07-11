@@ -18,7 +18,7 @@ const hideLoading = function () {
 
 const userRole = (expected) => expected === window.cliqr.bootstrap.userRole
 
-const getContainer = (selector) => Backbone.$(selector || '#cliqr-container')
+const getContainer = (selector) => Backbone.$(selector || '#cliqr')
 
 const activateNavigation = function (selector = 'li:first-child') {
     Backbone.$('#sidebar-navigation ul.sidebar-navigation')

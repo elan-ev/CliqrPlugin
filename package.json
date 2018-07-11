@@ -6,7 +6,7 @@
   "scripts": {
     "build-dev": "webpack --config webpack.dev.js --mode development",
     "build-prod": "webpack --config webpack.prod.js --mode production",
-    "wds": "webpack-dev-server --progress --config webpack.dev.js --mode development",
+    "wds": "webpack-dev-server --progress --config webpack.wds.js --mode development",
     "zip": "zip -r cliqr.zip app assets CliqrPlugin.php config.php lib LICENSE migrations plugin.manifest README.md static vendor"
   },
   "devDependencies": {

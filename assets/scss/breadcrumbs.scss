@@ -1,0 +1,187 @@
+@charset "utf-8";
+
+$breadcrumb-item-color: #28497c !default;
+$breadcrumb-item-hover-color: #ffbd33 !default;
+
+$breadcrumb-item-padding-vertical: 0 !default;
+$breadcrumb-item-padding-horizontal: 0.75em !default;
+
+$breadcrumb-item-separator-color: #b5b5b5 !default;
+
+$size-normal: 1em;
+
+nav.cliqr--breadcrumb {
+  @include block;
+  @include unselectable;
+
+  padding: 1.5rem 0;
+
+  ul {
+      list-style: none;
+  }
+
+  ul, li {
+      margin: 0;
+      padding: 0;
+  }
+
+  font-size: $size-normal;
+  white-space: nowrap;
+
+  a {
+    align-items: center;
+    color: $breadcrumb-item-color;
+    display: flex;
+    justify-content: center;
+    padding: $breadcrumb-item-padding-vertical $breadcrumb-item-padding-horizontal;
+
+    &:hover {
+      color: $breadcrumb-item-hover-color;
+    }
+  }
+
+  li {
+    align-items: center;
+    display: flex;
+
+    &:first-child a {
+      padding-left: 0;
+    }
+
+    & + li::before {
+      color: $breadcrumb-item-separator-color;
+      content: "/";
+    }
+  }
+
+  ul {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .cliqr--icon {
+    &:first-child {
+      margin-right: 0.5em;
+    }
+
+    &:last-child {
+      margin-left: 0.5em;
+    }
+  }
+
+  // Styles
+  &.has-arrow-separator {
+    li + li::before {
+      content: "→";
+    }
+  }
+
+  &.has-bullet-separator {
+    li + li::before {
+      content: "•";
+    }
+  }
+
+  &.has-dot-separator {
+    li + li::before {
+      content: "·";
+    }
+  }
+
+  &.has-succeeds-separator {
+    li + li::before {
+      content: "≻";
+    }
+  }
+}
+
+
+/*
+nav.cliqr--breadcrumb {
+
+    overflow: hidden;
+    width: 100%;
+
+    ul {
+        display: inline-block;
+        font-size: 16px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        > li {
+            float: left;
+            margin-top: 10px;
+
+            a {
+                color: $breadcrumb-color;
+                display: block;
+                background: $breadcrumb-background;
+                position: relative;
+                height: 40px;
+                line-height: 40px;
+                padding: 0 10px 0 10px;
+                text-align: center;
+                margin-right: 23px;
+                transition: background-color .25s, margin .125s ease-in;
+
+                &:before, &:after {
+                    border: 0 solid $breadcrumb-background;
+                    border-width: 20px 10px;
+                    content: '';
+                    height: 0;
+                    position: absolute;
+                    top: 0;
+                    width: 0;
+                    transition: border-color .25s;
+                }
+
+                &:before {
+                    left: -20px;
+                    border-left-color: transparent !important;
+                }
+
+                &:after {
+                    left: 100%;
+                    border-color: transparent !important;
+                    border-left-color: $breadcrumb-background !important;
+                }
+
+                img:nth-of-type(2) {
+                    display: none;
+                }
+
+                &:hover {
+                    background-color: $breadcrumb-background-activity;
+                    color: $breadcrumb-color-activity;
+                    margin-left: 10px;
+                    margin-right: 35px;
+
+                    &:before {
+                        border-color: $breadcrumb-background-activity !important;
+                        border-left-color: transparent !important;
+                    }
+
+                    &:after {
+                        border-left-color: $breadcrumb-background-activity !important;
+                    }
+
+                    img:nth-of-type(1) {
+                        display: none;
+                    }
+
+                    img:nth-of-type(2) {
+                        display: inline;
+                    }
+                }
+            }
+
+            img {
+                vertical-align: text-bottom;
+            }
+        }
+    }
+}
+*/

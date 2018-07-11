@@ -4,6 +4,8 @@ import TextInputComponent from './component-text-input'
 import Viewmaster from '../../../views/viewmaster'
 import WysiwygComponent from './component-wysiwyg'
 
+import SwitchableComponent from './component-switchable'
+
 const decorateTask = function (model) {
     const task = { ...model.get('task') }
     task.lrange_max = task.hrange_value - 1
@@ -50,8 +52,16 @@ const FormView = Viewmaster.extend({
             key: 'description'
         })
 
+        const switchInput = new SwitchableComponent({
+            model: this.model,
+            key: 'description'
+        })
+
+
         this.setView('.cliqr--scales-title', titleInput)
         this.setView('.cliqr--scales-description', wysiwyg)
+
+        this.setView('.cliqr--scales-description', switchInput)
 
         this.listenTo(this.model, 'change:task', this.render)
         this.listenTo(this.model, 'invalid', () => this.render({ force: true }))

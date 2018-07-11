@@ -1,0 +1,15 @@
+img.cliqr--icon {
+    width: $button-icon-size;
+    height: $button-icon-size;
+    vertical-align: middle;
+}
+
+a > img.cliqr--icon {
+    margin-right: 0.25em;
+}
+
+h1 > img.cliqr--icon {
+    width: $button-icon-size-header;
+    height: $button-icon-size-header;
+    vertical-align: bottom;
+}

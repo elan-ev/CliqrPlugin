@@ -1,0 +1,44 @@
+article.cliqr--tasks-show {
+    lost-flex-container: row;
+
+
+    > nav {
+        width: 100%;
+    }
+
+    > main {
+        lost-column: 8/12 0 0;
+        padding-right: 30px;
+        box-sizing: border-box;
+    }
+
+    > aside {
+        lost-column: 4/12 0;
+        box-sizing: border-box;
+
+        ol.cliqr--votings-list {
+            padding: 0;
+            list-style: none;
+
+            li {
+                margin-bottom: 0.75em;
+                margin-left: 1em;
+            }
+
+            a {
+                display: block;
+                line-height: 2.5em;
+                white-space: nowrap;
+                font-size: 0.9em;
+            }
+
+            img {
+                margin-right: 0.5em;
+            }
+
+            .bubble {
+                margin-left: 0.75em;
+            }
+        }
+    }
+}

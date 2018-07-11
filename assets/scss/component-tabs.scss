@@ -1,0 +1,51 @@
+.tabs {
+    -webkit-overflow-scrolling: touch;
+    align-items: stretch;
+    display: flex;
+    font-size: 20px;
+    justify-content: space-between;
+    overflow: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    ul {
+        align-items: center;
+        border-bottom-color: #dbdbdb;
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 0;
+        justify-content: flex-start;
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        align-items: center;
+        border-bottom-color: #dbdbdb;
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        color: $color-accent;
+        display: flex;
+        justify-content: center;
+        margin-bottom: -1px;
+        padding: 0.5em 1em;
+        vertical-align: top;
+        cursor: pointer;
+    }
+
+    a:hover {
+        border-bottom-color: #363636;
+        color: #363636;
+    }
+
+    li {
+        display: block;
+    }
+
+    li.is-active a {
+        border-bottom-color: $color-accent;
+        color: $color-accent;
+    }
+}

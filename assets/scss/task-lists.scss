@@ -1,0 +1,45 @@
+.cliqr--task-list {
+    .cliqr--task-header {
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 40em;
+
+
+        > a {
+            line-height: 2.5em;
+            display: block;
+            font-weight: 800;
+            font-size: 1.1em;
+        }
+
+        .cliqr--task-last-assignment {
+            line-height: 2.5em;
+            margin-left: 1em;
+            margin-top: -0.8em;
+            font-style: italic;
+            font-size: 0.8em;
+
+            img {
+                height: 16px;
+            }
+        }
+
+        .cliqr--task-last-assignment-active a {
+            vertical-align: middle;
+            font-style: normal;
+            color: red;
+        }
+    }
+
+    .cliqr--task-actions {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .cliqr--task-list-empty {
+        font-size: 1.25em;
+        line-height: 2;
+        padding: 2em 1em;
+        text-align: center;
+    }
+}

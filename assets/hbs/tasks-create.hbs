@@ -1,23 +1,21 @@
 <header>
-    <h1>Frage hinzufügen</h1>
-    <p>Wählen Sie zunächst die Art der Frage:</p>
+    <h1>Neue Frage</h1>
 </header>
 
-<nav>
-    <ul class="task-types">
+<div class="tabs">
+    <ul>
+        <li>Art der Frage:</li>
         {{#each taskTypes as |type|}}
-            <li>
-                <button type="button" class="button cliqr--button  cliqr--button-with-icon js-add-question {{#if type.selected}}active{{/if}}"
-                        data-typeid="{{type.id}}">
+            <li{{#if type.selected}} class="is-active"{{/if}}>
+                <a class="js-add-question{{#if type.selected}} is-active{{/if}}"
+                   data-typeid="{{type.id}}">
                     <img class="cliqr--task-types-icon"
-                         src="{{../STUDIP.ASSETS_URL}}/images/icons/{{#if type.selected}}white{{else}}blue{{/if}}/{{type.icon}}.svg">
-                    <img class="cliqr--task-types-icon"
-                         src="{{../STUDIP.ASSETS_URL}}/images/icons/{{#if type.selected}}blue{{else}}white{{/if}}/{{type.icon}}.svg">
+                         src="{{../STUDIP.ASSETS_URL}}/images/icons/blue/{{type.icon}}.svg">
                     {{name}}
-                </button>
+                </a>
             </li>
         {{/each}}
     </ul>
-</nav>
+</div>
 
 <main></main>

@@ -1,17 +1,15 @@
 <nav class="cliqr--breadcrumb">
-    <ol>
+    <ul>
         <li>
             <a href="#task-groups">
-              {{icon "folder-parent" color="white"}}
-              {{icon "folder-parent" color="black"}}
+              {{icon "folder-parent" color="blue"}}
               Fragensammlungen
             </a>
         </li>
         {{#if task_group_id}}
             <li>
                 <a href="#task-groups/show/{{task_group_id}}">
-                    {{icon "folder-full" color="white"}}
-                    {{icon "folder-full" color="black"}}
+                    {{icon "folder-full" color="blue"}}
                     Fragensammlung &laquo;{{shorten task_group_title 40}}&raquo;
                 </a>
             </li>
@@ -20,11 +18,10 @@
         {{#if task_id}}
             <li>
                 <a href="#task/show/{{task_id}}">
-                    {{icon "assessment" color="white"}}
-                    {{icon "assessment" color="black"}}
+                    {{icon "assessment" color="blue"}}
                     Frage {{#if task_title}} &laquo;{{shorten task_title 40}}&raquo; {{/if}}
                 </a>
             </li>
         {{/if}}
-    </ol>
+    </ul>
 </nav>

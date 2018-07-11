@@ -1,0 +1,32 @@
+table.task-groups {
+    tbody {
+        tr {
+            line-height: 3em;
+            font-size: 1.1em;
+        }
+
+        td {
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 40em;
+        }
+
+        td:last-child {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        td.cliqr--empty {
+            text-align: left;
+        }
+
+        a {
+            line-height: 3em;
+            display: block;
+
+            &.cliqr--task-group-title {
+                font-weight: 800;
+            }
+        }
+    }
+}

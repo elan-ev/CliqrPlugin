@@ -35,4 +35,4 @@ class StudIPCliqrApp {
     }
 }
 
-const app = new StudIPCliqrApp('#cliqr-container')
+const app = new StudIPCliqrApp('#cliqr')

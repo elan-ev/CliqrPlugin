@@ -1,3 +1,6 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
 $chartColor1: #a9b6cb;
 $chartColor2: #28497c;
 $color-activity80: #ffbd33;
@@ -5,178 +8,231 @@ $color-activity100: #f26e00;
 
 $color-detail: #000;
 
-#cliqr-container,
 #cliqr-poll-container {
-
-  .cliqr--votings-compare .cliqr--scales-assignment-view h1 {
-    display: none;
-  }
-
-  .cliqr--scales-assignment-view {
-
-    .cliqr--scales-description {
-      font-weight: 400;
-      font-size: 2.75em;
-    }
-
-    .cliqr--scales-statements {
-      margin-top: 1em;
-
-      li {
-        font-size: 2em;
-        line-height: 2;
-        padding-bottom: 1em;
-      }
-    }
-
-    svg {
-
-      .bar {
-        fill: $color-activity80;
-
-        text {
-          fill: black;
+    .cliqr--scales-poll-view {
+        .description {
+            font-size: 2em;
         }
-      }
 
-      line.center {
-        stroke: black;
-        stroke-width: 2px;
-        stroke-dasharray: 3,3;
-      }
-
-      line.median {
-        stroke: black;
-        stroke-width: 2px;
-      }
-
-      line.whisker {
-        stroke: black;
-        stroke-width: 1px;
-      }
-
-      rect.box {
-        fill: white;
-        stroke: black;
-        stroke-width: 1px;
-      }
-
-      text.box {
-        font-size: 10px;
-      }
-    }
-  }
-
-
-  .cliqr--scales-show-view {
-
-    .cliqr--scales-description {
-      font-weight: 400;
-      font-size: 2.75em;
-    }
-
-    .cliqr--scales-statements {
-      margin-top: 1em;
-
-      li {
-        font-size: 2em;
-        line-height: 2;
-      }
-    }
-  }
-
-  .cliqr--scales-create-view,
-  .cliqr--scales-edit-view {
-
-    .choices {
-
-      input {
-        width: 500px;
-        margin-bottom: 5px;
-        padding: 4px 6px;
-        border: 1px solid #CCCCCC;
-        box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.024);
-      }
-
-      .choice-input  + .choice-input {
-        margin-top: 0.5em;
-      }
-
-      .choice-input input {
-        display: inline-block;
-      }
-
-      .cliqr--scales-choice-actions {
-        margin-left: 8px;
-      }
-
-      .choices-required {
-        position: relative;
-
-        select {
-          position: absolute;
-          left: 0;
-          top: -25px;
-          z-index: -1;
-          border: none;
+        li {
+            padding: 0;
         }
-      }
-    }
 
-    .cliqr--scales-range {
-      > div {
-        span {
-          display: inline-block;
-          min-width: 8em;
-          line-height: 3em;
+        label {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            margin: 0;
         }
-        input {
-          display: inline;
-          vertical-align: baseline;
-          width: auto;
 
-          &::placeholder {
-            color: #888;
-          }
+        .rangeslider__ruler {
+            cursor: pointer;
+            font-size: 0.7em;
+
+            margin: 30px 3px 0 3px;
+            position: relative;
+            top: -20px;
+
+            display: flex;
+            justify-content: space-between;
         }
-      }
+
+        output {
+            width: 100%;
+            text-align: center;
+        }
     }
-  }
+}
 
-  .cliqr--scales-poll-view {
-
-    .description {
-      font-size: 2em;
-    }
-
-    li {
-      padding: 0;
-    }
-
-    label {
-      display: block;
-      padding: .75rem 1.25rem;
-      margin: 0;
+#cliqr {
+    .cliqr--votings-compare .cliqr--scales-assignment-view h1 {
+        display: none;
     }
 
-    .rangeslider__ruler {
-      cursor: pointer;
-      font-size: .7em;
+    .cliqr--scales-assignment-view {
+        .cliqr--scales-description {
+            font-weight: 400;
+            font-size: 2.75em;
+        }
 
-      margin: 30px 3px 0 3px;
-      position: relative;
-      top: -20px;
+        .cliqr--scales-statements {
+            margin-top: 1em;
 
-      display: flex;
-      justify-content: space-between;
+            li {
+                font-size: 2em;
+                line-height: 2;
+                padding-bottom: 1em;
+            }
+        }
+
+        svg {
+            .bar {
+                fill: $color-activity80;
+
+                text {
+                    fill: black;
+                }
+            }
+
+            line.center {
+                stroke: black;
+                stroke-width: 2px;
+                stroke-dasharray: 3, 3;
+            }
+
+            line.median {
+                stroke: black;
+                stroke-width: 2px;
+            }
+
+            line.whisker {
+                stroke: black;
+                stroke-width: 1px;
+            }
+
+            rect.box {
+                fill: white;
+                stroke: black;
+                stroke-width: 1px;
+            }
+
+            text.box {
+                font-size: 10px;
+            }
+        }
     }
 
-    output {
-      width: 100%;
-      text-align: center;
+    .cliqr--scales-show-view {
+        .cliqr--scales-description {
+            font-weight: 400;
+            font-size: 2.75em;
+        }
+
+        .cliqr--scales-statements {
+            margin-top: 1em;
+
+            li {
+                font-size: 2em;
+                line-height: 2;
+            }
+        }
     }
 
-    .text {
+    .cliqr--scales-create-view,
+    .cliqr--scales-edit-view {
+        @include desktop {
+            display: flex;
+        }
+
+        .card {
+            max-width: 48em;
+            margin-left: 0.5em;
+            margin-right: 0.5em;
+            align-self: flex-start;
+            display: none;
+
+            @include tablet {
+                display: block;
+            }
+
+            @include desktop {
+                flex-basis: 300px;
+                order: 2;
+                margin-left: 2em;
+            }
+        }
+
+        form {
+            flex: 0 1 48em;
+
+            label > span {
+                font-weight: 700;
+                display: block;
+                margin-top: 1.5em;
+                margin-bottom: 0.5em;
+            }
+
+            @include desktop {
+                label:first-child > span {
+                    margin-top: 0;
+                }
+            }
+
+            footer {
+                margin-top: 1.5em;
+            }
+        }
+
+        .choices {
+            margin-bottom: 1.5em;
+
+            input {
+                margin-bottom: 5px;
+                padding: 4px 6px;
+                border: 1px solid #cccccc;
+                box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.024);
+            }
+
+            .choice-input {
+                display: flex;
+                margin-top: 0.75em;
+
+                input {
+                    display: inline-block;
+                    margin: 0;
+                }
+            }
+
+            .cliqr--scales-choice-actions {
+                margin-left: 8px;
+            }
+
+            .choices-required {
+                position: relative;
+
+                select {
+                    position: absolute;
+                    left: 0;
+                    top: -25px;
+                    z-index: -1;
+                    border: none;
+                }
+            }
+        }
+
+        .cliqr--scales-range {
+            > div {
+                display: flex;
+
+                span {
+                    display: inline-block;
+                    min-width: 5em;
+                    line-height: 3em;
+                }
+
+                input {
+                    display: inline;
+                    vertical-align: baseline;
+                    width: auto;
+                    margin: 0;
+
+                    &::placeholder {
+                        color: #888;
+                    }
+
+                    &[type='number'] {
+                        max-width: 6em;
+                    }
+                    &[type='text'] {
+                        flex-grow: 2;
+                    }
+                }
+            }
+        }
     }
-  }
+
+    .cliqr--component-switchable {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }

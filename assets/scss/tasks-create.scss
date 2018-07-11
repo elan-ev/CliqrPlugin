@@ -1,0 +1,32 @@
+.cliqr--tasks-create {
+    .tabs {
+
+        @include tablet {
+            padding-bottom: 1.5em;
+        }
+
+        ul {
+            flex-wrap: wrap;
+        }
+
+        li:first-child {
+            flex-basis: 100%;
+        }
+
+        a {
+            padding: 0.5em;
+            color:
+        }
+    }
+}
+
+@include desktop {
+    .cliqr--tasks-create .tabs li:first-child {
+        flex-basis: auto;
+    }
+}
+
+.tabs .cliqr--task-types-icon {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}

@@ -1,0 +1,46 @@
+@at-root {
+    .cliqr--dialog {
+        fieldset {
+            border: none;
+            padding-top: 1.5em;
+            padding-bottom: 1.5em;
+        }
+
+        legend {
+            padding: 1.5em 0 0 0;
+            font-size: 1.5em;
+        }
+
+        .cliqr--upload-box {
+            text-align: center;
+            font-size: 1.25rem;
+            background-color: #eee;
+            padding: 0;
+            position: relative;
+            display: block;
+            padding: 50px 20px;
+            outline: 2px dashed $color-accent;
+            outline-offset: -10px;
+
+            &:hover {
+                outline: 2px dashed red;
+            }
+
+            img {
+                width: 100%;
+                height: 60px;
+                display: block;
+                margin-bottom: 40px;
+            }
+
+            input[type=file] {
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
+        }
+    }
+}

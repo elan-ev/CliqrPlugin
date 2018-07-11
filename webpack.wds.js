@@ -4,6 +4,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
+    mode: 'development',
+    devtool: 'inline-source-map',
+    devServer: {
+        contentBase: './assets/js',
+        compress: true,
+        port: 8081,
+        historyApiFallback: true,
+        https: true
+    },
     context: path.join(__dirname, './assets/js'),
     entry: {
         'studip-cliqr': './studip-app.js',
@@ -12,15 +21,15 @@ module.exports = {
     output: {
         path: path.join(__dirname, './static'),
         chunkFilename: '[name].chunk.js',
-        filename: '[name].js'
+        filename: '[name].js',
+        publicPath: 'https://localhost:8081/'
     },
     module: {
         rules: [
             {
                 test: /assets\/scss\/.+\.scss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
-                    //{ loader: 'style-loader' },
+                    { loader: 'style-loader' },
                     {
                         loader: 'css-loader',
                         options: {
@@ -34,7 +43,6 @@ module.exports = {
             {
                 test: /assets\/js\/.+\.scss$/,
                 use: [
-                    // MiniCssExtractPlugin.loader,
                     { loader: 'style-loader' },
                     {
                         loader: 'css-loader',
@@ -75,19 +83,6 @@ module.exports = {
                 handlebarsLoader: {
                     partialDirs: path.join(__dirname, './assets/hbs'),
                     helperDirs: [path.join(__dirname, './assets/js/helpers')]
-                }
-            }
-        }),
-        new MiniCssExtractPlugin({
-            // Options similar to the same options in webpackOptions.output
-            // both options are optional
-            filename: '[name].css',
-            chunkFilename: '[id].css'
-        }),
-        new OptimizeCSSAssetsPlugin({
-            cssProcessorOptions: {
-                discardComments: {
-                    removeAll: true
                 }
             }
         })
