@@ -1,12 +1,11 @@
 @import "../../../scss/variables.scss";
 @import "../../../scss/mixins.scss";
 
-$chartColor1: #a9b6cb;
-$chartColor2: #28497c;
-$color-activity80: #ffbd33;
-$color-activity100: #f26e00;
+$color-activity80: $studip-yellow;
+$color-activity100: $studip-orange;
 
-$color-detail: #000;
+$color-detail: $studip-black;
+$color-diminished: #999999;
 
 #cliqr-poll-container {
     .cliqr--scales-poll-view {
@@ -44,25 +43,51 @@ $color-detail: #000;
 }
 
 #cliqr {
-    .cliqr--votings-compare .cliqr--scales-assignment-view h1 {
-        display: none;
-    }
-
+    .cliqr--scales-show-view,
     .cliqr--scales-assignment-view {
         .cliqr--scales-description {
-            font-weight: 400;
-            font-size: 2.75em;
+            @include tablet {
+                font-size: $size-medium;
+            }
+
+            @include desktop {
+            }
+
+            @include widescreen {
+                font-size: $size-large;
+            }
+
+            @include fullhd {
+                font-size: $size-huge;
+            }
+        }
+
+        .cliqr--scales-slider {
+            margin: 1em;
         }
 
         .cliqr--scales-statements {
             margin-top: 1em;
+            padding-left: 0;
+            list-style-type: none;
 
             li {
                 font-size: 2em;
                 line-height: 2;
-                padding-bottom: 1em;
+                padding: .25em 0;
+                border-bottom: 2px solid $border;
             }
         }
+
+        .nominal {
+            color: $color-diminished;
+            width: 1em;
+        }
+
+        .text {
+            padding-left: 0.75em;
+        }
+
 
         svg {
             .bar {
@@ -97,22 +122,6 @@ $color-detail: #000;
 
             text.box {
                 font-size: 10px;
-            }
-        }
-    }
-
-    .cliqr--scales-show-view {
-        .cliqr--scales-description {
-            font-weight: 400;
-            font-size: 2.75em;
-        }
-
-        .cliqr--scales-statements {
-            margin-top: 1em;
-
-            li {
-                font-size: 2em;
-                line-height: 2;
             }
         }
     }

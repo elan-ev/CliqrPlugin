@@ -11,7 +11,7 @@ const decorateContext = function (response, voting) {
         voting: _.omit(voting.toJSON(), 'task'),
         task: {
             ...task.toJSON(),
-            initialValue: lrange_value + Math.floor((hrange_value - lrange_value) / 2)
+            initialValue: Math.floor((hrange_value + lrange_value) / 2)
         },
         statements
     }

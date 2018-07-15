@@ -64,7 +64,7 @@ const AssignmentView =  Viewmaster.extend({
         this.listenTo(this.voting, 'change', this.render)
     },
 
-    template: require('../hbs/multiple-choice-assignment.hbs'),
+    template: require('../hbs/assignment.hbs'),
 
     context() {
         return decorateTask(this.model, this.voting)

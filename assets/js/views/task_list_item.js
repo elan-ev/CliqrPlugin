@@ -4,6 +4,7 @@ import showError from '../error'
 import Viewmaster from './viewmaster'
 import { showConfirmDialog } from '../dialog'
 import Voting from '../models/voting'
+import task_types from '../models/task_types'
 
 const TaskListItemView = Viewmaster.extend({
 
@@ -28,9 +29,11 @@ const TaskListItemView = Viewmaster.extend({
 
     context() {
         const votings = this.model.getVotings()
+        const icon = task_types.get(this.model.get('type')).get('icon')
 
         return {
             ...this.model.toJSON(),
+            icon,
             votings_count: votings.length,
             last_voting: votings.length ? votings.last().toJSON() : null,
             state: this.model.getCurrentState()

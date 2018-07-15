@@ -45,6 +45,15 @@ const AssignmentView = Viewmaster.extend({
 
         const views = this.getViews('.cliqr--scales-statements')
         views && _.invoke(views, 'postRender')
+
+        const { lrange_value, hrange_value } = this.model.get('task')
+        const value = Math.floor(0.382 * (hrange_value + lrange_value))
+
+        this.$('.cliqr--scales-slider').slider({
+            min: lrange_value,
+            max: hrange_value,
+            value
+        })
     }
 })
 

@@ -16,8 +16,7 @@ const TasksShowView = Viewmaster.extend({
 
     events: {
         'click .js-start': 'onClickStart',
-        'click .js-stop': 'onClickStop',
-        'click .js-copy-edit': 'onClickCopyEdit'
+        'click .js-stop': 'onClickStop'
     },
 
     taskType: null,
@@ -50,7 +49,6 @@ const TasksShowView = Viewmaster.extend({
         return {
             task,
             state: this.model.getCurrentState(),
-            editable: !votings.any((v) => v.get('responses_count')),
             votings: votings.map(function (v) {
                 return {
                     ...v.toJSON(),
@@ -89,22 +87,6 @@ const TasksShowView = Viewmaster.extend({
             .catch(response => {
                 showError('Could not stop voting', response)
             })
-    },
-
-    onClickCopyEdit() {
-        showConfirmDialog(
-            "Diese Frage kann nicht mehr geändert werden, da sie schon beantwortet wurde.\nWollen Sie eine Kopie dieser Frage erstellen und bearbeiten?",
-            () => {
-                this.model.duplicate()
-                    .then(task => {
-                        Backbone.history.navigate(`task/edit/${task.id}`, { trigger: true })
-                        return null
-                    })
-                    .catch(error => {
-                        showError('Error while copying task', error)
-                    })
-            }
-        )
     }
 })
 

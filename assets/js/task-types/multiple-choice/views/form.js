@@ -59,7 +59,7 @@ const FormView = Viewmaster.extend({
         this.listenTo(this.model, 'invalid', () => this.render({ force: true }))
     },
 
-    template: require('../hbs/multiple-choice-form.hbs'),
+    template: require('../hbs/form.hbs'),
 
     context() {
         return {

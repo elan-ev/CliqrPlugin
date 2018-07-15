@@ -1,10 +1,11 @@
-import Backbone from 'backbone'
 import _ from 'underscore'
+import Viewmaster from '../../../views/viewmaster'
+import TaskEditComponent from '../../../views/component-task-edit'
 
 const decorateTask = function (task) {
     const id = task.get('id')
     return {
-        ...task.toJSON(),
+        task: task.toJSON(),
         answers: _.map(task.get('task').answers,
                        function (nsr, i) {
                            return {
@@ -16,16 +17,25 @@ const decorateTask = function (task) {
     }
 }
 
-const ShowView = Backbone.View.extend({
+const ShowView = Viewmaster.extend({
 
     tagName: 'section',
-
     className: 'cliqr--multiple-choice-show-view',
 
-    render() {
-        const template = require('../hbs/multiple-choice-show.hbs')
-        this.$el.html(template(decorateTask(this.model)))
-        return this
+    initialize() {
+        Viewmaster.prototype.initialize.call(this)
+
+        const edit = new TaskEditComponent({
+            model: this.model
+        })
+
+        this.setView('.contentbox header', edit)
+    },
+
+    template: require('../hbs/show.hbs'),
+
+    context() {
+        return decorateTask(this.model)
     },
 
     postRender() {

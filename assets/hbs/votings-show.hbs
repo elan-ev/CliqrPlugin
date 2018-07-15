@@ -1,4 +1,22 @@
 {{#user_role "lecturer"}}
+    <header class="cliqr--page-header">
+        {{> breadcrumb breadcrumb}}
+    </header>
+{{else}}
+    <header class="cliqr--page-header">
+        <nav class="cliqr--breadcrumb">
+            <ul>
+                <li>
+                    <a href="#archive">
+                        Beendete Abstimmungen
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+{{/user_role}}
+
+{{#user_role "lecturer"}}
     {{#if isRunning}}
         <nav class="cliqr--voting-is-running">
 
@@ -20,24 +38,6 @@
             </div>
         </nav>
     {{/if}}
-{{/user_role}}
-
-{{#user_role "lecturer"}}
-    <header class="cliqr--page-header">
-        {{> breadcrumb breadcrumb}}
-    </header>
-{{else}}
-    <header class="cliqr--page-header">
-        <nav class="cliqr--breadcrumb">
-            <ol>
-                <li>
-                    <a href="#archive">
-                        Beendete Abstimmungen
-                    </a>
-                </li>
-            </ol>
-        </nav>
-    </header>
 {{/user_role}}
 
 <main></main>

@@ -1,37 +1,34 @@
 article.cliqr--tasks-show {
-    lost-flex-container: row;
 
+    display: flex;
+    flex-wrap: wrap;
 
-    > nav {
+    > header {
         width: 100%;
+        flex-basis: 100%;
     }
 
     > main {
-        lost-column: 8/12 0 0;
+        flex: 3 1 auto;
         padding-right: 30px;
+        padding-bottom: 2em;
+        margin-bottom: 2em;
         box-sizing: border-box;
     }
 
     > aside {
-        lost-column: 4/12 0;
+        flex: 1 0 content;
         box-sizing: border-box;
 
-        ol.cliqr--votings-list {
-            padding: 0;
-            list-style: none;
+        .button {
+            border-color: $studip-content-color-40;
+        }
 
-            li {
-                margin-bottom: 0.75em;
-                margin-left: 1em;
-            }
+        > .button:first-child {
+            margin-top: 0;
+        }
 
-            a {
-                display: block;
-                line-height: 2.5em;
-                white-space: nowrap;
-                font-size: 0.9em;
-            }
-
+        .cliqr--votings-list-item {
             img {
                 margin-right: 0.5em;
             }

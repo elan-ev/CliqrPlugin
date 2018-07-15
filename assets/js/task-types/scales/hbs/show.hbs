@@ -1,9 +1,12 @@
-{{> ./_scales_header header="Frage:"}}
+{{> ./_scales_header header="Skalen-Frage:"}}
 
 <main>
-    <ol class="cliqr--scales-statements">
+    <ul class="cliqr--scales-statements">
         {{#each task.statements}}
-            <li class="text"> {{text}} </li>
+            <li>
+                <span class="nominal"> Aussage {{nominal @index}}: </span>
+                <span class="text"> {{text}} </span>
+            </li>
         {{/each}}
-    </ol>
+    </ul>
 </main>

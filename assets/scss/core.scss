@@ -7,6 +7,10 @@
   position: relative;
 }
 
+section.contentbox header {
+    align-items: center;
+}
+
 @import "fullscreen.scss";
 @import "loader.scss";
 
@@ -28,6 +32,11 @@
     @import "page-headers.scss";
     @import "task-groups.scss";
     @import "dialogs.scss";
+
+    @import "content.scss";
+    @import "panel.scss";
+
+
     @import "task-lists.scss";
     @import "tasks-create.scss";
     @import "votings-compare.scss";

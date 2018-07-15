@@ -29,7 +29,7 @@ const PollView = Viewmaster.extend({
         this.voting = options.voting
     },
 
-    template: require('../hbs/multiple-choice-poll.hbs'),
+    template: require('../hbs/poll.hbs'),
 
     context() {
         return decorateContext(this.model, this.voting)

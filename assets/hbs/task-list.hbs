@@ -4,17 +4,13 @@
             <th></th>
             <th> Titel </th>
             <th> letzte Änderung </th>
-            <th class="cliqr--task-actions">
-                <a href="#task/create/{{taskGroup.id}}">
-                    {{button "createTask" "Frage erstellen" icon="add/assessment" class="cliqr--button-important" color="red"}}
-                </a>
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {{#unless tasks}}
           <tr>
-            <td colspan="5" class="cliqr--task-list-empty">
+            <td colspan="4" class="cliqr--task-list-empty">
                 <p>
                     Sie haben derzeit noch keine Fragen.
                 </p>

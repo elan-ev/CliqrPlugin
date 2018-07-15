@@ -7,8 +7,6 @@ module.exports = merge(common, {
     output: {
         publicPath: 'https://localhost:8081/'
     },
-    optimization: {
-    },
     devServer: {
         contentBase: './assets/js',
         compress: true,

@@ -1,21 +1,26 @@
-<header>
-    <h1>{{header}}</h1>
-    <div class="cliqr--scales-description">{{{description_html}}}</div>
+<section class="contentbox">
+    <header>
+        <h4>{{header}} {{#if title}}{{title}}{{/if}}</h4>
+    </header>
+    <section class="cliqr--scales-description cliqr--content">{{{description_html}}}</section>
+    <section>
+        {{#with task}}
+            <div class="cliqr--scales-range">
 
-    {{#with task}}
-        <div class="cliqr--scales-range">
+                auf einer Skala von
 
-            auf einer Skala von
+                <span class="cliqr--scales-label">
+                    {{#if lrange_label}} {{lrange_value}} ({{lrange_label}}) {{else}} {{lrange_value}} {{/if}}
+                </span>
 
-            <span class="cliqr--scales-label">
-                {{#if lrange_label}} {{lrange_value}} ({{lrange_label}}) {{else}} {{lrange_value}} {{/if}}
-            </span>
+                bis
 
-            bis
+                <span class="cliqr--scales-label">
+                    {{#if hrange_label}} {{hrange_value}} ({{hrange_label}}) {{else}} {{hrange_value}} {{/if}}
+                </span>
 
-            <span class="cliqr--scales-label">
-                {{#if hrange_label}} {{hrange_value}} ({{hrange_label}}) {{else}} {{hrange_value}} {{/if}}
-            </span>
-        </div>
-    {{/with}}
-</header>
+                <div class="cliqr--scales-slider"></div>
+            </div>
+        {{/with}}
+    </section>
+</section>

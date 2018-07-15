@@ -1,6 +1,45 @@
-$color-accent: #28497c !default;
-$color-accent-contrast: #ffffff !default;
-$color-activity: #ffbd33 !default;
+$studip-font-size-base: 14px;
+$studip-line-height-base: 20px;
+
+$studip-text-color: #000 !default;
+$studip-base-color: #28497c !default;
+$studip-base-gray: #3c454e !default;
+
+$studip-brand-color-dark: #28497c !default;
+$studip-brand-color-darker: #1f3f70 !default;
+
+$studip-brand-color-light: #36598f !default;
+$studip-brand-color-lighter: #899ab9 !default;
+
+$studip-base-color-80: color-mod($studip-base-color tint(20%));
+$studip-base-color-60: color-mod($studip-base-color tint(40%));
+$studip-base-color-40: color-mod($studip-base-color tint(60%));
+$studip-base-color-20: color-mod($studip-base-color tint(80%));
+
+$studip-content-color: $studip-brand-color-lighter;
+$studip-content-color-80: color-mod($studip-content-color tint(20%));
+$studip-content-color-60: color-mod($studip-content-color tint(40%));
+$studip-content-color-40: color-mod($studip-content-color tint(60%));
+$studip-content-color-20: color-mod($studip-content-color tint(80%));
+$studip-content-color-10: color-mod($studip-content-color tint(90%));
+
+
+$studip-black: #000000 !default;
+$studip-white: #ffffff !default;
+$studip-yellow: #ffbd33 !default;
+$studip-orange: #f26e00 !default;
+$studip-red: #d60000 !default;
+$studip-violet: #b02e7c !default;
+$studip-dark-violet: #682c8b !default;
+$studip-green: #6ead10 !default;
+$studip-dark-green: #008512 !default;
+$studip-petrol: #129c94 !default;
+$studip-brown: #a85d45 !default;
+
+
+$color-accent: $studip-base-color !default;
+$color-accent-contrast: $studip-white !default;
+$color-activity: $studip-yellow !default;
 
 $studip-button-height: 28px;
 $button-size: 44px;
@@ -8,21 +47,21 @@ $button-icon-size: 16px;
 $button-icon-size-header: 32px;
 
 $bubble-font-size: 12px !default;
-$bubble-color: #ffffff !default;
-$bubble-background: #28497c !default;
+$bubble-color: $studip-white !default;
+$bubble-background: $studip-base-color !default;
 $bubble-min-size : 12px !default;
 $bubble-padding: 3px 7px !default;
 
-$baseFontSize: 14px !default;
-$baseLineHeight: 20px !default;
+$baseFontSize: $studip-font-size-base !default;
+$baseLineHeight: $studip-line-height-base !default;
 
 $headingsFontWeight: 300 !default;
 
-$breadcrumb-background: #899ab9;
-$breadcrumb-background-activity: #ffbd33;
+$breadcrumb-background: $studip-brand-color-lighter;
+$breadcrumb-background-activity: $studip-yellow;
 
-$breadcrumb-color: #ffffff;
-$breadcrumb-color-activity: #000000;
+$breadcrumb-color: $studip-white;
+$breadcrumb-color-activity: $studip-black;
 
 /* The container horizontal gap, which acts as the offset for breakpoints */
 $gap: 32px !default;
@@ -38,3 +77,37 @@ $widescreen: calc(1152px + 2 * $gap) !default;
 
 /* 1344px container + 4rem */
 $fullhd: calc(1344px + 2 * $gap) !default;
+
+
+$size-1: 3em !default;
+$size-2: 2.5em !default;
+$size-3: 2em !default;
+$size-4: 1.5em !default;
+$size-5: 1.25em !default;
+$size-6: 1em !default;
+$size-7: 0.75em !default;
+
+$size-small: $size-7 !default;
+$size-normal: $size-6 !default;
+$size-medium: $size-5 !default;
+$size-large: $size-4 !default;
+$size-huge: $size-2 !default;
+
+
+$grey: $studip-black !default;
+$grey-dark: $studip-black !default;
+$grey-darker: $studip-black !default;
+
+$text: $grey-dark !default;
+$text-light: $grey !default;
+$text-strong: $grey-darker !default;
+
+$link: $studip-base-color !default;
+$weight-normal: 400;
+$weight-light: 300;
+$background: $studip-content-color-20 !default;
+$border: $studip-content-color-40 !default;
+$radius: 0px;
+
+$link-active-border: $studip-brand-color-dark;
+$link-active: $studip-brand-color-dark;

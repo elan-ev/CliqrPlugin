@@ -5,48 +5,53 @@
 <main></main>
 
 <aside class="votings">
-  {{#if editable}}
-      {{linkbutton (concat "#task/edit/" task.id) "Frage bearbeiten" icon="edit"}}
-  {{else}}
-      {{button "copy-edit" "Frage bearbeiten" icon="exclaim-circle" color="red"}}
-  {{/if}}
-
     {{#unless votings}}
-        {{button "start" "Abstimmung starten" icon="play" once=true}}
+        <nav class="panel">
+            <p class="panel-heading">
+                Abstimmungen:
+            </p>
+            <div class="panel-block">
+                Die Frage wurde noch nie gestartet.
+            </div>
+            <div class="panel-block">
+                {{button "start" "Abstimmung starten" icon="play" once=true color="red" class="control"}}
+            </div>
+        </nav>
     {{/unless}}
 
+
     {{#if votings}}
-        <h2>
-            Abstimmungen:
-        </h2>
+        <nav class="panel">
+            <p class="panel-heading">
+                Abstimmungen:
+            </p>
 
-        <nav>
-          {{#unless_state 'is_active'}}
-              {{button "start" "Abstimmung starten" icon="play" once=true}}
-          {{else}}
-              {{button "stop" "Abstimmung beenden" icon="pause" once=true color="red"}}
-          {{/unless_state}}
-        </nav>
+            <div class="panel-block">
+                {{#unless_state 'is_active'}}
+                    {{button "start" "Abstimmung starten" icon="play" once=true  color="red" class="control"}}
+    {{else}}
+                    {{button "stop" "Abstimmung beenden" icon="pause" once=true color="red" class="control"}}
+                {{/unless_state}}
+            </div>
 
-        <ol class="cliqr--votings-list">
+
             {{#each votings}}
-                <li>
-                    <a href="#voting/{{id}}">
-                        {{#if running}}
-                            <span>
-                                {{icon 'play' color='red'}}
-                            </span>
-                            {{moment start label="läuft gerade"}}
-                        {{else}}
-                            <span>
-                                {{icon 'vote'}}
-                            </span>
-                            {{moment start}}
-                        {{/if}}
-                        <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
-                    </a>
-                </li>
+                <a class="panel-block cliqr--votings-list-item" href="#voting/{{id}}">
+                    {{#if running}}
+                        <span class="panel-icon">
+                            {{icon 'play' color='red'}}
+                        </span>
+                        {{moment start label="läuft gerade"}}
+                    {{else}}
+                        <span class="panel-icon">
+                            {{icon 'vote'}}
+                        </span>
+                        {{moment start}}
+                    {{/if}}
+
+                    <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
+                </a>
             {{/each}}
-        </ol>
+        </nav>
     {{/if}}
 </aside>
