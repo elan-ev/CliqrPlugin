@@ -30,7 +30,7 @@ $color-diminished: #999999;
 
     .cliqr--multiple-choice-show-view,
     .cliqr--multiple-choice-assignment-view {
-        table {
+        table.cliqr--multiple-choice-answers {
             font-size: 2em;
             line-height: 1.5;
             overflow: hidden;
