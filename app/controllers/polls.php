@@ -34,6 +34,7 @@ class PollsController extends CliqrStudipController
     {
         $this->json = ['polls' => $this->getPollsJSON($cid)];
         $this->cid = $cid;
+        $this->course = \Course::find($cid);
     }
 
     private function getPollsJSON($cid)
