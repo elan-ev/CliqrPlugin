@@ -1,23 +1,31 @@
-<nav class="navbar navbar-static-top navbar-dark bg-inverse">
-    <a class="navbar-brand" href="#"> Stud.IP &ndash; Cliqr </a>
-
-    <span class="pull-xs-right bg-primary">
-        {{fab "refresh" "Neu laden" "refresh" class="btn btn-secondary btn-sm"}}
-    </span>
-</nav>
-
-<main></main>
-
-{{#unless hasFresh}}
-    <div class="card">
-        <div class="card-block">
-            <h4 class="card-title">Keine weiteren Fragen</h4>
-        </div>
-
-        <!-- <img src="..." alt="Card image"> -->
-
-        <div class="card-block">
-            {{button "refresh" "Neu laden" class="btn btn-primary"}}
+<nav class="navbar is-link" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item is-size-3-tablet is-size-4" href="#">
+            Stud.IP &ndash; Cliqr
+        </a>
+        <div class="navbar-item is-expanded" style="justify-content: right;">
+            {{#if hasFresh}}
+                <button type="button" class="button btn-info js-refresh">Neu laden</button>
+            {{/if}}
         </div>
     </div>
+</nav>
+
+<section class="container">
+    <main></main>
+</section>
+
+{{#unless hasFresh}}
+    <section class="hero is-info is-large">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Keine weiteren Fragen
+                </h1>
+                <h2 class="subtitle">
+                    Laden Sie die Seite neu, sobald eine neue Abstimmung gestartet wurde.                    </h2>
+                <button type="button" class="button js-refresh is-large is-fullwidth">Neu laden</button>
+            </div>
+        </div>
+    </section>
 {{/unless}}

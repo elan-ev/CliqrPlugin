@@ -1,29 +1,31 @@
 article.cliqr--votings-show {
-    lost-flex-container: row;
 
-    > header {
-        lost-column: 12/12;
+    display: flex;
+    flex-wrap: wrap;
+
+    > * {
+        flex: 1 100%;
+    }
+
+    @include tablet {
+        > .cliqr--voting-is-not-running {
+            flex: 0 auto;
+        }
+        > main {
+            flex: 5 0px;
+            padding-right: 30px;
+        }
     }
 
     > main {
-        lost-column: 8/12 0 0;
+        padding-bottom: 2em;
+        margin-bottom: 2em;
     }
 
-    > footer {
-        lost-column: 12/12;
-        width: 100%;
-    }
-
-    nav.cliqr--voting-is-running + header + main {
-        lost-column: 12/12;
-    }
-
-    nav.cliqr--voting-is-not-running {
-        lost-column: 4/12 0 0;
-    }
-
-    nav.cliqr--voting-is-running {
-        lost-column: 12/12;
+    > .cliqr--voting-is-not-running {
+        .button {
+            border-color: $studip-content-color-40;
+        }
     }
 
     nav.cliqr--voting-is-running {
@@ -33,10 +35,6 @@ article.cliqr--votings-show {
 
         border-bottom: 2px dotted #aaa;
         margin-bottom: 2em;
-
-        > div {
-
-        }
 
         div.url {
             font-size: 30px;
@@ -55,22 +53,22 @@ article.cliqr--votings-show {
         }
     }
 
-    nav.cliqr--voting-is-running + header {
-        opacity: 0.7;
-    }
-
-    .cliqr--sample-size {
+    footer .cliqr--sample-size {
         font-size: 1.2em;
         text-align: right;
         color: #666;
     }
 
 
-    nav {
-        fieldset {
+    .cliqr--voting-is-not-running {
+        form {
+            display: flex;
+            align-items: center;
+            width: 100%;
+
             select {
-                margin-top: 0;
-                width: calc(100% - 50px);
+                flex: 1;
+                margin-right: 0.5em;
             }
 
             option[disabled] {

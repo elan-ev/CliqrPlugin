@@ -10,7 +10,6 @@ $color-diminished: #999999;
 #cliqr-poll-container {
     .cliqr--scales-poll-view {
         .description {
-            font-size: 2em;
         }
 
         li {
@@ -36,6 +35,7 @@ $color-diminished: #999999;
         }
 
         output {
+            display: block;
             width: 100%;
             text-align: center;
         }

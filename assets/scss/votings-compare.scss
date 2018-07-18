@@ -5,10 +5,10 @@ article.cliqr--votings-compare {
     }
 
     > main {
-        lost-flex-container: row;
+        display: flex;
 
         > section {
-            lost-column: 1/2 0 0;
+            flex: 0 0 50%;
             box-sizing: border-box;
         }
 

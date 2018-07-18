@@ -26,15 +26,16 @@ const TasksCreateView = Viewmaster.extend({
     },
 
     context() {
-        const { task_group_id, task_group_title } = this.model.toJSON()
-
         return {
             STUDIP: window.STUDIP,
             $selectedType: this.$selectedType,
             taskTypes: taskTypes.map(t => {
                 return { ...t.toJSON(), selected: t.id === this.$selectedType }
             }),
-            breadcrumb: { task_group_id, task_group_title }
+            breadcrumb: {
+                task_group_id: this.model.id,
+                task_group_title: this.model.get('title')
+            }
         }
     },
 

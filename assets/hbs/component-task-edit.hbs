@@ -1,5 +1,7 @@
 {{#if editable}}
-    {{fab "edit" "Bearbeiten" "edit" flat=true}}
+    {{button "edit" "Bearbeiten" icon="edit"}}
+    {{fab "edit" "Bearbeiten" "edit"}}
 {{else}}
-    {{fab "copy-edit" "Bearbeiten" "exclaim-circle" color="red"}}
+    {{button "copy-edit" "Bearbeiten" icon="exclaim-circle" color="red"}}
+    {{fab "copy-edit" "Bearbeiten" "edit" color="red"}}
 {{/if}}

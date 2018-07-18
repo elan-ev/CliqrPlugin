@@ -2,17 +2,26 @@
     .ui-dialog-content {
         text-align: center;
         padding: 0;
+        display: flex !important;
+        flex-direction: column;
     }
 
     .short {
         margin-left: 0.5em;
         margin-right: 0.5em;
         display: block;
-        font-size: 50px;
+        font-size: 20px;
+        flex: 0 auto;
+
+        @include tablet {
+            font-size: 50px;
+        }
     }
 
     .qr {
-        width: 493px;
-        height: 493px;
+        @include tablet {
+            flex: 1;
+        }
+        align-self: center;
     }
 }

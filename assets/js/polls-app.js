@@ -3,7 +3,6 @@ import './public-path.js'
 import Backbone from 'backbone'
 import jQuery from 'jquery'
 
-import core_css from '../scss/core.scss'
 import PollsRouter from './routers/polls'
 
 class PollCliqrApp {
