@@ -1,3 +1,5 @@
+$button-with-icon-padding: 15px;
+
 button.cliqr--button.active {
   background-color: $color-accent;
   color: $color-accent-contrast;
@@ -15,7 +17,13 @@ button.cliqr--button.active {
 }
 
 button.cliqr--button-with-icon {
-  padding-left: calc(15px + $button-icon-size);
+  padding-left: calc($button-with-icon-padding + $button-icon-size);
+}
+
+button.cliqr--button {
+  img {
+    top: calc(($studip-button-height - $button-icon-size) * 0.5);
+  }
 }
 
 button.cliqr--button {
@@ -27,9 +35,6 @@ button.cliqr--button {
     }
   }
 
-  img {
-    top: calc(($studip-button-height - $button-icon-size) * 0.5);
-  }
   &.cliqr--button-important {
     font-weight: 800;
   }
@@ -39,9 +44,12 @@ button.cliqr--button-fab {
   width: $button-size;
   height: $button-size;
   min-width: $button-size;
-  color: transparent;
   margin: 0;
   padding: 0;
+
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 
   &.cliqr--flat {
     border: none;
@@ -90,7 +98,6 @@ button.cliqr--button {
     position: absolute;
     width: $button-icon-size;
     height: $button-icon-size;
-    left: calc(($button-size - $button-icon-size) * 0.5);
     transition: opacity 0.5s ease-in-out;
   }
 
@@ -108,3 +115,15 @@ button.cliqr--button {
     opacity: 0;
   }
 }
+
+button.cliqr--button-fab {
+    img {
+        left: calc(($button-size - $button-icon-size) * 0.5);
+    }
+ }
+
+button.cliqr--button {
+    img {
+        left: calc($button-with-icon-padding * 0.5);
+    }
+ }

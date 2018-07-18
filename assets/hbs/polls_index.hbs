@@ -4,7 +4,9 @@
             Stud.IP &ndash; Cliqr
         </a>
         <div class="navbar-item is-expanded" style="justify-content: right;">
-            <button type="button" class="button btn-info js-refresh">Neu laden</button>
+            {{#if hasFresh}}
+                <button type="button" class="button btn-info js-refresh">Neu laden</button>
+            {{/if}}
         </div>
     </div>
 </nav>

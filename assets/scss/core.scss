@@ -1,8 +1,6 @@
 @import "variables.scss";
 @import "mixins.scss";
 
-@lost flexbox flex;
-
 #layout_content {
   position: relative;
 }
@@ -49,3 +47,5 @@ section.contentbox header {
 
 @import "component-card.scss";
 @import "component-tabs.scss";
+
+@import "component-task-edit.scss";

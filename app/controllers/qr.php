@@ -48,6 +48,7 @@ class QrController extends CliqrStudipController
         $renderer = new \BaconQrCode\Renderer\Image\Svg();
         $renderer->setHeight(256);
         $renderer->setWidth(256);
+        $renderer->setMargin(0);
         $writer = new \BaconQrCode\Writer($renderer);
         $writer->writeFile($url, $filename);
     }

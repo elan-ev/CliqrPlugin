@@ -4,7 +4,7 @@ $breadcrumb-item-color: #28497c !default;
 $breadcrumb-item-hover-color: #ffbd33 !default;
 
 $breadcrumb-item-padding-vertical: 0 !default;
-$breadcrumb-item-padding-horizontal: 0.75em !default;
+$breadcrumb-item-padding-horizontal: 0.5em !default;
 
 $breadcrumb-item-separator-color: #b5b5b5 !default;
 
@@ -12,8 +12,7 @@ nav.cliqr--breadcrumb {
   @include block;
   @include unselectable;
 
-  font-size: $size-medium;
-  padding: 0 0 1.5rem 0;
+  padding: 0 0 1em 0;
 
   ul {
       list-style: none;
@@ -60,13 +59,7 @@ nav.cliqr--breadcrumb {
   }
 
   .cliqr--icon {
-    &:first-child {
       margin-right: 0.5em;
-    }
-
-    &:last-child {
-      margin-left: 0.5em;
-    }
   }
 
   &.has-arrow-separator {

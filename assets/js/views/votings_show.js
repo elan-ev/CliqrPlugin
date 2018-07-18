@@ -122,8 +122,8 @@ const VotingsShowView = Viewmaster.extend({
 
         window.STUDIP.Dialog.show(dialog.html(), {
             dialogClass: 'cliqr--dialog-qr',
-            width: 650,
-            height: 700,
+            width: 600,
+            height: 625,
             title: dialog.attr('title'),
             buttons: null,
             resize: true

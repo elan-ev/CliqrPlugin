@@ -1,0 +1,13 @@
+.cliqr--component-task-edit {
+    .cliqr--button-with-icon {
+        @include touch {
+            display: none;
+        }
+    }
+
+    .cliqr--button-fab {
+        @include desktop {
+            display: none;
+        }
+    }
+}

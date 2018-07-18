@@ -8,17 +8,16 @@ const iconMaker = (color, icon, text) => {
 }
 
 const fab = function (klass, text, icon, { hash }) {
-    let { disabled = false, once = false, flat = false } = hash
+    let { disabled = false, once = false, flat = false, color = 'blue' } = hash
     const disabledAttr = disabled ? 'disabled' : ''
 
     text = escapeExpression(text)
     klass = 'js-' + escapeExpression(klass)
+    color = escapeExpression(color)
 
     const addClasses = (escapeExpression(hash['class']) || '')
           + (once ? ' cliqr--click-once' : '')
           + (flat ? '  cliqr--flat' : '')
-
-    const color = 'blue'
 
     return new SafeString(`
             <button type="button" class="button cliqr--button-fab ${klass} ${addClasses}"
