@@ -13,6 +13,10 @@ const actionMap = function (action) {
 
 const TaskGroup = Backbone.Model.extend({
 
+    defaults: {
+        tasks_count: 0
+    },
+
     sync(method, model, options) {
         _.extend(options, {
             url: typeof model.url === 'function' ? model.url(actionMap(method)) : void 0
