@@ -66,7 +66,13 @@ module.exports = {
             },
             {
                 test: /\.hbs$/,
-                use: [{ loader: 'handlebars-loader' }]
+                use: {
+                    loader: 'handlebars-loader',
+                    options: {
+                        partialDirs: path.join(__dirname, './assets/hbs'),
+                        helperDirs: [path.join(__dirname, './assets/js/helpers')]
+                    }
+                }
             }
         ]
     },
@@ -78,13 +84,5 @@ module.exports = {
         modules: [path.resolve('./assets/js'), 'node_modules']
     },
     plugins: [
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                handlebarsLoader: {
-                    partialDirs: path.join(__dirname, './assets/hbs'),
-                    helperDirs: [path.join(__dirname, './assets/js/helpers')]
-                }
-            }
-        })
     ]
 }

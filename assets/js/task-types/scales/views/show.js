@@ -30,15 +30,6 @@ const ShowView = Viewmaster.extend({
     postRender() {
         const Hub = window.MathJax.Hub
         this.$('.cliqr--scales-description, td.text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
-
-        const { lrange_value, hrange_value } = this.model.get('task')
-        const value = Math.floor(0.382 * (hrange_value + lrange_value))
-
-        this.$('.cliqr--scales-slider').slider({
-            min: lrange_value,
-            max: hrange_value,
-            value
-        })
     }
 })
 

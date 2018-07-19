@@ -1,3 +1,11 @@
+{{#* inline "leftlabel"}}
+{{#if lrange_label}} {{lrange_value}} ({{lrange_label}}) {{else}} {{lrange_value}} {{/if}}
+{{/inline}}
+
+{{#* inline "rightlabel"}}
+{{#if hrange_label}} {{hrange_value}} ({{hrange_label}}) {{else}} {{hrange_value}} {{/if}}
+{{/inline}}
+
 <section class="contentbox">
     <header>
         <h4>{{header}} {{#if title}}{{title}}{{/if}}</h4>
@@ -10,16 +18,14 @@
                 auf einer Skala von
 
                 <span class="cliqr--scales-label">
-                    {{#if lrange_label}} {{lrange_value}} ({{lrange_label}}) {{else}} {{lrange_value}} {{/if}}
+                    {{> leftlabel}}
                 </span>
 
                 bis
 
                 <span class="cliqr--scales-label">
-                    {{#if hrange_label}} {{hrange_value}} ({{hrange_label}}) {{else}} {{hrange_value}} {{/if}}
+                    {{> rightlabel}}
                 </span>
-
-                <div class="cliqr--scales-slider"></div>
             </div>
         {{/with}}
     </section>
