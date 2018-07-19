@@ -60,7 +60,10 @@ const WysiwygComponent = Viewmaster.extend({
     },
 
     onEditorChange({ editor }) {
-        this.model.set(this.key, editor.getData())
+        const data = window.STUDIP.wysiwyg.markAsHtml(
+            editor.getData()
+        )
+        this.model.set(this.key, data)
     },
 
     onEditorFocus({ editor }) {

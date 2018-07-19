@@ -137,12 +137,9 @@ class Task extends \eTask\Task
 
         $result['description_html'] = formatReady($result['description']);
 
-        // since Stud.IP v4.0
-        if (is_callable('\\Studip\\Markup::markupToHtml')) {
-            if (\Studip\Markup::editorEnabled()) {
-                $result['description'] = \Studip\Markup::markupToHtml($result['description']);
-            }
-        }
+        $result['description'] = is_callable('wysiwygReady')
+                               ? wysiwygReady($result['description'])
+                               : htmlReady($result['description']);
 
         // TODO nicht sehr performant
         if (!in_array('task.task_group_id', $omits)) {
