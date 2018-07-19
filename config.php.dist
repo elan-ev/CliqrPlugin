@@ -19,7 +19,7 @@ class = \Cliqr\MockShortener
 ;class = \Cliqr\YourlsShortener
 
 [basicshortener]
-url = http://<MY-BASIC-SHORTENER-URL?name-of-the-url-key=%s
+url = https://<MY-BASIC-SHORTENER-URL?name-of-the-url-key=%s
 
 [google]
 ;api_url = https://www.googleapis.com/urlshortener/v1/url

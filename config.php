@@ -19,7 +19,7 @@ class = \Cliqr\BasicShortener
 ;class = \Cliqr\YourlsShortener
 
 [basicshortener]
-url = http://vt.uos.de/shorten.php?longurl=%s
+url = https://vt.uos.de/shorten.php?longurl=%s
 
 [google]
 ;api_url = https://www.googleapis.com/urlshortener/v1/url
