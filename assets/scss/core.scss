@@ -49,3 +49,35 @@ section.contentbox header {
 @import "component-tabs.scss";
 
 @import "component-task-edit.scss";
+
+.cliqr--example {
+    border: 1px solid color-mod($studip-yellow tint(80%));
+    position: relative;
+    padding: 1.5rem;
+
+    &:not(:last-child) {
+        margin-bottom: 1.5rem;
+    }
+
+    &:not(:first-child) {
+        margin-top: 2rem;
+    }
+
+    &::before {
+        background: color-mod($studip-yellow tint(40%));
+        border-radius: 2px 2px 0 0;
+        bottom: 100%;
+        color: rgba(0,0,0,.7);
+        content: "Beispiel";
+        display: inline-block;
+        font-size: 7px;
+        font-weight: 700;
+        left: -1px;
+        letter-spacing: 1px;
+        margin-left: -1px;
+        padding: 3px 5px;
+        position: absolute;
+        text-transform: uppercase;
+        vertical-align: top;
+    }
+}
