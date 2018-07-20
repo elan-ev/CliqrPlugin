@@ -1,36 +1,38 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 import { changeToPage } from '../utils'
+import showError from '../error'
 
-import VotingsCollection from '../models/votings'
+import PollsCollection from '../models/polls'
 
 import PollsIndexView from '../views/polls_index'
 
 // instantiate then remove bootstrapped
-const bootstrapPolls = function () {
-    const polls = new VotingsCollection(window.cliqr.bootstrap.polls || [])
-    delete(window.cliqr.bootstrap.polls)
+const bootstrapPolls = function() {
+    const polls = new PollsCollection(window.cliqr.bootstrap.polls || [])
+    delete window.cliqr.bootstrap.polls
     return polls
 }
 
-const fetchPolls = function () {
+const fetchPolls = function() {
     if (window.cliqr.bootstrap.polls) {
         return Promise.resolve(bootstrapPolls())
     }
 
-    const polls = new VotingsCollection()
-    return polls.fetch()
-        .then((...args) => polls )
-        .catch((...args) => { console.log("caught: ", args); return args })
+    const polls = new PollsCollection()
+    return polls
+        .fetch()
+        .then(() => polls)
+        .catch((...args) => {
+            showError('Die Abstimmung konnte nicht geladen werden.', args)
+        })
 }
 
-
-
 const PollsRouter = Backbone.Router.extend({
-
     routes: {
         '': 'polls',
-        'polls': 'polls'
+        polls: 'polls',
+        ':cid': 'polls'
     },
 
     initialize(options) {
@@ -42,7 +44,9 @@ const PollsRouter = Backbone.Router.extend({
         fetcher(id)
             .then(response => {
                 this.hideLoading()
-                const page = new view(useCollection ? { collection: response } : { model: response })
+                const page = new view(
+                    useCollection ? { collection: response } : { model: response }
+                )
                 changeToPage(page, this.selector)
             })
             .catch(error => {
@@ -53,7 +57,9 @@ const PollsRouter = Backbone.Router.extend({
 
     // ROUTE: ''
     // ROUTE: '#polls'
-    polls() { this.routeHandler(fetchPolls, null, PollsIndexView, true) },
+    polls() {
+        this.routeHandler(fetchPolls, null, PollsIndexView, true)
+    },
 
     // Loader stuff - TODO should not be here, AppView?
 
@@ -61,8 +67,10 @@ const PollsRouter = Backbone.Router.extend({
     timeout: false,
 
     showLoading() {
-        this.timeout = setTimeout( () => {
-            this.loader = Backbone.$('<span class="cliqr-loader"/>').html('Loading...').prependTo('#layout_content')
+        this.timeout = setTimeout(() => {
+            this.loader = Backbone.$('<span class="cliqr-loader"/>')
+                .html('Loading...')
+                .prependTo('#layout_content')
         }, 300)
     },
 
