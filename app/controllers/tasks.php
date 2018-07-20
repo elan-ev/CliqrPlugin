@@ -169,22 +169,6 @@ class TasksController extends CliqrStudipController
         $this->redirect('tasks/show/'.$duplicate->id);
     }
 
-    private function getKnownTypes()
-    {
-        return [
-            'multiple-choice' => '\\Cliqr\\TaskTypes\\MultipleChoice',
-            'scales' => '\\Cliqr\\TaskTypes\\Scales',
-        ];
-    }
-
-    private function getTaskType($type)
-    {
-        $knownTypes = $this->getKnownTypes();
-        $klass = $knownTypes[$type];
-
-        return new $klass();
-    }
-
     private function validateTask($type, $task)
     {
         $taskType = $this->getTaskType($type);
