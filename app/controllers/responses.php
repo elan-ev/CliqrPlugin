@@ -52,6 +52,10 @@ class ResponsesController extends CliqrStudipController
             throw new \Trails_Exception(400, 'Could not create response');
         }
 
+        if (!$assignment->isRunning()) {
+            throw new \Trails_Exception(400, 'Could not create response');
+        }
+
         $now = time();
         /** @var Response $response */
         $response = Response::build(
