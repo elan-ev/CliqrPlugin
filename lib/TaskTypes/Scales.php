@@ -59,4 +59,23 @@ class Scales extends TaskType
 
         return null;
     }
+
+    protected function validateResponse(\Cliqr\DB\Response $response)
+    {
+        $responseData = json_decode((string)$response->response);
+
+        $schemaFile = __DIR__ . '/scales-response.json';
+        $schema = json_decode(file_get_contents($schemaFile));
+
+        $validator = \JVal\Validator::buildDefault();
+        $violations = $validator->validate($responseData, $schema, 'file://'. $schemaFile);
+
+        if (!empty($violations)) {
+            return join(' ', array_map(function ($vltn) {
+                return $vltn['path'] . ' ' . $vltn['message'];
+            }, $violations));
+        }
+
+        return null;
+    }
 }

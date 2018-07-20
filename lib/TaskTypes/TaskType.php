@@ -14,4 +14,11 @@ abstract class TaskType
     abstract protected function validate($task);
 
     abstract public function transformBeforeSave($task);
+
+    public function isValidResponse(\Cliqr\DB\Response $response)
+    {
+        return !($this->validationError = $this->validateResponse($response) ?: null);
+    }
+
+    abstract protected function validateResponse(\Cliqr\DB\Response $response);
 }
