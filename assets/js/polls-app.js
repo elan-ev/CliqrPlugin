@@ -3,27 +3,58 @@ import './public-path.js'
 import Backbone from 'backbone'
 import jQuery from 'jquery'
 
-import PollsRouter from './routers/polls'
+import { changeToPage } from './utils'
+import showError from './error'
+
+import PollsCollection from './models/polls'
+import PollsIndexView from './views/polls_index'
+
+// instantiate then remove bootstrapped
+const bootstrapPolls = function() {
+    const polls = new PollsCollection(window.cliqr.bootstrap.polls || [])
+    delete window.cliqr.bootstrap.polls
+    return polls
+}
+
+const fetchPolls = function() {
+    if (window.cliqr.bootstrap.polls) {
+        return Promise.resolve(bootstrapPolls())
+    }
+
+    const polls = new PollsCollection()
+    return polls
+        .fetch()
+        .then(() => polls)
+        .catch((...args) => {
+            showError('Die Abstimmung konnte nicht geladen werden.', args)
+        })
+}
 
 class PollCliqrApp {
     constructor(selector) {
+        this.selector = selector
         this.initBackbone()
-        this.initRouters(selector)
-
-        Backbone.history.start()
+        this.initPage()
     }
 
     initBackbone() {
         Backbone.$ = jQuery
 
-        Backbone.ajax = function () {
+        Backbone.ajax = function() {
             const xhr = Backbone.$.ajax.apply(Backbone.$, arguments)
             return Promise.resolve(xhr)
         }
     }
 
-    initRouters(selector) {
-        let router = new PollsRouter({ selector })
+    initPage() {
+        fetchPolls()
+            .then(response => {
+                const page = new PollsIndexView({ collection: response })
+                changeToPage(page, this.selector)
+            })
+            .catch(error => {
+                showError('Caught an error', error)
+            })
     }
 }
 
