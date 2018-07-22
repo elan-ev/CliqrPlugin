@@ -1,5 +1,8 @@
-
 export default function showError(errorMessage, data) {
     console.error(errorMessage, data)
-    window.STUDIP.Dialog.show(errorMessage)
+    if (window.STUDIP && window.STUDIP.Dialog) {
+        window.STUDIP.Dialog.show(errorMessage)
+    } else {
+        alert(errorMessage)
+    }
 }

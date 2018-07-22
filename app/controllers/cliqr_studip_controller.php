@@ -158,4 +158,20 @@ abstract class CliqrStudipController extends \StudipController
 
         return $controller_name.'/'.$action;
     }
+
+    protected function getKnownTypes()
+    {
+        return [
+            'multiple-choice' => '\\Cliqr\\TaskTypes\\MultipleChoice',
+            'scales' => '\\Cliqr\\TaskTypes\\Scales',
+        ];
+    }
+
+    protected function getTaskType($type)
+    {
+        $knownTypes = $this->getKnownTypes();
+        $klass = $knownTypes[$type];
+
+        return new $klass();
+    }
 }

@@ -1,0 +1,11 @@
+{
+    "title": "eTask Scales Response Schema",
+    "type": "object",
+    "properties": {
+        "answer": {
+            "type": "array",
+            "items": { "type": "number" }
+        }
+    },
+    "required": ["answer"]
+}

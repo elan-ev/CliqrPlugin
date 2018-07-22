@@ -137,7 +137,10 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             return;
         }
 
-        $course = Course::find($cid);
+        if (!$course = Course::find($cid)) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
         $datafields = DatafieldEntryModel::findByModel(
             $course,
             $this->config['datafield_first_run_complete_id']

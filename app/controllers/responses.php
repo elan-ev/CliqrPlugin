@@ -52,9 +52,13 @@ class ResponsesController extends CliqrStudipController
             throw new \Trails_Exception(400, 'Could not create response');
         }
 
+        if (!$assignment->isRunning()) {
+            throw new \Trails_Exception(400, 'Could not create response');
+        }
+
         $now = time();
         /** @var Response $response */
-        $response = Response::create(
+        $response = Response::build(
             [
                 'assignment_id' => $this->json['voting_id'],
                 'task_id' => $this->json['task_id'],
@@ -63,8 +67,22 @@ class ResponsesController extends CliqrStudipController
                 'mkdate' => $now,
                 'chdate' => $now,
                 'options' => [],
-            ]);
+            ]
+        );
+
+        $this->validateResponse($response);
+        if (!$response->store()) {
+            throw new \Trails_Exception(500);
+        }
 
         return $this->render_json($response->toJSON());
+    }
+
+    private function validateResponse(Response $response)
+    {
+        $taskType = $this->getTaskType($response->task->type);
+        if (!$taskType->isValidResponse($response)) {
+            throw new \Trails_Exception(400, $taskType->validationError);
+        }
     }
 }
