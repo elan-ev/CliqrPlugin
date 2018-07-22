@@ -9,10 +9,6 @@ const TasksCollection = Backbone.Collection.extend({
 
     url() {
         return cliqr.config.PLUGIN_URL + 'tasks?cid=' + cliqr.config.CID
-    },
-
-    comparator(task) {
-        return parseInt(task.get('id'), 10)
     }
 })
 

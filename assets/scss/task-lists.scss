@@ -42,4 +42,56 @@
         padding: 2em 1em;
         text-align: center;
     }
+
+    .ui-sortable {
+        box-sizing: border-box;
+    }
+
+    .ui-sortable-handle {
+        cursor: move;
+        i {
+            color: $studip-base-color;
+            font-size: 20px;
+            opacity: 0.5;
+        }
+    }
+
+    .ui-sortable-placeholder {
+        background-color: $studip-violet;
+        color: $studip-violet;
+        visibility: visible !important;
+        position: relative;
+
+        > * {
+            font-size: 0px;
+            padding: 2px 0 0 0;
+        }
+        > td:first-child:before {
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            background-color: $studip-violet;
+            content: "·";
+            position: absolute;
+            color: white;
+            top: -3px;
+            left: 0px;
+        }
+    }
+
+    .ui-sortable-helper {
+        display: table;
+        border: 1px solid #bbbbbb;
+        border-left: 3px solid $studip-violet;
+        box-shadow: 0 3px 4px rgba(116, 116, 116, 0.3);
+        * {
+            background-color: $studip-white;
+        }
+    }
+
+    .cliqr--task-checkbox {
+        width: 2em;
+        &:hover {
+        }
+    }
 }

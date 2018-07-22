@@ -1,7 +1,10 @@
-<td class="cliqr--task-checkbox"> </td>
+<td class="cliqr--task-checkbox">
+    <i class="cliqr--icon-grip"></i>
+</td>
 
 <td class="cliqr--task-header">
     <a href="#task/show/{{id}}">
+        <i class="cliqr--icon-{{./icon}}"></i>
         {{icon icon}}
         {{#if title}}{{title}}{{else}}{{strip_tags description_html}}{{/if}}
     </a>
