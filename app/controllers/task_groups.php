@@ -262,7 +262,7 @@ class TaskGroupsController extends CliqrStudipController
             throw new \Trails_Exception(400);
         }
 
-        $query = 'UPDATE etask_test_tasks SET position = FIND_IN_SET(id, ?) WHERE test_id = ?';
+        $query = 'UPDATE etask_test_tasks SET position = FIND_IN_SET(task_id, ?) WHERE test_id = ?';
         $args = [join(',', $newPositions), $taskGroup->test->id];
 
         $dbm = \DBManager::get();

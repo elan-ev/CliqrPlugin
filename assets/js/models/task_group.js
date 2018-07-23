@@ -49,6 +49,16 @@ const TaskGroup = Backbone.Model.extend({
 
     exportURL() {
         return this.url('export')
+    },
+
+    reorder(positions) {
+        return Backbone.ajax({
+            accepts: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify(positions),
+            method: 'PATCH',
+            url: this.url('tasks')
+        })
     }
 })
 

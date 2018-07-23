@@ -1,5 +1,7 @@
+import Backbone from 'backbone'
 import Viewmaster from './viewmaster'
 import TaskListItemView from './task_list_item'
+import showError from '../error'
 
 const TaskListView = Viewmaster.extend({
 
@@ -24,7 +26,8 @@ const TaskListView = Viewmaster.extend({
     },
 
     postRender() {
-        const tbody = this.$('.cliqr--task-list')
+        const tbody = this.$('.cliqr--task-list'),
+              model = this.model
 
         if (!tbody.sortable('instance')) {
             tbody.sortable(
@@ -33,21 +36,14 @@ const TaskListView = Viewmaster.extend({
                     items: 'tbody tr',
                     cursor: 'move',
                     opacity: 1,
-                    // activate() { console.log('activate', arguments) },
-                    // beforeStop() { console.log('beforeStop', arguments) },
-                    // change() { console.log('change', arguments) },
-                    // create() { console.log('create', arguments) },
-                    // deactivate() { console.log('deactivate', arguments) },
-                    // out() { console.log('out', arguments) },
-                    // over() { console.log('over', arguments) },
-                    // receive() { console.log('receive', arguments) },
-                    // remove() { console.log('remove', arguments) },
-                    // sort() { console.log('sort', arguments) },
-                    // start() { console.log('start', arguments) },
-                    // stop() { console.log('stop', arguments) },
+                    update() {
+                        const positions = Backbone.$(this)
+                              .sortable('toArray', { attribute: 'data-taskid' })
+                              .map(item => parseInt(item, 10))
 
-                    update(event, ui) {
-                        console.log('update', arguments)
+                        model
+                            .reorder(positions)
+                            .catch((...attrs) => showError('Die Sortierung konnte nicht gespeichert werden.', attrs))
                     }
                 }
             ).disableSelection()
