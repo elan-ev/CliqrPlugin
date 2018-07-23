@@ -135,11 +135,9 @@ class Task extends \eTask\Task
         $result['mkdate'] = date('c', $this->mkdate);
         $result['chdate'] = date('c', $this->chdate);
 
+        $result['description'] = $result['description'];
         $result['description_html'] = formatReady($result['description']);
-
-        $result['description'] = is_callable('wysiwygReady')
-                               ? wysiwygReady($result['description'])
-                               : htmlReady($result['description']);
+        # $result['description_html'] = is_callable('wysiwygReady') ? wysiwygReady($result['description']) : htmlReady($result['description']);
 
         // TODO nicht sehr performant
         if (!in_array('task.task_group_id', $omits)) {
