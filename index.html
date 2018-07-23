@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Stud.IP-Cliqr</title>
+        <link rel="stylesheet" href="assets/vendor/bulma/bulma.css">
+        <link rel="stylesheet" href="assets/vendor/rangeslider-2.3.2/rangeslider.min.css" />
+
+        <script>
+        var cliqr = {
+            bootstrap: { },
+            config: (function(){
+                var studipPath = location.pathname.match(/^(.*)\/plugins_packages\/elan-ev\/CliqrPlugin\/index.html$/)[1]
+
+                return {
+                    "PLUGIN_URL": studipPath + "/plugins.php/cliqrplugin/",
+                    "ASSETS_URL": studipPath + "/plugins_packages/elan-ev/CliqrPlugin/",
+                    get CID() { return location.hash.substr(1) }
+                };
+            })()
+        };
+        </script>
+    </head>
+    <body>
+        <div id="cliqr-poll-container"></div>
+        <noscript>
+            <h1>
+                Um Cliqr verwenden zu können, aktivieren Sie in Ihrem Browser
+                bitte JavaScript. Wenn Sie dabei Hilfe benötigen,
+                <a href="https://www.enable-javascript.com/de/" target="_blank">
+                    können Sie diese Anleitung zu Rate ziehen.
+                </a>
+            </h1>
+        </noscript>
+
+        <script src="assets/vendor/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+        <script src="assets/vendor/rangeslider-2.3.2/rangeslider.min.js"></script>
+        <script>
+        document.head.appendChild(document.createElement('script')).src = '../../../assets/javascripts/mathjax/MathJax.js?config=TeX-AMS_HTML,default'
+        </script>
+
+
+        <script charset="utf-8" src="https://localhost:8081/polls.js"></script>
+
+        <!-- <script charset="utf-8" src="static/polls.js"></script> -->
+    </body>
+</html>
