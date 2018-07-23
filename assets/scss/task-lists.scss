@@ -50,9 +50,7 @@
     .ui-sortable-handle {
         cursor: move;
         i {
-            color: $studip-base-color;
-            font-size: 20px;
-            opacity: 0.5;
+            color: $studip-base-color-40;
         }
     }
 
@@ -91,7 +89,5 @@
 
     .cliqr--task-checkbox {
         width: 2em;
-        &:hover {
-        }
     }
 }

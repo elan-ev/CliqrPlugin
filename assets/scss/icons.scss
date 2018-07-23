@@ -4,7 +4,7 @@ img.cliqr--icon {
     vertical-align: middle;
 }
 
-a > img.cliqr--icon {
+a > .cliqr--icon {
     margin-right: 0.25em;
 }
 
@@ -12,4 +12,13 @@ h1 > img.cliqr--icon {
     width: $button-icon-size-header;
     height: $button-icon-size-header;
     vertical-align: bottom;
+}
+
+i.cliqr--icon {
+    font-size: $button-icon-size;
+    vertical-align: middle;
+}
+
+a i.cliqr--icon::before, a:hover i.cliqr--icon::before {
+    color: $studip-base-color;
 }

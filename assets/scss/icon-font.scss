@@ -1,26 +1,15 @@
-@font-face {
-    font-family: 'cliqricons';
-    src:
-    url('../../plugins_packages/elan-ev/CliqrPlugin/assets/fonts/cliqricons.ttf?n1vcq5') format('truetype'),
-    url('../../plugins_packages/elan-ev/CliqrPlugin/assets/fonts/cliqricons.woff?n1vcq5') format('woff'),
-    url('../../plugins_packages/elan-ev/CliqrPlugin/assets/fonts/cliqricons.svg?n1vcq5#cliqricons') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
 i {
-    /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'cliqricons' !important;
-    speak: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
     font-style: normal;
-    font-weight: normal;
     font-variant: normal;
-    text-transform: none;
     line-height: 1;
 
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    speak: none;
+    font-weight: normal;
+    text-transform: none;
 }
 
 .cliqr--icon-grip:before {
@@ -90,4 +79,14 @@ i {
 }
 .cliqr--icon-vote:before {
     content: "\e915";
+}
+
+@font-face {
+    font-family: 'cliqricons';
+    src:
+    url('../../plugins_packages/elan-ev/CliqrPlugin/assets/fonts/cliqricons.ttf?n1vcq5') format('truetype'),
+    url('../../plugins_packages/elan-ev/CliqrPlugin/assets/fonts/cliqricons.woff?n1vcq5') format('woff'),
+    url('../../plugins_packages/elan-ev/CliqrPlugin/assets/fonts/cliqricons.svg?n1vcq5#cliqricons') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
