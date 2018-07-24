@@ -44,7 +44,10 @@ class Scales {
 
     createTask() {
         const task = new ScalesTask()
-        task.set('description', 'Bewerten Sie bitte die folgende(n) Aussage(n)')
+        task.set({
+            description: 'Bewerten Sie bitte die folgende(n) Aussage(n)',
+            description_html: 'Bewerten Sie bitte die folgende(n) Aussage(n)'
+        })
         _.times(1, () => task.addStatement())
         return task
     }
