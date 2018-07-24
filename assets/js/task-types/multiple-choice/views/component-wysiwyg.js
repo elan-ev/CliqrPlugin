@@ -50,10 +50,13 @@ const WysiwygComponent = Viewmaster.extend({
             return
         }
 
+        const placeholder = textarea.placeholder || ''
+
         window.STUDIP.wysiwyg.replace(textarea)
         const element = window.CKEDITOR.dom.element.get(textarea)
         if (element) {
             this.editor = element.getEditor()
+            this.editor.config.placeholder = placeholder
             this.editor.on('change', this.onEditorChange, this)
             this.editor.once('focus', this.onEditorFocus, this)
         }
