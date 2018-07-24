@@ -17,20 +17,20 @@ const SwitchableComponent = Viewmaster.extend({
 
         this.editable = false
 
-        this.key = options.key
-        this.listenTo(this.model, `change:${this.key}`, this.onModelChange)
+        this.keys = options.keys
+        this.listenTo(this.model, `change:${this.keys.edit}`, this.onModelChange)
     },
 
     context() {
         return {
             editable: this.editable,
-            key: this.key,
-            value: this.model.get(this.key)
+            keys: this.keys,
+            valueView: this.model.get(this.keys.view)
         }
     },
 
     onModelChange(model, change) {
-        this.model.set(this.key, change)
+        this.model.set(this.keys.edit, change)
     },
 
     onClickEdit(event) {
@@ -42,7 +42,7 @@ const SwitchableComponent = Viewmaster.extend({
 
         const wysiwyg = new WysiwygComponent({
             model: this.model,
-            key: 'description'
+            key: this.keys.edit
         })
         this.setView('.cliqr--component-switchable-wysiwyg', wysiwyg)
         this.refreshViews()

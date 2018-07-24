@@ -54,7 +54,7 @@ const FormView = Viewmaster.extend({
 
         const switchInput = new SwitchableComponent({
             model: this.model,
-            key: 'description'
+            keys: { view: 'description_html', edit: 'description' }
         })
 
 
