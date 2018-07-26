@@ -2,15 +2,11 @@ import _ from 'underscore'
 import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
 
-const createPollView = function (voting) {
-    return taskTypes.fetchTaskType(voting.getTask())
-        .then(taskType => taskType.getPollView(voting))
+const createPollView = function(voting) {
+    return taskTypes.fetchTaskType(voting.getTask()).then(taskType => taskType.getPollView(voting))
 }
 
 const PollsIndexView = Viewmaster.extend({
-
-    id: 'polls-index',
-
     events: {
         'click .js-refresh': 'onClickRefresh'
     },
@@ -27,7 +23,6 @@ const PollsIndexView = Viewmaster.extend({
     },
 
     update() {
-
         this.fresh = this.collection.firstFresh()
 
         if (this.fresh) {
@@ -63,7 +58,6 @@ const PollsIndexView = Viewmaster.extend({
     postRender() {
         this.pollView && _.invoke([this.pollView], 'postRender')
     },
-
 
     onClickRefresh(event) {
         event.preventDefault()
