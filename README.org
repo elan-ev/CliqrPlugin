@@ -71,7 +71,7 @@ cd CliqrPlugin
 
 muss [[https://getcomposer.org][Composer]], ein PHP Dependency Manager, installiert werden:
 
-#+BEGIN_SRC bash :results drawer :async
+#+BEGIN_SRC bash :results drawer
 wget "https://getcomposer.org/composer.phar"
 #+END_SRC
 
@@ -81,7 +81,7 @@ wget "https://getcomposer.org/composer.phar"
 
 Nun werden die notwendigen PHP-Pakete mit =composer= installiert:
 
-#+BEGIN_SRC bash :results drawer :async
+#+BEGIN_SRC bash :results drawer
 php composer.phar install --no-dev
 #+END_SRC
 
@@ -91,29 +91,26 @@ php composer.phar install --no-dev
 
 Zum Kompilieren des JavaScript-Codes benötigen wir JavaScript-Pakete, die mit =npm= installiert werden:
 
-#+BEGIN_SRC bash :results drawer :async
+#+BEGIN_SRC bash :results drawer
 npm install
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-added 1214 packages from 686 contributors and audited 9699 packages in 29.569s
+added 1213 packages from 685 contributors and audited 9942 packages in 18.991s
 found 0 vulnerabilities
 
 :END:
 
 Jetzt kann es mit dem Kompilieren losgehen:
 
-#+BEGIN_SRC bash :results silent :async
+#+BEGIN_SRC bash :results silent
 npm run build-prod
 #+END_SRC
 
-#+RESULTS:
-: 02489b7c9b930ee3cd3a74488fa2c4b3
-
 Zum Schluß muss noch das Stud.IP-Plugin gepackt werden:
 
-#+BEGIN_SRC bash :results drawer :async
+#+BEGIN_SRC bash :results drawer
 npm run zip > /dev/null
 #+END_SRC
 

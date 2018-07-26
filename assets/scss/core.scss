@@ -21,12 +21,12 @@ section.contentbox header {
 }
 
 @import "icon-font.scss";
+@import "icons.scss";
 @import "buttons.scss";
 
 #cliqr {
     @import "typography.scss";
     @import "bubble.scss";
-    @import "icons.scss";
     @import "breadcrumbs.scss";
     @import "page-headers.scss";
     @import "task-groups.scss";

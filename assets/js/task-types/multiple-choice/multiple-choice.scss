@@ -51,6 +51,7 @@ $color-diminished: #999999;
         .cliqr--multiple-choice-answers,
         .cliqr--mc-description {
             max-width: 45em;
+            overflow-x: scroll;
 
             @include tablet {
                 font-size: $size-medium;

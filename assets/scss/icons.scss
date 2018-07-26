@@ -22,3 +22,19 @@ i.cliqr--icon {
 a i.cliqr--icon::before, a:hover i.cliqr--icon::before {
     color: $studip-base-color;
 }
+
+.cliqr--icon-color-blue::before {
+    color: $studip-base-color;
+}
+
+.cliqr--icon-color-red::before {
+    color: $studip-red !important;
+}
+
+.cliqr--icon-color-black::before {
+    color: $studip-black !important;
+}
+
+.cliqr--icon-color-white::before {
+    color: $studip-white !important;
+}

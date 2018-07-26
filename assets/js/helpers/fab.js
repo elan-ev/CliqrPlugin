@@ -2,8 +2,7 @@ import { SafeString, escapeExpression } from 'handlebars/runtime'
 
 const iconMaker = (color, icon, text) => {
     return (
-        `<img src="${[window.STUDIP.ASSETS_URL, 'images/icons/', color, '/', icon, '.svg'].join('')}" alt="${text}">` +
-        `<img src="${[window.STUDIP.ASSETS_URL, 'images/icons/white/', icon, '.svg'].join('')}" alt="">`
+        `<i class="cliqr--icon cliqr--icon-${icon} cliqr--icon-color-${color}" alt="${text}" title="${text}"></i>`
     )
 }
 

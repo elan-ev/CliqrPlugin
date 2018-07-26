@@ -1,14 +1,17 @@
 import { SafeString, escapeExpression } from 'handlebars/runtime'
 
-const icon = function (icon, { hash } ) {
+const icon = function(icon, { hash }) {
     let { color = 'blue', text = '' } = hash
 
+    color = escapeExpression(color)
+    icon = escapeExpression(icon)
     text = escapeExpression(text)
 
-    const addClasses = (escapeExpression(hash['class']) || '')
+    const addClasses = escapeExpression(hash['class']) || ''
 
-    const icon_path = [STUDIP.ASSETS_URL, 'images/icons/', color, '/', escapeExpression(icon), '.svg'].join('')
-    return new SafeString(`<img class="cliqr--icon ${addClasses}" src="${icon_path}" alt="${text}" title="${text}">`)
+    return new SafeString(
+        `<i class="cliqr--icon cliqr--icon-${icon} ${addClasses} cliqr--icon-color-${color}" alt="${text}" title="${text}"></i>`
+    )
 }
 
 export default icon
