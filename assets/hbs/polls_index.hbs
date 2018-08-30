@@ -1,12 +1,12 @@
 <nav class="navbar is-link" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item is-size-3-tablet is-size-4" href="#">
+        <div class="navbar-item is-size-3-tablet is-size-4">
             Stud.IP &ndash; Cliqr
-        </a>
+        </div>
         <div class="navbar-item is-expanded" style="justify-content: right;">
-            {{#if hasFresh}}
+            {{#unless hasFresh}}
                 <button type="button" class="button btn-info js-refresh">Neu laden</button>
-            {{/if}}
+            {{/unless}}
         </div>
     </div>
 </nav>

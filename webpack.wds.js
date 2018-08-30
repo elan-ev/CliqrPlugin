@@ -2,6 +2,10 @@ const webpack = require('webpack')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const GitRevisionPlugin = require('git-revision-webpack-plugin')
+let gitRevisionPlugin = new GitRevisionPlugin({
+    lightweightTags: true
+})
 
 module.exports = {
     mode: 'development',
@@ -15,8 +19,8 @@ module.exports = {
     },
     context: path.join(__dirname, './assets/js'),
     entry: {
-        'studip-cliqr': './studip-app.js',
-        polls: './polls-app.js'
+        polls: './polls-app.js',
+        'studip-cliqr': './studip-app.js'
     },
     output: {
         path: path.join(__dirname, './static'),
@@ -84,5 +88,10 @@ module.exports = {
         modules: [path.resolve('./assets/js'), 'node_modules']
     },
     plugins: [
+        gitRevisionPlugin,
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify(gitRevisionPlugin.version()),
+            COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash())
+        })
     ]
 }

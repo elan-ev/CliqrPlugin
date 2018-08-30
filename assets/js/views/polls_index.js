@@ -2,6 +2,10 @@ import _ from 'underscore'
 import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
 
+import { toast } from './toast'
+import '../../scss/poll.scss'
+
+
 const createPollView = function(voting) {
     return taskTypes.fetchTaskType(voting.getTask()).then(taskType => taskType.getPollView(voting))
 }
@@ -12,7 +16,6 @@ const PollsIndexView = Viewmaster.extend({
     },
 
     fresh: null,
-    pollView: null,
 
     initialize(options) {
         Viewmaster.prototype.initialize.call(this)
@@ -22,14 +25,20 @@ const PollsIndexView = Viewmaster.extend({
         this.update()
     },
 
-    update() {
+    update(polls = null, response = null) {
         this.fresh = this.collection.firstFresh()
+
+        if (response) {
+            toast({
+                message: 'Erfolgreich abgestimmt',
+                type: 'is-success'
+            })
+        }
 
         if (this.fresh) {
             createPollView(this.fresh)
                 .then(pollView => {
-                    this.pollView = pollView
-                    this.setView('main', this.pollView)
+                    this.setView('main', pollView)
                     this.refreshViews()
                     this.render()
                     this.postRender()
@@ -56,7 +65,8 @@ const PollsIndexView = Viewmaster.extend({
     },
 
     postRender() {
-        this.pollView && _.invoke([this.pollView], 'postRender')
+        const pollViews = this.getViews('main') || []
+        pollViews.forEach(view => view.postRender && view.postRender())
     },
 
     onClickRefresh(event) {
