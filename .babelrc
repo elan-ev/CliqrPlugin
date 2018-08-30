@@ -1,14 +1,10 @@
 {
-    "plugins": [
-        "@babel/plugin-proposal-object-rest-spread"
-    ],
     "presets": [
-        ["@babel/env", {
-            "modules": false,
-            "targets": {
-                "browsers": ["last 2 versions", "android>=4.4", "safari>=9"]
-            },
-            "useBuiltins": "usage"
-        }]
+        [
+            "@babel/preset-env",
+            {
+                "useBuiltIns": "entry"
+            }
+        ]
     ]
 }
