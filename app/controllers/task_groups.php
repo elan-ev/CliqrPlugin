@@ -3,7 +3,6 @@
 namespace Cliqr;
 
 use Cliqr\DB\Assignment;
-use Cliqr\DB\Test;
 
 require_once 'cliqr_studip_controller.php';
 
@@ -103,7 +102,6 @@ class TaskGroupsController extends CliqrStudipController
 
         $this->render_json($taskGroup->toJSON());
     }
-
 
     public function destroy_action($id)
     {
@@ -212,5 +210,66 @@ class TaskGroupsController extends CliqrStudipController
         $duplicate = $taskGroup->duplicateTaskGroup();
 
         $this->redirect('task_groups/show/'.$duplicate->id);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
+    public function tasks_action($taskGroupId)
+    {
+        if (!$taskGroup = Assignment::findTaskGroup($this->cid, $taskGroupId)) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        switch (\Request::method()) {
+            case 'GET':
+                return $this->fetchTasksRelationship($taskGroup);
+            case 'PATCH':
+                return $this->updateTasksRelationship($taskGroup);
+        }
+
+        throw new \Trails_Exception(405);
+    }
+
+    private function fetchTasksRelationship(Assignment $taskGroup)
+    {
+        if (!$this->can('read', 'TaskGroup', $taskGroup)) {
+            throw new \Trails_Exception(403);
+        }
+
+        $this->render_json(array_map('intval', $taskGroup->test->testtasks->pluck('task_id')));
+    }
+
+    private function updateTasksRelationship(Assignment $taskGroup)
+    {
+        if (!$this->can('update', 'TaskGroup', $taskGroup)) {
+            throw new \Trails_Exception(403);
+        }
+
+        if (!$this->hasJSONContentType()) {
+            throw new \Trails_Exception(400, 'Content-Type must be application/json.');
+        }
+
+        if (!is_array($positions = $this->parseJSONBody())) {
+            throw new \Trails_Exception(400, 'Content must be JSON encoded array of integers.');
+        }
+
+        $newPositions = array_map('intval', $positions);
+        $oldPositions = array_map('intval', $taskGroup->test->testtasks->pluck('task_id'));
+
+        if (count($newPositions) !== count($oldPositions)
+            || count(array_diff($newPositions, $oldPositions))) {
+            throw new \Trails_Exception(400);
+        }
+
+        $query = 'UPDATE etask_test_tasks SET position = FIND_IN_SET(task_id, ?) WHERE test_id = ?';
+        $args = [join(',', $newPositions), $taskGroup->test->id];
+
+        $dbm = \DBManager::get();
+        $stmt = $dbm->prepare($query);
+        $stmt->execute($args);
+
+        $this->set_status(204);
+        $this->render_nothing();
     }
 }

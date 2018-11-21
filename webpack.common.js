@@ -1,12 +1,16 @@
 const webpack = require('webpack')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const GitRevisionPlugin = require('git-revision-webpack-plugin')
+let gitRevisionPlugin = new GitRevisionPlugin({
+    lightweightTags: true
+})
 
 module.exports = {
     context: path.join(__dirname, './assets/js'),
     entry: {
-        'studip-cliqr': './studip-app.js',
-        polls: './polls-app.js'
+        polls: './polls-app.js',
+        'studip-cliqr': './studip-app.js'
     },
     output: {
         path: path.join(__dirname, './static'),
@@ -78,6 +82,11 @@ module.exports = {
             // both options are optional
             filename: '[name].css',
             chunkFilename: '[id].css'
+        }),
+        gitRevisionPlugin,
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify(gitRevisionPlugin.version()),
+            COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash())
         })
     ]
 }

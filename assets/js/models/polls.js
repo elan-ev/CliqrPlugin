@@ -13,7 +13,7 @@ const PollsCollection = Backbone.Collection.extend({
     },
 
     url() {
-        return window.cliqr.config.PLUGIN_URL + 'polls/' + window.cliqr.config.CID
+        return window.cliqr.config.PLUGIN_URL + 'polls/' + window.cliqr.config.CID + '?cancel_login=1'
     },
 
     comparator: 'start',

@@ -3,7 +3,6 @@ import './public-path.js'
 import Backbone from 'backbone'
 import jQuery from 'jquery'
 
-import { changeToPage } from './utils'
 import showError from './error'
 
 import PollsCollection from './models/polls'
@@ -22,12 +21,7 @@ const fetchPolls = function() {
     }
 
     const polls = new PollsCollection()
-    return polls
-        .fetch()
-        .then(() => polls)
-        .catch((...args) => {
-            showError('Die Abstimmung konnte nicht geladen werden.', args)
-        })
+    return polls.fetch().then(() => polls)
 }
 
 class PollCliqrApp {
@@ -48,12 +42,14 @@ class PollCliqrApp {
 
     initPage() {
         fetchPolls()
-            .then(response => {
-                const page = new PollsIndexView({ collection: response })
-                changeToPage(page, this.selector)
+            .then(collection => {
+                const page = new PollsIndexView({ collection })
+                page.$el.appendTo(Backbone.$(this.selector))
+                page.render()
+                page.postRender()
             })
-            .catch(error => {
-                showError('Caught an error', error)
+            .catch((...args) => {
+                showError('Die Abstimmung konnte nicht geladen werden.', args)
             })
     }
 }

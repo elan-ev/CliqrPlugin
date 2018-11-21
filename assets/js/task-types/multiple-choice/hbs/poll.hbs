@@ -8,20 +8,19 @@
     <form action="" method="post">
 
         {{#each answers}}
-            <div class="field has-addons">
-                <p class="control nominal">
-                    <a class="button is-static">
-                        {{nominal @index}}
-                    </a>
-                </p>
+            <div class="field">
                 <p class="control is-expanded is-size-4-desktop">
                     {{#if ../isSingleSelect}}
                         <label class="radio">
+                            <span class="tag is-rounded"> {{nominal @index}}</span>
                             <input type="radio" name="choice" value="{{@index}}" required>
-                            <span class="text content">{{text}}</span>
+                            <span class="text content">
+                                {{text}}
+                            </span>
                         </label>
                     {{else}}
                         <label class="checkbox">
+                            <span class="tag is-rounded"> {{nominal @index}}</span>
                             <input type="checkbox" name="choice[{{@index}}]" value="{{@index}}">
                             <span class="text content">{{text}}</span>
                         </label>

@@ -38,7 +38,7 @@ const TaskGroupsIndexView = Viewmaster.extend({
     onClickAddTaskGroup(event) {
         event.preventDefault()
         const createDialog = new TaskGroupsCreateView({ collection: this.collection })
-        showDialog(createDialog.render(), { title: 'Fragensammlung erstellen' })
+        showDialog(createDialog.render(), { title: 'Fragensammlung erstellen', size: 'small' })
             .then(closer => createDialog.once('cancel', closer))
             .catch(error => {
                 showError('Could not create task group', error)

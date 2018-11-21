@@ -8,8 +8,13 @@ import task_types from '../models/task_types'
 
 const TaskListItemView = Viewmaster.extend({
 
-    tagName: 'tr',
+    attributes() {
+        return {
+            'data-taskid': this.model.id
+        }
+    },
 
+    tagName: 'tr',
     className: 'cliqr--task-list-item',
 
     events: {
