@@ -114,4 +114,21 @@ class VotingsController extends CliqrStudipController
 
         $this->redirect('votings/show/'.$voting->id);
     }
+
+    public function destroy_action($id)
+    {
+        $voting = Assignment::findVoting($this->cid, $id);
+
+        if (!$this->can('delete', 'Voting', $voting)) {
+            throw new \Trails_Exception(403);
+        }
+
+        if (!$voting) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        $voting->delete();
+
+        $this->render_json(['status' => 'OK']);
+    }
 }

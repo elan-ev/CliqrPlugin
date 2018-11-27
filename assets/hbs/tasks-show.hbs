@@ -36,20 +36,26 @@
 
 
             {{#each votings}}
-                <a class="panel-block cliqr--votings-list-item" href="#voting/{{id}}">
-                    {{#if running}}
-                        <span class="panel-icon">
-                            {{icon 'play' color='red'}}
-                        </span>
-                        {{moment start label="läuft gerade"}}
-                    {{else}}
-                        <span class="panel-icon">
-                            {{icon 'vote'}}
-                        </span>
-                        {{moment start}}
-                    {{/if}}
+                <a class="panel-block cliqr--votings-list-item" href="#voting/{{id}}" data-votingid="{{id}}">
+                    <div class="panel-block-label">
+                        {{#if running}}
+                            <span class="panel-icon">
+                                {{icon 'play' color='red'}}
+                            </span>
+                            {{moment start label="läuft gerade"}}
+                        {{else}}
+                            <span class="panel-icon">
+                                {{icon 'vote'}}
+                            </span>
+                            {{moment start}}
+                        {{/if}}
 
-                    <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
+                        <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
+                    </div>
+
+                    <div class="panel-block-actions">
+                        {{fab "remove" "Löschen" "trash" flat=true}}
+                    </div>
                 </a>
             {{/each}}
         </nav>

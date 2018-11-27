@@ -9,14 +9,14 @@ import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
 
 const TasksShowView = Viewmaster.extend({
-
     tagName: 'article',
 
     className: 'cliqr--tasks-show',
 
     events: {
         'click .js-start': 'onClickStart',
-        'click .js-stop': 'onClickStop'
+        'click .js-stop': 'onClickStop',
+        'click .js-remove': 'onClickRemoveVoting'
     },
 
     taskType: null,
@@ -24,7 +24,8 @@ const TasksShowView = Viewmaster.extend({
     initialize() {
         Viewmaster.prototype.initialize.call(this)
 
-        taskTypes.fetchTaskType(this.model)
+        taskTypes
+            .fetchTaskType(this.model)
             .then(taskType => {
                 this.taskType = taskType
 
@@ -49,12 +50,14 @@ const TasksShowView = Viewmaster.extend({
         return {
             task,
             state: this.model.getCurrentState(),
-            votings: votings.map(function (v) {
-                return {
-                    ...v.toJSON(),
-                    running: v.isRunning()
-                }
-            }).reverse(),
+            votings: votings
+                .map(function(v) {
+                    return {
+                        ...v.toJSON(),
+                        running: v.isRunning()
+                    }
+                })
+                .reverse(),
             breadcrumb: {
                 task_group_id: task.task_group_id,
                 task_group_title: task.task_group_title
@@ -79,7 +82,8 @@ const TasksShowView = Viewmaster.extend({
         event.preventDefault()
 
         const running = this.model.getVotings().find(a => a.isRunning())
-        running.stop()
+        running
+            .stop()
             .then(() => {
                 this.render()
                 return null
@@ -87,6 +91,29 @@ const TasksShowView = Viewmaster.extend({
             .catch(response => {
                 showError('Could not stop voting', response)
             })
+    },
+
+    onClickRemoveVoting(event) {
+        event.preventDefault()
+        const voting = this.model.getVotings().get(
+            $(event.target)
+                .closest('.cliqr--votings-list-item')
+                .data('votingid')
+        )
+        if (!voting) {
+            return
+        }
+        showConfirmDialog(`Wollen Sie diese Abstimmung wirklich löschen?`, () => {
+            voting
+                .destroy()
+                .then(() => {
+                    this.render()
+                    return null
+                })
+                .catch(error => {
+                    showError('Could not remove voting', error)
+                })
+        })
     }
 })
 
