@@ -12,6 +12,10 @@ import ScalesResponse from './models/response'
 
 import scalesCss from './scales.scss'
 
+import Handlebars from 'handlebars-template-loader/runtime'
+import scalesHeader from './hbs/scales_header.hbs'
+Handlebars.registerPartial('scales_header', scalesHeader)
+
 class Scales {
     constructor(task) {
         this.task = task

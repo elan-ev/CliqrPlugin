@@ -4,6 +4,7 @@ import Backbone from 'backbone'
 import jQuery from 'jquery'
 
 import showError from './error'
+import setupHandlebars from './setupHandlebars.js'
 
 import PollsCollection from './models/polls'
 import PollsIndexView from './views/polls_index'
@@ -27,6 +28,7 @@ const fetchPolls = function() {
 class PollCliqrApp {
     constructor(selector) {
         this.selector = selector
+        setupHandlebars()
         this.initBackbone()
         this.initPage()
     }

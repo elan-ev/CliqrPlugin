@@ -20,7 +20,7 @@
         "css-loader": "1.0.0",
         "git-revision-webpack-plugin": "3.0.3",
         "handlebars": "4.0.11",
-        "handlebars-loader": "1.7.0",
+        "handlebars-template-loader": "1.0.0",
         "mini-css-extract-plugin": "0.4.2",
         "optimize-css-assets-webpack-plugin": "5.0.1",
         "postcss-atroot": "0.1.3",

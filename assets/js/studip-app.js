@@ -3,11 +3,13 @@ import './public-path.js'
 import Backbone from 'backbone'
 import jQuery from 'jquery'
 
-import core_css from '../scss/core.scss'
+import '../scss/core.scss'
+import setupHandlebars from './setupHandlebars.js'
 import StudipRouter from './routers/studip'
 
 class StudIPCliqrApp {
     constructor(selector) {
+        setupHandlebars()
         this.initBackbone()
         this.initStuff()
         this.initRouters(selector)

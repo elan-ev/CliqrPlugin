@@ -12,6 +12,10 @@ import MCResponse from './models/response'
 
 import mc_css from './multiple-choice.scss'
 
+import Handlebars from 'handlebars-template-loader/runtime'
+import mcHeader from './hbs/mc_header.hbs'
+Handlebars.registerPartial('mc_header', mcHeader)
+
 class MultipleChoice {
     constructor(task) {
         this.task = task
