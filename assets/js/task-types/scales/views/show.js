@@ -18,7 +18,7 @@ const ShowView = Viewmaster.extend({
             model: this.model
         })
 
-        this.setView('.contentbox header', edit)
+        this.setView('article.studip header', edit)
     },
 
     template: require('../hbs/show.hbs'),
