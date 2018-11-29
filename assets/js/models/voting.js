@@ -40,10 +40,10 @@ const Voting = Backbone.Model.extend({
         }
 
         const start = new Date(this.get('start')).valueOf(),
-              end = new Date(this.get('end')).valueOf() || Infinity,
-              now = new Date().valueOf()
+            end = new Date(this.get('end')).valueOf() || Infinity,
+            now = new Date().valueOf()
 
-        return start <= now && now <= end
+        return start <= now && now < end
     },
 
     addResponse(newResponse) {

@@ -190,7 +190,7 @@ class Assignment extends eAssignment
         $now = time();
         $end = $this->end ?: PHP_INT_MAX;
 
-        return $start <= $now && $now <= $end;
+        return $start <= $now && $now < $end;
     }
 
     /**
