@@ -1,6 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-
+import messageBus from '../message_bus'
 import showError from '../error'
 import Task from './task'
 
@@ -12,7 +12,6 @@ const actionMap = {
 }
 
 const Voting = Backbone.Model.extend({
-
     sync(method, model, options) {
         _.extend(options, {
             url: typeof model.url === 'function' ? model.url(actionMap[method]) : void 0
@@ -47,8 +46,9 @@ const Voting = Backbone.Model.extend({
     },
 
     addResponse(newResponse) {
-        newResponse.save({ course_id: window.cliqr.config.CID })
-            .then(response => {
+        newResponse
+            .save({ course_id: window.cliqr.config.CID })
+            .then(() => {
                 this.trigger('add:response', this, newResponse)
                 return null
             })
@@ -58,7 +58,11 @@ const Voting = Backbone.Model.extend({
     },
 
     stop() {
-        return this.save({ end: new Date().toISOString() })
+        return this.save({ end: new Date().toISOString() }).then(model => {
+            messageBus.broadcast('stop:voting', model)
+
+            return model
+        })
     }
 })
 

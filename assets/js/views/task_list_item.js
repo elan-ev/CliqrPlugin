@@ -1,9 +1,7 @@
 import Backbone from 'backbone'
-
 import showError from '../error'
 import Viewmaster from './viewmaster'
 import { showConfirmDialog } from '../dialog'
-import Voting from '../models/voting'
 import task_types from '../models/task_types'
 
 const TaskListItemView = Viewmaster.extend({
@@ -64,10 +62,9 @@ const TaskListItemView = Viewmaster.extend({
 
     onClickStart(event) {
         event.preventDefault()
-        const vtng = new Voting({ task_id: this.model.id })
-        vtng.save()
-            .then(model => {
-                Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
+        this.model.startVoting()
+            .then(voting => {
+                Backbone.history.navigate(`voting/${voting.id}`, { trigger: true })
                 return null
             })
             .catch(error => {
@@ -81,7 +78,6 @@ const TaskListItemView = Viewmaster.extend({
         const running = this.model.getVotings().find(a => a.isRunning())
         running.stop()
             .then(() => {
-                // nothing to do
                 return null
             })
             .catch(error => {

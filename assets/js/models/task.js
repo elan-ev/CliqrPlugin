@@ -1,10 +1,10 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-
+import messageBus from '../message_bus'
 import Voting from './voting'
 import VotingsCollection from './votings'
 
-const actionMap = function (action) {
+const actionMap = function(action) {
     const map = {
         create: 'create',
         update: 'update',
@@ -15,7 +15,6 @@ const actionMap = function (action) {
 }
 
 const Task = Backbone.Model.extend({
-
     sync(method, model, options) {
         _.extend(options, {
             url: typeof model.url === 'function' ? model.url(actionMap(method)) : void 0
@@ -53,8 +52,17 @@ const Task = Backbone.Model.extend({
 
     duplicate() {
         const options = {}
-        return this.sync('duplicate', this, options)
-            .then(attrs => new Task(attrs))
+        return this.sync('duplicate', this, options).then(attrs => new Task(attrs))
+    },
+
+    startVoting() {
+        const vtng = new Voting({ task_id: this.id })
+
+        return vtng.save().then(model => {
+            messageBus.broadcast('start:voting', model)
+
+            return model
+        })
     }
 })
 

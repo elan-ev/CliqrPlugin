@@ -1,0 +1,19 @@
+{{#if task}}
+    {{#> widgetLayout}}
+
+    {{#*inline "title"}}
+    {{icon 'play'}}
+    Aktuelle Abstimmung
+    {{/inline}}
+
+    {{#*inline "content"}}
+    {{#with task}}
+
+        <a href="#task/show/{{id}}">
+            <i class="cliqr--icon cliqr--icon-color-red cliqr--icon-{{../icon}}"></i>
+            {{#if title}}{{title}}{{else}}{{strip_tags description_html}}{{/if}}
+        </a>
+    {{/with}}
+    {{/inline}}
+  {{/widgetLayout}}
+{{/if}}

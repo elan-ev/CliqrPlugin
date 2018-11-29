@@ -1,0 +1,8 @@
+<ul class="{{#each cssClasses as |cssClass|}} {{cssClass}}{{/each}}">
+    {{#each elements as |element|}}
+        <li{{#if element.active}} class="active"{{/if}}>
+            {{#if element.icon}}{{element.icon}}{{/if}}
+            {{element.content}}
+        </li>
+    {{/each}}
+</ul>

@@ -1,10 +1,8 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-
 import showError from '../error'
 import Voting from '../models/voting'
 import taskTypes from '../models/task_types'
-
 import Viewmaster from './viewmaster'
 
 const decorateVoting = function (voting) {
@@ -98,16 +96,15 @@ const VotingsShowView = Viewmaster.extend({
 
     onClickStop(event) {
         event.preventDefault()
-        this.model.save({ end: new Date().toISOString() })
+        this.model.stop()
     },
 
     onClickRestart(event) {
         event.preventDefault()
-        const task_id = this.model.getTask().id,
-              vtng = new Voting({ task_id })
-        vtng.save()
-            .then(model => {
-                Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
+        const task = this.model.getTask()
+        task.startVoting()
+            .then(voting => {
+                Backbone.history.navigate(`voting/${voting.id}`, { trigger: true })
                 return null
             })
             .catch(error => {

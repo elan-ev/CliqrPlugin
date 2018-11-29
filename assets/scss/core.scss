@@ -51,6 +51,9 @@ article.studip header {
 
 @import "component-task-edit.scss";
 
+@import "component-sidebar.scss";
+
+
 .cliqr--example {
     border: 1px solid color-mod($studip-yellow tint(80%));
     position: relative;

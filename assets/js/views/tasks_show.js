@@ -2,11 +2,8 @@ import Backbone from 'backbone'
 import _ from 'underscore'
 import { showConfirmDialog } from '../dialog'
 import showError from '../error'
-
-import Viewmaster from './viewmaster'
-
 import taskTypes from '../models/task_types'
-import Voting from '../models/voting'
+import Viewmaster from './viewmaster'
 
 const TasksShowView = Viewmaster.extend({
     tagName: 'article',
@@ -67,10 +64,9 @@ const TasksShowView = Viewmaster.extend({
 
     onClickStart(event) {
         event.preventDefault()
-        const vtng = new Voting({ task_id: this.model.id })
-        vtng.save()
-            .then(model => {
-                Backbone.history.navigate(`voting/${model.id}`, { trigger: true })
+        this.model.startVoting()
+            .then(voting => {
+                Backbone.history.navigate(`voting/${voting.id}`, { trigger: true })
                 return null
             })
             .catch(response => {

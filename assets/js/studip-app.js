@@ -2,10 +2,10 @@ import '@babel/polyfill'
 import './public-path.js'
 import Backbone from 'backbone'
 import jQuery from 'jquery'
-
 import '../scss/core.scss'
 import setupHandlebars from './setupHandlebars.js'
 import StudipRouter from './routers/studip'
+import SidebarView from './views/component-sidebar'
 
 class StudIPCliqrApp {
     constructor(selector) {
@@ -20,15 +20,21 @@ class StudIPCliqrApp {
     initBackbone() {
         Backbone.$ = jQuery
 
-        Backbone.ajax = function () {
+        Backbone.ajax = function() {
             const xhr = Backbone.$.ajax.apply(Backbone.$, arguments)
             return Promise.resolve(xhr)
         }
+
+        const sidebar = new SidebarView({ el: '#layout-sidebar' })
+        sidebar.render()
     }
 
     initStuff() {
-        Backbone.$(document).on('click', '.cliqr--click-once', (e) => {
-            Backbone.$(e.target).closest('button').prop('disabled', true).addClass('loading')
+        Backbone.$(document).on('click', '.cliqr--click-once', e => {
+            Backbone.$(e.target)
+                .closest('button')
+                .prop('disabled', true)
+                .addClass('loading')
         })
     }
 
