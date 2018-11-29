@@ -112,7 +112,7 @@ class VotingsController extends CliqrStudipController
         // TODO: validate model
         $voting->store();
 
-        $this->redirect('votings/show/'.$voting->id);
+        $this->render_json($voting->toJSON());
     }
 
     public function destroy_action($id)
