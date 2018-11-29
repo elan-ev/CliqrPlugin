@@ -7,12 +7,15 @@ const iconMaker = (color, icon, text) => {
 }
 
 const fab = function (klass, text, icon, { hash }) {
-    let { disabled = false, once = false, flat = false, color = 'blue' } = hash
+    let { disabled = false, once = false, flat = false, color = 'blue', tooltip = true } = hash
     const disabledAttr = disabled ? 'disabled' : ''
+
 
     text = escapeExpression(text)
     klass = 'js-' + escapeExpression(klass)
     color = escapeExpression(color)
+
+    const tooltipAttr = tooltip ? `data-tooltip="${text}"` : ''
 
     const addClasses = (escapeExpression(hash['class']) || '')
           + (once ? ' cliqr--click-once' : '')
@@ -20,8 +23,7 @@ const fab = function (klass, text, icon, { hash }) {
 
     return new SafeString(`
             <button type="button" class="button cliqr--button-fab ${klass} ${addClasses}"
-                    name="${text}" ${disabledAttr}
-                    data-tooltip="${text}">
+                    name="${text}" ${disabledAttr} ${tooltipAttr}>
                 ${iconMaker(color, escapeExpression(icon), text)}
             </button>`)
 }
