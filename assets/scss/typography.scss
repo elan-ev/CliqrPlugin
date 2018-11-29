@@ -4,8 +4,8 @@ h3,
 h4,
 h5,
 h6 {
-    margin: calc($baseLineHeight / 2) 0;
-    font-weight: calc($headingsFontWeight);
+    margin: ($baseLineHeight / 2) 0;
+    font-weight: ($headingsFontWeight);
     line-height: $baseLineHeight;
     /* Fix the character spacing for headings */
     text-rendering: optimizelegibility;
@@ -21,37 +21,37 @@ h6 {
 h1,
 h2,
 h3 {
-    line-height: calc($baseLineHeight * 2);
+    line-height: ($baseLineHeight * 2);
 }
 
 h1 {
-    font-size: calc($baseFontSize * 2.75);
+    font-size: ($baseFontSize * 2.75);
 }
 h2 {
-    font-size: calc($baseFontSize * 2.25);
+    font-size: ($baseFontSize * 2.25);
 }
 h3 {
-    font-size: calc($baseFontSize * 1.75);
+    font-size: ($baseFontSize * 1.75);
 }
 h4 {
-    font-size: calc($baseFontSize * 1.25);
+    font-size: ($baseFontSize * 1.25);
 }
 h5 {
-    font-size: calc($baseFontSize);
+    font-size: ($baseFontSize);
 }
 h6 {
-    font-size: calc($baseFontSize * 0.85);
+    font-size: ($baseFontSize * 0.85);
 }
 
 h1 small {
-    font-size: calc($baseFontSize * 1.75);
+    font-size: ($baseFontSize * 1.75);
 }
 h2 small {
-    font-size: calc($baseFontSize * 1.25);
+    font-size: ($baseFontSize * 1.25);
 }
 h3 small {
-    font-size: calc($baseFontSize);
+    font-size: ($baseFontSize);
 }
 h4 small {
-    font-size: calc($baseFontSize);
+    font-size: ($baseFontSize);
 }

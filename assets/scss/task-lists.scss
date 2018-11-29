@@ -54,6 +54,10 @@
         }
     }
 
+    tbody tr:only-child .ui-sortable-handle i {
+        visibility: hidden;
+    }
+
     .ui-sortable-placeholder {
         background-color: $studip-violet;
         color: $studip-violet;

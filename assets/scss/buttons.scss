@@ -58,7 +58,7 @@ button.cliqr--button-fab {
     box-shadow: 0 0 8px 0px rgba(0,0,0,0.0), inset 0 0 0 0px $color-accent;
 
     &:not(:disabled):hover {
-        box-shadow: 0 0 8px 0px rgba(0,0,0,0.7), inset 0 0 0 calc($button-size / 2) $color-accent;
+        box-shadow: 0 0 8px 0px rgba(0,0,0,0.7), inset 0 0 0 ($button-size/2) $color-accent;
         background-color: transparent;
     }
 

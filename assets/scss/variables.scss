@@ -70,13 +70,13 @@ $gap: 32px !default;
 $tablet: 801px !default;
 
 /* 960px container + 4rem */
-$desktop: calc(960px + 2 * $gap) !default;
+$desktop: 960px + (2 * $gap) !default;
 
 /* 1152px container + 4rem */
-$widescreen: calc(1152px + 2 * $gap) !default;
+$widescreen: 1152px + (2 * $gap) !default;
 
 /* 1344px container + 4rem */
-$fullhd: calc(1344px + 2 * $gap) !default;
+$fullhd: 1344px + (2 * $gap) !default;
 
 
 $size-1: 3em !default;

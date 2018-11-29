@@ -6,6 +6,8 @@ let gitRevisionPlugin = new GitRevisionPlugin({
     lightweightTags: true
 })
 
+const devMode = process.env.NODE_ENV !== 'production'
+
 module.exports = {
     context: path.join(__dirname, './assets/js'),
     entry: {
@@ -22,29 +24,29 @@ module.exports = {
             {
                 test: /assets\/scss\/.+\.scss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
-                            url: false,
-                            importLoaders: 1
+                            url: false
                         }
                     },
-                    { loader: 'postcss-loader' }
+                    'postcss-loader',
+                    'sass-loader'
                 ]
             },
             {
                 test: /assets\/js\/.+\.scss$/,
                 use: [
-                    { loader: 'style-loader' },
+                    'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
-                            url: false,
-                            importLoaders: 1
+                            url: false
                         }
                     },
-                    { loader: 'postcss-loader' }
+                    'postcss-loader',
+                    'sass-loader'
                 ]
             },
             {
