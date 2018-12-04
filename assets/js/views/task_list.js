@@ -34,7 +34,7 @@ const TaskListView = Viewmaster.extend({
                 {
                     handle: '.cliqr--task-checkbox',
                     items: 'tbody tr',
-                    cursor: 'move',
+                    cursor: 'ns-resize',
                     opacity: 1,
                     update() {
                         const positions = Backbone.$(this)
