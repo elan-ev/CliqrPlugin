@@ -55,7 +55,7 @@ article.studip header {
 
 
 .cliqr--example {
-    border: 1px solid color-mod($studip-yellow tint(80%));
+    border: 1px solid mix($studip-yellow, white, 20%);
     position: relative;
     padding: 1.5rem;
 
@@ -68,7 +68,7 @@ article.studip header {
     }
 
     &::before {
-        background: color-mod($studip-yellow tint(40%));
+        background: mix($studip-yellow, white, 60%);
         border-radius: 2px 2px 0 0;
         bottom: 100%;
         color: rgba(0,0,0,.7);

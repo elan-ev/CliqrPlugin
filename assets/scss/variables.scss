@@ -11,17 +11,17 @@ $studip-brand-color-darker: #1f3f70 !default;
 $studip-brand-color-light: #36598f !default;
 $studip-brand-color-lighter: #899ab9 !default;
 
-$studip-base-color-80: color-mod($studip-base-color tint(20%));
-$studip-base-color-60: color-mod($studip-base-color tint(40%));
-$studip-base-color-40: color-mod($studip-base-color tint(60%));
-$studip-base-color-20: color-mod($studip-base-color tint(80%));
+$studip-base-color-80: mix($studip-base-color, white, 80%);
+$studip-base-color-60: mix($studip-base-color, white, 60%);
+$studip-base-color-40: mix($studip-base-color, white, 40%);
+$studip-base-color-20: mix($studip-base-color, white, 20%);
 
 $studip-content-color: $studip-brand-color-lighter;
-$studip-content-color-80: color-mod($studip-content-color tint(20%));
-$studip-content-color-60: color-mod($studip-content-color tint(40%));
-$studip-content-color-40: color-mod($studip-content-color tint(60%));
-$studip-content-color-20: color-mod($studip-content-color tint(80%));
-$studip-content-color-10: color-mod($studip-content-color tint(90%));
+$studip-content-color-80: mix($studip-content-color, white, 80%);
+$studip-content-color-60: mix($studip-content-color, white, 60%);
+$studip-content-color-40: mix($studip-content-color, white, 40%);
+$studip-content-color-20: mix($studip-content-color, white, 20%);
+$studip-content-color-10: mix($studip-content-color, white, 10%);
 
 
 $studip-black: #000000 !default;
