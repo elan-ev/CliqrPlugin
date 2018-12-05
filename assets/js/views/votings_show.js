@@ -1,5 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
+import { showConfirmDialog } from '../dialog'
 import showError from '../error'
 import Voting from '../models/voting'
 import taskTypes from '../models/task_types'
@@ -39,7 +40,8 @@ const VotingsShowView = Viewmaster.extend({
         'click .js-stop': 'onClickStop',
         'click .js-restart': 'onClickRestart',
         'click .js-show-qr-code': 'onClickShowQRCode',
-        'click .js-compare': 'onClickCompare'
+        'click .js-compare': 'onClickCompare',
+        'click .js-remove': 'onClickRemove'
     },
 
     initialize() {
@@ -133,6 +135,22 @@ const VotingsShowView = Viewmaster.extend({
         const thisVersion = this.model.id,
               otherVersion = Backbone.$(event.target).closest('form').find('select').val()
         Backbone.history.navigate(`compare/${otherVersion}/${thisVersion }`, { trigger: true })
+    },
+
+    onClickRemove(event) {
+        event.preventDefault()
+        const task = this.model.getTask()
+        showConfirmDialog(`Wollen Sie diese Abstimmung wirklich löschen?`, () => {
+            this.model
+                .destroy()
+                .then(() => {
+                    Backbone.history.navigate(`task/show/${task.id}`, { trigger: true })
+                    return null
+                })
+                .catch(error => {
+                    showError('Could not remove voting', error)
+                })
+        })
     }
 })
 
