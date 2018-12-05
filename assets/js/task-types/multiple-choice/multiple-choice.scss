@@ -25,6 +25,10 @@ $color-diminished: #999999;
     .cliqr--multiple-choice-show-view,
     .cliqr--multiple-choice-assignment-view {
 
+        header .cliqr--moment {
+            margin-left: 0.5em;
+        }
+
         table.cliqr--multiple-choice-answers {
             line-height: 1.5;
             overflow: hidden;

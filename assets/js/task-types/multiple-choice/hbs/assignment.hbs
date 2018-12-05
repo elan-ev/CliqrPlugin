@@ -1,4 +1,13 @@
-{{> mc_header task header="Abstimmung:"}}
+{{#> mc_header}}
+{{#*inline "title"}}
+
+Abstimmung
+{{#unless isRunning}}
+    {{moment start}}
+{{/unless}}
+
+ {{/inline}}
+{{/mc_header}}
 
 <main>
     <table class="cliqr--multiple-choice-answers">
