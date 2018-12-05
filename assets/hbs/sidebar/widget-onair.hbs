@@ -7,13 +7,10 @@
     {{/inline}}
 
     {{#*inline "content"}}
-    {{#with task}}
-
-        <a href="#task/show/{{id}}">
-            <i class="cliqr--icon cliqr--icon-color-red cliqr--icon-{{../icon}}"></i>
-            {{#if title}}{{title}}{{else}}{{strip_tags description_html}}{{/if}}
-        </a>
-    {{/with}}
+    <a href="#voting/{{voting.id}}">
+        <i class="cliqr--icon cliqr--icon-color-red cliqr--icon-{{./icon}}"></i>
+        {{#if task.title}}{{task.title}}{{else}}{{strip_tags task.description_html}}{{/if}}
+    </a>
     {{/inline}}
   {{/widgetLayout}}
 {{/if}}
