@@ -32,6 +32,7 @@ const AssignmentView = Viewmaster.extend({
 
     context() {
         return {
+            start: this.voting.get('start'),
             task: this.model.toJSON(),
             isRunning: this.voting.isRunning()
         }
