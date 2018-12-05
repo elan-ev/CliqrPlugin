@@ -14,12 +14,12 @@ class HelpController extends CliqrStudipController
     public function index_action()
     {
         global $template_factory;
-        $this->set_layout($template_factory->open('layouts/base'));
+        $this->set_layout(
+            $GLOBALS['template_factory']->open(\Request::isXhr() ? 'layouts/dialog' : 'layouts/base')
+        );
 
         // set title
         $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
         \PageLayout::setTitle(_('Cliqr - Methodische Informationen'));
-
-        \Navigation::activateItem('/course/cliqr/help');
     }
 }

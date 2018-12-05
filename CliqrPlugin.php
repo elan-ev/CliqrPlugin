@@ -26,6 +26,19 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $this->observeQuestions();
 
         $this->initializeCourse();
+
+        $label = 'Wozu ist "Stud.IP Cliqr" gut?';
+        $text = 'Mit Cliqr können Lehrende in einer Veranstaltung online Fragen stellen und die Lernenden damit aktiv in die Veranstaltung einbeziehen. Die gestellten Frage werden mit Hilfe der mobilen Endgeräten der Studierenden beantwortet.';
+        \Helpbar::get()->addPlainText($label, $text);
+
+        \Helpbar::get()->addLink(
+            'Methodische Informationen',
+            PluginEngine::getURL('cliqrplugin', [], 'help'),
+            Icon::create('folder-full', Icon::ROLE_INFO_ALT),
+            false,
+            ['data-dialog' => 'size=big']
+        );
+
     }
 
     private function setupNavigation()
@@ -54,8 +67,6 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
 
             $navigation->addSubNavigation('archive', new Navigation(_('Beendete Abstimmungen'), $url.'#archive'));
 
-            $url = PluginEngine::getURL('cliqrplugin', compact('cid'), 'help', true);
-            $navigation->addSubNavigation('help', new Navigation(_('Methodische Informationen'), $url));
         }
 
         Navigation::addItem('/course/cliqr', $navigation);
