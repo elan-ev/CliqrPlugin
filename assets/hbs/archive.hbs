@@ -9,11 +9,14 @@
                 <th> Titel der Frage </th>
                 <th> Datum </th>
                 <th> Anzahl Antworten </th>
+                {{#user_role "lecturer"}}
+                    <th> &nbsp; </th>
+                {{/user_role}}
             </tr>
         </thead>
         <tbody>
             {{#each votings}}
-                <tr>
+                <tr data-votingid="{{id}}">
                     <td class="cliqr--archive-header">
                         <a href="#voting/{{id}}">
                             {{icon "test"}}
@@ -29,6 +32,11 @@
                         <span class="bubble" data-tooltip="Frage mit {{responses_count}} abgegebenen Antworten">{{responses_count}}</span>
                     </td>
 
+                    {{#user_role "lecturer"}}
+                        <td class="actions">
+                            {{fab "remove" "Abstimmung löschen" "trash" flat=true}}
+                        </td>
+                    {{/user_role}}
                 </tr>
             {{/each}}
         </tbody>
