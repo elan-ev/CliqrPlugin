@@ -92,7 +92,7 @@ const TasksShowView = Viewmaster.extend({
     onClickRemoveVoting(event) {
         event.preventDefault()
         const voting = this.model.getVotings().get(
-            $(event.target)
+            Backbone.$(event.target)
                 .closest('.cliqr--votings-list-item')
                 .data('votingid')
         )
