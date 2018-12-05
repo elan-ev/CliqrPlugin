@@ -17,7 +17,6 @@ const WidgetOnAir = Viewmaster.extend({
 
         this.collection = new PollsCollection()
         this.listenTo(this.collection, 'add remove', this.render)
-        // this.listenTo(this.collection, 'all', (...args) => console.log("debug SidebarQuatsch", ...args))
 
         this.listenTo(this.collection, 'sync', restartTimeout)
         this.collection.fetch()
