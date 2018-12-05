@@ -54,7 +54,9 @@
                     </div>
 
                     <div class="panel-block-actions">
-                        {{fab "remove" "Löschen" "trash" flat=true tooltip=false once=true}}
+                        {{#unless running}}
+                            {{fab "remove" "Löschen" "trash" flat=true tooltip=false once=true}}
+                        {{/unless}}
                     </div>
                 </a>
             {{/each}}
