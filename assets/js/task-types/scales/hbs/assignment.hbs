@@ -1,4 +1,14 @@
-{{> scales_header task header="Abstimmung:"}}
+{{#> scales_header task}}
+{{#*inline "title"}}
+
+Abstimmung:  {{title}}
+
+{{#unless ../isRunning}}
+    {{moment ../start}}
+{{/unless}}
+
+ {{/inline}}
+{{/scales_header}}
 
 <main{{#if isRunning}} class="cliqr--voting-is-running"{{/if}}>
     <ol class="cliqr--scales-statements"></ol>
