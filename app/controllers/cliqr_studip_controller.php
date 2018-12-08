@@ -4,29 +4,32 @@ namespace Cliqr;
 
 /**
  * @property \CliqrPlugin $plugin
- * @property \Pimple $container
+ * @property \Pimple      $container
  */
 abstract class CliqrStudipController extends \StudipController
 {
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function before_filter(&$action, &$args)
     {
         $this->plugin = $this->dispatcher->plugin;
         $this->container = $this->dispatcher->container;
     }
 
-    protected function current_user()
-    {
-        return $GLOBALS['user'];
-    }
-
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
     protected function polls_url($cid)
     {
-        $abs_base = $GLOBALS['ABSOLUTE_URI_STUDIP'];
+        $absBase = $GLOBALS['ABSOLUTE_URI_STUDIP'];
 
         // force an absolute URL
-        \URLHelper::setBaseURL($abs_base);
+        \URLHelper::setBaseURL($absBase);
 
-        $url = current(explode('?', $this->url_for('polls', $cid))) . '?cancel_login=1';
+        $url = current(explode('?', $this->url_for('polls', $cid))).'?cancel_login=1';
 
         // reset to the default set in plugins.php
         \URLHelper::setBaseURL($GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP']);
@@ -34,7 +37,10 @@ abstract class CliqrStudipController extends \StudipController
         return $url;
     }
 
-    public function url_for($to = '')
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
+    public function url_for($toUrl = '')
     {
         $args = func_get_args();
 
@@ -46,11 +52,14 @@ abstract class CliqrStudipController extends \StudipController
 
         // urlencode all but the first argument
         $args = array_map('urlencode', $args);
-        $args[0] = $to;
+        $args[0] = $toUrl;
 
         return \PluginEngine::getURL($this->dispatcher->plugin, $params, implode('/', $args));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     public function render_json($data)
     {
         $this->response->add_header('Content-Type', 'application/json;charset=utf-8');
@@ -61,6 +70,8 @@ abstract class CliqrStudipController extends \StudipController
      * Return the Content-Type of the HTTP request.
      *
      * @return string|null the content type
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function contentType()
     {
@@ -79,7 +90,7 @@ abstract class CliqrStudipController extends \StudipController
      */
     protected function hasJSONContentType()
     {
-        return $this->contentType() === 'application/json';
+        return 'application/json' === $this->contentType();
     }
 
     /**
@@ -98,7 +109,7 @@ abstract class CliqrStudipController extends \StudipController
      * Exception handler called when the performance of an action raises an
      * exception.
      *
-     * @param  object $exception the thrown exception
+     * @param object $exception the thrown exception
      */
     public function rescue($exception)
     {
@@ -110,13 +121,13 @@ abstract class CliqrStudipController extends \StudipController
         }
     }
 
-    protected static function ensureMD5($id)
+    protected static function ensureMD5($md5ish)
     {
-        if (!preg_match('/^[0-9a-f]{32}$/', $id)) {
+        if (!preg_match('/^[0-9a-f]{32}$/', $md5ish)) {
             throw new \Trails_Exception(400);
         }
 
-        return $id;
+        return $md5ish;
     }
 
     // require a cid; throw a 400 otherwise
@@ -132,6 +143,10 @@ abstract class CliqrStudipController extends \StudipController
     }
 
     // require ´tutor´ permission; throw a 403 otherwise
+
+    /**
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
     protected static function requireAuthorisation($cid)
     {
         if (!$GLOBALS['perm']->have_studip_perm('tutor', $cid)) {
@@ -149,14 +164,19 @@ abstract class CliqrStudipController extends \StudipController
         return $this->container['authority']->cannot($action, $resource, $resourceValue);
     }
 
-    // ignore namespace of controllers
+    /**
+     * ignore namespace of controllers
+     * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName))
+     */
     public function get_default_template($action)
     {
         $class = array_pop(explode('\\', get_class($this)));
-        $controller_name =
+        $controllerName =
             \Trails_Inflector::underscore(substr($class, 0, -10));
 
-        return $controller_name.'/'.$action;
+        return $controllerName.'/'.$action;
     }
 
     protected function getKnownTypes()

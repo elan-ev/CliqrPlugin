@@ -1,8 +1,5 @@
 <?php
 
-// require composer autoloader
-require __DIR__.'/vendor/autoload.php';
-
 use Cliqr\DB\Assignment;
 
 class CliqrPlugin extends StudIPPlugin implements StandardPlugin
@@ -13,105 +10,73 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     {
         parent::__construct();
 
-        $this->setupNavigation();
+        require_once __DIR__.'/vendor/autoload.php';
     }
 
     public function initialize()
     {
-        require_once 'vendor/trails/trails.php';
-        require_once 'app/controllers/studip_controller.php';
-
-        $this->config = self::setupConfig();
-
+        $this->config = new \Cliqr\Container();
         $this->observeQuestions();
-
         $this->initializeCourse();
-
-        $label = 'Wozu ist "Stud.IP Cliqr" gut?';
-        $text = 'Mit Cliqr können Lehrende in einer Veranstaltung online Fragen stellen und die Lernenden damit aktiv in die Veranstaltung einbeziehen. Die gestellten Frage werden mit Hilfe der mobilen Endgeräten der Studierenden beantwortet.';
-        \Helpbar::get()->addPlainText($label, $text);
-
-        \Helpbar::get()->addLink(
-            'Methodische Informationen',
-            PluginEngine::getURL('cliqrplugin', [], 'help'),
-            Icon::create('folder-full', Icon::ROLE_INFO_ALT),
-            false,
-            ['data-dialog' => 'size=big']
-        );
-
-    }
-
-    private function setupNavigation()
-    {
-        global $perm;
-
-        $cid = $this->getContext();
-        if (Request::isXhr()
-            || Navigation::hasItem('/course/cliqr')
-            || !$this->isActivated($cid)
-            || !$perm->have_studip_perm('autor', $cid)) {
-            return;
-        }
-
-        // /course/cliqr -> plugins.php/cliqrplugin/questions
-        $url = PluginEngine::getURL('cliqrplugin', compact('cid'), '', true);
-
-        $navigation = new Navigation(_('Cliqr'), $url);
-        $navigation->setImage(Icon::create('test', 'info_alt'));
-        $navigation->setActiveImage(Icon::create('test', 'info'));
-
-        if ($perm->get_studip_perm($cid) === 'autor') {
-            $navigation->addSubNavigation('index', new Navigation(_('Beendete Abstimmungen'), $url.'#'));
-        } else {
-            $navigation->addSubNavigation('index', new Navigation(_('Fragensammlungen'), $url.'#task-groups'));
-
-            $navigation->addSubNavigation('archive', new Navigation(_('Beendete Abstimmungen'), $url.'#archive'));
-
-        }
-
-        Navigation::addItem('/course/cliqr', $navigation);
     }
 
     public function getContext()
     {
-        return Request::option('cid');
+        global $user;
+
+        return (\Request::int('cancel_login')
+                && (!is_object($user) || 'nobody' === $user->id))
+            ? null
+            : Request::option('cid');
     }
 
-    private static function setupConfig()
-    {
-        require_once 'lib/Container.php';
-
-        return new \Cliqr\Container();
-    }
-
-    public function getIconNavigation($course_id, $last_visit, $user_id = null)
-    {
-        // ...
-    }
-
-    public function getInfoTemplate($course_id)
+    /**
+     * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function getIconNavigation($courseId, $lastVisit, $userId = null)
     {
         // ...
     }
 
-    public function getTabNavigation($course_id)
+    /**
+     * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function getInfoTemplate($courseId)
     {
         // ...
     }
 
-    public function getNotificationObjects($course_id, $since, $user_id)
+    public function getTabNavigation($cid)
+    {
+        $url = \PluginEngine::getURL($this, compact('cid'), '', true);
+        $cliqr = new Navigation('Cliqr', $url);
+
+        return compact('cliqr');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function getNotificationObjects($courseId, $since, $userId)
     {
         // ...
     }
 
     const DEFAULT_CONTROLLER = 'app';
 
+    /**
+     * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
     public function perform($unconsumedPath)
     {
-        if (!\Request::isXhr()) {
-            $this->setupStudipNavigation();
-        }
-
         $trailsRoot = $this->getPluginPath().'/app';
         $dispatcher = new \Cliqr\Dispatcher(
             $trailsRoot,
@@ -123,14 +88,6 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $dispatcher->container = $this->config;
 
         $dispatcher->dispatch($unconsumedPath);
-    }
-
-    // setup Stud.IP navigation and title
-    private function setupStudipNavigation($action = null)
-    {
-        $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
-
-        PageLayout::setTitle($this->config['header_line'].' - '._('Cliqr'));
     }
 
     public function observeQuestions()
@@ -156,7 +113,7 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             $course,
             $this->config['datafield_first_run_complete_id']
         );
-        if (count($datafields) !== 1) {
+        if (1 !== count($datafields)) {
             throw new RuntimeException('Missing Cliqr First Run Datafield');
         }
         $firstRunComplete = $datafields[0];
