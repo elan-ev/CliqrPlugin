@@ -1,8 +1,12 @@
 <div class="sidebar-widget"{{#if id}} id="{{id}}"{{/if}}>
     <div class="sidebar-widget-header">
         {{> title}}
+
+        <div class="sidebar-widget-extra">
+            {{#> extra}} {{! per default leer }} {{/extra}}
+        </div>
     </div>
     <div class="sidebar-widget-content">
-        {{> content}}
+        {{> @partial-block}}
     </div>
 </div>

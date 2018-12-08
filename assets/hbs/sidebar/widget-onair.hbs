@@ -6,11 +6,10 @@
     Aktuelle Abstimmung
     {{/inline}}
 
-    {{#*inline "content"}}
     <a href="#voting/{{voting.id}}">
         <i class="cliqr--icon cliqr--icon-color-red cliqr--icon-{{./icon}}"></i>
         {{#if task.title}}{{task.title}}{{else}}{{strip_tags task.description_html}}{{/if}}
     </a>
-    {{/inline}}
+
   {{/widgetLayout}}
 {{/if}}
