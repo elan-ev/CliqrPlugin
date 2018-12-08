@@ -22,12 +22,10 @@ const WidgetOnAir = Viewmaster.extend({
         this.collection.fetch()
 
         this.listenTo(pubsub, 'start:voting', voting => {
-            // TODO: verify
             this.collection.add(voting)
             restartTimeout()
         })
         this.listenTo(pubsub, 'stop:voting', voting => {
-            // TODO: verify
             this.collection.remove(voting.id)
             restartTimeout()
         })

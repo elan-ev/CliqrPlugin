@@ -105,7 +105,7 @@ const FormView = Viewmaster.extend({
             return
         }
         const subtype = classSubtype[0].substr(8)
-        if (subtypes.some(type => type.id === subtype)) {
+        if (_.some(subtypes.models, type => type.id === subtype)) {
             this.selectSubtype(subtype)
         }
     },

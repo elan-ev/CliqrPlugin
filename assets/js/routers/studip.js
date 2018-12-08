@@ -14,10 +14,11 @@ import TasksShowView from '../views/tasks_show'
 import VotingsCompareView from '../views/votings_compare'
 import VotingsShowView from '../views/votings_show'
 
-import { fetchTaskGroups, fetchTaskGroup, fetchTask, fetchVoting, fetchTwoVotings, fetchLastVotings } from './studip-fetcher'
+import taskGroups from '../store/task_groups'
+
+import { fetchTaskGroup, fetchTask, fetchVoting, fetchTwoVotings, fetchLastVotings } from './studip-fetcher'
 
 const StudipRouter = Backbone.Router.extend({
-
     initialize(options) {
         this.selector = options.selector
     },
@@ -37,7 +38,7 @@ const StudipRouter = Backbone.Router.extend({
 
         'voting/:id': 'voting',
 
-        'archive': 'archive'
+        archive: 'archive'
     },
 
     routeHandler(fetcher, id, view, useCollection = 'model', ...rest) {
@@ -62,14 +63,11 @@ const StudipRouter = Backbone.Router.extend({
 
     // ROUTE: ''
     redirectByAuthorization() {
-
         if (userRole('student')) {
             this.navigate('archive', { trigger: true, replace: true })
-        }
-
-        else {
-            if (window.cliqr.bootstrap.taskGroups.length === 1) {
-                this.navigate(`task-groups/show/${window.cliqr.bootstrap.taskGroups[0].id}`, { trigger: true, replace: true })
+        } else {
+            if (taskGroups.size() === 1) {
+                this.navigate(`task-groups/show/${taskGroups.first().id}`, { trigger: true, replace: true })
             } else {
                 this.navigate('task-groups', { trigger: true, replace: true })
             }
@@ -77,31 +75,49 @@ const StudipRouter = Backbone.Router.extend({
     },
 
     // ROUTE: '#task-groups'
-    taskGroups() { this.routeHandler(fetchTaskGroups, null, TaskGroupsIndexView, 'collection') },
+    taskGroups() {
+        this.routeHandler(() => Promise.resolve(taskGroups), null, TaskGroupsIndexView, 'collection')
+    },
 
     // ROUTE: '#task-groups/show/:id'
-    taskGroup(id) { this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView) },
+    taskGroup(id) {
+        this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView)
+    },
 
     // ROUTE: '#task-group/edit/:id'
-    taskGroupEdit(id) { this.routeHandler(fetchTaskGroup, id, TaskGroupsEditView) },
+    taskGroupEdit(id) {
+        this.routeHandler(fetchTaskGroup, id, TaskGroupsEditView)
+    },
 
     // ROUTE: '#task/show/:id'
-    task(id) { this.routeHandler(fetchTask, id, TasksShowView) },
+    task(id) {
+        this.routeHandler(fetchTask, id, TasksShowView)
+    },
 
     // ROUTE: '#task/create/:id'
-    taskCreate(id) { this.routeHandler(fetchTaskGroup, id, TasksCreateView) },
+    taskCreate(id) {
+        this.routeHandler(fetchTaskGroup, id, TasksCreateView)
+    },
 
     // ROUTE: '#task/edit/:id'
-    taskEdit(id) { this.routeHandler(fetchTask, id, TasksEditView) },
+    taskEdit(id) {
+        this.routeHandler(fetchTask, id, TasksEditView)
+    },
 
     // ROUTE: '#voting/:id'
-    voting(id) { this.routeHandler(fetchVoting, id, VotingsShowView) },
+    voting(id) {
+        this.routeHandler(fetchVoting, id, VotingsShowView)
+    },
 
     // ROUTE: '#compare/:v1/:v2'
-    votingCompare(v1, v2) { this.routeHandler(fetchTwoVotings, [ v1, v2 ], VotingsCompareView, 'votings') },
+    votingCompare(v1, v2) {
+        this.routeHandler(fetchTwoVotings, [v1, v2], VotingsCompareView, 'votings')
+    },
 
     // ROUTE: '#archive'
-    archive() { this.routeHandler(fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive') }
+    archive() {
+        this.routeHandler(fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive')
+    }
 })
 
 export default StudipRouter

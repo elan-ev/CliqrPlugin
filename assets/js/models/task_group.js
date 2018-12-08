@@ -1,7 +1,7 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-const actionMap = function (action) {
+const actionMap = function(action) {
     const map = {
         create: 'create',
         update: 'update',
@@ -12,7 +12,6 @@ const actionMap = function (action) {
 }
 
 const TaskGroup = Backbone.Model.extend({
-
     defaults: {
         tasks_count: 0
     },
@@ -20,19 +19,13 @@ const TaskGroup = Backbone.Model.extend({
     sync(method, model, options) {
         _.extend(options, {
             url: typeof model.url === 'function' ? model.url(actionMap(method)) : void 0
-        });
+        })
         return Backbone.sync(method, model, options)
     },
 
     url(action) {
         let id = this.id != null ? '/' + this.id : ''
-        const url = [
-            window.cliqr.config.PLUGIN_URL,
-            'task_groups/',
-            action,
-            id,
-            '?cid=' + window.cliqr.config.CID
-        ]
+        const url = [window.cliqr.config.PLUGIN_URL, 'task_groups/', action, id, '?cid=' + window.cliqr.config.CID]
 
         if (action === 'show') {
             url.push('&include=tasks')
@@ -43,8 +36,7 @@ const TaskGroup = Backbone.Model.extend({
 
     duplicate() {
         const options = {}
-        return this.sync('duplicate', this, options)
-            .then(attrs => new TaskGroup(attrs))
+        return this.sync('duplicate', this, options).then(attrs => new TaskGroup(attrs))
     },
 
     exportURL() {

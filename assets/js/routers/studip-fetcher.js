@@ -2,35 +2,23 @@ import _ from 'underscore'
 
 import Task from '../models/task'
 import TaskGroup from '../models/task_group'
-import TaskGroupsCollection from '../models/task_groups'
 import Voting from '../models/voting'
 import VotingsCollection from '../models/votings'
 
-// instantiate then remove bootstrapped
-const bootstrapTaskGroups = function () {
-    const taskGroups = new TaskGroupsCollection(window.cliqr.bootstrap.taskGroups)
-    delete(window.cliqr.bootstrap.taskGroups)
-    return taskGroups
-}
+import taskGroups from '../store/task_groups'
 
 const bootstrapLastVotings = function () {
     const lastVotings = new VotingsCollection(window.cliqr.bootstrap.lastVotings || [])
-    delete(window.cliqr.bootstrap.lastVotings)
     return lastVotings
 }
 
 export const fetchTaskGroups = function () {
-    if (window.cliqr.bootstrap.taskGroups) {
-        return Promise.resolve(bootstrapTaskGroups())
-    }
-
-    const taskGroups = new TaskGroupsCollection()
-    return taskGroups.fetch()
-        .then( () => taskGroups )
+    return Promise.resolve(taskGroups)
 }
 
 export const fetchTaskGroup = function (id) {
     const taskGroup = new TaskGroup({ id })
+
     return taskGroup.fetch()
         .then( () => taskGroup )
 }

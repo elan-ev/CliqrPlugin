@@ -2,6 +2,7 @@ import Backbone from 'backbone'
 import Viewmaster from './viewmaster'
 import { showConfirmDialog } from '../dialog'
 import showError from '../error'
+import _ from 'underscore'
 
 const TaskEditComponent = Viewmaster.extend({
     tagName: 'span',
@@ -22,7 +23,7 @@ const TaskEditComponent = Viewmaster.extend({
 
     context() {
         const task = this.model.toJSON()
-        const editable = !this.model.getVotings().any(v => v.get('responses_count'))
+        const editable = !_.some(this.model.getVotings().models, v => v.get('responses_count'))
 
         return { task, editable }
     },

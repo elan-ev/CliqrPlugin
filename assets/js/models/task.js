@@ -46,7 +46,7 @@ const Task = Backbone.Model.extend({
             return this.STATE_NEW
         }
 
-        const did_run = votings.any(a => a.isRunning())
+        const did_run = _.some(votings.models, a => a.isRunning())
         return did_run ? this.STATE_IS_ACTIVE : this.STATE_WAS_ACTIVE
     },
 
