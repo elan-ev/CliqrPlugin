@@ -21,7 +21,7 @@ class Container extends \Pimple
     protected function setupStudip()
     {
         $this['current_user'] = function ($c) {
-            return $GLOBALS['user'];
+            return \User::findCurrent();
         };
 
         if (is_callable('\\Context::getId')) {
