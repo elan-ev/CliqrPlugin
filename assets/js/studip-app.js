@@ -1,7 +1,6 @@
 import '@babel/polyfill'
 import './public-path.js'
 import Backbone from 'backbone'
-import jQuery from 'jquery'
 import '../scss/core.scss'
 import setupHandlebars from './setupHandlebars.js'
 import StudipRouter from './routers/studip'
@@ -15,18 +14,22 @@ class StudIPCliqrApp {
         this.initRouters(selector)
 
         Backbone.history.start()
+
     }
 
     initBackbone() {
-        Backbone.$ = jQuery
+        // @ts-ignore
+        Backbone.$ = window.jQuery
+        // @ts-ignore
+        Backbone._ = window._
 
+        // @ts-ignore
         Backbone.ajax = function() {
             const xhr = Backbone.$.ajax.apply(Backbone.$, arguments)
             return Promise.resolve(xhr)
         }
 
         const sidebar = new SidebarView({ el: '#layout-sidebar' })
-        sidebar.render()
     }
 
     initStuff() {

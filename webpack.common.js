@@ -64,7 +64,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            jquery: path.join(__dirname, './assets/js/jquery')
+            jquery: path.join(__dirname, './assets/js/jquery'),
+            underscore: path.join(__dirname, './assets/js/underscore')
         },
         extensions: ['.js'],
         modules: [path.resolve('./assets/js'), 'node_modules']
