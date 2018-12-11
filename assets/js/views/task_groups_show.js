@@ -1,29 +1,30 @@
+import template from '../../hbs/task-groups-show.hbs'
 import TaskCollection from '../models/tasks'
-
-import Viewmaster from './viewmaster'
 import TaskListView from './task_list'
+import Viewmaster from './viewmaster'
 
 const TaskGroupsShowView = Viewmaster.extend({
-
     className: 'task-groups-show',
 
     tasks: null,
 
-    initialize() {
+    initialize({ store }) {
         Viewmaster.prototype.initialize.call(this)
 
         this.tasks = new TaskCollection(this.model.get('tasks'))
         this.setView('.task-list-container', new TaskListView({ collection: this.tasks, model: this.model }))
     },
 
-    template: require('../../hbs/task-groups-show.hbs'),
+    template,
 
     context() {
         return this.model.toJSON()
     },
 
     postRender() {
-        this.eachView((sel, v) => { v && v.postRender && v.postRender() })
+        this.eachView((sel, v) => {
+            v && v.postRender && v.postRender()
+        })
     }
 })
 

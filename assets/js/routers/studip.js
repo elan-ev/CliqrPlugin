@@ -1,26 +1,21 @@
 import Backbone from 'backbone'
-
-import { userRole, activateNavigation, showLoading, hideLoading, changeToPage } from '../utils'
-
 import showError from '../error'
-
+import { activateNavigation, changeToPage, hideLoading, showLoading, userRole } from '../utils'
 import ArchiveView from '../views/archive'
-import TaskGroupsEditView from '../views/task_groups_edit'
-import TaskGroupsIndexView from '../views/task_groups_index'
-import TaskGroupsShowView from '../views/task_groups_show'
 import TasksCreateView from '../views/tasks_create'
 import TasksEditView from '../views/tasks_edit'
 import TasksShowView from '../views/tasks_show'
+import TaskGroupsEditView from '../views/task_groups_edit'
+import TaskGroupsIndexView from '../views/task_groups_index'
+import TaskGroupsShowView from '../views/task_groups_show'
 import VotingsCompareView from '../views/votings_compare'
 import VotingsShowView from '../views/votings_show'
-
-import taskGroups from '../store/task_groups'
-
-import { fetchTaskGroup, fetchTask, fetchVoting, fetchTwoVotings, fetchLastVotings } from './studip-fetcher'
+import { fetchLastVotings, fetchTask, fetchTaskGroup, fetchTwoVotings, fetchVoting } from './studip-fetcher'
 
 const StudipRouter = Backbone.Router.extend({
     initialize(options) {
         this.selector = options.selector
+        this.store = options.store
     },
 
     routes: {
@@ -47,7 +42,7 @@ const StudipRouter = Backbone.Router.extend({
             .then(response => {
                 hideLoading()
                 activateNavigation(...rest)
-                const page = new view({ [useCollection]: response })
+                const page = new view({ [useCollection]: response, store: this.store })
                 return changeToPage(page, this.selector)
             })
             .catch(error => {
@@ -66,8 +61,8 @@ const StudipRouter = Backbone.Router.extend({
         if (userRole('student')) {
             this.navigate('archive', { trigger: true, replace: true })
         } else {
-            if (taskGroups.size() === 1) {
-                this.navigate(`task-groups/show/${taskGroups.first().id}`, { trigger: true, replace: true })
+            if (this.store.taskGroups.size() === 1) {
+                this.navigate(`task-groups/show/${this.store.taskGroups.first().id}`, { trigger: true, replace: true })
             } else {
                 this.navigate('task-groups', { trigger: true, replace: true })
             }
@@ -76,7 +71,7 @@ const StudipRouter = Backbone.Router.extend({
 
     // ROUTE: '#task-groups'
     taskGroups() {
-        this.routeHandler(() => Promise.resolve(taskGroups), null, TaskGroupsIndexView, 'collection')
+        this.routeHandler(() => Promise.resolve(this.store.taskGroups), null, TaskGroupsIndexView, 'collection')
     },
 
     // ROUTE: '#task-groups/show/:id'

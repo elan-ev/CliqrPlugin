@@ -1,0 +1,18 @@
+<div class="sidebar-widget-header"> Navigation </div>
+<div class="sidebar-widget-content">
+    <ul class="widget-list widget-links sidebar-navigation">
+        {{#user_role "lecturer"}}
+            <li class="active">
+                <a class="active" href="#task-groups">Fragensammlungen</a>
+            </li>
+
+            <li>
+                <ul class="cliqr--navigation-task-groups"></ul>
+            </li>
+        {{/user_role}}
+
+        <li>
+            <a href="#archive">Beendete Abstimmungen</a>
+        </li>
+    </ul>
+</div>
