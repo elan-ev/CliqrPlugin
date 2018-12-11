@@ -33,11 +33,3 @@ endpoint = https://<yourls-domain>/yourls-api.php
 username =
 password =
 api_key =
-
-[pusher]
-;key = <MY-PUSHER-KEY>
-;secret = <MY-PUSHER-SECRET>
-;app_id = <MY-PUSHER-APP-ID>
-;host = http://localhost
-;api_port = 4567
-;ws_port = 8080
