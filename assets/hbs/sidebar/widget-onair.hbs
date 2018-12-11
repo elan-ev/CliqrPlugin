@@ -6,7 +6,13 @@
     Aktuelle Abstimmung
     {{/inline}}
 
-    <a href="#voting/{{voting.id}}">
+    <a
+        {{#user_role "lecturer"}}
+        href="#voting/{{voting.id}}"
+        {{^}}
+        href="{{cliqr_short_url}}"
+        {{/user_role}}
+    >
         <i class="cliqr--icon cliqr--icon-color-red cliqr--icon-{{./icon}}"></i>
         {{#if task.title}}{{task.title}}{{else}}{{strip_tags task.description_html}}{{/if}}
     </a>
