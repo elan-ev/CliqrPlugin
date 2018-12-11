@@ -5,15 +5,9 @@ import TaskGroup from '../models/task_group'
 import Voting from '../models/voting'
 import VotingsCollection from '../models/votings'
 
-import taskGroups from '../store/task_groups'
-
 const bootstrapLastVotings = function () {
     const lastVotings = new VotingsCollection(window.cliqr.bootstrap.lastVotings || [])
     return lastVotings
-}
-
-export const fetchTaskGroups = function () {
-    return Promise.resolve(taskGroups)
 }
 
 export const fetchTaskGroup = function (id) {
