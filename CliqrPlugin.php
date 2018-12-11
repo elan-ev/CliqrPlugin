@@ -16,7 +16,6 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
     public function initialize()
     {
         $this->config = new \Cliqr\Container();
-        $this->observeQuestions();
         $this->initializeCourse();
     }
 
@@ -88,15 +87,6 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
         $dispatcher->container = $this->config;
 
         $dispatcher->dispatch($unconsumedPath);
-    }
-
-    public function observeQuestions()
-    {
-        if ($this->config['pusher_configured']) {
-            require_once 'lib/QuestionPusher.php';
-            $pusher = new \Cliqr\QuestionPusher($this->config, $this->getContext());
-            $pusher->observeNotifications();
-        }
     }
 
     private function initializeCourse()
