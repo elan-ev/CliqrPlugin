@@ -16,13 +16,14 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, './static'),
-        chunkFilename: '[name].chunk.js',
+        chunkFilename: '[name]-[chunkhash].chunk.js',
         filename: '[name].js'
     },
     module: {
         rules: [
             {
-                test: /assets\/scss\/.+\.scss$/,
+                test: /\.scss$/,
+                include: path.resolve(__dirname, 'assets/scss'),
                 use: [
                     devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
                     {
@@ -36,7 +37,8 @@ module.exports = {
                 ]
             },
             {
-                test: /assets\/js\/.+\.scss$/,
+                test: /\.scss$/,
+                include: path.resolve(__dirname, 'assets/js'),
                 use: [
                     'style-loader',
                     {
@@ -51,7 +53,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: /(node_modules)/,
+                include: path.resolve(__dirname, 'assets/js'),
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -59,7 +61,11 @@ module.exports = {
                     }
                 }
             },
-            { test: /\.hbs/, loader: "handlebars-template-loader" }
+            {
+                test: /\.hbs/,
+                include: path.resolve(__dirname, 'assets'),
+                loader: 'handlebars-template-loader'
+            }
         ]
     },
     resolve: {
