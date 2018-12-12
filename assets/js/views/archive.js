@@ -1,9 +1,9 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-import Viewmaster from './viewmaster'
+import template from '../../hbs/archive.hbs'
 import { showConfirmDialog } from '../dialog'
 import showError from '../error'
-import template from '../../hbs/archive.hbs'
+import Viewmaster from './viewmaster'
 
 const ArchiveView = Viewmaster.extend({
     tagName: 'article',
@@ -12,6 +12,12 @@ const ArchiveView = Viewmaster.extend({
 
     events: {
         'click .js-remove': 'onClickRemove'
+    },
+
+    initialize({ store }) {
+        Viewmaster.prototype.initialize.call(this)
+
+        store.trigger('navigation', 'archive')
     },
 
     template,

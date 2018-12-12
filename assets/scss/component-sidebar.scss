@@ -1,34 +1,103 @@
+@mixin right-arrow($width, $color, $margin) {
+    position: relative;
+    margin-right: $margin;
+
+    &:before {
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        left: 100%;
+        top: 50%;
+    }
+
+    &:before {
+        border: $width solid rgba($color, 0);
+        border-left-width: floor($width * 0.66);
+        border-left-color: $color;
+        margin-top: (-$width);
+    }
+}
+
+
+
+ul.cliqr--navigation-task-groups > li.active {
+    background-color: $studip-base-color;
+    margin-left: -4px;
+
+    @include right-arrow(14px, $studip-base-color, -5px);
+
+    a {
+        color: $studip-white;
+        padding-left: 4px;
+        > i.cliqr--icon::before {
+            color: $studip-white !important;
+        }
+    }
+}
+
+.sidebar-navigation > li {
+    padding-left: 5px;
+
+    &.active {
+        display: block;
+        line-height: 2em;
+
+        &:before, &:after {
+            margin-left: -1px;
+        }
+    }
+}
+
+
+.widget-links.sidebar-navigation > li {
+    line-height: 2em;
+}
+
+.cliqr--navigation-task-groups {
+    padding-left: 0;
+    list-style: none;
+}
+
+#sidebar-navigation a.cliqr--navigation-task-group {
+    margin-left: 0.75em;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
 @keyframes heartbeat
 {
-  0%
-  {
-    transform: scale( .75 );
-  }
-  20%
-  {
-    transform: scale( 1 );
-  }
-  40%
-  {
-    transform: scale( .75 );
-  }
-  60%
-  {
-    transform: scale( 1 );
-  }
-  80%
-  {
-    transform: scale( .75 );
-  }
-  100%
-  {
-    transform: scale( .75 );
-  }
+    0%
+    {
+        transform: scale( .75 );
+    }
+    20%
+    {
+        transform: scale( 1 );
+    }
+    40%
+    {
+        transform: scale( .75 );
+    }
+    60%
+    {
+        transform: scale( 1 );
+    }
+    80%
+    {
+        transform: scale( .75 );
+    }
+    100%
+    {
+        transform: scale( .75 );
+    }
 }
 
 #cliqr--on-air .sidebar-widget-header i
 {
-  animation: heartbeat 2s infinite;
+    animation: heartbeat 2s infinite;
 }
 
 #cliqr--on-air .sidebar-widget-content > a {

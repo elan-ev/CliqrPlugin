@@ -90,7 +90,7 @@ const AssignmentView =  Viewmaster.extend({
 
         const width = 150,
               data = context.answers,
-              max = _.max(_.pluck(data, 'votes_count')),
+              max = _.max(_.map(data, 'votes_count')),
               widths = _.map(data, d => max > 0 ? d.votes_count / max * width : 0)
 
         this.$('.graph').append(function (index) {

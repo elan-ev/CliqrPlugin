@@ -44,7 +44,7 @@ const VotingsShowView = Viewmaster.extend({
         'click .js-remove': 'onClickRemove'
     },
 
-    initialize() {
+    initialize({ store }) {
         Viewmaster.prototype.initialize.call(this)
 
         this.listenTo(this.model, 'change', () => {
@@ -53,6 +53,9 @@ const VotingsShowView = Viewmaster.extend({
         })
 
         const task = this.model.getTask()
+
+        const taskGroup = store.taskGroups.get(task.get('task_group_id'))
+        store.trigger('navigation', 'task-group', taskGroup)
 
         taskTypes.fetchTaskType(task)
             .then(taskType => {
@@ -78,7 +81,7 @@ const VotingsShowView = Viewmaster.extend({
         Backbone.$(window.document.body).addClass('cliqr--voting-show')
 
         const views = this.getViews('main')
-        views && _.invoke(views, 'postRender')
+        views && _.each(views, views => views.postRender())
     },
 
     remove() {

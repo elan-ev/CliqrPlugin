@@ -13,6 +13,8 @@ const TaskGroupsShowView = Viewmaster.extend({
 
         this.tasks = new TaskCollection(this.model.get('tasks'))
         this.setView('.task-list-container', new TaskListView({ collection: this.tasks, model: this.model }))
+
+        store.trigger('navigation', 'task-group', this.model)
     },
 
     template,

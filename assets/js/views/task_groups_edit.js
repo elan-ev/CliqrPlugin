@@ -13,6 +13,12 @@ const TaskGroupsEditView = Viewmaster.extend({
         'click .js-cancel': 'onClickCancel'
     },
 
+    initialize({ store }) {
+        Viewmaster.prototype.initialize.call(this)
+
+        store.trigger('navigation', 'task-group', this.model)
+    },
+
     template: require('../../hbs/task-groups-edit.hbs'),
 
     context() {

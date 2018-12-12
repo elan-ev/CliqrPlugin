@@ -1,13 +1,11 @@
 import Backbone from 'backbone'
-
+import template from '../../hbs/tasks-create.hbs'
 import showError from '../error'
-
-import Viewmaster from './viewmaster'
-import taskTypes from '../models/task_types'
 import TaskCollection from '../models/tasks'
+import taskTypes from '../models/task_types'
+import Viewmaster from './viewmaster'
 
 const TasksCreateView = Viewmaster.extend({
-
     tagName: 'article',
 
     className: 'cliqr--tasks-create', // TODO
@@ -18,12 +16,14 @@ const TasksCreateView = Viewmaster.extend({
         'click .js-add-question': 'onClickAddQuestion'
     },
 
-    template: require('../../hbs/tasks-create.hbs'),
-
-    initialize(options) {
+    initialize({ store }) {
         Viewmaster.prototype.initialize.call(this)
+
         this.tasks = new TaskCollection(this.model.get('tasks'))
+        store.trigger('navigation', 'task-group', this.model)
     },
+
+    template,
 
     context() {
         return {
@@ -43,7 +43,8 @@ const TasksCreateView = Viewmaster.extend({
         if (this.$selectedType !== id) {
             this.$selectedType = id
 
-            taskTypes.fetchTaskType(this.$selectedType)
+            taskTypes
+                .fetchTaskType(this.$selectedType)
                 .then(taskType => {
                     const oldViews = this.getViews('main')
                     if (oldViews) {
@@ -65,14 +66,16 @@ const TasksCreateView = Viewmaster.extend({
         }
     },
 
-
     onNewTask(task) {
-        this.tasks.create({ ...task.attributes, task_group_id: this.model.id }, {
-            success(task) {
-                Backbone.history.navigate(`task/show/${task.id}`, { trigger: true })
-                return null
+        this.tasks.create(
+            { ...task.attributes, task_group_id: this.model.id },
+            {
+                success(task) {
+                    Backbone.history.navigate(`task/show/${task.id}`, { trigger: true })
+                    return null
+                }
             }
-        })
+        )
     },
 
     onCancel() {
@@ -82,7 +85,9 @@ const TasksCreateView = Viewmaster.extend({
     onClickAddQuestion(event) {
         event.preventDefault()
 
-        const id = Backbone.$(event.target).closest('.js-add-question').data('typeid')
+        const id = Backbone.$(event.target)
+            .closest('.js-add-question')
+            .data('typeid')
 
         this.selectTypeCreator(id)
     }

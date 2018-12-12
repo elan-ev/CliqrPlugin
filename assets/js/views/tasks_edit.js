@@ -1,23 +1,26 @@
 import Backbone from 'backbone'
-
+import template from '../../hbs/tasks-edit.hbs'
 import showError from '../error'
-import { showLoading, hideLoading } from '../utils'
-import Viewmaster from './viewmaster'
 import taskTypes from '../models/task_types'
 import Voting from '../models/voting'
+import { hideLoading, showLoading } from '../utils'
+import Viewmaster from './viewmaster'
 
 const TasksEditView = Viewmaster.extend({
-
     tagName: 'article',
 
     className: 'cliqr--tasks-edit',
 
     taskType: null,
 
-    initialize(options) {
+    initialize({ store }) {
         Viewmaster.prototype.initialize.call(this)
 
-        taskTypes.fetchTaskType(this.model)
+        const taskGroup = store.taskGroups.get(this.model.get('task_group_id'))
+        store.trigger('navigation', 'task-group', taskGroup)
+
+        taskTypes
+            .fetchTaskType(this.model)
             .then(taskType => {
                 const oldViews = this.getViews('main')
                 if (oldViews) {
@@ -38,7 +41,7 @@ const TasksEditView = Viewmaster.extend({
             })
     },
 
-    template: require('../../hbs/tasks-edit.hbs'),
+    template,
 
     context() {
         const task = this.model.toJSON()
@@ -69,7 +72,8 @@ const TasksEditView = Viewmaster.extend({
         event.preventDefault()
 
         const running = this.model.getVotings().find(a => a.isRunning())
-        running.save({ end: new Date().toISOString() })
+        running
+            .save({ end: new Date().toISOString() })
             .then(() => {
                 this.render()
                 return null
@@ -84,7 +88,8 @@ const TasksEditView = Viewmaster.extend({
 
         showLoading()
 
-        this.model.save()
+        this.model
+            .save()
             .then(() => {
                 Backbone.history.navigate(`task/show/${this.model.id}`, { trigger: true })
                 hideLoading()

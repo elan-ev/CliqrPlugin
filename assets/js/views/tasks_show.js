@@ -18,8 +18,11 @@ const TasksShowView = Viewmaster.extend({
 
     taskType: null,
 
-    initialize() {
+    initialize({ store }) {
         Viewmaster.prototype.initialize.call(this)
+
+        const taskGroup = store.taskGroups.get(this.model.get('task_group_id'))
+        store.trigger('navigation', 'task-group', taskGroup)
 
         taskTypes
             .fetchTaskType(this.model)
@@ -30,7 +33,7 @@ const TasksShowView = Viewmaster.extend({
                 this.setView('main', view)
                 this.refreshViews()
 
-                view && _.invoke([view], 'postRender')
+                view && _.isFunction(view.postRender) && view.postRender()
 
                 return null
             })

@@ -21,6 +21,12 @@ const TaskGroupsImportView = Viewmaster.extend({
         'drop .cliqr--upload-box': 'onDropFile'
     },
 
+    initialize({ store }) {
+        Viewmaster.prototype.initialize.call(this)
+
+        store.trigger('navigation', 'task-groups')
+    },
+
     template: require('../../hbs/task-groups-import.hbs'),
 
     context() {

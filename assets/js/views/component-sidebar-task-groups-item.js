@@ -12,6 +12,8 @@ const WidgetTaskGroupsItem = Viewmaster.extend({
     initialize() {
         Viewmaster.prototype.initialize.call(this)
 
+        this.listenTo(this.model, 'select', () => this.$el.addClass('active'))
+
         this.listenTo(this.model, 'change', this.render)
         this.listenTo(this.model, 'remove', () => this.remove())
     },

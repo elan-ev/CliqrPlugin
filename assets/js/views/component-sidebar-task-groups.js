@@ -10,17 +10,33 @@ const WidgetTaskGroups = Viewmaster.extend({
         if (userRole('lecturer')) {
             this.listenTo(this.collection, 'add', this.onTaskGroupAdded)
             this.collection.each(item => this.appendItem(item))
-
-            this.listenTo(store, 'select:task-group', (...args) =>
-                console.log('WidgetTaskGroups select:task-group', args)
-            )
         }
+
+        this.listenTo(store, 'navigation', this.onNavigation)
     },
 
     template,
 
     onTaskGroupAdded(model) {
         this.appendItem(model)
+    },
+
+    onNavigation(item, taskGroup = null) {
+        this.$('li.active, a.active').removeClass('active')
+
+        switch (item) {
+            case 'task-groups':
+                this.$('.sidebar-navigation > li:first-child').addClass('active')
+                break
+
+            case 'archive':
+                this.$('.sidebar-navigation > li:last-child').addClass('active')
+                break
+
+            case 'task-group':
+                taskGroup && taskGroup.trigger('select')
+                break
+        }
     },
 
     appendItem(model) {

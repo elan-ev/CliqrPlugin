@@ -39,7 +39,7 @@ const histogramView = function ($statementElement, data, lrange, hrange) {
               d3histogram = histogram().domain(x.domain()).thresholds(thresholds),
               bins = d3histogram(data),
               y = scaleLinear()
-              .domain([ 0, _.max(_.pluck(bins, 'length')) ])
+              .domain([ 0, _.max(_.map(bins, 'length')) ])
               .range([ height0, 0 ])
 
         if (quantiles.min !== quantiles.max) {
@@ -70,8 +70,8 @@ const histogramView = function ($statementElement, data, lrange, hrange) {
 
         if (!small) {
             // x.nice()
-            axis.tickValues(_.unique([ lrange, ...x.ticks().slice(0, -1), hrange ]))
-            // axis.tickValues(_.unique([ lrange, ...x.ticks() ]))
+            axis.tickValues(_.uniq([ lrange, ...x.ticks().slice(0, -1), hrange ]))
+            // axis.tickValues(_.uniq([ lrange, ...x.ticks() ]))
         }
 
         g.append('g')

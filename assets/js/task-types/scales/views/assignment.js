@@ -1,7 +1,7 @@
 import _ from 'underscore'
 import Viewmaster from '../../../views/viewmaster'
-import StatementView from './statement'
 import template from '../hbs/assignment.hbs'
+import StatementView from './statement'
 
 const AssignmentView = Viewmaster.extend({
     template,
@@ -39,13 +39,13 @@ const AssignmentView = Viewmaster.extend({
     },
 
     postRender() {
-        const Hub = window.MathJax.Hub
-        this.$('.cliqr--scales-description, td.text').each((index, element) =>
-            Hub.Queue(['Typeset', Hub, element])
-        )
+        if (window.MathJax) {
+            const Hub = window.MathJax.Hub
+            this.$('.cliqr--scales-description, td.text').each((index, element) => Hub.Queue(['Typeset', Hub, element]))
+        }
 
         const views = this.getViews('.cliqr--scales-statements')
-        views && _.invoke(views, 'postRender')
+        views && _.each(views, view => view.postRender())
     }
 })
 

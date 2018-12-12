@@ -1,13 +1,12 @@
 import Backbone from 'backbone'
-
-import showError from '../error'
-import Viewmaster from './viewmaster'
+import template from '../../hbs/task-groups-index.hbs'
 import { showConfirmDialog, showDialog } from '../dialog'
+import showError from '../error'
 import TaskGroupsCreateView from './task_groups_create'
 import TaskGroupsImportView from './task_groups_import'
+import Viewmaster from './viewmaster'
 
 const TaskGroupsIndexView = Viewmaster.extend({
-
     className: 'cliqr--task-groups-index',
 
     events: {
@@ -19,15 +18,16 @@ const TaskGroupsIndexView = Viewmaster.extend({
         'click .js-remove': 'onClickRemove'
     },
 
-    initialize() {
+    initialize({ store }) {
         Viewmaster.prototype.initialize.call(this)
 
         this.listenTo(this.collection, 'change', this.render)
         this.listenTo(this.collection, 'update', this.render)
+
+        store.trigger('navigation', 'task-groups')
     },
 
-    template: require('../../hbs/task-groups-index.hbs'),
-
+    template,
 
     context() {
         return {
@@ -59,26 +59,28 @@ const TaskGroupsIndexView = Viewmaster.extend({
     onClickRemove(event) {
         event.preventDefault()
 
-        const id = Backbone.$(event.target).closest('tr').data('taskgroupid'),
-              taskGroup = this.collection.get(id)
+        const id = Backbone.$(event.target)
+                .closest('tr')
+                .data('taskgroupid'),
+            taskGroup = this.collection.get(id)
 
-        showConfirmDialog(
-            `Wollen Sie die Fragensammlung "${taskGroup.get('title')}" wirklich löschen?`,
-            () => {
-                taskGroup.destroy()
-                    .catch(error => {
-                        showError('Could not remove task group', error)
-                    })
-            }
-        )
+        showConfirmDialog(`Wollen Sie die Fragensammlung "${taskGroup.get('title')}" wirklich löschen?`, () => {
+            taskGroup.destroy().catch(error => {
+                showError('Could not remove task group', error)
+            })
+        })
     },
 
     onClickDuplicate(event) {
         event.preventDefault()
 
-        const id = Backbone.$(event.target).closest('tr').data('taskgroupid')
+        const id = Backbone.$(event.target)
+            .closest('tr')
+            .data('taskgroupid')
 
-        this.collection.get(id).duplicate()
+        this.collection
+            .get(id)
+            .duplicate()
             .then(taskGroup => {
                 this.collection.add(taskGroup)
                 return null
@@ -91,8 +93,10 @@ const TaskGroupsIndexView = Viewmaster.extend({
     onClickExport(event) {
         event.preventDefault()
 
-        const id = Backbone.$(event.target).closest('tr').data('taskgroupid'),
-              taskGroup = this.collection.get(id)
+        const id = Backbone.$(event.target)
+                .closest('tr')
+                .data('taskgroupid'),
+            taskGroup = this.collection.get(id)
         window.open(taskGroup.exportURL())
     }
 })

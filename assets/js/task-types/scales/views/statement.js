@@ -16,7 +16,7 @@ const StatementView = Viewmaster.extend({
 
     responses() {
         return _.reduce(
-            _.pluck(this.model.get('responses'), 'answer'),
+            _.map(this.model.get('responses'), 'answer'),
             (memo, r) => _.isArray(r) && !_.isUndefined(r[this.index]) ? memo.concat(r[this.index]) : memo,
             [])
     },
