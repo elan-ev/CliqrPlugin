@@ -64,6 +64,8 @@ class BasicShortener implements Shortener
 
         $ch = \curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
         return curl_exec($ch);
     }
