@@ -1,0 +1,31 @@
+<header class="cliqr--page-header">
+    <h1>
+        {{icon "folder-full" color="black"}}
+        Fragensammlung: {{shorten title 40}}
+    </h1>
+
+    <nav class="cliqr--actions">
+        <ol>
+            <li>
+                <a href="#task/create/{{id}}">
+                    {{button "createTask" "Frage erstellen" icon="add-assessment" class="cliqr--button-important" color="red"}}
+                </a>
+            </li>
+            <li>
+                <a href="#task-group/edit/{{id}}">
+                    {{button "edit" "Fragensammlung bearbeiten" icon="edit"}}
+                </a>
+            </li>
+        </ol>
+    </nav>
+</header>
+
+<section class="task-list-container">
+    <div class="messagebox messagebox_info">
+        <div class="messagebox_buttons">
+            <a class="close" href="#" title="{{i18n 'Nachrichtenbox schliessen'}}"><span>{{i18n 'Nachrichtenbox schliessen'}}</span></a>
+        </div>
+        <p> In dieser Fragensammlung gibt es derzeit noch keine Fragen.
+        <p> Klicken Sie auf den Knopf „Frage erstellen“, um eine anzulegen!
+    </div>
+</section>

@@ -50,8 +50,18 @@ article.studip header {
 @import "component-tabs.scss";
 
 @import "component-task-edit.scss";
+@import "component-wysiwyg.scss";
 
 @import "component-sidebar.scss";
+
+.cliqr--help {
+    display: block;
+    margin-top: .25em;
+
+    &.cliqr--is-danger {
+        color: $studip-red;
+    }
+}
 
 
 .cliqr--example {

@@ -4,7 +4,6 @@ import _ from 'underscore'
 import Task from './task'
 
 const TasksCollection = Backbone.Collection.extend({
-
     model: Task,
 
     url() {

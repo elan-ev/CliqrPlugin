@@ -95,33 +95,8 @@ $color-diminished: #999999;
 
                 text {
                     fill: black;
+                    font-size: 17px;
                 }
-            }
-
-            line.center {
-                stroke: black;
-                stroke-width: 2px;
-                stroke-dasharray: 3, 3;
-            }
-
-            line.median {
-                stroke: black;
-                stroke-width: 2px;
-            }
-
-            line.whisker {
-                stroke: black;
-                stroke-width: 1px;
-            }
-
-            rect.box {
-                fill: white;
-                stroke: black;
-                stroke-width: 1px;
-            }
-
-            text.box {
-                font-size: 10px;
             }
         }
     }
@@ -194,21 +169,21 @@ $color-diminished: #999999;
             .cliqr--scales-choice-actions {
                 margin-left: 8px;
             }
+        }
 
-            .choices-required {
-                position: relative;
+        .cliqr--scales-statements .choices-required {
+            position: relative;
 
-                select {
-                    position: absolute;
-                    left: 0;
-                    top: -25px;
-                    z-index: -1;
-                    border: none;
-                }
+            select {
+                position: absolute;
+                left: 20;
+                top: -40px;
+                z-index: -1;
+                border: none;
             }
         }
 
-        .cliqr--scales-range {
+        div.cliqr--scales-range {
             > div {
                 display: flex;
 

@@ -1,36 +1,41 @@
-import Viewmaster from '../../../views/viewmaster'
+import Backbone from 'backbone'
+import { View } from 'backbone.marionette'
 import TaskEditComponent from '../../../views/component-task-edit'
+import template from '../hbs/show.hbs'
+import StatementsView from './show-statements'
 
-const decorateTask = function (task) {
-    return task.toJSON()
-}
-
-const ShowView = Viewmaster.extend({
-
+export default View.extend({
     tagName: 'section',
     className: 'cliqr--scales-show-view',
 
+    regions: {
+        editButton: 'span.cliqr--component-task-edit',
+        statements: 'main'
+    },
 
     initialize() {
-        Viewmaster.prototype.initialize.call(this)
+        this.statements = new Backbone.Collection(this.model.get('task').statements)
+    },
 
-        const edit = new TaskEditComponent({
-            model: this.model
+    template,
+
+    onRender() {
+        this.showChildView(
+            'editButton',
+            new TaskEditComponent({
+                model: this.model
+            })
+        )
+        const statements = new StatementsView({
+            collection: this.statements
         })
-
-        this.setView('article.studip header', edit)
+        this.showChildView('statements', statements)
     },
 
-    template: require('../hbs/show.hbs'),
-
-    context() {
-        return decorateTask(this.model)
-    },
-
-    postRender() {
-        const Hub = window.MathJax.Hub
-        this.$('.cliqr--scales-description, td.text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
+    onAttach() {
+        if (window.MathJax) {
+            const Hub = window.MathJax.Hub
+            Hub.Queue(['Typeset', Hub, this.$('.cliqr--scales-description')[0]])
+        }
     }
 })
-
-export default ShowView

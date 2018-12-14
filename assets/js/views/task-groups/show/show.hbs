@@ -1,0 +1,47 @@
+<header class="cliqr--page-header">
+    <h1>
+        {{icon "folder-full" color="black"}}
+        Fragensammlung: {{shorten title 40}}
+    </h1>
+
+    <nav class="cliqr--actions">
+        <ol>
+            <li>
+                <a href="#task/create/{{id}}">
+                    {{button "createTask" "Frage erstellen" icon="add-assessment" class="cliqr--button-important" color="red"}}
+                </a>
+            </li>
+            <li>
+                <a href="#task-group/edit/{{id}}">
+                    {{button "edit" "Fragensammlung bearbeiten" icon="edit"}}
+                </a>
+            </li>
+        </ol>
+    </nav>
+</header>
+
+
+<section class="task-list-container">
+    <table class="cliqr--task-list task-group default">
+        <thead>
+            <tr>
+                <th></th>
+                <th> Titel </th>
+                <th> letzte Änderung </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody></tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <a href="#task/create/{{id}}">
+                        {{button "createTask" "Frage erstellen" icon="add-assessment" class="cliqr--button-important" color="red"}}
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</section>

@@ -1,7 +1,7 @@
 button.cliqr--button-fab,
 button.cliqr--button {
-    transition: background 0.3s ease-in-out;
-    transition: color 0.3s ease-in-out;
+    transition: background 0.3s ease-out;
+    transition: color 0.3s ease-out;
 
     i.cliqr--icon::before {
         transition: color 0.3s ease-in-out;
@@ -11,7 +11,7 @@ button.cliqr--button {
     color: $studip-base-color;
 
     &:not(:disabled):hover {
-        background-color: $studip-base-color;
+        background-color: $studip-brand-color-lighter;
         i.cliqr--icon::before {
             color: $studip-white !important;
         }
@@ -34,6 +34,10 @@ button.cliqr--button.active {
     }
 
     &:not(:disabled):hover {
+        background-color: $studip-brand-color-light;
+    }
+/*
+    &:not(:disabled):hover {
         background-color: $studip-white;
         color: $studip-base-color;
 
@@ -41,6 +45,7 @@ button.cliqr--button.active {
             color: $studip-base-color !important;
         }
     }
+*/
 }
 
 button.cliqr--button.cliqr--button-important {

@@ -1,4 +1,4 @@
-const strip_tags = function (html) {
+const strip_tags = function(html) {
     if (!html) {
         return ''
     }

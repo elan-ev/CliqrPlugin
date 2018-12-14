@@ -1,5 +1,5 @@
-{{#> mc_header}}
-{{#*inline "title"}}
+{{#> mc_header task}}
+{{#*inline "header_title"}}
 
 Abstimmung
 {{#unless isRunning}}
@@ -11,6 +11,15 @@ Abstimmung
 
 <main>
     <table class="cliqr--multiple-choice-answers">
+        <caption>
+            {{#if isRunning}}
+                {{#if isSingleSelect}}
+                    {{i18n "Wählen Sie eine der folgenden Optionen:"}}
+                    {{^}}
+                    {{i18n "Wählen Sie beliebige aus folgenden Optionen:"}}
+                {{/if}}
+            {{/if}}
+        </caption>
         <tbody>
             {{#each answers}}
                 <tr>

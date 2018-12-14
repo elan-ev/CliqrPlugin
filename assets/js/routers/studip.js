@@ -1,15 +1,10 @@
 import Backbone from 'backbone'
 import showError from '../error'
 import { activateNavigation, changeToPage, hideLoading, showLoading, userRole } from '../utils'
-import ArchiveView from '../views/archive'
-import TasksCreateView from '../views/tasks_create'
-import TasksEditView from '../views/tasks_edit'
-import TasksShowView from '../views/tasks_show'
-import TaskGroupsEditView from '../views/task_groups_edit'
-import TaskGroupsIndexView from '../views/task_groups_index'
-import TaskGroupsShowView from '../views/task_groups_show'
-import VotingsCompareView from '../views/votings_compare'
-import VotingsShowView from '../views/votings_show'
+import ArchiveView from '../views/archive/view'
+import * as TaskGroups from '../views/task-groups/index'
+import * as Tasks from '../views/tasks/index'
+import * as Votings from '../views/votings/index'
 import { fetchLastVotings, fetchTask, fetchTaskGroup, fetchTwoVotings, fetchVoting } from './studip-fetcher'
 
 const StudipRouter = Backbone.Router.extend({
@@ -71,42 +66,42 @@ const StudipRouter = Backbone.Router.extend({
 
     // ROUTE: '#task-groups'
     taskGroups() {
-        this.routeHandler(() => Promise.resolve(this.store.taskGroups), null, TaskGroupsIndexView, 'collection')
+        this.routeHandler(() => Promise.resolve(this.store.taskGroups), null, TaskGroups.IndexView, 'collection')
     },
 
     // ROUTE: '#task-groups/show/:id'
     taskGroup(id) {
-        this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView)
+        this.routeHandler(fetchTaskGroup, id, TaskGroups.ShowView)
     },
 
     // ROUTE: '#task-group/edit/:id'
     taskGroupEdit(id) {
-        this.routeHandler(fetchTaskGroup, id, TaskGroupsEditView)
+        this.routeHandler(fetchTaskGroup, id, TaskGroups.EditView)
     },
 
     // ROUTE: '#task/show/:id'
     task(id) {
-        this.routeHandler(fetchTask, id, TasksShowView)
+        this.routeHandler(fetchTask, id, Tasks.ShowView)
     },
 
     // ROUTE: '#task/create/:id'
     taskCreate(id) {
-        this.routeHandler(fetchTaskGroup, id, TasksCreateView)
+        this.routeHandler(fetchTaskGroup, id, Tasks.CreateView)
     },
 
     // ROUTE: '#task/edit/:id'
     taskEdit(id) {
-        this.routeHandler(fetchTask, id, TasksEditView)
+        this.routeHandler(fetchTask, id, Tasks.EditView)
     },
 
     // ROUTE: '#voting/:id'
     voting(id) {
-        this.routeHandler(fetchVoting, id, VotingsShowView)
+        this.routeHandler(fetchVoting, id, Votings.ShowView)
     },
 
     // ROUTE: '#compare/:v1/:v2'
     votingCompare(v1, v2) {
-        this.routeHandler(fetchTwoVotings, [v1, v2], VotingsCompareView, 'votings')
+        this.routeHandler(fetchTwoVotings, [v1, v2], Votings.CompareView, 'votings')
     },
 
     // ROUTE: '#archive'

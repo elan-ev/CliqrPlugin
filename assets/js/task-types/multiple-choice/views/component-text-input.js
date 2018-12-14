@@ -1,8 +1,8 @@
+import { View } from 'backbone.marionette'
 import Backbone from 'backbone'
-import Viewmaster from '../../../views/viewmaster'
 import template from '../hbs/component-text-input.hbs'
 
-const TextInputComponent = Viewmaster.extend({
+export default View.extend({
     tagName: 'span',
     className: 'cliqr--component-text-input',
 
@@ -14,16 +14,19 @@ const TextInputComponent = Viewmaster.extend({
         'input input': 'onTextUpdate'
     },
 
-    initialize(options) {
-        Viewmaster.prototype.initialize.call(this)
-
-        this.key = options.key
-        this.placeholderKey = options.placeholderKey
-        this.listenTo(this.model, `change:${this.key}`, this.onModelChange)
-        this.listenTo(this.model, `change:${this.placeholderKey}`, this.render)
+    modelEvents() {
+        return {
+            [`change:${this.key}`]: 'onModelChange',
+            [`change:${this.placeholderKey}`]: 'render'
+        }
     },
 
-    context() {
+    initialize(options) {
+        this.key = options.key
+        this.placeholderKey = options.placeholderKey
+    },
+
+    templateContext() {
         return {
             key: this.key,
             placeholder: this.placeholderKey && this.model.get(this.placeholderKey),
@@ -39,5 +42,3 @@ const TextInputComponent = Viewmaster.extend({
         this.model.set(this.key, Backbone.$(event.target).val())
     }
 })
-
-export default TextInputComponent

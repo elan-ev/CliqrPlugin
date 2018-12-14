@@ -1,0 +1,20 @@
+<td class="cliqr--archive-header">
+    <a href="#voting/{{id}}">
+        {{icon "test"}}
+        {{#if title}}{{task.title}}{{else}}{{strip_tags task.description_html}}{{/if}}
+    </a>
+</td>
+
+<td class="cliqr--archive-date">
+    <div> {{moment start}} </div>
+</td>
+
+<td class="cliqr--archive-bubble">
+    <span class="bubble" data-tooltip="Frage mit {{responses_count}} abgegebenen Antworten">{{responses_count}}</span>
+</td>
+
+{{#user_role "lecturer"}}
+    <td class="actions">
+        {{fab "remove" "Abstimmung löschen" "trash" flat=true}}
+    </td>
+{{/user_role}}

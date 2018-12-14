@@ -1,0 +1,65 @@
+<header class="cliqr--page-header">
+    {{> breadcrumb breadcrumb }}
+</header>
+
+<main></main>
+
+<aside class="votings">
+    {{#unless votings}}
+        <nav class="panel">
+            <p class="panel-heading">
+                Abstimmungen:
+            </p>
+            <div class="panel-block">
+                Die Frage wurde noch nie gestartet.
+            </div>
+            <div class="panel-block">
+                {{button "start" "Abstimmung starten" icon="play" once=true color="red" class="control"}}
+            </div>
+        </nav>
+    {{/unless}}
+
+
+    {{#if votings}}
+        <nav class="panel">
+            <p class="panel-heading">
+                Abstimmungen:
+            </p>
+
+            <div class="panel-block">
+                {{#unless_state 'is_active'}}
+                    {{button "start" "Abstimmung starten" icon="play" once=true  color="red" class="control"}}
+                {{else}}
+                    {{button "stop" "Abstimmung beenden" icon="stop" once=true color="red" class="control"}}
+                {{/unless_state}}
+            </div>
+
+
+            {{#each votings}}
+                <a class="panel-block cliqr--votings-list-item" href="#voting/{{id}}" data-votingid="{{id}}">
+                    <div class="panel-block-label">
+                        {{#if running}}
+                            <span class="panel-icon">
+                                {{icon 'play' color='red'}}
+                            </span>
+                            {{moment start label="läuft gerade"}}
+                        {{else}}
+                            <span class="panel-icon">
+                                {{icon 'vote'}}
+                            </span>
+                            {{moment start}}
+                        {{/if}}
+
+                        <span class="bubble" data-tooltip="{{responses_count}} Stimmen">{{responses_count}}</span>
+                    </div>
+
+                    <div class="panel-block-actions">
+                        {{#unless running}}
+                            {{fab "remove" "Löschen" "trash" flat=true once=true}}
+                        {{/unless}}
+                    </div>
+                </a>
+            {{/each}}
+        </nav>
+    {{/if}}
+</aside>

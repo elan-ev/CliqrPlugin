@@ -35,6 +35,14 @@ $color-diminished: #999999;
             border-collapse: collapse;
             width: 100%;
 
+            caption {
+                padding-top: 2rem;
+                padding-bottom: 0;
+                font-size: 0.8em;
+                color: $color-diminished;
+                text-align: left;
+            }
+
             td {
                 padding-top: 0.75em;
                 border-bottom: 2px solid $border;
@@ -165,16 +173,17 @@ $color-diminished: #999999;
                 margin-left: 8px;
             }
 
-            .choices-required {
-                position: relative;
+        }
 
-                select {
-                    position: absolute;
-                    left: 20px;
-                    top: -40px;
-                    z-index: -1;
-                    border: none;
-                }
+        .cliqr--mc-choices .choices-required {
+            position: relative;
+
+            select {
+                position: absolute;
+                left: 20px;
+                top: -40px;
+                z-index: -1;
+                border: none;
             }
         }
 
@@ -183,6 +192,20 @@ $color-diminished: #999999;
 
             legend {
                 font-size: 10.5pt;
+            }
+        }
+
+        .cliqr--mc-answer-templates {
+            margin-top: 1.5ex;
+            max-width: 100%;
+            text-indent: .25ex;
+            vertical-align: top;
+
+            & > span:first-child {
+                font-weight: 700;
+                display: block;
+                margin-top: 1.5em;
+                margin-bottom: 0.5em;
             }
         }
     }

@@ -8,7 +8,9 @@ module.exports = merge(common, {
     devtool: 'source-map',
     output: {
         publicPath: undefined
-    },
+    }
+    /*
+      ,
     optimization: {
         minimizer: [
             new UglifyJsPlugin({
@@ -25,4 +27,5 @@ module.exports = merge(common, {
             })
         ]
     }
+*/
 })

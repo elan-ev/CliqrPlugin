@@ -5,29 +5,33 @@ let currentView = false
 
 let timeout = false
 
-const showLoading = function () {
-    timeout = setTimeout( () => {
+const showLoading = function() {
+    timeout = setTimeout(() => {
         Backbone.$(window.document.body).addClass('cliqr--loading')
     }, 300)
 }
 
-const hideLoading = function () {
+const hideLoading = function() {
     clearTimeout(timeout)
     Backbone.$(window.document.body).removeClass('cliqr--loading')
 }
 
-const userRole = (expected) => expected === window.cliqr.bootstrap.userRole
+const userRole = expected => expected === window.cliqr.bootstrap.userRole
 
-const getContainer = (selector) => Backbone.$(selector || '#cliqr')
+const getContainer = selector => Backbone.$(selector || '#cliqr')
 
-const activateNavigation = function (selector = 'li:first-child') {
+const activateNavigation = function(selector = 'li:first-child') {
     Backbone.$('#sidebar-navigation ul.sidebar-navigation')
-        .find('> li.active').removeClass('active').end()
-        .find(selector).eq(0)
-        .closest('li').addClass('active')
+        .find('> li.active')
+        .removeClass('active')
+        .end()
+        .find(selector)
+        .eq(0)
+        .closest('li')
+        .addClass('active')
 }
 
-const changeToPage = function (view, selector) {
+const changeToPage = function(view, selector) {
     if (currentView) {
         currentView.$el.hide()
         currentView.remove()

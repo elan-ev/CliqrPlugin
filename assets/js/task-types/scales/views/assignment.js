@@ -1,36 +1,24 @@
-import _ from 'underscore'
-import Viewmaster from '../../../views/viewmaster'
+import Backbone from 'backbone'
+import { View } from 'backbone.marionette'
 import template from '../hbs/assignment.hbs'
-import StatementView from './statement'
+import StatementsView from './assignment-statements'
 
-const AssignmentView = Viewmaster.extend({
-    template,
-
+export default View.extend({
     tagName: 'section',
-
     className: 'cliqr--scales-assignment-view',
 
-    initialize({ voting }) {
-        Viewmaster.prototype.initialize.call(this)
-
-        this.voting = voting
-
-        const task = _.omit(this.model.get('task'), 'statements')
-
-        _.each(this.model.get('task').statements, (statement, index) => {
-            this.appendView(
-                '.cliqr--scales-statements',
-                new StatementView({
-                    model: this.voting,
-                    statement: { ...task, ...statement },
-                    index
-                })
-            )
-        })
-        this.refreshViews()
+    regions: {
+        statements: 'main'
     },
 
-    context() {
+    initialize({ voting }) {
+        this.voting = voting
+        this.statements = new Backbone.Collection(this.model.get('task').statements)
+    },
+
+    template,
+
+    templateContext() {
         return {
             start: this.voting.get('start'),
             task: this.model.toJSON(),
@@ -38,15 +26,18 @@ const AssignmentView = Viewmaster.extend({
         }
     },
 
-    postRender() {
+    onRender() {
+        const statements = new StatementsView({
+            collection: this.statements,
+            voting: this.voting
+        })
+        this.showChildView('statements', statements)
+    },
+
+    onAttach() {
         if (window.MathJax) {
             const Hub = window.MathJax.Hub
-            this.$('.cliqr--scales-description, td.text').each((index, element) => Hub.Queue(['Typeset', Hub, element]))
+            Hub.Queue(['Typeset', Hub, this.$('.cliqr--scales-description')[0]])
         }
-
-        const views = this.getViews('.cliqr--scales-statements')
-        views && _.each(views, view => view.postRender())
     }
 })
-
-export default AssignmentView

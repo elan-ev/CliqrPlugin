@@ -26,12 +26,7 @@ module.exports = {
                 include: path.resolve(__dirname, 'assets/scss'),
                 use: [
                     devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            url: false
-                        }
-                    },
+                    'css-loader',
                     'postcss-loader',
                     'sass-loader'
                 ]
@@ -41,19 +36,13 @@ module.exports = {
                 include: path.resolve(__dirname, 'assets/js'),
                 use: [
                     'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            url: false
-                        }
-                    },
+                    'css-loader',
                     'postcss-loader',
                     'sass-loader'
                 ]
             },
             {
                 test: /\.js$/,
-                include: path.resolve(__dirname, 'assets/js'),
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -65,6 +54,16 @@ module.exports = {
                 test: /\.hbs/,
                 include: path.resolve(__dirname, 'assets'),
                 loader: 'handlebars-template-loader'
+            },
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'fonts/'
+                    }
+                }]
             }
         ]
     },

@@ -1,0 +1,12 @@
+<span>Antwortmöglichkeiten</span>
+
+<div class="cliqr--mc-subtypes button-group">
+    {{#each subtypes}}
+        {{#if selected}}
+            {{button (concat "type-" id) text class="active"}}
+        {{/if}}
+        {{^if selected}}
+            {{button (concat "type-" id) text}}
+        {{/if}}
+    {{/each}}
+</div>

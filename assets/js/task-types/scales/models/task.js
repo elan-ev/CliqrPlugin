@@ -3,7 +3,7 @@ import Task from '../../../models/task'
 
 const ScalesTask = Task.extend({
     defaults: {
-        type:  'scales',
+        type: 'scales',
         task: {
             statements: [],
             lrange_value: 1,
@@ -49,16 +49,13 @@ const ScalesTask = Task.extend({
 
     addStatement(data = {}, options = {}) {
         const oldTask = this.get('task')
-        const statements = [ ...oldTask.statements, { text: '', ...data  } ]
+        const statements = [...oldTask.statements, { text: '', ...data }]
         this.set('task', { ...oldTask, statements }, options)
     },
 
     removeStatement(index, options = {}) {
         const oldTask = this.get('task')
-        const statements = [
-            ...oldTask.statements.slice(0, index),
-            ...oldTask.statements.slice(index + 1),
-        ]
+        const statements = [...oldTask.statements.slice(0, index), ...oldTask.statements.slice(index + 1)]
         this.set('task', { ...oldTask, statements })
     },
 

@@ -4,7 +4,6 @@ import Voting from './voting'
 import IDList from './id_list'
 
 const PollsCollection = Backbone.Collection.extend({
-
     model: Voting,
 
     initialize() {

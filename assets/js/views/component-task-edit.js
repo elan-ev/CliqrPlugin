@@ -1,31 +1,24 @@
 import Backbone from 'backbone'
-import Viewmaster from './viewmaster'
+import { View } from 'backbone.marionette'
+import _ from 'underscore'
+import template from '../../hbs/component-task-edit.hbs'
 import { showConfirmDialog } from '../dialog'
 import showError from '../error'
-import _ from 'underscore'
 
-const TaskEditComponent = Viewmaster.extend({
+export default View.extend({
     tagName: 'span',
     className: 'cliqr--component-task-edit',
-
-    template: require('../../hbs/component-task-edit.hbs'),
 
     events: {
         'click .js-edit': 'onClickEdit',
         'click .js-copy-edit': 'onClickCopyEdit'
     },
 
-    initialize(options) {
-        Viewmaster.prototype.initialize.call(this)
+    template,
 
-        console.log("options:", options)
-    },
-
-    context() {
-        const task = this.model.toJSON()
+    templateContext() {
         const editable = !_.some(this.model.getVotings().models, v => v.get('responses_count'))
-
-        return { task, editable }
+        return { editable }
     },
 
     onClickEdit() {
@@ -49,5 +42,3 @@ const TaskEditComponent = Viewmaster.extend({
         )
     }
 })
-
-export default TaskEditComponent

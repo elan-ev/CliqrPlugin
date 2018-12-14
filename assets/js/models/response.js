@@ -9,11 +9,10 @@ const actionMap = {
 }
 
 const Response = Backbone.Model.extend({
-
     sync(method, model, options) {
         _.extend(options, {
             url: typeof model.url === 'function' ? model.url(actionMap[method]) : void 0
-        });
+        })
         return Backbone.sync(method, model, options)
     },
 

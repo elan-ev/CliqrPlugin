@@ -1,9 +1,18 @@
 {{#> mc_header}}
-{{#*inline "title"}} Multiple-Choice-Frage: {{/inline}}
+{{#*inline "header_title"}}
+Multiple-Choice-Frage: {{title}}
+{{/inline}}
 {{/mc_header}}
 
 <main>
     <table class="cliqr--multiple-choice-answers">
+        <caption>
+            {{#if isSingleSelect}}
+                {{i18n "Wählen Sie eine der folgenden Optionen:"}}
+                {{^}}
+                {{i18n "Wählen Sie beliebige aus folgenden Optionen:"}}
+            {{/if}}
+        </caption>
         <tbody>
             {{#each answers}}
                 <tr>

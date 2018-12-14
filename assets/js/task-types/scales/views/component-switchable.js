@@ -1,32 +1,55 @@
-import Viewmaster from '../../../views/viewmaster'
+import { View } from 'backbone.marionette'
 import template from '../hbs/component-switchable.hbs'
-import WysiwygComponent from './component-wysiwyg'
+import nonEditTemplate from '../hbs/component-switchable-noneditable.hbs'
+import WysiwygComponent from '../../../component-wysiwyg'
 
-const SwitchableComponent = Viewmaster.extend({
+const NonEditableView = View.extend({
+    template: nonEditTemplate,
+    templateContext() {
+        return { valueView: this.valueView }
+    },
+    initialize({ valueView }) {
+        this.valueView = valueView
+    }
+})
+
+export default View.extend({
     tagName: 'span',
     className: 'cliqr--component-switchable',
 
     template,
 
+    regions: {
+        wysiwyg: '.cliqr--component-switchable-wysiwyg'
+    },
+
     events: {
         'click .js-edit': 'onClickEdit'
     },
 
-    initialize(options) {
-        Viewmaster.prototype.initialize.call(this)
-
-        this.editable = false
-
-        this.keys = options.keys
-        this.listenTo(this.model, `change:${this.keys.edit}`, this.onModelChange)
+    modelEvents() {
+        return {
+            [`change:${this.keys.edit}`]: 'onModelChange'
+        }
     },
 
-    context() {
-        return {
-            editable: this.editable,
-            keys: this.keys,
-            valueView: this.model.get(this.keys.view)
-        }
+    initialize({ keys }) {
+        this.editable = false
+        this.keys = keys
+    },
+
+    onRender() {
+        this.showChildView(
+            'wysiwyg',
+            this.editable
+                ? new WysiwygComponent({
+                      model: this.model,
+                      key: this.keys.edit
+                  })
+                : new NonEditableView({
+                      valueView: this.model.get(this.keys.view)
+                  })
+        )
     },
 
     onModelChange(model, change) {
@@ -36,17 +59,7 @@ const SwitchableComponent = Viewmaster.extend({
     onClickEdit(event) {
         event.stopPropagation()
         event.preventDefault()
-
         this.editable = true
         this.render()
-
-        const wysiwyg = new WysiwygComponent({
-            model: this.model,
-            key: this.keys.edit
-        })
-        this.setView('.cliqr--component-switchable-wysiwyg', wysiwyg)
-        this.refreshViews()
     }
 })
-
-export default SwitchableComponent

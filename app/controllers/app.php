@@ -95,8 +95,6 @@ HELPTEXT;
     {
         $pollsUrl = $this->polls_url($this->cid);
 
-        return $pollsUrl;
-
         return $this->plugin->config['shortener']->shorten($pollsUrl);
     }
 

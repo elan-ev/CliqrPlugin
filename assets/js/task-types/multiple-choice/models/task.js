@@ -33,16 +33,13 @@ const MCTask = Task.extend({
 
     addAnswer(data = {}, options = {}) {
         const oldTask = this.get('task')
-        const answers = [ ...oldTask.answers, { text: '', score: 0, feedback: '', ...data  } ]
+        const answers = [...oldTask.answers, { text: '', score: 0, feedback: '', ...data }]
         this.set('task', { ...oldTask, answers }, options)
     },
 
     removeAnswer(index, options = {}) {
         const oldTask = this.get('task')
-        const answers = [
-            ...oldTask.answers.slice(0, index),
-            ...oldTask.answers.slice(index + 1),
-        ]
+        const answers = [...oldTask.answers.slice(0, index), ...oldTask.answers.slice(index + 1)]
         this.set('task', { ...oldTask, answers })
     },
 
@@ -62,7 +59,7 @@ const MCTask = Task.extend({
     },
 
     setAnswers(answers) {
-        this.set('task', { ...this.get('task'), answers }, { silent: true })
+        this.set('task', { ...this.get('task'), answers })
     },
 
     clearAnswers() {

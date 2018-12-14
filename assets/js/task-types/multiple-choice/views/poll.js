@@ -1,53 +1,45 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
+import template from '../hbs/poll.hbs'
+import { View } from 'backbone.marionette'
 
-import Viewmaster from '../../../views/viewmaster'
-
-const decorateContext = function (response, voting) {
-    const task = voting.getTask()
-    return {
-        response: response.toJSON(),
-        voting: _.omit(voting.toJSON(), 'task'),
-        task: task.toJSON(),
-        answers: task.get('task').answers,
-        isSingleSelect: task.get('task').type === 'single'
-    }
-}
-
-const PollView = Viewmaster.extend({
-
+export default View.extend({
     className: 'cliqr--multiple-choice-poll-view',
 
     events: {
         'submit form': 'onSubmitForm'
     },
 
-
-    initialize(options) {
-        Viewmaster.prototype.initialize.call(this)
-
-        this.voting = options.voting
+    initialize({ voting }) {
+        this.voting = voting
     },
 
-    template: require('../hbs/poll.hbs'),
+    template,
 
-    context() {
-        return decorateContext(this.model, this.voting)
+    templateContext() {
+        const task = this.voting.getTask()
+        return {
+            response: this.model.toJSON(),
+            voting: _.omit(this.voting.toJSON(), 'task'),
+            task: task.toJSON(),
+            answers: task.get('task').answers,
+            isSingleSelect: task.get('task').type === 'single'
+        }
     },
 
-    postRender() {
+    onAttach() {
         const Hub = window.MathJax.Hub
-        this.$('.description, .text').each((index, element) => Hub.Queue([ 'Typeset', Hub, element ]))
+        this.$('.description, .text').each((index, element) => Hub.Queue(['Typeset', Hub, element]))
     },
 
     onSubmitForm(event) {
         event.preventDefault()
 
-        const ary = Backbone.$(event.target).closest('form').serializeArray()
-        this.model.set('response', { answer: _.map(ary, (input) => parseInt(input.value, 10)) })
+        const ary = Backbone.$(event.target)
+            .closest('form')
+            .serializeArray()
+        this.model.set('response', { answer: _.map(ary, input => parseInt(input.value, 10)) })
 
         this.voting.trigger('newResponse', this.model, this.voting)
     }
 })
-
-export default PollView

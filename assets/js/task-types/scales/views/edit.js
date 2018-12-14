@@ -1,11 +1,16 @@
 import FormView from './form'
 
-const EditView = FormView.extend({
-
+export default FormView.extend({
     className: 'cliqr--scales-edit-view',
 
     onSubmitForm(event) {
         event.preventDefault()
+
+        this.model.set('task', {
+            ...this.model.get('task'),
+            statements: this.statements.toJSON()
+        })
+
         if (this.model.isValid()) {
             this.trigger('editTask', this.model)
         }
@@ -16,5 +21,3 @@ const EditView = FormView.extend({
         this.trigger('cancel', this.model)
     }
 })
-
-export default EditView

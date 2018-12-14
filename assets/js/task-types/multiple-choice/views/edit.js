@@ -2,7 +2,6 @@ import Backbone from 'backbone'
 import FormView from './form'
 
 const EditView = FormView.extend({
-
     className: 'cliqr--multiple-choice-edit-view',
 
     onSubmitForm(event) {

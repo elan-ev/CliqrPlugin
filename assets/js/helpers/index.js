@@ -10,6 +10,7 @@ import moment from './moment.js'
 import nominal from './nominal.js'
 import qr_code from './qr_code.js'
 import shorten from './shorten.js'
+import spinner from './spinner.js'
 import strip_tags from './strip_tags.js'
 import unless_state from './unless_state.js'
 import url_for from './url_for.js'
@@ -28,6 +29,7 @@ const helpers = {
     nominal,
     qr_code,
     shorten,
+    spinner,
     strip_tags,
     unless_state,
     url_for,

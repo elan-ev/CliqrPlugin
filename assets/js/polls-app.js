@@ -1,59 +1,47 @@
-import '@babel/polyfill'
 import './public-path.js'
+import '@babel/polyfill'
 import Backbone from 'backbone'
-import jQuery from 'jquery'
-
-import showError from './error'
-import setupHandlebars from './setupHandlebars.js'
-
+import { Application } from 'backbone.marionette'
 import PollsCollection from './models/polls'
-import PollsIndexView from './views/polls_index'
+import setupHandlebars from './setupHandlebars.js'
+import PollsIndexView from './views/polls/view'
 
-// instantiate then remove bootstrapped
-const bootstrapPolls = function() {
-    const polls = new PollsCollection(window.cliqr.bootstrap.polls || [])
-    delete window.cliqr.bootstrap.polls
-    return polls
-}
+const PollsCliqrApplication = Application.extend({
+    region: '#cliqr-poll-container',
 
-const fetchPolls = function() {
-    if (window.cliqr.bootstrap.polls) {
-        return Promise.resolve(bootstrapPolls())
-    }
-
-    const polls = new PollsCollection()
-    return polls.fetch().then(() => polls)
-}
-
-class PollCliqrApp {
-    constructor(selector) {
-        this.selector = selector
+    initialize() {
         setupHandlebars()
-        this.initBackbone()
-        this.initPage()
-    }
+        // @ts-ignore
+        Backbone.$ = window.jQuery
+        // @ts-ignore
+        Backbone._ = window._
 
-    initBackbone() {
-        Backbone.$ = jQuery
-
+        // @ts-ignore
         Backbone.ajax = function() {
             const xhr = Backbone.$.ajax.apply(Backbone.$, arguments)
             return Promise.resolve(xhr)
         }
-    }
+    },
 
-    initPage() {
-        fetchPolls()
-            .then(collection => {
-                const page = new PollsIndexView({ collection })
-                page.$el.appendTo(Backbone.$(this.selector))
-                page.render()
-                page.postRender()
-            })
-            .catch((...args) => {
-                showError('Die Abstimmung konnte nicht geladen werden.', args)
-            })
-    }
-}
+    onBeforeStart(app, options) {
+        if (window.cliqr.bootstrap.polls) {
+            this.collection = new PollsCollection(window.cliqr.bootstrap.polls || [])
+            delete window.cliqr.bootstrap.polls
+        }
 
-const app = new PollCliqrApp('#cliqr-poll-container')
+        this.collection = new PollsCollection()
+    },
+
+    onStart(app, options) {
+        this.collection.fetch().then(() => {
+            const page = new PollsIndexView({ collection: this.collection })
+            this.showView(page)
+        })
+        Backbone.history.start()
+    }
+})
+
+const pollsApp = new PollsCliqrApplication()
+pollsApp.start({
+    data: {}
+})

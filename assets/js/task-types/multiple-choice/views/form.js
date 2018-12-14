@@ -1,160 +1,129 @@
 import Backbone from 'backbone'
-import _ from 'underscore'
-
-import Viewmaster from '../../../views/viewmaster'
+import { View } from 'backbone.marionette'
+import template from '../hbs/form.hbs'
 import TextInputComponent from './component-text-input'
-import WysiwygComponent from './component-wysiwyg'
+import WysiwygComponent from '../../../views/component-wysiwyg'
+import AnswerTemplatesComponent from './form-answer-templates'
+import ChoicesComponent from './form-choices'
+import OptionsComponent from './form-options'
 
-const subtypes = [
-    { id: 'custom', text: 'Individuell' },
-    { id: 'yesno', text: 'Ja·Nein' },
-    { id: 'truefalse', text: 'Wahr·Falsch' },
-    { id: 'evaluation', text: 'Evaluation' },
-    { id: 'grading', text: 'Benotung' }
-]
-
-const FormView = Viewmaster.extend({
-
+export default View.extend({
     tagName: 'section',
 
-    $selectedSubtype: 'custom',
-    $custom: null,
+    ui: {
+        cancel: '.js-cancel'
+    },
 
     events: {
-        'click .js-add': 'onClickAdd',
-        'click .js-remove': 'onClickRemove',
-        'submit form': 'onSubmitForm',
-        'click .js-cancel': 'onClickCancel',
-
-        'keypress input.choice': 'onChoiceUpdate',
-        'change input.choice': 'onChoiceUpdate',
-        'input input.choice': 'onChoiceUpdate',
-
-        'change input[name="select-type"]': 'onChangeMultiSingle',
-
-        'click .cliqr--mc-subtypes button': 'onSelectSubtype'
+        'click @ui.cancel': 'onClickCancel',
+        'submit form': 'onBeforeSubmitForm'
     },
 
-    initialize(options) {
-        Viewmaster.prototype.initialize.call(this)
+    childViewEventPrefix: 'childview',
 
-        this.type = options.type
-        this.taskGroup = options.taskGroup
-
-        const titleInput = new TextInputComponent({
-            model: this.model,
-            key: 'title',
-            placeholderKey: 'description'
-        })
-
-        const wysiwyg = new WysiwygComponent({
-            model: this.model,
-            key: 'description'
-        })
-
-        this.setView('.cliqr--mc-title', titleInput)
-        this.setView('.cliqr--mc-description', wysiwyg)
-
-        this.listenTo(this.model, 'change:task', this.render)
-        this.listenTo(this.model, 'invalid', () => this.render({ force: true }))
+    regions: {
+        title: '.cliqr--mc-title',
+        description: '.cliqr--mc-description',
+        answerTemplates: { el: '.cliqr--mc-answer-templates', replaceElement: true },
+        choices: { el: '.cliqr--mc-choices', replaceElement: true },
+        options: { el: '.cliqr--multiple-choice-options div', replaceElement: true }
     },
 
-    template: require('../hbs/form.hbs'),
+    initialize({ type, taskGroup }) {
+        this.type = type
+        this.taskGroup = taskGroup
+        this.subtype = new Backbone.Model({ selected: 'custom', custom: null })
+        this.choices = new Backbone.Collection(this.model.get('task').answers)
 
-    context() {
+        this.listenTo(this.choices, 'all', console.log)
+    },
+
+    template,
+
+    templateContext() {
         return {
-            taskGroup: this.taskGroup && this.taskGroup.toJSON(),
-            task: this.model.toJSON(),
-            error: this.model.validationError || null,
-            singleSelect: this.model.getSelectType() === 'single',
-            $selectedSubtype: this.$selectedSubtype,
-            subtypes: subtypes.map(subtype => {
-                return { ...subtype, selected: subtype.id === this.$selectedSubtype }
+            error: this.model.validationError || null
+        }
+    },
+
+    onRender() {
+        this.showChildView(
+            'title',
+            new TextInputComponent({
+                model: this.model,
+                key: 'title',
+                placeholderKey: 'description'
             })
-        }
+        )
+        this.showChildView(
+            'description',
+            new WysiwygComponent({
+                model: this.model,
+                key: 'description'
+            })
+        )
+        this.showChildView('choices', new ChoicesComponent({ collection: this.choices }))
+        this.showChildView(
+            'answerTemplates',
+            new AnswerTemplatesComponent({
+                model: this.subtype
+            })
+        )
+        this.showChildView('options', new OptionsComponent({ model: this.model }))
     },
 
-    onClickAdd(event) {
-        event.preventDefault()
-
-        this.model.addAnswer()
-    },
-
-    onClickRemove(event) {
-        event.preventDefault()
-
-        const index = parseInt(Backbone.$(event.target).closest('.choice-input').find('input[name]').attr('name').match(/\d+/)[0], 10)
-        this.model.removeAnswer(index)
-    },
-
-    onChoiceUpdate(event) {
-        const $inputEl = Backbone.$(event.target),
-              index = parseInt($inputEl.attr('name').match(/\d+/)[0], 10),
-              text = $inputEl.val()
-        this.model.updateAnswer(index, { text })
-    },
-
-    onChangeMultiSingle({ target }) {
-        const type = Backbone.$(target).prop('checked') ? 'multiple' : 'single'
-        this.model.setSelectType(type)
-    },
-
-    onSelectSubtype({ target }) {
-        const classSubtype = [...target.classList].filter(item => item.match(/^js-type-/))
-        if (!classSubtype.length) {
-            return
-        }
-        const subtype = classSubtype[0].substr(8)
-        if (_.some(subtypes.models, type => type.id === subtype)) {
-            this.selectSubtype(subtype)
-        }
-    },
-
-    selectSubtype(newSubtype) {
-        const oldSubtype = this.$selectedSubtype
+    onChildviewSelectSubtype(newSubtype) {
+        const oldSubtype = this.subtype.get('selected')
 
         if (newSubtype === oldSubtype) {
             return
         }
 
-        this.$selectedSubtype = newSubtype
+        this.subtype.set('selected', newSubtype)
 
         if (oldSubtype === 'custom') {
-            // store custom choices
-            this.$custom = { ...this.model.attributes }
+            this.subtype.set('custom', { model: this.model.toJSON(), choices: this.choices.toJSON() })
         }
 
         switch (newSubtype) {
+            case 'custom':
+                const { model, choices } = this.subtype.get('custom')
+                this.model.set(model)
+                this.choices.reset(choices)
+                break
 
-        case 'custom':
-            this.model.set({ ...this.$custom })
-            break;
+            case 'yesno':
+                this.fillWithSubtype(['ja', 'nein'])
+                break
 
-        case 'yesno':
-            this.fillWithSubtype(['ja', 'nein'])
-            break;
+            case 'truefalse':
+                this.fillWithSubtype(['wahr', 'falsch'])
+                break
 
-        case 'truefalse':
-            this.fillWithSubtype(['wahr', 'falsch'])
-            break;
+            case 'evaluation':
+                this.fillWithSubtype([
+                    'trifft voll zu',
+                    'trifft eher zu',
+                    'weder noch',
+                    'trifft eher nicht zu',
+                    'trifft gar nicht zu'
+                ])
+                break
 
-        case 'evaluation':
-            this.fillWithSubtype(['trifft voll zu', 'trifft eher zu', 'weder noch', 'trifft eher nicht zu', 'trifft gar nicht zu'])
-            break;
-
-        case 'grading':
-            this.fillWithSubtype([ 'sehr gut', 'gut', 'befriedigend', 'ausreichend', 'mangelhaft', 'ungenügend' ])
-            break
+            case 'grading':
+                this.fillWithSubtype(['sehr gut', 'gut', 'befriedigend', 'ausreichend', 'mangelhaft', 'ungenügend'])
+                break
         }
-
-        this.render()
     },
 
     fillWithSubtype(choices) {
-        this.model.clearAnswers()
+        this.choices.reset(choices.map(text => ({ text, score: 0, feedback: '' })))
         this.model.setSelectType('single')
-        choices.forEach(text => this.model.addAnswer({ text }))
+    },
+
+    onBeforeSubmitForm(event) {
+        event.preventDefault()
+        this.model.get('task').answers = this.choices.toJSON()
+        this.onSubmitForm(event)
     }
 })
-
-export default FormView

@@ -1,0 +1,11 @@
+<span>Tragen Sie die Antworten ein</span>
+
+<div class="choices"></div>
+
+{{button "add" "Antwort hinzufügen" icon="add" class="choice-add"}}
+
+{{#unless items}}
+    <div class="choices-required">
+        <select required oninvalid="setCustomValidity('{{i18n "Mindestens eine Antwort wird benötigt."}}')"></select>
+    </div>
+{{/unless}}

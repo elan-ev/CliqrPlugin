@@ -15,59 +15,13 @@
         <div class="cliqr--mc-title"></div>
     </label>
 
-    <label>
-        <span>Antwortmöglichkeiten</span>
+    <div class="cliqr--mc-answer-templates"></div>
 
-        <div class="cliqr--mc-subtypes button-group">
-            {{#each subtypes}}
-                {{#if selected}}
-                    {{button (concat "type-" id) text class="active"}}
-                {{/if}}
-                {{^if selected}}
-                    {{button (concat "type-" id) text}}
-                {{/if}}
-            {{/each}}
-        </div>
-    </label>
-
-    <label>
-        <span>Tragen Sie die Antworten ein</span>
-
-        <div class="choices">
-            {{#each task.task.answers}}
-                <div class="choice-input">
-                    <span class="nominal">{{nominal @index}}</span>
-
-                    <input
-                        class="choice no-hint" maxlength="500" type="text"
-                        name="answers[{{@index}}]"
-                        value="{{text}}" required>
-
-                    <span class="cliqr--mc-choice-actions">
-                        {{fab "remove" "Entfernen" "trash"}}
-                        <!-- {{fab "upload" "Bild hochladen" "upload"}} -->
-                        <!-- {{fab "options" "Optionen" "tools"}} -->
-                    </span>
-                </div>
-            {{/each}}
-
-            {{button "add" "Antwort hinzufügen" icon="add" class="choice-add"}}
-
-            {{#unless task.task.answers}}
-                <div class="choices-required">
-                    <select required oninvalid="setCustomValidity('{{i18n "Mindestens eine Antwort wird benötigt."}}')"></select>
-                </div>
-            {{/unless}}
-        </div>
-    </label>
+    <label class="cliqr--mc-choices"></label>
 
     <fieldset class="collapsable collapsed cliqr--multiple-choice-options">
         <legend>Optionen</legend>
-
-        <label>
-            <input type="checkbox" name="select-type" value="multi"{{#unless singleSelect}} checked{{/unless}}>
-            Nutzer dürfen mehr als eine Antwort ankreuzen
-        </label>
+        <div></div>
     </fieldset>
 
     <footer>
