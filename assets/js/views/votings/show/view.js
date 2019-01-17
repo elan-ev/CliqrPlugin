@@ -1,3 +1,4 @@
+import Radio from 'backbone.radio'
 import Backbone from 'backbone'
 import { View } from 'backbone.marionette'
 import _ from 'underscore'
@@ -22,7 +23,8 @@ const decorateVoting = function(voting) {
             task_group_id: task.task_group_id,
             task_group_title: task.task_group_title,
             task_id: task.id,
-            task_title: task.title
+            task_title: task.title,
+            voting_id: voting.id
         }
     }
 }
@@ -56,6 +58,8 @@ export default View.extend({
         const task = this.model.getTask()
         const taskGroup = store.taskGroups.get(task.get('task_group_id'))
         store.trigger('navigation', 'task-group', taskGroup)
+        const title = task.getTitle(30)
+        Radio.channel('layout').request('change:pagetitle', `Abstimmung «${title}»`)
     },
 
     onRender() {

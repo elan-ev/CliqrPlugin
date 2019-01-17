@@ -1,3 +1,4 @@
+import Radio from 'backbone.radio'
 import Backbone from 'backbone'
 import { CollectionView } from 'backbone.marionette'
 import { showConfirmDialog } from '../../../dialog'
@@ -27,6 +28,15 @@ export default CollectionView.extend({
 
     template,
 
+    templateContext() {
+        return {
+            breadcrumb: {
+                task_group_id: this.model.id,
+                task_group_title: this.model.get('title')
+            }
+        }
+    },
+
     events: {
         sortupdate: 'onSortUpdate'
     },
@@ -34,6 +44,8 @@ export default CollectionView.extend({
     initialize({ store }) {
         this.store = store
         this.store.trigger('navigation', 'task-group', this.model)
+        const title = this.model.get('title')
+        Radio.channel('layout').request('change:pagetitle', `Fragensammlung «${title}»`)
 
         this.collection = new TaskCollection(this.model.get('tasks'))
     },

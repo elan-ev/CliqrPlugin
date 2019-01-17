@@ -1,21 +1,6 @@
 import { View } from 'backbone.marionette'
-import _ from 'underscore'
 import TaskEditComponent from '../../../views/component-task-edit'
 import template from '../hbs/show.hbs'
-
-const decorateTask = function(task) {
-    const id = task.get('id')
-    return {
-        answers: _.map(task.get('task').answers, function(nsr, i) {
-            return {
-                ...nsr,
-                id: `${id}-${i}`,
-                isCorrect: !!nsr.score
-            }
-        }),
-        isSingleSelect: task.get('task')['type'] === 'single'
-    }
-}
 
 export default View.extend({
     tagName: 'section',
@@ -35,15 +20,19 @@ export default View.extend({
     template,
 
     templateContext() {
-        return decorateTask(this.model)
+        return {
+            answers: this.model.get('task').answers,
+            isSingleSelect: this.model.get('task')['type'] === 'single'
+        }
     },
 
     onRender() {
-        const edit = new TaskEditComponent({
-            model: this.model
-        })
-
-        this.showChildView('headerRegion', edit)
+        this.showChildView(
+            'headerRegion',
+            new TaskEditComponent({
+                model: this.model
+            })
+        )
     },
 
     onAttach() {

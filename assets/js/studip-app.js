@@ -1,32 +1,62 @@
 import './public-path.js'
 import '@babel/polyfill'
 import Backbone from 'backbone'
-import { Application, View } from 'backbone.marionette'
+import { Application, MnObject, View } from 'backbone.marionette'
+import '../scss/core.scss'
 import StudipRouter from './routers/studip'
 import setupHandlebars from './setupHandlebars.js'
 import store from './store/index'
 import SidebarView from './views/sidebar/view'
-import '../scss/core.scss'
+
+const NotificationHandler = MnObject.extend({
+    channelName: 'layout',
+
+    radioRequests: {
+        'change:pagetitle': 'onChangePagetitle'
+    },
+
+    initialize({ layout }) {
+        this.layout = layout
+    },
+
+    onChangePagetitle(newTitle) {
+        const title = document.head.querySelector('title')
+        const original = title && title.dataset.original
+        if (original) {
+            const prefix = original.substring(0, original.length - 5)
+            this.layout.triggerMethod('change:pagetitle', prefix + newTitle)
+        }
+    }
+})
 
 const MyBaseLayout = View.extend({
     template: false,
 
     regions: {
+        content: '#cliqr',
+        pageTitle: '#current_page_title',
         sidebar: {
             el: '#layout-sidebar',
             replaceElement: false
-        },
-        content: '#cliqr'
+        }
     },
 
     initialize() {
         this.showChildView('sidebar', new SidebarView({ el: '#layout-sidebar', store }))
         this.router = new StudipRouter({ selector: this.getRegion('content').$el, store })
+
+        this.notificationHandler = new NotificationHandler({ layout: this })
+    },
+
+    onChangePagetitle(title) {
+        console.log('im layout', 'onChangePagetitle', title)
+        document.title = title
+        this.getRegion('pageTitle').$el.text(title)
     }
 })
 
 const StudipCliqrApplication = Application.extend({
-    region: '#layout_container',
+    region: '#layout_page',
 
     initialize() {
         setupHandlebars()
@@ -49,7 +79,7 @@ const StudipCliqrApplication = Application.extend({
                 .addClass('loading')
         })
 
-        Backbone.$(document).on('mouseleave', '.cliqr--button-fab', function(event) {
+        Backbone.$(document).on('mouseleave', '.cliqr--moment, .cliqr--button-fab', function(event) {
             const { tooltipObject } = Backbone.$(this).data()
             tooltipObject && tooltipObject.hide()
         })
@@ -62,7 +92,6 @@ const StudipCliqrApplication = Application.extend({
 
     onStart(app, options) {
         // console.log('onStart', app, options)
-
         this.showView(new MyBaseLayout({ el: '#layout_container' }))
         Backbone.history.start()
     }

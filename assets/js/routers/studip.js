@@ -1,11 +1,24 @@
 import Backbone from 'backbone'
 import showError from '../error'
-import { activateNavigation, changeToPage, hideLoading, showLoading, userRole } from '../utils'
+import { hideLoading, showLoading, userRole } from '../utils'
 import ArchiveView from '../views/archive/view'
 import * as TaskGroups from '../views/task-groups/index'
 import * as Tasks from '../views/tasks/index'
 import * as Votings from '../views/votings/index'
-import { fetchLastVotings, fetchTask, fetchTaskGroup, fetchTwoVotings, fetchVoting } from './studip-fetcher'
+import * as fetchers from './studip-fetcher'
+
+let currentView
+
+const changeToPage = function(view, selector) {
+    if (currentView) {
+        currentView.$el.hide()
+        currentView.remove()
+    }
+    currentView = view
+    Backbone.$(window).scrollTop(0)
+    Backbone.$(selector).prepend(view.$el)
+    view.render()
+}
 
 const StudipRouter = Backbone.Router.extend({
     initialize(options) {
@@ -36,7 +49,6 @@ const StudipRouter = Backbone.Router.extend({
         return fetcher(id)
             .then(response => {
                 hideLoading()
-                activateNavigation(...rest)
                 const page = new view({ [useCollection]: response, store: this.store })
                 return changeToPage(page, this.selector)
             })
@@ -71,42 +83,42 @@ const StudipRouter = Backbone.Router.extend({
 
     // ROUTE: '#task-groups/show/:id'
     taskGroup(id) {
-        this.routeHandler(fetchTaskGroup, id, TaskGroups.ShowView)
+        this.routeHandler(fetchers.fetchTaskGroup, id, TaskGroups.ShowView)
     },
 
     // ROUTE: '#task-group/edit/:id'
     taskGroupEdit(id) {
-        this.routeHandler(fetchTaskGroup, id, TaskGroups.EditView)
+        this.routeHandler(fetchers.fetchTaskGroup, id, TaskGroups.EditView)
     },
 
     // ROUTE: '#task/show/:id'
     task(id) {
-        this.routeHandler(fetchTask, id, Tasks.ShowView)
+        this.routeHandler(fetchers.fetchTask, id, Tasks.ShowView)
     },
 
     // ROUTE: '#task/create/:id'
     taskCreate(id) {
-        this.routeHandler(fetchTaskGroup, id, Tasks.CreateView)
+        this.routeHandler(fetchers.fetchTaskGroup, id, Tasks.CreateView)
     },
 
     // ROUTE: '#task/edit/:id'
     taskEdit(id) {
-        this.routeHandler(fetchTask, id, Tasks.EditView)
+        this.routeHandler(fetchers.fetchTask, id, Tasks.EditView)
     },
 
     // ROUTE: '#voting/:id'
     voting(id) {
-        this.routeHandler(fetchVoting, id, Votings.ShowView)
+        this.routeHandler(fetchers.fetchVoting, id, Votings.ShowView)
     },
 
     // ROUTE: '#compare/:v1/:v2'
     votingCompare(v1, v2) {
-        this.routeHandler(fetchTwoVotings, [v1, v2], Votings.CompareView, 'votings')
+        this.routeHandler(fetchers.fetchTwoVotings, [v1, v2], Votings.CompareView, 'votings')
     },
 
     // ROUTE: '#archive'
     archive() {
-        this.routeHandler(fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive')
+        this.routeHandler(fetchers.fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive')
     }
 })
 

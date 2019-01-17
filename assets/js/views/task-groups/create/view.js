@@ -1,3 +1,4 @@
+import Radio from 'backbone.radio'
 import { View } from 'backbone.marionette'
 import template from './create.hbs'
 
@@ -13,6 +14,7 @@ export default View.extend({
 
     initialize({ store }) {
         store.trigger('navigation', 'task-groups')
+        Radio.channel('layout').request('change:pagetitle', 'Fragensammlung anlegen')
     },
 
     template,

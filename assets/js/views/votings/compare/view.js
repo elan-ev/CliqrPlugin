@@ -1,3 +1,4 @@
+import Radio from 'backbone.radio'
 import { View } from 'backbone.marionette'
 import _ from 'underscore'
 import showError from '../../../error'
@@ -22,6 +23,8 @@ export default View.extend({
     },
 
     initialize({ store, votings }) {
+        Radio.channel('layout').request('change:pagetitle', 'Abstimmungen vergleichen')
+
         this.votings = new Votings(votings)
         const ids = this.votings.map(voting => voting.id),
             selectors = _.zipObject(ids, ['sideA', 'sideB'])

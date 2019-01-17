@@ -1,88 +1,98 @@
 @charset "utf-8";
 
-$breadcrumb-item-color: #28497c !default;
-$breadcrumb-item-hover-color: #ffbd33 !default;
+$breadcrumb-item-color: $studip-base-color !default;
+$breadcrumb-item-hover-color: $studip-yellow !default;
+$breadcrumb-disabled-item-color: $studip-base-gray !default;
 
 $breadcrumb-item-padding-vertical: 0 !default;
 $breadcrumb-item-padding-horizontal: 0.5em !default;
 
-$breadcrumb-item-separator-color: #b5b5b5 !default;
+$breadcrumb-item-separator-color: $studip-base-gray !default;
 
 nav.cliqr--breadcrumb {
-  @include block;
-  @include unselectable;
+    @include block;
+    @include unselectable;
 
-  padding: 0 0 1em 0;
+    padding: 0 0 2em 0;
 
-  ul {
-      list-style: none;
-  }
-
-  ul, li {
-      margin: 0;
-      padding: 0;
-  }
-
-  white-space: nowrap;
-
-  a {
-    align-items: center;
-    color: $breadcrumb-item-color;
-    display: flex;
-    justify-content: center;
-    padding: $breadcrumb-item-padding-vertical $breadcrumb-item-padding-horizontal;
-
-    &:hover {
-      color: $breadcrumb-item-hover-color;
-    }
-  }
-
-  li {
-    align-items: center;
-    display: flex;
-
-    &:first-child a {
-      padding-left: 0;
+    ul {
+        list-style: none;
     }
 
-    & + li::before {
-      color: $breadcrumb-item-separator-color;
-      content: "/";
+    ul, li {
+        margin: 0;
+        padding: 0;
     }
-  }
 
-  ul {
-    align-items: flex-start;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-  }
+    white-space: nowrap;
 
-  .cliqr--icon {
-      margin-right: 0.5em;
-  }
+    a {
+        align-items: center;
+        color: $breadcrumb-item-color;
+        display: flex;
+        justify-content: center;
+        padding: $breadcrumb-item-padding-vertical $breadcrumb-item-padding-horizontal;
 
-  &.has-arrow-separator {
-    li + li::before {
-      content: "→";
+        &:hover {
+            color: $breadcrumb-item-hover-color;
+        }
     }
-  }
 
-  &.has-bullet-separator {
-    li + li::before {
-      content: "•";
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+        color: $breadcrumb-disabled-item-color;
+        &:hover {
+            color: $breadcrumb-disabled-item-color;
+        }
     }
-  }
 
-  &.has-dot-separator {
-    li + li::before {
-      content: "·";
-    }
-  }
+    li {
+        align-items: center;
+        display: flex;
 
-  &.has-succeeds-separator {
-    li + li::before {
-      content: "≻";
+        &:first-child a {
+            padding-left: 0;
+        }
+
+        & + li::before {
+            color: $breadcrumb-item-separator-color;
+            content: "/";
+        }
     }
-  }
+
+    ul {
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .cliqr--icon {
+        margin-right: 0.5em;
+    }
+
+    &.has-arrow-separator {
+        li + li::before {
+            content: "→";
+        }
+    }
+
+    &.has-bullet-separator {
+        li + li::before {
+            content: "•";
+        }
+    }
+
+    &.has-dot-separator {
+        li + li::before {
+            content: "·";
+        }
+    }
+
+    &.has-succeeds-separator {
+        li + li::before {
+            content: "≻";
+        }
+    }
 }

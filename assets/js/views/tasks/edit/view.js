@@ -1,3 +1,4 @@
+import Radio from 'backbone.radio'
 import Backbone from 'backbone'
 import { View } from 'backbone.marionette'
 import showError from '../../../error'
@@ -21,6 +22,7 @@ export default View.extend({
     initialize({ store }) {
         const taskGroup = store.taskGroups.get(this.model.get('task_group_id'))
         store.trigger('navigation', 'task-group', taskGroup)
+        Radio.channel('layout').request('change:pagetitle', 'Frage bearbeiten')
     },
 
     template,

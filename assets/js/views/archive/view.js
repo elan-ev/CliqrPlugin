@@ -1,3 +1,4 @@
+import Radio from 'backbone.radio'
 import Backbone from 'backbone'
 import _ from 'underscore'
 import template from './archive.hbs'
@@ -23,6 +24,7 @@ export default CollectionView.extend({
 
     initialize({ store }) {
         store.trigger('navigation', 'archive')
+        Radio.channel('layout').request('change:pagetitle', 'Beendete Abstimmungen')
     },
 
     viewFilter(view, index, children) {

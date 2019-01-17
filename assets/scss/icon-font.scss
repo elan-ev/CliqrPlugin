@@ -69,6 +69,8 @@ i {
     content: "\e911";
 }
 .cliqr--icon-test:before {
+    position: relative;
+    top: -2px;
     content: "\e912";
 }
 .cliqr--icon-trash:before {

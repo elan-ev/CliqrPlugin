@@ -1,25 +1,60 @@
+{{#*inline "taskgroups"}}
+{{icon "folder-parent" color="blue"}} Fragensammlungen
+{{/inline}}
+
+{{#*inline "taskgroup"}}
+Fragensammlung &laquo;{{shorten task_group_title 40}}&raquo;
+{{/inline}}
+
+{{#*inline "task"}}
+Frage {{#if task_title}} &laquo;{{shorten task_title 40}}&raquo; {{/if}}
+{{/inline}}
+
 <nav class="cliqr--breadcrumb">
     <ul>
         <li>
-            <a href="#task-groups">
-              {{icon "folder-parent" color="blue"}}
-              Fragensammlungen
-            </a>
+            <a href="#task-groups"> {{> taskgroups}} </a>
         </li>
+
         {{#if task_group_id}}
             <li>
-                <a href="#task-groups/show/{{task_group_id}}">
-                    {{icon "folder-full" color="blue"}}
-                    Fragensammlung &laquo;{{shorten task_group_title 40}}&raquo;
-                </a>
+                {{#if task_id}}
+                    <a href="#task-groups/show/{{task_group_id}}">
+                        {{icon "folder-full" color="blue"}}
+                        {{> taskgroup }}
+                    </a>
+                    {{^}}
+                    <a class="disabled">
+                        {{icon "folder-full" color="gray"}}
+                        {{> taskgroup }}
+                    </a>
+                {{/if}}
             </li>
         {{/if}}
 
+
         {{#if task_id}}
             <li>
-                <a href="#task/show/{{task_id}}">
-                    {{icon "assessment" color="blue"}}
-                    Frage {{#if task_title}} &laquo;{{shorten task_title 40}}&raquo; {{/if}}
+                {{#if voting_id}}
+                    <a href="#task/show/{{task_id}}">
+                        {{icon "assessment" color="blue"}}
+                        {{> task}}
+                    </a>
+                    {{^}}
+                    <a class="disabled">
+                        {{icon "assessment" color="gray"}}
+                        {{> task}}
+                    </a>
+                {{/if}}
+            </li>
+        {{/if}}
+
+
+        {{#if voting_id}}
+            <li>
+                <a class="disabled">
+                    {{icon "test" color="gray"}}
+                    {{i18n "Abstimmung"}}
                 </a>
             </li>
         {{/if}}

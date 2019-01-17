@@ -1,3 +1,4 @@
+import Radio from 'backbone.radio'
 import { View } from 'backbone.marionette'
 import Backbone from 'backbone'
 import showError from '../../../error'
@@ -28,6 +29,7 @@ export default View.extend({
     initialize({ store }) {
         this.tasks = new TaskCollection(this.model.get('tasks'))
         store.trigger('navigation', 'task-group', this.model)
+        Radio.channel('layout').request('change:pagetitle', 'Neue Frage anlegen')
 
         // TODO:
         this.selectTypeCreator('scales')

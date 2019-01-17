@@ -1,3 +1,4 @@
+import Radio from 'backbone.radio'
 import Backbone from 'backbone'
 import { View } from 'backbone.marionette'
 import { showConfirmDialog } from '../../../dialog'
@@ -30,6 +31,8 @@ export default View.extend({
     initialize({ store }) {
         const taskGroup = store.taskGroups.get(this.model.get('task_group_id'))
         store.trigger('navigation', 'task-group', taskGroup)
+        const title = this.model.getTitle(30)
+        Radio.channel('layout').request('change:pagetitle', `Frage «${title}»`)
 
         taskTypes
             .fetchTaskType(this.model)
@@ -56,7 +59,9 @@ export default View.extend({
             votings: votings.map(v => ({ ...v.toJSON(), running: v.isRunning() })).reverse(),
             breadcrumb: {
                 task_group_id: this.model.get('task_group_id'),
-                task_group_title: this.model.get('task_group_title')
+                task_group_title: this.model.get('task_group_title'),
+                task_id: this.model.id,
+                task_title: this.model.getTitle()
             }
         }
     },

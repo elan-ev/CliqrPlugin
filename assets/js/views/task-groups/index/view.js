@@ -5,6 +5,7 @@ import * as TaskGroups from '../index'
 import EmptyView from './empty'
 import ListItemView from './list-item'
 import indexTemplate from './view.hbs'
+import Radio from 'backbone.radio'
 
 export default CollectionView.extend({
     className: 'cliqr--task-groups-index',
@@ -33,6 +34,7 @@ export default CollectionView.extend({
     initialize({ store }) {
         this.store = store
         store.trigger('navigation', 'task-groups')
+        Radio.channel('layout').request('change:pagetitle', 'Fragensammlungen')
     },
 
     onAddTaskgroup(view, event) {

@@ -3,6 +3,8 @@ import _ from 'underscore'
 import messageBus from '../message_bus'
 import Voting from './voting'
 import VotingsCollection from './votings'
+import shorten from '../helpers/shorten'
+import stripTags from '../helpers/strip_tags'
 
 const actionMap = function(action) {
     const map = {
@@ -25,6 +27,11 @@ const Task = Backbone.Model.extend({
     url(action) {
         let id = this.id != null ? '/' + this.id : ''
         return window.cliqr.config.PLUGIN_URL + ('tasks/' + action + id + '?cid=') + window.cliqr.config.CID
+    },
+
+    getTitle(len = false) {
+        const title = this.get('title') || stripTags(this.get('description'))
+        return len ? shorten(title.trim(), len) : title
     },
 
     getVotings() {
