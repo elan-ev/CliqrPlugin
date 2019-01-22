@@ -30,9 +30,6 @@ export default View.extend({
         this.tasks = new TaskCollection(this.model.get('tasks'))
         store.trigger('navigation', 'task-group', this.model)
         Radio.channel('layout').request('change:pagetitle', 'Neue Frage anlegen')
-
-        // TODO:
-        this.selectTypeCreator('scales')
     },
 
     template,
