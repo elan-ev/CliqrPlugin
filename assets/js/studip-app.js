@@ -49,7 +49,6 @@ const MyBaseLayout = View.extend({
     },
 
     onChangePagetitle(title) {
-        console.log('im layout', 'onChangePagetitle', title)
         document.title = title
         this.getRegion('pageTitle').$el.text(title)
     }
