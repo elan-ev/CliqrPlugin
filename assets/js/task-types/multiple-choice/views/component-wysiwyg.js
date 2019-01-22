@@ -46,7 +46,7 @@ const WysiwygComponent = Viewmaster.extend({
 
     afterTemplate() {
         const textarea = this.$('textarea').get(0)
-        if (!textarea || !window.STUDIP.wysiwyg) {
+        if (!textarea || !window.STUDIP.wysiwyg || !window.STUDIP.wysiwyg.replace) {
             return
         }
 
