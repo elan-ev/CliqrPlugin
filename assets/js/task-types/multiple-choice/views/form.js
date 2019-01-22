@@ -16,7 +16,7 @@ export default View.extend({
 
     events: {
         'click @ui.cancel': 'onClickCancel',
-        'submit form': 'onBeforeSubmitForm'
+        'submit form': 'onSubmitForm'
     },
 
     childViewEventPrefix: 'childview',
@@ -119,11 +119,5 @@ export default View.extend({
     fillWithSubtype(choices) {
         this.choices.reset(choices.map(text => ({ text, score: 0, feedback: '' })))
         this.model.setSelectType('single')
-    },
-
-    onBeforeSubmitForm(event) {
-        event.preventDefault()
-        this.model.get('task').answers = this.choices.toJSON()
-        this.onSubmitForm(event)
     }
 })
