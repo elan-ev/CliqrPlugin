@@ -57,7 +57,7 @@ nav.cliqr--breadcrumb {
 
         & + li::before {
             color: $breadcrumb-item-separator-color;
-            content: "/";
+            content: ">";
         }
     }
 
