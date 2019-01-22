@@ -1,35 +1,24 @@
-import { CollectionView } from 'backbone.marionette'
-import statementsTemplate from '../hbs/form-statements.hbs'
+import { CollectionView, View } from 'backbone.marionette'
+import template from '../hbs/form-statements.hbs'
 import StatementView from './form-statement'
 
 export default CollectionView.extend({
     tagName: 'label',
     className: 'cliqr--scales-statements',
-    template: statementsTemplate,
+    template,
 
     childView: StatementView,
-    childViewContainer: '.choices',
-    childViewEventPrefix: 'childview',
+    childViewContainer: '.statements',
+
+    childViewTriggers: {
+        'remove:statement': 'remove:statement'
+    },
 
     ui: {
-        add: '.js-add'
+        addStatement: '.js-add'
     },
 
     triggers: {
-        'click @ui.add': 'add:statement'
-    },
-
-    collectionEvents: {
-        remove: 'render'
-    },
-
-    onAddStatement(view, event) {
-        this.collection.add({
-            text: ''
-        })
-    },
-
-    onChildviewRemoveStatement({ model }, event) {
-        this.collection.remove(model)
+        'click @ui.addStatement': 'add:statement'
     }
 })

@@ -1,11 +1,5 @@
 <span> Aussagen </span>
 
-<div class="choices"></div>
+<div class="statements"></div>
 
 {{button "add" "Aussage hinzufügen" icon="add" class="choice-add"}}
-
-{{#unless items}}
-    <div class="choices-required">
-        <select required oninvalid="setCustomValidity('{{i18n "Mindestens eine Aussage wird benötigt."}}')"></select>
-    </div>
-{{/unless}}

@@ -27,12 +27,19 @@ export default View.extend({
         cancelCreate: '.js-cancel'
     },
 
-    triggers: {},
-
     events: {
         'submit form': 'onSubmitForm',
         'click @ui.cancelCreate': 'onClickCancel',
         'click @ui.editDescription': 'onClickEdit'
+    },
+
+    modelEvents: {
+        invalid: 'render'
+    },
+
+    childViewTriggers: {
+        'add:statement': 'add:statement',
+        'remove:statement': 'remove:statement'
     },
 
     initialize({ type, taskGroup }) {
@@ -44,11 +51,7 @@ export default View.extend({
     template,
 
     templateContext() {
-        const task = this.model.get('task')
-
         return {
-            taskGroup: this.taskGroup && this.taskGroup.toJSON(),
-            task: { ...task, lrange_max: task.hrange_value - 1, hrange_min: task.lrange_value + 1 },
             error: this.model.validationError || null
         }
     },
@@ -83,5 +86,13 @@ export default View.extend({
                 key: 'description'
             })
         )
+    },
+
+    onAddStatement(view, event) {
+        this.statements.add({ text: '' })
+    },
+
+    onRemoveStatement(view, event) {
+        this.statements.remove(view.model)
     }
 })

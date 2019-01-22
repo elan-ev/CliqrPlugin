@@ -146,7 +146,7 @@ $color-diminished: #999999;
             }
         }
 
-        .choices {
+        .statements {
             margin-bottom: 1.5em;
 
             input {
@@ -169,17 +169,11 @@ $color-diminished: #999999;
             .cliqr--scales-choice-actions {
                 margin-left: 8px;
             }
-        }
 
-        .cliqr--scales-statements .choices-required {
-            position: relative;
-
-            select {
-                position: absolute;
-                left: 20;
-                top: -40px;
-                z-index: -1;
-                border: none;
+            .choice-input:only-child .js-remove {
+                pointer-events: none;
+                cursor: none;
+                opacity: 0.2;
             }
         }
 

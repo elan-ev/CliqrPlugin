@@ -5,6 +5,13 @@ export default View.extend({
     tagName: 'div',
     className: 'choice-input',
 
+    template,
+    templateContext() {
+        return {
+            index: this.model.collection.indexOf(this.model)
+        }
+    },
+
     ui: {
         choice: 'input.choice',
         remove: '.js-remove'
@@ -20,13 +27,6 @@ export default View.extend({
     initialize() {
         // re-render index
         this.listenTo(this.model.collection, 'remove', this.render)
-    },
-
-    template,
-    templateContext() {
-        return {
-            index: this.model.collection.indexOf(this.model)
-        }
     },
 
     onUpdateChoice() {

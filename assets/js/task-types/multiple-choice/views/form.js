@@ -10,6 +10,14 @@ import OptionsComponent from './form-options'
 export default View.extend({
     tagName: 'section',
 
+    regions: {
+        title: '.cliqr--mc-title',
+        description: '.cliqr--mc-description',
+        answerTemplates: { el: '.cliqr--mc-answer-templates', replaceElement: true },
+        choices: { el: '.cliqr--mc-choices', replaceElement: true },
+        options: { el: '.cliqr--multiple-choice-options div', replaceElement: true }
+    },
+
     ui: {
         cancel: '.js-cancel'
     },
@@ -19,15 +27,17 @@ export default View.extend({
         'submit form': 'onSubmitForm'
     },
 
+    modelEvents: {
+        invalid: 'render'
+    },
+
     childViewEventPrefix: 'childview',
 
-    regions: {
-        title: '.cliqr--mc-title',
-        description: '.cliqr--mc-description',
-        answerTemplates: { el: '.cliqr--mc-answer-templates', replaceElement: true },
-        choices: { el: '.cliqr--mc-choices', replaceElement: true },
-        options: { el: '.cliqr--multiple-choice-options div', replaceElement: true }
+    childViewTriggers: {
+        'add:choice': 'add:choice',
+        'remove:choice': 'remove:choice'
     },
+
 
     initialize({ type, taskGroup }) {
         this.type = type
@@ -119,5 +129,19 @@ export default View.extend({
     fillWithSubtype(choices) {
         this.choices.reset(choices.map(text => ({ text, score: 0, feedback: '' })))
         this.model.setSelectType('single')
+    },
+
+    onAddChoice(view, event) {
+        event.preventDefault()
+        this.choices.add({
+            text: '',
+            score: 0,
+            feedback: ''
+        })
+    },
+
+    onRemoveChoice({ model }, event) {
+        event.preventDefault()
+        this.choices.remove(model)
     }
 })

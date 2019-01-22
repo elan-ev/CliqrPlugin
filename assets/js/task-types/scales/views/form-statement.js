@@ -6,7 +6,6 @@ export default View.extend({
     className: 'choice-input',
 
     template: statementTemplate,
-
     templateContext() {
         return {
             index: this.model.collection.indexOf(this.model)

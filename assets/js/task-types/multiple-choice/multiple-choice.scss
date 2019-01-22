@@ -173,17 +173,10 @@ $color-diminished: #999999;
                 margin-left: 8px;
             }
 
-        }
-
-        .cliqr--mc-choices .choices-required {
-            position: relative;
-
-            select {
-                position: absolute;
-                left: 20px;
-                top: -40px;
-                z-index: -1;
-                border: none;
+            .choice-input:only-child .js-remove {
+                pointer-events: none;
+                cursor: none;
+                opacity: 0.2;
             }
         }
 

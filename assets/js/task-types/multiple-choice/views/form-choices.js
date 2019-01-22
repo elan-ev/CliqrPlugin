@@ -9,7 +9,10 @@ export default CollectionView.extend({
 
     childView: ChoiceView,
     childViewContainer: '.choices',
-    childViewEventPrefix: 'childview',
+
+    childViewTriggers: {
+        'remove:choice': 'remove:choice'
+    },
 
     ui: {
         add: '.js-add'
@@ -17,23 +20,5 @@ export default CollectionView.extend({
 
     triggers: {
         'click @ui.add': 'add:choice'
-    },
-
-    collectionEvents: {
-        remove: 'render'
-    },
-
-    onAddChoice(view, event) {
-        event.preventDefault()
-        this.collection.add({
-            text: '',
-            score: 0,
-            feedback: ''
-        })
-    },
-
-    onChildviewRemoveChoice({ model }, event) {
-        event.preventDefault()
-        this.collection.remove(model)
     }
 })
