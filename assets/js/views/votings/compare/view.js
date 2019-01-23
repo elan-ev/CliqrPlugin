@@ -24,30 +24,10 @@ export default View.extend({
 
     initialize({ store, votings }) {
         Radio.channel('layout').request('change:pagetitle', 'Abstimmungen vergleichen')
-
+        this.store = store
         this.votings = new Votings(votings)
-        const ids = this.votings.map(voting => voting.id),
-            selectors = _.zipObject(ids, ['sideA', 'sideB'])
-
-        this.listenTo(this.votings, 'change sync', this.render)
-
-        this.listenTo(this.votings, 'sync', voting => {
-            const viewSelector = selectors[voting.id]
-            getView(voting)
-                .then(view => {
-                    // trigger navigation event
-                    const task = voting.getTask()
-                    const taskGroup = store.taskGroups.get(task.get('task_group_id'))
-                    store.trigger('navigation', 'task-group', taskGroup)
-
-                    this.showChildView(viewSelector, view)
-                })
-                .catch(error => {
-                    showError('Could not fetch task type', error)
-                })
-        })
-
-        this.votings.each(voting => voting.fetch())
+        this.listenTo(this.votings, 'sync', this.onSync)
+        this.promise = Promise.all(this.votings.map(voting => voting.fetch()))
     },
 
     template,
@@ -70,5 +50,23 @@ export default View.extend({
             task,
             breadcrumb
         }
+    },
+
+    onSync(voting) {
+        const ids = this.votings.map(voting => voting.id),
+            selectors = _.zipObject(ids, ['sideA', 'sideB'])
+        const viewSelector = selectors[voting.id]
+        getView(voting)
+            .then(view => {
+                // trigger navigation event
+                const task = voting.getTask()
+                const taskGroup = this.store.taskGroups.get(task.get('task_group_id'))
+                this.store.trigger('navigation', 'task-group', taskGroup)
+
+                this.showChildView(viewSelector, view)
+            })
+            .catch(error => {
+                showError('Es ist ein Fehler aufgetreten.', error)
+            })
     }
 })

@@ -35,7 +35,8 @@ export default View.extend({
     className: 'cliqr--votings-show',
 
     ui: {
-        main: 'main'
+        main: 'main',
+        compare: '.js-compare'
     },
 
     regions: {
@@ -46,7 +47,7 @@ export default View.extend({
         'click .js-stop': 'onClickStop',
         'click .js-restart': 'onClickRestart',
         'click .js-show-qr-code': 'onClickShowQRCode',
-        'click .js-compare': 'onClickCompare',
+        'click @ui.compare': 'onClickCompare',
         'click .js-remove': 'onClickRemove'
     },
 
@@ -137,6 +138,9 @@ export default View.extend({
                 .find('select')
                 .val()
         Backbone.history.navigate(`compare/${otherVersion}/${thisVersion}`, { trigger: true })
+
+        // workaround for tooltips staying too long
+        this.getUI('compare').remove()
     },
 
     onClickRemove(event) {
