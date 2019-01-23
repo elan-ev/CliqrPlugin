@@ -12,7 +12,8 @@ const NotificationHandler = MnObject.extend({
     channelName: 'layout',
 
     radioRequests: {
-        'change:pagetitle': 'onChangePagetitle'
+        'change:pagetitle': 'onChangePagetitle',
+        'scroll:top': 'onScrollTop'
     },
 
     initialize({ layout }) {
@@ -26,6 +27,11 @@ const NotificationHandler = MnObject.extend({
             const prefix = original.substring(0, original.length - 5)
             this.layout.triggerMethod('change:pagetitle', prefix + newTitle)
         }
+    },
+
+    onScrollTop() {
+        const { left, top } = this.layout.$el.offset()
+        Backbone.$('html, body').animate({ scrollLeft: left - 20, scrollTop: top - 20 })
     }
 })
 
