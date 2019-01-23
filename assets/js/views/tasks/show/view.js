@@ -33,20 +33,6 @@ export default View.extend({
         store.trigger('navigation', 'task-group', taskGroup)
         const title = this.model.getTitle(30)
         Radio.channel('layout').request('change:pagetitle', `Frage «${title}»`)
-
-        taskTypes
-            .fetchTaskType(this.model)
-            .then(taskType => {
-                const view = taskType.getShowView()
-                if (view) {
-                    this.showChildView('mainRegion', view)
-                }
-
-                return null
-            })
-            .catch(error => {
-                showError('Could not fetch type of task', error)
-            })
     },
 
     template,
@@ -64,6 +50,21 @@ export default View.extend({
                 task_title: this.model.getTitle()
             }
         }
+    },
+
+    onRender() {
+        taskTypes.fetchTaskType(this.model)
+            .then(taskType => {
+                const view = taskType.getShowView()
+                if (view) {
+                    this.showChildView('mainRegion', view)
+                }
+
+                return null
+            })
+            .catch(error => {
+                showError('Es ist ein Fehler aufgetreten.', error)
+            })
     },
 
     onClickStart(event) {
@@ -86,7 +87,7 @@ export default View.extend({
         running
             .stop()
             .then(() => {
-                this.render()
+                Backbone.history.navigate(`voting/${running.id}`, { trigger: true })
                 return null
             })
             .catch(response => {
