@@ -1,10 +1,11 @@
-import Backbone from 'backbone'
-import { View } from 'backbone.marionette'
-import template from '../hbs/form.hbs'
-import TextInputComponent from './component-text-input'
-import WysiwygComponent from '../../../views/component-wysiwyg'
-import RangeView from './form-range'
-import StatementsView from './form-statements'
+import Backbone from 'backbone';
+import { View } from 'backbone.marionette';
+import Radio from 'backbone.radio';
+import WysiwygComponent from '../../../views/component-wysiwyg';
+import template from '../hbs/form.hbs';
+import TextInputComponent from './component-text-input';
+import RangeView from './form-range';
+import StatementsView from './form-statements';
 
 export default View.extend({
     tagName: 'section',
@@ -34,7 +35,7 @@ export default View.extend({
     },
 
     modelEvents: {
-        invalid: 'render'
+        invalid: 'onInvalid'
     },
 
     childViewTriggers: {
@@ -94,5 +95,10 @@ export default View.extend({
 
     onRemoveStatement(view, event) {
         this.statements.remove(view.model)
+    },
+
+    onInvalid() {
+        this.render()
+        Radio.channel('layout').request('scroll:top')
     }
 })

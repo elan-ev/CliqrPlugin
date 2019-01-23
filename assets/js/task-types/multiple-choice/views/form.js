@@ -1,8 +1,9 @@
 import Backbone from 'backbone'
 import { View } from 'backbone.marionette'
+import Radio from 'backbone.radio'
+import WysiwygComponent from '../../../views/component-wysiwyg'
 import template from '../hbs/form.hbs'
 import TextInputComponent from './component-text-input'
-import WysiwygComponent from '../../../views/component-wysiwyg'
 import AnswerTemplatesComponent from './form-answer-templates'
 import ChoicesComponent from './form-choices'
 import OptionsComponent from './form-options'
@@ -28,7 +29,7 @@ export default View.extend({
     },
 
     modelEvents: {
-        invalid: 'render'
+        invalid: 'onInvalid'
     },
 
     childViewEventPrefix: 'childview',
@@ -37,7 +38,6 @@ export default View.extend({
         'add:choice': 'add:choice',
         'remove:choice': 'remove:choice'
     },
-
 
     initialize({ type, taskGroup }) {
         this.type = type
@@ -143,5 +143,10 @@ export default View.extend({
     onRemoveChoice({ model }, event) {
         event.preventDefault()
         this.choices.remove(model)
+    },
+
+    onInvalid() {
+        this.render()
+        Radio.channel('layout').request('scroll:top')
     }
 })
