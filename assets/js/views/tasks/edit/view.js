@@ -1,9 +1,8 @@
-import Radio from 'backbone.radio'
 import Backbone from 'backbone'
 import { View } from 'backbone.marionette'
+import Radio from 'backbone.radio'
 import showError from '../../../error'
 import taskTypes from '../../../models/task_types'
-import { hideLoading, showLoading } from '../../../utils'
 import template from './edit.hbs'
 
 export default View.extend({
@@ -55,17 +54,17 @@ export default View.extend({
     onEditTask(model) {
         this.model.set(model.attributes, { silent: true })
 
-        showLoading()
+        Radio.channel('layout').request('show:loading')
 
         this.model
             .save()
             .then(() => {
                 Backbone.history.navigate(`task/show/${this.model.id}`, { trigger: true })
-                hideLoading()
+                Radio.channel('layout').request('hide:loading')
                 return null
             })
             .catch(error => {
-                hideLoading()
+                Radio.channel('layout').request('hide:loading')
                 showError('Could not edit task', error)
             })
     },

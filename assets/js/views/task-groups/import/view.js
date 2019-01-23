@@ -1,6 +1,5 @@
-import Radio from 'backbone.radio'
 import { View } from 'backbone.marionette'
-import { showLoading } from '../../../utils'
+import Radio from 'backbone.radio'
 import template from './import.hbs'
 
 const cancel = function(e) {
@@ -53,7 +52,7 @@ export default View.extend({
 
                 this.$('form').submit()
                 this.trigger('cancel', event, this)
-                showLoading()
+                Radio.channel('layout').request('show:loading')
             }
 
             fileReader.readAsText(event.target.files[0])

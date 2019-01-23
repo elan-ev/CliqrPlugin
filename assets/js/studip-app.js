@@ -8,16 +8,19 @@ import setupHandlebars from './setupHandlebars.js'
 import store from './store/index'
 import SidebarView from './views/sidebar/view'
 
-const NotificationHandler = MnObject.extend({
+const LayoutNotificationHandler = MnObject.extend({
     channelName: 'layout',
 
     radioRequests: {
         'change:pagetitle': 'onChangePagetitle',
-        'scroll:top': 'onScrollTop'
+        'scroll:top': 'onScrollTop',
+        'show:loading': 'onShowLoading',
+        'hide:loading': 'onHideLoading'
     },
 
     initialize({ layout }) {
         this.layout = layout
+        this.timeout = null
     },
 
     onChangePagetitle(newTitle) {
@@ -32,6 +35,20 @@ const NotificationHandler = MnObject.extend({
     onScrollTop() {
         const { left, top } = this.layout.$el.offset()
         Backbone.$('html, body').animate({ scrollLeft: left - 20, scrollTop: top - 20 })
+    },
+
+    onShowLoading() {
+        this.timeout = setTimeout(() => {
+            Backbone.$(window.document.body).addClass('cliqr--loading')
+        }, 300)
+    },
+
+    onHideLoading() {
+        if (this.timeout) {
+            clearTimeout(this.timeout)
+            this.timeout = null
+        }
+        Backbone.$(window.document.body).removeClass('cliqr--loading')
     }
 })
 
@@ -51,7 +68,7 @@ const MyBaseLayout = View.extend({
         this.showChildView('sidebar', new SidebarView({ el: '#layout-sidebar', store }))
         this.router = new StudipRouter({ selector: this.getRegion('content').$el, store })
 
-        this.notificationHandler = new NotificationHandler({ layout: this })
+        this.layoutNotificationHandler = new LayoutNotificationHandler({ layout: this })
     },
 
     onChangePagetitle(title) {

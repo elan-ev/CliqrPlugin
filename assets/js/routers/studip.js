@@ -1,6 +1,7 @@
 import Backbone from 'backbone'
+import Radio from 'backbone.radio'
 import showError from '../error'
-import { hideLoading, showLoading, userRole } from '../utils'
+import { userRole } from '../utils'
 import ArchiveView from '../views/archive/view'
 import * as TaskGroups from '../views/task-groups/index'
 import * as Tasks from '../views/tasks/index'
@@ -45,17 +46,17 @@ const StudipRouter = Backbone.Router.extend({
     },
 
     routeHandler(fetcher, id, view, useCollection = 'model', ...rest) {
-        showLoading()
+        Radio.channel('layout').request('show:loading')
         return fetcher(id)
             .then(response => {
-                hideLoading()
+                Radio.channel('layout').request('hide:loading')
                 const page = new view({ [useCollection]: response, store: this.store })
                 return changeToPage(page, this.selector)
             })
             .catch(error => {
                 const status = error && error.status
                 if (status === 403) {
-                    hideLoading()
+                    Radio.channel('layout').request('hide:loading')
                     return this.navigate('', { trigger: true, replace: true })
                 }
                 showError('Could not route URL', error)
