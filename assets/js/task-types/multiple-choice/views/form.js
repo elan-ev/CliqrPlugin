@@ -44,8 +44,6 @@ export default View.extend({
         this.taskGroup = taskGroup
         this.subtype = new Backbone.Model({ selected: 'custom', custom: null })
         this.choices = new Backbone.Collection(this.model.get('task').answers)
-
-        this.listenTo(this.choices, 'all', console.log)
     },
 
     template,
