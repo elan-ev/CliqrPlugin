@@ -1,29 +1,44 @@
 <header class="cliqr--page-header">
-    {{> breadcrumb breadcrumb}}
+    {{#if doneLoading}}
+        {{> breadcrumb breadcrumb}}
+    {{else}}
+        <nav class="cliqr--breadcrumb">
+            {{spinner}}
+        </nav>
+    {{/if}}
 
     <h1>Abstimmungen vergleichen</h1>
 </header>
 
 <main>
-    {{#with votingA}}
+    {{#if doneLoading}}
+
         <section class="cliqr--voting-side-a">
             <nav>
-                <a href="#voting/{{id}}">
-                    Abstimmung {{#if start}}{{moment start}}{{/if}}
+                <a href="#voting/{{votingA.id}}">
+                    Abstimmung {{#if votingA.start}}{{moment votingA.start}}{{/if}}
                 </a>
             </nav>
             <main></main>
         </section>
-    {{/with}}
 
-    {{#with votingB}}
         <section class="cliqr--voting-side-b">
             <nav>
-                <a href="#voting/{{id}}">
-                    Abstimmung {{#if start}}{{moment start}}{{/if}}
+                <a href="#voting/{{votingB.id}}">
+                    Abstimmung {{#if votingB.start}}{{moment votingB.start}}{{/if}}
                 </a>
             </nav>
             <main></main>
         </section>
-    {{/with}}
+
+    {{else}}
+        <section class="cliqr--voting-side-a">
+            {{spinner}}
+        </section>
+        <section class="cliqr--voting-side-b">
+            {{spinner}}
+        </section>
+    {{/if}}
 </main>
+
+<pre>{{json .}}</pre>

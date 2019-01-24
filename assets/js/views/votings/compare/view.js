@@ -1,9 +1,6 @@
-import Radio from 'backbone.radio'
 import { View } from 'backbone.marionette'
-import _ from 'underscore'
-import showError from '../../../error'
+import Radio from 'backbone.radio'
 import taskTypes from '../../../models/task_types'
-import Votings from '../../../models/votings'
 import template from './compare.hbs'
 
 const getView = function(model) {
@@ -22,51 +19,59 @@ export default View.extend({
         sideB: 'section.cliqr--voting-side-b main'
     },
 
-    initialize({ store, votings }) {
-        Radio.channel('layout').request('change:pagetitle', 'Abstimmungen vergleichen')
+    initialize({ store, votings: [votingA, votingB] }) {
         this.store = store
-        this.votings = new Votings(votings)
-        this.listenTo(this.votings, 'sync', this.onSync)
-        this.promise = Promise.all(this.votings.map(voting => voting.fetch()))
+        Radio.channel('layout').request('change:pagetitle', 'Abstimmungen vergleichen')
+
+        this.doneLoading = false
+        this.votingA = votingA
+        this.votingB = votingB
+        Promise.all([votingA.fetch(), votingB.fetch()]).then(() => {
+            this.triggerMethod('votings:loaded')
+        })
     },
 
     template,
 
     templateContext() {
-        const votingA = this.votings.first(),
-            votingB = this.votings.last(),
-            taskModel = votingA && votingA.getTask(),
-            task = taskModel && taskModel.toJSON(),
-            breadcrumb = task && {
+        const result = {
+            doneLoading: this.doneLoading
+        }
+
+        if (this.doneLoading) {
+            const taskModel = this.votingA.getTask()
+            const task = taskModel.toJSON()
+
+            result['breadcrumb'] = {
                 task_group_id: task.task_group_id,
                 task_group_title: task.task_group_title,
                 task_id: task.id,
                 task_title: task.title
             }
 
-        return {
-            votingA: votingA.toJSON(),
-            votingB: votingB.toJSON(),
-            task,
-            breadcrumb
+            result['votingA'] = this.votingA.toJSON()
+            result['votingB'] = this.votingB.toJSON()
+        }
+        return result
+    },
+
+    onRender() {
+        if (this.doneLoading) {
+            Promise.all([getView(this.votingA), getView(this.votingB)]).then(([sideA, sideB]) => {
+                this.showChildView('sideA', sideA)
+                this.showChildView('sideB', sideB)
+            })
         }
     },
 
-    onSync(voting) {
-        const ids = this.votings.map(voting => voting.id),
-            selectors = _.zipObject(ids, ['sideA', 'sideB'])
-        const viewSelector = selectors[voting.id]
-        getView(voting)
-            .then(view => {
-                // trigger navigation event
-                const task = voting.getTask()
-                const taskGroup = this.store.taskGroups.get(task.get('task_group_id'))
-                this.store.trigger('navigation', 'task-group', taskGroup)
+    onVotingsLoaded() {
+        this.doneLoading = true
 
-                this.showChildView(viewSelector, view)
-            })
-            .catch(error => {
-                showError('Es ist ein Fehler aufgetreten.', error)
-            })
+        // trigger navigation event
+        const task = this.votingA.getTask()
+        const taskGroup = this.store.taskGroups.get(task.get('task_group_id'))
+        this.store.trigger('navigation', 'task-group', taskGroup)
+
+        this.render()
     }
 })
