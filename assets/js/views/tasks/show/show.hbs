@@ -27,11 +27,11 @@
             </p>
 
             <div class="panel-block">
-                {{#unless_state 'is_active'}}
-                    {{button "start" "Abstimmung starten" icon="play" once=true  color="red" class="control"}}
-                {{else}}
+                {{#if isRunning}}
                     {{button "stop" "Abstimmung beenden" icon="stop" once=true color="red" class="control"}}
-                {{/unless_state}}
+                {{else}}
+                    {{button "start" "Abstimmung starten" icon="play" once=true  color="red" class="control"}}
+                {{/if}}
             </div>
 
 

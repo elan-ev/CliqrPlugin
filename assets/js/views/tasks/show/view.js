@@ -41,7 +41,7 @@ export default View.extend({
         const votings = this.model.getVotings()
 
         return {
-            state: this.model.getCurrentState(),
+            isRunning: this.model.getCurrentState() === 'is_active',
             votings: votings.map(v => ({ ...v.toJSON(), running: v.isRunning() })).reverse(),
             breadcrumb: {
                 task_group_id: this.model.get('task_group_id'),

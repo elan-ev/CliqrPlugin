@@ -37,7 +37,6 @@ export default View.extend({
     templateContext() {
         return {
             STUDIP: window.STUDIP,
-            $selectedType: this.$selectedType,
             taskTypes: taskTypes.map(t => {
                 return { ...t.toJSON(), selected: t.id === this.$selectedType }
             }),

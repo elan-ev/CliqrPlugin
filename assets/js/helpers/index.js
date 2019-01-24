@@ -12,7 +12,6 @@ import qr_code from './qr_code.js'
 import shorten from './shorten.js'
 import spinner from './spinner.js'
 import strip_tags from './strip_tags.js'
-import unless_state from './unless_state.js'
 import url_for from './url_for.js'
 import user_role from './user_role.js'
 
@@ -31,7 +30,6 @@ const helpers = {
     shorten,
     spinner,
     strip_tags,
-    unless_state,
     url_for,
     user_role
 }
