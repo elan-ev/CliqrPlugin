@@ -1,20 +1,11 @@
-section.cliqr--archive-votings {
+.cliqr--archive-header {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 35em;
 
-    .cliqr--archive-header {
+    > a {
+        line-height: 3em;
+        display: block;
         white-space: nowrap;
-        overflow: hidden;
-        max-width: 35em;
-
-        > a {
-            line-height: 3em;
-            display: block;
-            white-space: nowrap;
-        }
-    }
-
-    .cliqr--archive-date {
-    }
-
-    .cliqr--archive-bubble {
     }
 }
