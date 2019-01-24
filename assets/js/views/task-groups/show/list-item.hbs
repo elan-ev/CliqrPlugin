@@ -9,17 +9,17 @@
     </a>
     <div class="cliqr--task-last-assignment">
         {{#if last_voting}}
-            {{#if_state 'is_active'}}
+            {{#if is_active}}
                 <span class="cliqr--task-last-assignment-active">
                     {{icon 'play' color="red"}}
                     <a href="#voting/{{last_voting.id}}">
                         {{moment last_voting.start label="Läuft gerade"}}
                     </a>
                 </span>
-        {{else}}
+            {{else}}
                 zuletzt abgestimmt
                 <a href="#voting/{{last_voting.id}}">{{moment last_voting.start}}</a>
-            {{/if_state}}
+            {{/if}}
         {{else}}
             nie abgestimmt
         {{/if}}
@@ -33,11 +33,11 @@
 </td>
 
 <td class="cliqr--task-actions">
-    {{#if_state 'is_active'}}
+    {{#if is_active}}
         {{fab "stop" "Abstimmung beenden" "stop" once=true flat=true}}
         {{^}}
         {{fab "start" "Abstimmung starten" "play" once=true flat=true}}
-    {{/if_state}}
+    {{/if}}
     {{fab "duplicate" "Frage duplizieren" "add-files" flat=true}}
     {{fab "remove" "Frage löschen" "trash" flat=true}}
 </td>

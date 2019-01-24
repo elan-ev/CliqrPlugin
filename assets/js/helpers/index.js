@@ -4,7 +4,6 @@ import concat from './concat.js'
 import fab from './fab.js'
 import i18n from './i18n.js'
 import icon from './icon.js'
-import if_state from './if_state.js'
 import json from './json.js'
 import moment from './moment.js'
 import nominal from './nominal.js'
@@ -22,7 +21,6 @@ const helpers = {
     fab,
     i18n,
     icon,
-    if_state,
     json,
     moment,
     nominal,

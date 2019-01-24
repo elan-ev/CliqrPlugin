@@ -33,9 +33,8 @@ export default View.extend({
 
         return {
             icon,
-            votings_count: votings.length,
             last_voting: votings.length ? votings.last().toJSON() : null,
-            state: this.model.getCurrentState()
+            isActive: this.model.getCurrentState() === 'is_active'
         }
     }
 })
