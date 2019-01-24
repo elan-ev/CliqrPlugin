@@ -26,17 +26,7 @@ module.exports = {
             {
                 test: /\.scss$/,
                 include: path.resolve(__dirname, 'assets/scss'),
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            url: false
-                        }
-                    },
-                    'postcss-loader',
-                    'sass-loader'
-                ]
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
             },
             {
                 test: /\.scss$/,
