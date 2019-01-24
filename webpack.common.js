@@ -1,12 +1,9 @@
 const webpack = require('webpack')
 const path = require('path')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
 let gitRevisionPlugin = new GitRevisionPlugin({
     lightweightTags: true
 })
-
-const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
     context: path.join(__dirname, './assets/js'),
@@ -23,23 +20,8 @@ module.exports = {
         rules: [
             {
                 test: /\.scss$/,
-                include: path.resolve(__dirname, 'assets/scss'),
-                use: [
-                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader'
-                ]
-            },
-            {
-                test: /\.scss$/,
                 include: path.resolve(__dirname, 'assets/js'),
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader'
-                ]
+                use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
             },
             {
                 test: /\.js$/,
@@ -57,13 +39,15 @@ module.exports = {
             },
             {
                 test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]',
-                        outputPath: 'fonts/'
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'fonts/'
+                        }
                     }
-                }]
+                ]
             }
         ]
     },
@@ -76,12 +60,6 @@ module.exports = {
         modules: [path.resolve('./assets/js'), 'node_modules']
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            // Options similar to the same options in webpackOptions.output
-            // both options are optional
-            filename: '[name].css',
-            chunkFilename: '[id].css'
-        }),
         gitRevisionPlugin,
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(gitRevisionPlugin.version()),
