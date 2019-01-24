@@ -1,3 +1,4 @@
+import './public-path.js'
 import '@babel/polyfill'
 import Backbone from 'backbone'
 import { Application, MnObject, View } from 'backbone.marionette'
