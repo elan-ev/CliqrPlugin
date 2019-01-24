@@ -21,10 +21,6 @@ var cliqr = {
 <div id="cliqr"></div>
 <?= $this->render_partial('_noscript') ?>
 
-<? if (defined('WDS_ACTIVATED') && constant('WDS_ACTIVATED')) { ?>
-    <script charset="utf-8" src="https://localhost:8081/studip-cliqr.js"></script>
-<? } else { ?>
-    <link charset="utf-8" href="<?= $PLGNURL ?>/static/studip-cliqr.css" rel="stylesheet" media="screen, print">
-    <script charset="utf-8" src="<?= $PLGNURL ?>/static/studip-cliqr.js"></script>
-<? } ?>
+<link charset="utf-8" href="<?= $PLGNURL ?>/static/studip-cliqr.css" rel="stylesheet" media="screen, print">
+<script charset="utf-8" src="<?= $PLGNURL ?>/static/studip-cliqr.js"></script>
 <!-- END CLIQR PAGE -->
