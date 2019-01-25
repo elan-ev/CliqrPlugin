@@ -1,19 +1,17 @@
 import Backbone from 'backbone'
+import Handlebars from 'handlebars-template-loader/runtime'
 import _ from 'underscore'
-
+import mcHeader from './hbs/mc_header.hbs'
+import MCResponse from './models/response'
+import MCTask from './models/task'
 import AssignmentView from './views/assignment'
 import CreateView from './views/create'
 import EditView from './views/edit'
 import PollView from './views/poll'
 import ShowView from './views/show'
 
-import MCTask from './models/task'
-import MCResponse from './models/response'
-
 import mc_css from './multiple-choice.scss'
 
-import Handlebars from 'handlebars-template-loader/runtime'
-import mcHeader from './hbs/mc_header.hbs'
 Handlebars.registerPartial('mc_header', mcHeader)
 
 class MultipleChoice {

@@ -1,19 +1,17 @@
 import Backbone from 'backbone'
+import Handlebars from 'handlebars-template-loader/runtime'
 import _ from 'underscore'
-
+import scalesHeader from './hbs/scales_header.hbs'
+import ScalesResponse from './models/response'
+import ScalesTask from './models/task'
 import AssignmentView from './views/assignment'
 import CreateView from './views/create'
 import EditView from './views/edit'
 import PollView from './views/poll'
 import ShowView from './views/show'
 
-import ScalesTask from './models/task'
-import ScalesResponse from './models/response'
-
 import scalesCss from './scales.scss'
 
-import Handlebars from 'handlebars-template-loader/runtime'
-import scalesHeader from './hbs/scales_header.hbs'
 Handlebars.registerPartial('scales_header', scalesHeader)
 
 class Scales {
