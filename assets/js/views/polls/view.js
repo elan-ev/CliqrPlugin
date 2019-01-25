@@ -24,7 +24,6 @@ export default View.extend({
 
     templateContext() {
         return {
-            polls: this.collection.toJSON(),
             hasFresh: !!this.fresh
         }
     },
