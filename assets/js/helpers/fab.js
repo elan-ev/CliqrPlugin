@@ -18,7 +18,7 @@ const fab = function(klass, text, icon, { hash }) {
     return new SafeString(`
             <button type="button" class="button cliqr--button-fab ${klass} ${addClasses}"
                     name="${text}" title="${text}"
-                    data-tooltip=${text} ${disabledAttr}>
+                    data-tooltip="${text}" ${disabledAttr}>
                 ${iconMaker(color, escapeExpression(icon), text)}
             </button>`)
 }
