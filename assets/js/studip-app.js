@@ -101,7 +101,7 @@ const StudipCliqrApplication = Application.extend({
                 .addClass('loading')
         })
 
-        Backbone.$(document).on('mouseleave', '.cliqr--moment, .cliqr--button-fab', function(event) {
+        Backbone.$(document).on('mouseleave', '.cliqr--moment, .cliqr--button-fab, span.bubble', function(event) {
             const { tooltipObject } = Backbone.$(this).data()
             tooltipObject && tooltipObject.hide()
         })
