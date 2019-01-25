@@ -1,5 +1,4 @@
 import Backbone from 'backbone'
-
 import Voting from './voting'
 
 const VotingsCollection = Backbone.Collection.extend({
