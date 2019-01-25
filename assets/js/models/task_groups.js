@@ -4,7 +4,6 @@ import _ from 'underscore'
 import TaskGroup from './task_group'
 
 const TaskGroupsCollection = Backbone.Collection.extend({
-
     model: TaskGroup,
 
     url() {

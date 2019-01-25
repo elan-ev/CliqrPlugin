@@ -1,153 +1,92 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
 
-const histogramView = function ($statementElement, data, lrange, hrange) {
-    require.ensure([ '../../../d3.min' ], function (require) {
-        const { axisBottom, histogram, quantile, scaleLinear, select } = require('../../../d3.min')
+export default function($statementElement, data, lrange, hrange) {
+    const element = $statementElement.find('svg')[0],
+        margin = { top: 20, right: 20, bottom: 30, left: 20 },
+        width = Backbone.$(element).width() - margin.left - margin.right,
+        height = Backbone.$(element).height() - margin.top - margin.bottom
 
-        const element = $statementElement.find('svg')[0],
-              margin = { top: 20, right: 20, bottom: 30, left: 20 },
-              width = Backbone.$(element).width() - margin.left - margin.right,
-              height = Backbone.$(element).height() - margin.top - margin.bottom,
-              pad0 = 10,
-              height0 = height - pad0
-
-        if (width <= 0) {
-            return
-        }
-
-        data.sort()
-        const quantiles = { min: _.first(data), low: quantile(data, .25), median: quantile(data, .5), high: quantile(data, .75), max: _.last(data) }
-
-        const g = select(element)
-              .append('g')
-              .attr('class', 'histogram')
-              .attr('transform', `translate(${margin.left},${margin.top})`)
-
-        let thresholds = hrange - lrange + 1
-        let domain, small = false
-
-        if (thresholds <= 20) {
-            small = true
-            domain = [ lrange - 0.5, hrange + 0.5 ]
-        } else {
-            domain = [ lrange, hrange ]
-            thresholds = 10
-        }
-
-        const x = scaleLinear().domain(domain).rangeRound([ 0, width ]),
-              d3histogram = histogram().domain(x.domain()).thresholds(thresholds),
-              bins = d3histogram(data),
-              y = scaleLinear()
-              .domain([ 0, _.max(_.map(bins, 'length')) ])
-              .range([ height0, 0 ])
-
-        if (quantiles.min !== quantiles.max) {
-            boxPlot(x, quantiles, g);
-        }
-
-        const half = (x(bins[0].x1) - x(bins[0].x0)) / 2,
-              bar = g.selectAll('.bar')
-              .data(bins)
-              .enter().append('g')
-              .attr('class', 'bar')
-              .attr('transform', d => `translate(${x(d.x0) - (small ? half : 0)},${y(d.length)})`)
-
-        bar.append('rect')
-            .attr('x', 1)
-            .attr('y', pad0)
-            .attr('width', x(bins[0].x1) - x(bins[0].x0))
-            .attr('height', d => height0 - y(d.length))
-
-        bar.append('text')
-            .attr('dy', '1em')
-            .attr('y', pad0)
-            .attr('x', (x(bins[0].x1) - x(bins[0].x0)) / 2)
-            .attr('text-anchor', 'middle')
-            .text(d => d.length || '')
-
-        const axis = axisBottom(x)
-
-        if (!small) {
-            // x.nice()
-            axis.tickValues(_.uniq([ lrange, ...x.ticks().slice(0, -1), hrange ]))
-            // axis.tickValues(_.uniq([ lrange, ...x.ticks() ]))
-        }
-
-        g.append('g')
-            .attr('class', 'axis axis--x')
-            .attr('transform', `translate(0, ${height})`)
-            .call(axis)
-
-
-        function boxPlot(x, quantiles, g) {
-            const bp = g.append('g').attr('class', 'box-plot')
-
-            bp.append('line')
-                .attr('class', 'center')
-                .attr('x1', x(quantiles.min))
-                .attr('y1', -10)
-                .attr('x2', x(quantiles.max))
-                .attr('y2', -10)
-
-            bp.append('rect')
-                .attr('class', 'box')
-                .attr('x', x(quantiles.low))
-                .attr('y', -20)
-                .attr('width', x(quantiles.high) - x(quantiles.low))
-                .attr('height', 20)
-
-            bp.append('line')
-                .attr('class', 'median')
-                .attr('x1', x(quantiles.median))
-                .attr('y1', -20)
-                .attr('x2', x(quantiles.median))
-                .attr('y2', 0)
-
-            bp.append('line')
-                .attr('class', 'whisker')
-                .attr('x1', x(quantiles.min))
-                .attr('y1', -20)
-                .attr('x2', x(quantiles.min))
-                .attr('y2', 0)
-
-            bp.append('line')
-                .attr('class', 'whisker')
-                .attr('x1', x(quantiles.max))
-                .attr('y1', -20)
-                .attr('x2', x(quantiles.max))
-                .attr('y2', 0)
-
-            bp.append('text')
-                .attr('class', 'box')
-                .text(quantiles.median)
-                .attr('dy', '.3em')
-                .attr('dx', '-.3em')
-                .attr('x', x(quantiles.median))
-                .attr('y', -10)
-                .attr('text-anchor', 'end')
-
-            bp.append('text')
-                .attr('class', 'box')
-                .text(quantiles.low)
-                .attr('dy', '1em')
-                .attr('dx', '-.3em')
-                .attr('x', x(quantiles.low))
-                .attr('y', -10)
-                .attr('text-anchor', 'end')
-
-            bp.append('text')
-                .attr('class', 'box')
-                .text(quantiles.high)
-                .attr('dy', '1em')
-                .attr('dx', '.3em')
-                .attr('x', x(quantiles.high))
-                .attr('y', -10)
-                .attr('text-anchor', 'start')
-        }
-
-
-    }, 'scales-histogram')
+    import(/* webpackChunkName: "d3" */ './d3')
+        .then(({ default: d3 }) => {
+            _histogramView(d3, element, data, lrange, hrange, width, height, margin)
+        })
+        .catch(() => 'An error occurred while loading d3js')
 }
 
-export default histogramView
+function _histogramView(d3, element, data, lrange, hrange, width, height, margin) {
+    const g = d3
+        .select(element)
+        .append('g')
+        .attr('class', 'histogram')
+
+    // background
+    g.append('rect')
+        .attr('fill', '#ccf')
+        .attr('fill-opacity', '0.2')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+
+    const domain = [lrange, hrange]
+    const domainExtent = hrange - lrange + 1
+    const small = domainExtent <= 20
+
+    const thresholds = small ? domainExtent : 10
+    const d3histogram = d3
+        .histogram()
+        .domain(domain)
+        .thresholds(thresholds)
+    const bins = d3histogram(data)
+
+    const y = d3
+        .scaleLinear()
+        .domain([0, Math.max(...bins.map(b => b.length)) * 1.1])
+        .nice()
+        .range([height, 0])
+
+    let x, xAxis
+    if (small) {
+        const smallDomain = _.range(lrange, hrange + 1)
+        x = d3
+            .scaleBand()
+            .domain(smallDomain)
+            .range([margin.left, width + margin.left])
+            .padding(0.1)
+        xAxis = d3.axisBottom(x).tickSizeOuter(0)
+    } else {
+        x = d3
+            .scaleLinear()
+            .domain(domain)
+            .rangeRound([margin.left, width + margin.left])
+        const tickValues = _.uniq([...bins.map(b => b.x0), lrange, hrange])
+        xAxis = d3.axisBottom(x).tickValues(tickValues)
+    }
+
+    const bar = g
+        .selectAll('.bar')
+        .data(bins)
+        .enter()
+        .append('g')
+        .attr('class', 'bar')
+
+    bar.append('rect')
+        .attr('x', (d, i) => (small ? x(lrange + i) : x(d.x0)))
+        .attr('width', d => (small ? x.bandwidth() : x(d.x1) - x(d.x0)))
+        .attr('y', d => margin.top + y(d.length))
+        .attr('height', d => y(0) - y(d.length))
+
+    bar.append('text')
+        .attr('class', 'bin')
+        .attr('dy', '-0.5em')
+        .attr('y', d => margin.top + y(d.length))
+        .attr('x', (d, i) => (small ? x(lrange + i) + 0.5 * x.bandwidth() : (x(d.x1) + x(d.x0)) / 2))
+        .attr('text-anchor', 'middle')
+        .text(d => d.length || '')
+
+    g.append('g')
+        .attr('class', 'axis axis--x')
+        .attr('transform', `translate(0, ${height + margin.top})`)
+        .call(xAxis)
+}

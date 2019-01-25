@@ -59,7 +59,7 @@ Es wird die folgende Vorgehensweise empfohlen:
    :END:
 Um /Stud.IP Cliqr/ selbst zu kompilieren, benötigt man:
 
- - [[https://secure.php.net/][PHP]] (mind. v5.6) und
+ - [[https://secure.php.net/][PHP]] (mind. v5.5) und
  - [[https://nodejs.org][Node.js]] (und das darin enthaltene =npm=)
 
 Sobald man /Stud.IP Cliqr/ ausgecheckt hat:

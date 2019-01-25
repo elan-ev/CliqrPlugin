@@ -136,7 +136,7 @@ abstract class CliqrStudipController extends \StudipController
         $cid = self::ensureMD5(\Request::option('cid'));
 
         if (!$this->plugin->isActivated($cid)) {
-            throw new \Trails_Exception(404);
+            throw new \Trails_Exception(404, 'Das Plugin ist hier nicht aktiviert.');
         }
 
         return $cid;

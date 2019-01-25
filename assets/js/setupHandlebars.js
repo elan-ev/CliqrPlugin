@@ -1,6 +1,6 @@
 import helpers from './helpers/index.js'
 import breadcrumb from '../hbs/breadcrumb.hbs'
-import widgetLayout from '../hbs/sidebar/widgetLayout.hbs'
+import widgetLayout from './views/sidebar/widgetLayout.hbs'
 import Handlebars from 'handlebars-template-loader/runtime'
 
 export default function setupHandlebars() {

@@ -1,0 +1,26 @@
+<td> </td>
+
+<td>
+    <a class="cliqr--task-group-title" href="#task-groups/show/{{id}}">
+        {{icon "folder-full"}}
+        {{title}}
+    </a>
+</td>
+
+<td>
+    <a href="#task-groups/show/{{id}}">
+        <span class="bubble" data-tooltip="Fragensammlung mit {{tasks_count}} Frage/n">{{tasks_count}}</span>
+    </a>
+</td>
+
+<td>
+    <a class="cliqr--task-group-changed" href="#task-groups/show/{{id}}">
+        {{moment last_change}}
+    </a>
+</td>
+
+<td>
+    {{fab "export" "Export" "archive3" flat=true}}
+    {{fab "duplicate" "Duplizieren" "add-files" once=true flat=true}}
+    {{fab "remove" "Löschen" "trash" flat=true}}
+</td>

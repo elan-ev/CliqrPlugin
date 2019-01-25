@@ -61,7 +61,7 @@ hinzufügen würde.](https://hilfe.studip.de/help/4.0/de/Basis/VeranstaltungenVe
 
 Um *Stud.IP Cliqr* selbst zu kompilieren, benötigt man:
 
--   [PHP](https://secure.php.net/) (mind. v5.6) und
+-   [PHP](https://secure.php.net/) (mind. v5.5) und
 -   [Node.js](https://nodejs.org) (und das darin enthaltene `npm`)
 
 Sobald man *Stud.IP Cliqr* ausgecheckt hat:

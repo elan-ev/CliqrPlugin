@@ -1,0 +1,42 @@
+<header class="cliqr--page-header">
+    {{#if doneLoading}}
+        {{> breadcrumb breadcrumb}}
+    {{else}}
+        <nav class="cliqr--breadcrumb">
+            {{spinner}}
+        </nav>
+    {{/if}}
+
+    <h1>Abstimmungen vergleichen</h1>
+</header>
+
+<main>
+    {{#if doneLoading}}
+
+        <section class="cliqr--voting-side-a">
+            <nav>
+                <a href="#voting/{{votingA.id}}">
+                    Abstimmung {{#if votingA.start}}{{moment votingA.start}}{{/if}}
+                </a>
+            </nav>
+            <main></main>
+        </section>
+
+        <section class="cliqr--voting-side-b">
+            <nav>
+                <a href="#voting/{{votingB.id}}">
+                    Abstimmung {{#if votingB.start}}{{moment votingB.start}}{{/if}}
+                </a>
+            </nav>
+            <main></main>
+        </section>
+
+    {{else}}
+        <section class="cliqr--voting-side-a">
+            {{spinner}}
+        </section>
+        <section class="cliqr--voting-side-b">
+            {{spinner}}
+        </section>
+    {{/if}}
+</main>

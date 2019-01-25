@@ -1,3 +1,4 @@
+/static/*
 /vendor/*
 /composer.lock
 /node_modules/*

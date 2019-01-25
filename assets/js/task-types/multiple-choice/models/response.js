@@ -1,8 +1,7 @@
 import Response from '../../../models/response'
 
 const MCResponse = Response.extend({
-    defaults: {
-    }
+    defaults: {}
 })
 
 export default MCResponse

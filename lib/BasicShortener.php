@@ -50,7 +50,7 @@ class BasicShortener implements Shortener
         $cache_key = 'cliqr/basicshortener/'.md5($url);
 
         $result = unserialize($cache->read($cache_key));
-        if (true || $result === false) {
+        if (!$result) {
             $result = $this->_performRequest($url);
             $cache->write($cache_key, serialize($result));
         }
@@ -67,6 +67,7 @@ class BasicShortener implements Shortener
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
-        return curl_exec($ch);
+        $result = curl_exec($ch);
+        return curl_errno($ch) ? $url : $result;
     }
 }

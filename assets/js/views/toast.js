@@ -22,7 +22,9 @@ export function toast({
         .appendTo(/is-bottom/.test(position) ? noticesBottom : noticesTop)
 
     if (dismissible) {
-        toast.append($('<button class="delete"></button>')).on('click', () => { toast.remove() })
+        toast.append($('<button class="delete"></button>')).on('click', () => {
+            toast.remove()
+        })
     }
 
     setTimeout(() => {

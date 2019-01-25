@@ -1,0 +1,22 @@
+<header class="cliqr--page-header">
+    {{> breadcrumb breadcrumb}}
+
+    <h1>Fragensammlung &laquo;{{title}}&raquo;</h1>
+</header>
+
+<section>
+    <form class="cliqr--task-group-edit default" method="post" accept-char="UTF-8">
+        <fieldset>
+            <legend>Fragensammlung «{{title}}» bearbeiten</legend>
+            <label>
+                Name
+                <input type="text" name="title" required value="{{title}}">
+            </label>
+        </fieldset>
+
+        <footer>
+                {{button "edit-task-group" "Speichern" type="submit"}}
+                {{button "cancel" "Abbrechen"}}
+        </footer>
+    </form>
+</section>

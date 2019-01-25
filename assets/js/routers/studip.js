@@ -1,16 +1,25 @@
 import Backbone from 'backbone'
+import Radio from 'backbone.radio'
 import showError from '../error'
-import { activateNavigation, changeToPage, hideLoading, showLoading, userRole } from '../utils'
-import ArchiveView from '../views/archive'
-import TasksCreateView from '../views/tasks_create'
-import TasksEditView from '../views/tasks_edit'
-import TasksShowView from '../views/tasks_show'
-import TaskGroupsEditView from '../views/task_groups_edit'
-import TaskGroupsIndexView from '../views/task_groups_index'
-import TaskGroupsShowView from '../views/task_groups_show'
-import VotingsCompareView from '../views/votings_compare'
-import VotingsShowView from '../views/votings_show'
-import { fetchLastVotings, fetchTask, fetchTaskGroup, fetchTwoVotings, fetchVoting } from './studip-fetcher'
+import { userRole } from '../utils'
+import ArchiveView from '../views/archive/view'
+import * as TaskGroups from '../views/task-groups/index'
+import * as Tasks from '../views/tasks/index'
+import * as Votings from '../views/votings/index'
+import * as fetchers from './studip-fetcher'
+
+let currentView
+
+const changeToPage = function(view, selector) {
+    if (currentView) {
+        currentView.$el.hide()
+        currentView.remove()
+    }
+    currentView = view
+    Backbone.$(window).scrollTop(0)
+    Backbone.$(selector).prepend(view.$el)
+    view.render()
+}
 
 const StudipRouter = Backbone.Router.extend({
     initialize(options) {
@@ -37,18 +46,17 @@ const StudipRouter = Backbone.Router.extend({
     },
 
     routeHandler(fetcher, id, view, useCollection = 'model', ...rest) {
-        showLoading()
+        Radio.channel('layout').request('show:loading')
         return fetcher(id)
             .then(response => {
-                hideLoading()
-                activateNavigation(...rest)
+                Radio.channel('layout').request('hide:loading')
                 const page = new view({ [useCollection]: response, store: this.store })
                 return changeToPage(page, this.selector)
             })
             .catch(error => {
                 const status = error && error.status
                 if (status === 403) {
-                    hideLoading()
+                    Radio.channel('layout').request('hide:loading')
                     return this.navigate('', { trigger: true, replace: true })
                 }
                 showError('Could not route URL', error)
@@ -71,47 +79,47 @@ const StudipRouter = Backbone.Router.extend({
 
     // ROUTE: '#task-groups'
     taskGroups() {
-        this.routeHandler(() => Promise.resolve(this.store.taskGroups), null, TaskGroupsIndexView, 'collection')
+        this.routeHandler(() => Promise.resolve(this.store.taskGroups), null, TaskGroups.IndexView, 'collection')
     },
 
     // ROUTE: '#task-groups/show/:id'
     taskGroup(id) {
-        this.routeHandler(fetchTaskGroup, id, TaskGroupsShowView)
+        this.routeHandler(fetchers.fetchTaskGroup, id, TaskGroups.ShowView)
     },
 
     // ROUTE: '#task-group/edit/:id'
     taskGroupEdit(id) {
-        this.routeHandler(fetchTaskGroup, id, TaskGroupsEditView)
+        this.routeHandler(fetchers.fetchTaskGroup, id, TaskGroups.EditView)
     },
 
     // ROUTE: '#task/show/:id'
     task(id) {
-        this.routeHandler(fetchTask, id, TasksShowView)
+        this.routeHandler(fetchers.fetchTask, id, Tasks.ShowView)
     },
 
     // ROUTE: '#task/create/:id'
     taskCreate(id) {
-        this.routeHandler(fetchTaskGroup, id, TasksCreateView)
+        this.routeHandler(fetchers.fetchTaskGroup, id, Tasks.CreateView)
     },
 
     // ROUTE: '#task/edit/:id'
     taskEdit(id) {
-        this.routeHandler(fetchTask, id, TasksEditView)
+        this.routeHandler(fetchers.fetchTask, id, Tasks.EditView)
     },
 
     // ROUTE: '#voting/:id'
     voting(id) {
-        this.routeHandler(fetchVoting, id, VotingsShowView)
+        this.routeHandler(fetchers.fetchVoting, id, Votings.ShowView)
     },
 
     // ROUTE: '#compare/:v1/:v2'
     votingCompare(v1, v2) {
-        this.routeHandler(fetchTwoVotings, [v1, v2], VotingsCompareView, 'votings')
+        this.routeHandler(fetchers.fetchTwoVotings, [v1, v2], Votings.CompareView, 'votings')
     },
 
     // ROUTE: '#archive'
     archive() {
-        this.routeHandler(fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive')
+        this.routeHandler(fetchers.fetchLastVotings, null, ArchiveView, 'collection', '#nav_cliqr_archive')
     }
 })
 

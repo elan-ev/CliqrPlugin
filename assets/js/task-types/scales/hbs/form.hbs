@@ -36,58 +36,14 @@
     <label>
         <span>Aufgabenstellung (optional)</span>
     </label>
-    <div class="cliqr--scales-description"></div>
+    <div class="cliqr--scales-description">
+        <span class="cliqr--component-switchable-noneditable">{{{description_html}}}</span>
+        {{fab "edit" "Bearbeiten" "edit" flat=true}}
+    </div>
 
+    <label class="cliqr--scales-statements"></label>
 
-    <label>
-        <span> Aussagen </span>
-
-        <div class="choices">
-            {{#each task.task.statements}}
-                <div class="choice-input">
-                    <input
-                        class="choice no-hint" maxlength="500" type="text"
-                        name="statements[{{@index}}]"
-                        value="{{text}}" required>
-
-                    <span class="cliqr--scales-choice-actions">
-                        {{fab "remove" "Entfernen" "trash"}}
-                    </span>
-                </div>
-            {{/each}}
-
-            {{button "add" "Aussage hinzufügen" icon="add" class="choice-add"}}
-
-            {{#unless task.task.statements}}
-                <div class="choices-required">
-                    <select required oninvalid="setCustomValidity('{{i18n "Mindestens eine Aussage wird benötigt."}}')"></select>
-                </div>
-            {{/unless}}
-        </div>
-
-    </label>
-
-    <label>
-        <span>Skalenenden</span>
-
-        {{#with task.task}}
-            <div class="cliqr--scales-range">
-
-                <div>
-                    <span> Minimum </span>
-                    <input class="cliqr--scales-lrange no-hint" maxlength="4" type="number" value="{{lrange_value}}" max="{{lrange_max}}">
-                    <input class="cliqr--scales-llabel no-hint" maxlength="50" placeholder="Beschriftung (optional)" type="text" value="{{lrange_label}}">
-                </div>
-
-                <div>
-                    <span> Maximum </span>
-                    <input class="cliqr--scales-hrange no-hint" maxlength="4" type="number" value="{{hrange_value}}" min="{{hrange_min}}">
-                    <input class="cliqr--scales-hlabel no-hint" maxlength="50" placeholder="Beschriftung (optional)" type="text" value="{{hrange_label}}">
-                </div>
-
-            </div>
-        {{/with}}
-    </label>
+    <label class="cliqr--scales-range"></label>
 
     <footer>
         {{button "save" "Speichern" icon="accept" type="submit"}}

@@ -26,6 +26,9 @@ table.task-groups {
 
             &.cliqr--task-group-title {
                 font-weight: 800;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
     }

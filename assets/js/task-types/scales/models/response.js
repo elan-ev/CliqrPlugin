@@ -1,8 +1,7 @@
 import Response from '../../../models/response'
 
 const Scales = Response.extend({
-    defaults: {
-    }
+    defaults: {}
 })
 
 export default Scales

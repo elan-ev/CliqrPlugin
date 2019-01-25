@@ -1,11 +1,16 @@
 import FormView from './form'
 
-const CreateView = FormView.extend({
+export default FormView.extend({
     className: 'cliqr--scales-create-view',
 
-    // eslint-disable-line no-unused-vars
     onSubmitForm(event) {
         event.preventDefault()
+
+        this.model.set('task', {
+            ...this.model.get('task'),
+            statements: this.statements.toJSON()
+        })
+
         if (this.model.isValid()) {
             this.trigger('newTask', this.model)
         }
@@ -16,5 +21,3 @@ const CreateView = FormView.extend({
         this.trigger('cancel')
     }
 })
-
-export default CreateView

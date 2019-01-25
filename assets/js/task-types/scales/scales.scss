@@ -95,33 +95,8 @@ $color-diminished: #999999;
 
                 text {
                     fill: black;
+                    font-size: 17px;
                 }
-            }
-
-            line.center {
-                stroke: black;
-                stroke-width: 2px;
-                stroke-dasharray: 3, 3;
-            }
-
-            line.median {
-                stroke: black;
-                stroke-width: 2px;
-            }
-
-            line.whisker {
-                stroke: black;
-                stroke-width: 1px;
-            }
-
-            rect.box {
-                fill: white;
-                stroke: black;
-                stroke-width: 1px;
-            }
-
-            text.box {
-                font-size: 10px;
             }
         }
     }
@@ -171,7 +146,7 @@ $color-diminished: #999999;
             }
         }
 
-        .choices {
+        .statements {
             margin-bottom: 1.5em;
 
             input {
@@ -195,20 +170,14 @@ $color-diminished: #999999;
                 margin-left: 8px;
             }
 
-            .choices-required {
-                position: relative;
-
-                select {
-                    position: absolute;
-                    left: 0;
-                    top: -25px;
-                    z-index: -1;
-                    border: none;
-                }
+            .choice-input:only-child .js-remove {
+                pointer-events: none;
+                cursor: none;
+                opacity: 0.2;
             }
         }
 
-        .cliqr--scales-range {
+        div.cliqr--scales-range {
             > div {
                 display: flex;
 

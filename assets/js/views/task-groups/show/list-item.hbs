@@ -1,0 +1,43 @@
+<td class="cliqr--task-checkbox">
+    <i class="cliqr--icon-grip" data-tooltip="{{i18n "Drag-and-drop zum Sortieren"}}"></i>
+</td>
+
+<td class="cliqr--task-header">
+    <a href="#task/show/{{id}}">
+        <i class="cliqr--icon cliqr--icon-{{./icon}}"></i>
+        {{#if title}}{{title}}{{else}}{{strip_tags description_html}}{{/if}}
+    </a>
+    <div class="cliqr--task-last-assignment">
+        {{#if last_voting}}
+            {{#if is_active}}
+                <span class="cliqr--task-last-assignment-active">
+                    {{icon 'play' color="red"}}
+                    <a href="#voting/{{last_voting.id}}">
+                        {{moment last_voting.start label="Läuft gerade"}}
+                    </a>
+                </span>
+            {{else}}
+                zuletzt abgestimmt
+                <a href="#voting/{{last_voting.id}}">{{moment last_voting.start}}</a>
+            {{/if}}
+        {{else}}
+            nie abgestimmt
+        {{/if}}
+    </div>
+</td>
+
+<td class="cliqr--task-changed">
+    <a href="#task/show/{{id}}">
+        {{moment chdate}}
+    </a>
+</td>
+
+<td class="cliqr--task-actions">
+    {{#if is_active}}
+        {{fab "stop" "Abstimmung beenden" "stop" once=true flat=true}}
+        {{^}}
+        {{fab "start" "Abstimmung starten" "play" once=true flat=true}}
+    {{/if}}
+    {{fab "duplicate" "Frage duplizieren" "add-files" flat=true}}
+    {{fab "remove" "Frage löschen" "trash" flat=true}}
+</td>

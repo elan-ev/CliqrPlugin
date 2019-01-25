@@ -1,0 +1,33 @@
+<header>
+    <h1>Fragensammlungen</h1>
+</header>
+
+<table class="task-groups default">
+    <thead>
+        <tr>
+            <th></th>
+            <th> Name der Fragensammlung </th>
+            <th> Anzahl Fragen</th>
+            <th> letzte Änderung </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody> </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="5">
+                <div class="button-group">
+                    {{#if items}}
+                        {{button "add-task-group" "Fragensammlung erstellen" icon="add"}}
+                        {{^}}
+                        {{button "add-task-group" "Fragensammlung erstellen" icon="add" color="red"}}
+                    {{/if}}
+                    {{button "import-task-group" "Import" icon="upload2"}}
+                </div>
+            </td>
+        </tr>
+
+    </tfoot>
+</table>

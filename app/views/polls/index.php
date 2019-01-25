@@ -40,13 +40,9 @@
 
         <script src="<?= $ASSETS ?>vendor/jquery-3.3.1/jquery-3.3.1.min.js"></script>
         <script src="<?= $ASSETS ?>vendor/rangeslider-2.3.2/rangeslider.min.js"></script>
+        <script src="<?= $ASSETS ?>vendor/underscore-1.9.1/underscore-min.js"></script>
         <script src="<?= \Assets::javascript_path('mathjax/MathJax.js?config=TeX-AMS_HTML,default') ?>"></script>
-
-        <? if (defined('WDS_ACTIVATED') && constant('WDS_ACTIVATED')) { ?>
-            <script charset="utf-8" src="https://localhost:8081/polls.js"></script>
-        <? } else { ?>
-            <script charset="utf-8" src="<?= $PLGNURL ?>/static/polls.js"></script>
-        <? } ?>
+        <script charset="utf-8" src="<?= $PLGNURL ?>/static/polls.js"></script>
 
     </body>
 </html>

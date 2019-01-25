@@ -3,7 +3,7 @@ import Task from '../../../models/task'
 
 const ScalesTask = Task.extend({
     defaults: {
-        type:  'scales',
+        type: 'scales',
         task: {
             statements: [],
             lrange_value: 1,
@@ -40,6 +40,14 @@ const ScalesTask = Task.extend({
             return 'Es wird mindestens eine Aussage benötigt.'
         }
 
+        if (typeof lrange_value != 'number' || isNaN(lrange_value)) {
+            return 'Das Minimum muss eine Zahl sein.'
+        }
+
+        if (typeof hrange_value != 'number' || isNaN(hrange_value)) {
+            return 'Das Maximum muss eine Zahl sein.'
+        }
+
         if (lrange_value >= hrange_value) {
             return 'Das Minimum muss kleiner als das Maximum sein.'
         }
@@ -49,16 +57,13 @@ const ScalesTask = Task.extend({
 
     addStatement(data = {}, options = {}) {
         const oldTask = this.get('task')
-        const statements = [ ...oldTask.statements, { text: '', ...data  } ]
+        const statements = [...oldTask.statements, { text: '', ...data }]
         this.set('task', { ...oldTask, statements }, options)
     },
 
     removeStatement(index, options = {}) {
         const oldTask = this.get('task')
-        const statements = [
-            ...oldTask.statements.slice(0, index),
-            ...oldTask.statements.slice(index + 1),
-        ]
+        const statements = [...oldTask.statements.slice(0, index), ...oldTask.statements.slice(index + 1)]
         this.set('task', { ...oldTask, statements })
     },
 
