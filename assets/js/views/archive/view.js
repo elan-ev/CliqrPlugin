@@ -34,8 +34,8 @@ export default CollectionView.extend({
 
     template,
 
-    viewComparator: 'end',
-
+    viewComparator(view) {
+        return -new Date(view.model.get('end')).valueOf()
     },
 
     onChildviewRemoveVoting(view, event) {
