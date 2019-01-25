@@ -23,7 +23,8 @@ export default CollectionView.extend({
     },
 
     initialize({ store }) {
-        store.trigger('navigation', 'archive')
+        this.store = store
+        this.store.trigger('navigation', 'archive')
         Radio.channel('layout').request('change:pagetitle', 'Beendete Abstimmungen')
     },
 
@@ -35,16 +36,6 @@ export default CollectionView.extend({
 
     viewComparator: 'end',
 
-    TODOtemplateContext() {
-        return {
-            votings: this.collection.reverse().map(v => {
-                return {
-                    ..._.omit(v.toJSON(), 'tasks'),
-                    task: v.getTask().toJSON(),
-                    responses_count: v.get('responses').length
-                }
-            })
-        }
     },
 
     onChildviewRemoveVoting(view, event) {
