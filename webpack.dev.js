@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const path = require('path')
 const webpack = require('webpack')
@@ -9,7 +10,7 @@ let gitRevisionPlugin = new GitRevisionPlugin({
 module.exports = {
     mode: 'development',
     devtool: 'inline-source-map',
-    context: path.join(__dirname, './assets/js'),
+    context: path.join(__dirname, './src'),
     entry: {
         polls: './polls-app.js',
         'studip-cliqr': './studip-app.js'
@@ -17,19 +18,19 @@ module.exports = {
     output: {
         chunkFilename: '[name].chunk.js',
         publicPath: undefined,
-        path: path.join(__dirname, './static'),
+        path: path.join(__dirname, './dist'),
         filename: '[name].js'
     },
     module: {
         rules: [
             {
                 test: /\.scss$/,
-                include: path.resolve(__dirname, 'assets/scss'),
+                include: path.resolve(__dirname, 'src/assets/scss'),
                 use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
             },
             {
                 test: /\.scss$/,
-                include: path.resolve(__dirname, 'assets/js'),
+                include: path.resolve(__dirname, 'src/task-types'),
                 use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
             },
             {
@@ -43,7 +44,7 @@ module.exports = {
             },
             {
                 test: /\.hbs/,
-                include: path.resolve(__dirname, 'assets'),
+                include: path.resolve(__dirname, 'src'),
                 loader: 'handlebars-template-loader'
             },
             {
@@ -62,13 +63,14 @@ module.exports = {
     },
     resolve: {
         alias: {
-            jquery: path.join(__dirname, './assets/js/jquery'),
-            underscore: path.join(__dirname, './assets/js/underscore')
+            jquery: path.join(__dirname, './src/jquery'),
+            underscore: path.join(__dirname, './src/underscore')
         },
         extensions: ['.js'],
-        modules: [path.resolve('./assets/js'), 'node_modules']
+        modules: [path.resolve('./src'), 'node_modules']
     },
     plugins: [
+        new CopyWebpackPlugin([{ from: path.join(__dirname, 'public'), to: path.join(__dirname, 'dist') }]),
         gitRevisionPlugin,
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(gitRevisionPlugin.version()),

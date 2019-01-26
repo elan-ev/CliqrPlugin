@@ -7,7 +7,7 @@
         "build-dev": "webpack --config webpack.dev.js --mode development",
         "build-prod": "webpack --config webpack.prod.js --mode production",
         "watch": "webpack --config webpack.dev.js --mode development --watch",
-        "zip": "zip -r cliqr.zip app assets/vendor CliqrPlugin.php config.php lib LICENSE migrations plugin.manifest README.md static vendor"
+        "zip": "zip -r cliqr.zip app dist CliqrPlugin.php config.php lib LICENSE migrations plugin.manifest README.md vendor"
     },
     "devDependencies": {
         "@babel/cli": "7.2.3",
@@ -20,6 +20,7 @@
         "backbone": "1.3.3",
         "backbone.marionette": "4.0.0",
         "browserslist": "4.4.1",
+        "copy-webpack-plugin": "^4.6.0",
         "core-js": "2.6.3",
         "css-loader": "1.0.1",
         "d3-array": "2.0.3",

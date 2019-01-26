@@ -7,7 +7,7 @@
         <title>Stud.IP-Cliqr: <?= htmlReady($course->name) ?></title>
         <?
         $PLGNURL = $plugin->getPluginURL();
-        $ASSETS = $PLGNURL . '/assets/';
+        $ASSETS = $PLGNURL . '/dist/';
 
         $cliqrConfig = array_map('htmlReady', [
             'PLUGIN_URL' => current(explode('?', $controller->url_for(''))),
@@ -15,8 +15,8 @@
             'CID' => $cid
         ]);
         ?>
-        <link rel="stylesheet" href="<?= $ASSETS ?>vendor/bulma/bulma.css">
-        <link rel="stylesheet" href="<?= $ASSETS ?>vendor/rangeslider-2.3.2/rangeslider.min.css" />
+        <link rel="stylesheet" href="<?= $ASSETS ?>bulma/bulma.css">
+        <link rel="stylesheet" href="<?= $ASSETS ?>rangeslider-2.3.2/rangeslider.min.css" />
 
         <script>
         var STUDIP = {
@@ -38,11 +38,11 @@
         <?= $this->render_partial('_noscript') ?>
         <!-- END CLIQR PAGE -->
 
-        <script src="<?= $ASSETS ?>vendor/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-        <script src="<?= $ASSETS ?>vendor/rangeslider-2.3.2/rangeslider.min.js"></script>
-        <script src="<?= $ASSETS ?>vendor/underscore-1.9.1/underscore-min.js"></script>
+        <script src="<?= $ASSETS ?>jquery-3.3.1/jquery-3.3.1.min.js"></script>
+        <script src="<?= $ASSETS ?>rangeslider-2.3.2/rangeslider.min.js"></script>
+        <script src="<?= $ASSETS ?>underscore-1.9.1/underscore-min.js"></script>
         <script src="<?= \Assets::javascript_path('mathjax/MathJax.js?config=TeX-AMS_HTML,default') ?>"></script>
-        <script charset="utf-8" src="<?= $PLGNURL ?>/static/polls.js"></script>
+        <script charset="utf-8" src="<?= $PLGNURL ?>/polls.js"></script>
 
     </body>
 </html>

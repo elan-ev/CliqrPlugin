@@ -1,0 +1,205 @@
+@import "../../assets/scss/variables.scss";
+@import "../../assets/scss/mixins.scss";
+
+$chartColor: #ffbd33;
+$chartColor2: #f26e00;
+$color-diminished: #999999;
+
+#cliqr-poll-container {
+    .cliqr--multiple-choice-poll-view {
+        .has-addons .nominal {
+            padding-right: 0.75rem;
+        }
+
+        form {
+            margin-top: 1em;
+        }
+    }
+}
+
+#cliqr {
+    .cliqr--votings-compare .cliqr--multiple-choice-assignment-view header {
+        display: none;
+    }
+
+    .cliqr--multiple-choice-show-view,
+    .cliqr--multiple-choice-assignment-view {
+
+        header .cliqr--moment {
+            margin-left: 0.5em;
+        }
+
+        table.cliqr--multiple-choice-answers {
+            line-height: 1.5;
+            overflow: hidden;
+            border-collapse: collapse;
+            width: 100%;
+
+            caption {
+                padding-top: 2rem;
+                padding-bottom: 0;
+                font-size: 0.8em;
+                color: $color-diminished;
+                text-align: left;
+            }
+
+            td {
+                padding-top: 0.75em;
+                border-bottom: 2px solid $border;
+            }
+
+            .nominal {
+                color: $color-diminished;
+                width: 1em;
+            }
+
+            .text,
+            .graph,
+            .percent {
+                padding-left: 0.75em;
+            }
+        }
+
+        .cliqr--multiple-choice-answers,
+        .cliqr--mc-description {
+            max-width: 45em;
+            overflow-x: auto;
+
+            @include tablet {
+                font-size: $size-medium;
+            }
+
+            @include widescreen {
+                font-size: $size-large;
+            }
+        }
+    }
+
+    .cliqr--multiple-choice-assignment-view {
+
+        .chart {
+            display: inline-block;
+            background-color: $chartColor;
+            box-shadow: 1px 1px 1px 0px $chartColor2;
+
+            height: 1.5em;
+            margin-left: 0.5em;
+            vertical-align: middle;
+        }
+
+        .count {
+            padding-left: 0.25em;
+            color: $chartColor2;
+            text-align: right;
+        }
+
+        .percent {
+            color: $color-diminished;
+        }
+    }
+
+    .cliqr--multiple-choice-create-view,
+    .cliqr--multiple-choice-edit-view {
+        @include desktop {
+            display: flex;
+        }
+
+        form {
+            flex: 0 1 48em;
+
+            label > span {
+                font-weight: 700;
+                display: block;
+                margin-top: 1.5em;
+                margin-bottom: 0.5em;
+            }
+
+            @include desktop {
+                label:first-child > span {
+                    margin-top: 0;
+                }
+            }
+
+            footer {
+                margin-top: 1.5em;
+            }
+        }
+
+        .cliqr--mc-description {
+            .cke_contents {
+                font-size: 1.5em;
+            }
+
+            margin-bottom: 2em;
+        }
+
+        .cliqr--mc-subtypes {
+            button {
+                margin-top: 0;
+            }
+        }
+
+        .choices {
+            .choice-input {
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: stretch;
+            }
+
+            input {
+                flex: 1;
+                margin: 0;
+                padding: 4px 6px;
+                border: 1px solid #cccccc;
+                box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.024);
+            }
+
+            span.nominal {
+                line-height: 3em;
+                display: inline-block;
+                background-color: #e7ebf1;
+                padding: 0 0.5em;
+            }
+
+            .choice-input + .choice-input {
+                margin-top: 0.5em;
+            }
+
+            .choice-input input {
+                display: inline-block;
+            }
+
+            .cliqr--mc-choice-actions {
+                margin-left: 8px;
+            }
+
+            .choice-input:only-child .js-remove {
+                pointer-events: none;
+                cursor: none;
+                opacity: 0.2;
+            }
+        }
+
+        .cliqr--multiple-choice-options {
+            margin-top: 1.5em;
+
+            legend {
+                font-size: 10.5pt;
+            }
+        }
+
+        .cliqr--mc-answer-templates {
+            margin-top: 1.5ex;
+            max-width: 100%;
+            text-indent: .25ex;
+            vertical-align: top;
+
+            & > span:first-child {
+                font-weight: 700;
+                display: block;
+                margin-top: 1.5em;
+                margin-bottom: 0.5em;
+            }
+        }
+    }
+}

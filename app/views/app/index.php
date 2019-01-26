@@ -3,8 +3,6 @@ global $template_factory;
 $this->set_layout($template_factory->open('layouts/base'));
 
 $PLGNURL = $plugin->getPluginURL();
-$ASSETS = $PLGNURL . '/assets/';
-#PageLayout::addStylesheet($ASSETS . 'css/questions/styles.css');
 
 PageLayout::addHeadElement('script', array(), '
 var cliqr = {
@@ -21,6 +19,6 @@ var cliqr = {
 <div id="cliqr"></div>
 <?= $this->render_partial('_noscript') ?>
 
-<link charset="utf-8" href="<?= $PLGNURL ?>/static/studip-cliqr.css" rel="stylesheet" media="screen, print">
-<script charset="utf-8" src="<?= $PLGNURL ?>/static/studip-cliqr.js"></script>
+<link charset="utf-8" href="<?= $PLGNURL ?>/dist/studip-cliqr.css" rel="stylesheet" media="screen, print">
+<script charset="utf-8" src="<?= $PLGNURL ?>/dist/studip-cliqr.js"></script>
 <!-- END CLIQR PAGE -->
