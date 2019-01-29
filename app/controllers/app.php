@@ -31,9 +31,7 @@ class AppController extends CliqrStudipController
 
         $label = 'Wozu ist "Stud.IP Cliqr" gut?';
         $text = <<<'HELPTEXT'
-Mit Cliqr können Lehrende in einer Veranstaltung online Fragen stellen und
-die Lernenden damit aktiv in die Veranstaltung einbeziehen. Die gestellten
-Frage werden mit Hilfe der mobilen Endgeräten der Studierenden beantwortet.
+Mit Cliqr können Lehrende in einer Veranstaltung online Fragen stellen und die Lernenden damit aktiv in die Veranstaltung einbeziehen. Die gestellten Frage werden mit Hilfe der mobilen Endgeräten der Studierenden beantwortet.
 HELPTEXT;
         \Helpbar::get()->addPlainText($label, $text);
 
