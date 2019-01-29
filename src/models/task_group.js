@@ -1,5 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
+import shorten from '../helpers/shorten'
 
 const actionMap = function(action) {
     const map = {
@@ -51,6 +52,12 @@ const TaskGroup = Backbone.Model.extend({
             method: 'PATCH',
             url: this.url('tasks')
         })
+    },
+
+    getTitle(len = null) {
+        const title = this.get('title')
+
+        return len ? shorten(title.trim(), len) : title
     }
 })
 

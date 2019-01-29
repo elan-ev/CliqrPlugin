@@ -15,7 +15,7 @@ export default View.extend({
 
     initialize({ store }) {
         store.trigger('navigation', 'task-group', this.model)
-        const title = this.model.get('title')
+        const title = this.model.getTitle(40)
         Radio.channel('layout').request('change:pagetitle', `Fragensammlung «${title}» bearbeiten`)
     },
 
