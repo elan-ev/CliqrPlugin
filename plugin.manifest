@@ -1,7 +1,7 @@
 pluginname=Cliqr
 pluginclassname=CliqrPlugin
 origin=elan-ev
-version=3.0.0-beta1
+version=3.0.0-beta2
 studipMinVersion=3.4
 studipMaxVersion=4.3
 summary=Software-Clicker: interaktive Online-Fragen

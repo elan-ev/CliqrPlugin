@@ -1,6 +1,6 @@
 {
     "name": "studip-plugin-cliqr",
-    "version": "3.0.0-beta1",
+    "version": "3.0.0-beta2",
     "private": true,
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "scripts": {
