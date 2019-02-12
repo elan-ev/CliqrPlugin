@@ -61,5 +61,12 @@
         "printWidth": 120,
         "singleQuote": true,
         "tabWidth": 4
+    },
+    "stylelint": {
+        "extends": "stylelint-config-standard",
+        "rules": {
+            "indentation": 4,
+            "property-no-vendor-prefix": true
+        }
     }
 }
