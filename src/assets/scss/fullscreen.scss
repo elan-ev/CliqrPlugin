@@ -1,20 +1,18 @@
 @media all and (display-mode: fullscreen) {
+    body.cliqr--voting-show {
+        #layout_wrapper {
+            #flex-header,
+            .sticky-wrapper,
+            #tabs,
+            #layout_footer,
+            #layout-sidebar,
+            .helpbar-container {
+                display: none;
+            }
 
-  body.cliqr--voting-show {
-
-    #layout_wrapper {
-      #flex-header,
-      .sticky-wrapper,
-      #tabs,
-      #layout_footer,
-      #layout-sidebar,
-      .helpbar-container {
-        display: none;
-      }
-
-      #layout_page {
-        margin: 0;
-      }
+            #layout_page {
+                margin: 0;
+            }
+        }
     }
-  }
 }

@@ -4,7 +4,6 @@
         overflow: hidden;
         max-width: 40em;
 
-
         > a {
             line-height: 2.5em;
             display: block;
@@ -73,7 +72,7 @@
             width: 8px;
             height: 8px;
             background-color: $studip-violet;
-            content: "·";
+            content: '·';
             position: absolute;
             color: white;
             top: -3px;

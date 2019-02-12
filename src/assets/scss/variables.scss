@@ -23,7 +23,6 @@ $studip-content-color-40: mix($studip-content-color, white, 40%);
 $studip-content-color-20: mix($studip-content-color, white, 20%);
 $studip-content-color-10: mix($studip-content-color, white, 10%);
 
-
 $studip-black: #000000 !default;
 $studip-white: #ffffff !default;
 $studip-yellow: #ffbd33 !default;
@@ -35,7 +34,6 @@ $studip-green: #6ead10 !default;
 $studip-dark-green: #008512 !default;
 $studip-petrol: #129c94 !default;
 $studip-brown: #a85d45 !default;
-
 
 $color-accent: $studip-base-color !default;
 $color-accent-contrast: $studip-white !default;
@@ -49,7 +47,7 @@ $button-icon-size-header: 32px;
 $bubble-font-size: 12px !default;
 $bubble-color: $studip-white !default;
 $bubble-background: $studip-base-color !default;
-$bubble-min-size : 12px !default;
+$bubble-min-size: 12px !default;
 $bubble-padding: 3px 7px !default;
 
 $baseFontSize: $studip-font-size-base !default;
@@ -78,7 +76,6 @@ $widescreen: 1152px + (2 * $gap) !default;
 /* 1344px container + 4rem */
 $fullhd: 1344px + (2 * $gap) !default;
 
-
 $size-1: 3em !default;
 $size-2: 2.5em !default;
 $size-3: 2em !default;
@@ -92,7 +89,6 @@ $size-normal: $size-6 !default;
 $size-medium: $size-5 !default;
 $size-large: $size-4 !default;
 $size-huge: $size-2 !default;
-
 
 $grey: $studip-black !default;
 $grey-dark: $studip-black !default;

@@ -13,82 +13,80 @@ i {
 }
 
 .cliqr--icon-grip:before {
-    content: "\e900";
+    content: '\e900';
 }
 .cliqr--icon-add-files:before {
-    content: "\e901";
+    content: '\e901';
     color: #000;
 }
 .cliqr--icon-add-assessment:before {
-    content: "\e902";
+    content: '\e902';
     color: #000;
 }
 .cliqr--icon-accept:before {
-    content: "\e903";
+    content: '\e903';
 }
 .cliqr--icon-add:before {
-    content: "\e904";
+    content: '\e904';
 }
 .cliqr--icon-archive3:before {
-    content: "\e905";
+    content: '\e905';
 }
 .cliqr--icon-assessment:before {
-    content: "\e906";
+    content: '\e906';
 }
 .cliqr--icon-code:before {
-    content: "\e907";
+    content: '\e907';
 }
 .cliqr--icon-code-qr:before {
-    content: "\e908";
+    content: '\e908';
 }
 .cliqr--icon-decline:before {
-    content: "\e909";
+    content: '\e909';
 }
 .cliqr--icon-edit:before {
-    content: "\e90a";
+    content: '\e90a';
 }
 .cliqr--icon-exclaim-circle:before {
-    content: "\e90b";
+    content: '\e90b';
 }
 .cliqr--icon-folder-full:before {
-    content: "\e90c";
+    content: '\e90c';
 }
 .cliqr--icon-folder-parent:before {
-    content: "\e90d";
+    content: '\e90d';
 }
 .cliqr--icon-pause:before {
-    content: "\e90e";
+    content: '\e90e';
 }
 .cliqr--icon-play:before {
-    content: "\e90f";
+    content: '\e90f';
 }
 .cliqr--icon-refresh:before {
-    content: "\e910";
+    content: '\e910';
 }
 .cliqr--icon-stop:before {
-    content: "\e911";
+    content: '\e911';
 }
 .cliqr--icon-test:before {
     position: relative;
     top: -2px;
-    content: "\e912";
+    content: '\e912';
 }
 .cliqr--icon-trash:before {
-    content: "\e913";
+    content: '\e913';
 }
 .cliqr--icon-upload2:before {
-    content: "\e914";
+    content: '\e914';
 }
 .cliqr--icon-vote:before {
-    content: "\e915";
+    content: '\e915';
 }
 
 @font-face {
     font-family: 'cliqricons';
-    src:
-    url('../fonts/cliqricons.ttf?n1vcq5') format('truetype'),
-    url('../fonts/cliqricons.woff?n1vcq5') format('woff'),
-    url('../fonts/cliqricons.svg?n1vcq5#cliqricons') format('svg');
+    src: url('../fonts/cliqricons.ttf?n1vcq5') format('truetype'), url('../fonts/cliqricons.woff?n1vcq5') format('woff'),
+        url('../fonts/cliqricons.svg?n1vcq5#cliqricons') format('svg');
     font-weight: normal;
     font-style: normal;
 }

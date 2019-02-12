@@ -19,7 +19,8 @@ i.cliqr--icon {
     vertical-align: middle;
 }
 
-a i.cliqr--icon::before, a:hover i.cliqr--icon::before {
+a i.cliqr--icon::before,
+a:hover i.cliqr--icon::before {
     color: $studip-base-color;
 }
 

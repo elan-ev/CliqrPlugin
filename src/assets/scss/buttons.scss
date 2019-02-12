@@ -36,16 +36,6 @@ button.cliqr--button.active {
     &:not(:disabled):hover {
         background-color: $studip-brand-color-light;
     }
-/*
-    &:not(:disabled):hover {
-        background-color: $studip-white;
-        color: $studip-base-color;
-
-        i.cliqr--icon::before {
-            color: $studip-base-color !important;
-        }
-    }
-*/
 }
 
 button.cliqr--button.cliqr--button-important {
@@ -60,10 +50,10 @@ button.cliqr--button-fab {
     padding: 0;
 
     transition: box-shadow 0.3s;
-    box-shadow: 0 0 8px 0px rgba(0,0,0,0.0), inset 0 0 0 0px $color-accent;
+    box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0), inset 0 0 0 0px $color-accent;
 
     &:not(:disabled):hover {
-        box-shadow: 0 0 8px 0px rgba(0,0,0,0.7), inset 0 0 0 ($button-size/2) $color-accent;
+        box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.7), inset 0 0 0 ($button-size/2) $color-accent;
         background-color: transparent;
     }
 
@@ -84,7 +74,6 @@ button.cliqr--button-fab {
 button.cliqr--button-fab,
 button.cliqr--button {
     &.loading {
-
         i:before {
             content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSJibGFjayI+CiAgPHBhdGggb3BhY2l0eT0iLjI1IiBkPSJNMTYgMCBBMTYgMTYgMCAwIDAgMTYgMzIgQTE2IDE2IDAgMCAwIDE2IDAgTTE2IDQgQTEyIDEyIDAgMCAxIDE2IDI4IEExMiAxMiAwIDAgMSAxNiA0Ii8+CiAgPHBhdGggZD0iTTE2IDAgQTE2IDE2IDAgMCAxIDMyIDE2IEwyOCAxNiBBMTIgMTIgMCAwIDAgMTYgNHoiPgogICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIGZyb209IjAgMTYgMTYiIHRvPSIzNjAgMTYgMTYiIGR1cj0iMC44cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPC9wYXRoPgo8L3N2Zz4K);
         }

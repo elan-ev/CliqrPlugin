@@ -3,7 +3,7 @@
     margin-right: $margin;
 
     &:before {
-        content: "";
+        content: '';
         height: 0;
         width: 0;
         position: absolute;
@@ -19,8 +19,6 @@
         margin-top: (-$width);
     }
 }
-
-
 
 ul.cliqr--navigation-task-groups > li.active {
     background-color: $studip-base-color;
@@ -44,12 +42,12 @@ ul.cliqr--navigation-task-groups > li.active {
         display: block;
         line-height: 2em;
 
-        &:before, &:after {
+        &:before,
+        &:after {
             margin-left: -1px;
         }
     }
 }
-
 
 .widget-links.sidebar-navigation > li {
     line-height: 2em;
@@ -67,36 +65,28 @@ ul.cliqr--navigation-task-groups > li.active {
     text-overflow: ellipsis;
 }
 
-@keyframes heartbeat
-{
-    0%
-    {
-        transform: scale( .75 );
+@keyframes heartbeat {
+    0% {
+        transform: scale(0.75);
     }
-    20%
-    {
-        transform: scale( 1 );
+    20% {
+        transform: scale(1);
     }
-    40%
-    {
-        transform: scale( .75 );
+    40% {
+        transform: scale(0.75);
     }
-    60%
-    {
-        transform: scale( 1 );
+    60% {
+        transform: scale(1);
     }
-    80%
-    {
-        transform: scale( .75 );
+    80% {
+        transform: scale(0.75);
     }
-    100%
-    {
-        transform: scale( .75 );
+    100% {
+        transform: scale(0.75);
     }
 }
 
-#cliqr--on-air .sidebar-widget-header i
-{
+#cliqr--on-air .sidebar-widget-header i {
     animation: heartbeat 2s infinite;
 }
 
