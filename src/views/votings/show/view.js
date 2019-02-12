@@ -55,6 +55,8 @@ export default View.extend({
         change: 'render'
     },
 
+    interval: null,
+
     initialize({ store }) {
         const task = this.model.getTask()
         const taskGroup = store.taskGroups.get(task.get('task_group_id'))
@@ -74,8 +76,14 @@ export default View.extend({
                 showError('Es ist ein Fehler aufgetreten.', error)
             })
 
-        if (this.model.isRunning()) {
-            this.interval = setInterval(() => this.model.fetch(), 2000)
+        if (this.interval) {
+            clearInterval(this.interval)
+        }
+
+        if (this.model.isRunning() && !this.interval) {
+            this.interval = setInterval(() => {
+                this.model.fetch()
+            }, 2000)
         }
 
         Backbone.$(window.document.body).addClass('cliqr--voting-show')

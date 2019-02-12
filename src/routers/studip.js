@@ -13,7 +13,7 @@ let currentView
 const changeToPage = function(view, selector) {
     if (currentView) {
         currentView.$el.hide()
-        currentView.remove()
+        currentView.destroy()
     }
     currentView = view
     Backbone.$(window).scrollTop(0)

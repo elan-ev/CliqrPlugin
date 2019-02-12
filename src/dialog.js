@@ -33,7 +33,7 @@ const showDialog = function (backboneView, dialogOptions) {
             `.${hygenicDialogClass}`,
             function (event) {
                 if (Backbone.$(this).hasClass(hygenicDialogClass)) {
-                    backboneView.remove()
+                    backboneView.destroy()
                     Backbone.$(document).off(`.${hygenicDialogClass}`)
                 }
             }
