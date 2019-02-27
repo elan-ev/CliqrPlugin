@@ -22,7 +22,6 @@ class AppController extends CliqrStudipController
 
         $this->cid = $this->requireContext();
 
-
         if (!\Request::isXhr()) {
             $GLOBALS['CURRENT_PAGE'] = 'Cliqr';
 
@@ -35,10 +34,12 @@ Mit Cliqr können Lehrende in einer Veranstaltung online Fragen stellen und die 
 HELPTEXT;
         \Helpbar::get()->addPlainText($label, $text);
 
+        $role = defined('Icon::ROLE_INFO_ALT') ? \Icon::ROLE_INFO_ALT : 'info_alt';
+
         \Helpbar::get()->addLink(
             'Methodische Informationen',
             \PluginEngine::getURL('cliqrplugin', [], 'help'),
-            \Icon::create('folder-full', \Icon::ROLE_INFO_ALT),
+            \Icon::create('folder-full', $role),
             false,
             ['data-dialog' => 'size=big']
         );
