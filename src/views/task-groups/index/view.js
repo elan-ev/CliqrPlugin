@@ -2,7 +2,7 @@ import { CollectionView } from 'backbone.marionette'
 import { showConfirmDialog, showDialog } from '../../../dialog'
 import showError from '../../../error'
 import * as TaskGroups from '../index'
-import EmptyView from './empty'
+// import EmptyView from './empty'
 import ListItemView from './list-item'
 import indexTemplate from './view.hbs'
 import Radio from 'backbone.radio'
@@ -17,7 +17,7 @@ export default CollectionView.extend({
     },
     childViewEventPrefix: 'childview',
 
-    emptyView: EmptyView,
+    // emptyView: EmptyView,
 
     template: indexTemplate,
 
