@@ -1,4 +1,5 @@
 import { View } from 'backbone.marionette'
+import { userRole } from '../../utils'
 import WidgetTaskGroups from './task-groups'
 import WidgetOnAir from './onair'
 
@@ -12,8 +13,9 @@ export default View.extend({
     initialize({ store }) {
         this.getRegion('navigation').$el.after('<div></div')
         this.addRegion('onAirRegion', { el: '#sidebar-navigation + div', replaceElement: true })
-
-        this.showChildView('navigation', new WidgetTaskGroups({ collection: store.taskGroups, store }))
-        this.showChildView('onAirRegion', new WidgetOnAir({ store }))
+        if (userRole('lecturer')) {
+            this.showChildView('navigation', new WidgetTaskGroups({ collection: store.taskGroups, store }))
+            this.showChildView('onAirRegion', new WidgetOnAir({ store }))
+        }
     }
 })
