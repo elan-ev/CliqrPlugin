@@ -119,8 +119,11 @@ const StudipCliqrApplication = Application.extend({
     }
 })
 
-const myApp = new StudipCliqrApplication()
+window.Raven.config('https://ef7d4098598b43c9958ea96398f826eb@sentry.virtuos.uos.de/2').install()
+window.Raven.context(function() {
+    const myApp = new StudipCliqrApplication()
 
-myApp.start({
-    data: {}
+    myApp.start({
+        data: {}
+    })
 })

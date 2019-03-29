@@ -20,5 +20,6 @@ var cliqr = {
 <?= $this->render_partial('_noscript') ?>
 
 <link charset="utf-8" href="<?= $PLGNURL ?>/dist/studip-cliqr.css" rel="stylesheet" media="screen, print">
+<script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
 <script charset="utf-8" src="<?= $PLGNURL ?>/dist/studip-cliqr.js"></script>
 <!-- END CLIQR PAGE -->
