@@ -170,6 +170,7 @@ class Assignment extends eAssignment
 
         $result['is_task_group'] = $this->type == self::TYPE_TASK_GROUP;
         $result['is_voting'] = $this->type == self::TYPE_VOTING;
+        $result['responses_count'] = Response::countBySql('assignment_id = ?', [$this->id]);
 
         if (!in_array('assignment.test', $omits)) {
             $result['test'] = $this->test->toJSON($otherOmits);

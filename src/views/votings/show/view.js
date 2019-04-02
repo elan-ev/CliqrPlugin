@@ -15,7 +15,7 @@ const decorateVoting = function(voting) {
         .map(attrs => ({ ...attrs, isRunning: new Voting(attrs).isRunning() }))
 
     return {
-        responses_count: voting.get('responses').length,
+        responses_count: voting.get('responses_count'),
         task,
         isRunning: voting.isRunning(),
         otherVotings,
