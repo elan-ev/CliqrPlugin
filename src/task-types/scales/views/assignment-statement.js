@@ -1,4 +1,5 @@
 import { View } from 'backbone.marionette'
+import Radio from 'backbone.radio'
 import _ from 'underscore'
 import template from '../hbs/assignment-statement.hbs'
 import histogramView from './histogram'
@@ -24,8 +25,7 @@ export default View.extend({
     },
 
     onAttach() {
-        const Hub = window.MathJax.Hub
-        Hub.Queue(['Typeset', Hub, this.$('.text')[0]])
+        Radio.channel('layout').request('apply:mathjax', this.$('.text').eq(0))
 
         if (!this.voting.isRunning()) {
             const { lrange_value, hrange_value } = this.voting.getTask().get('task')

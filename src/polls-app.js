@@ -1,10 +1,36 @@
 import './public-path.js'
 import '@babel/polyfill'
 import Backbone from 'backbone'
-import { Application } from 'backbone.marionette'
+import { Application, MnObject } from 'backbone.marionette'
 import PollsCollection from './models/polls'
 import setupHandlebars from './setupHandlebars.js'
 import PollsIndexView from './views/polls/view'
+
+const LayoutNotificationHandler = MnObject.extend({
+    channelName: 'layout',
+
+    radioRequests: {
+        'apply:mathjax': 'onApplyMathjax'
+    },
+
+    onApplyMathjax($selector) {
+        let mathjaxP
+
+        if (window.MathJax && window.MathJax.Hub) {
+            mathjaxP = Promise.resolve(window.MathJax)
+        } else if (window.STUDIP && window.STUDIP.loadChunk) {
+            mathjaxP = window.STUDIP.loadChunk('mathjax')
+        }
+
+        mathjaxP
+            .then(({ Hub }) => {
+                $selector.each((index, element) => Hub.Queue(['Typeset', Hub, element]))
+            })
+            .catch(() => {
+                console.log('Warning: Could not load MathJax.')
+            })
+    }
+})
 
 const PollsCliqrApplication = Application.extend({
     region: '#cliqr-poll-container',
@@ -21,6 +47,8 @@ const PollsCliqrApplication = Application.extend({
             const xhr = Backbone.$.ajax.apply(Backbone.$, arguments)
             return Promise.resolve(xhr)
         }
+
+        this.layoutNotificationHandler = new LayoutNotificationHandler()
     },
 
     onBeforeStart(app, options) {
@@ -41,7 +69,13 @@ const PollsCliqrApplication = Application.extend({
     }
 })
 
-const pollsApp = new PollsCliqrApplication()
-pollsApp.start({
-    data: {}
+window.Raven.config('https://ef7d4098598b43c9958ea96398f826eb@sentry.virtuos.uos.de/2', {
+    release: window.cliqr.version
+}).install()
+window.Raven.context(function() {
+    const pollsApp = new PollsCliqrApplication()
+
+    pollsApp.start({
+        data: {}
+    })
 })

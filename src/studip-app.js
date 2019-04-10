@@ -15,7 +15,8 @@ const LayoutNotificationHandler = MnObject.extend({
         'change:pagetitle': 'onChangePagetitle',
         'scroll:top': 'onScrollTop',
         'show:loading': 'onShowLoading',
-        'hide:loading': 'onHideLoading'
+        'hide:loading': 'onHideLoading',
+        'apply:mathjax': 'onApplyMathjax'
     },
 
     initialize({ layout }) {
@@ -49,6 +50,24 @@ const LayoutNotificationHandler = MnObject.extend({
             this.timeout = null
         }
         Backbone.$(window.document.body).removeClass('cliqr--loading')
+    },
+
+    onApplyMathjax($selector) {
+        let mathjaxP
+
+        if (window.MathJax && window.MathJax.Hub) {
+            mathjaxP = Promise.resolve(window.MathJax)
+        } else if (window.STUDIP && window.STUDIP.loadChunk) {
+            mathjaxP = window.STUDIP.loadChunk('mathjax')
+        }
+
+        mathjaxP
+            .then(({ Hub }) => {
+                $selector.each((index, element) => Hub.Queue(['Typeset', Hub, element]))
+            })
+            .catch(() => {
+                console.log('Warning: Could not load MathJax.')
+            })
     }
 })
 
@@ -119,7 +138,9 @@ const StudipCliqrApplication = Application.extend({
     }
 })
 
-window.Raven.config('https://ef7d4098598b43c9958ea96398f826eb@sentry.virtuos.uos.de/2').install()
+window.Raven.config('https://ef7d4098598b43c9958ea96398f826eb@sentry.virtuos.uos.de/2', {
+    release: window.cliqr.version
+}).install()
 window.Raven.context(function() {
     const myApp = new StudipCliqrApplication()
 

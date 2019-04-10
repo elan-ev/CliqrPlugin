@@ -1,4 +1,5 @@
 import { View } from 'backbone.marionette'
+import Radio from 'backbone.radio'
 import template from '../hbs/show-statement.hbs'
 
 export default View.extend({
@@ -10,7 +11,6 @@ export default View.extend({
         }
     },
     onAttach() {
-        const Hub = window.MathJax.Hub
-        Hub.Queue(['Typeset', Hub, this.el])
+        Radio.channel('layout').request('apply:mathjax', this.$el)
     }
 })

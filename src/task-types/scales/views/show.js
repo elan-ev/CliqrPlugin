@@ -1,4 +1,5 @@
 import Backbone from 'backbone'
+import Radio from 'backbone.radio'
 import { View } from 'backbone.marionette'
 import TaskEditComponent from '../../../components/component-task-edit'
 import template from '../hbs/show.hbs'
@@ -33,9 +34,6 @@ export default View.extend({
     },
 
     onAttach() {
-        if (window.MathJax) {
-            const Hub = window.MathJax.Hub
-            Hub.Queue(['Typeset', Hub, this.$('.cliqr--scales-description')[0]])
-        }
+        Radio.channel('layout').request('apply:mathjax', this.$('.cliqr--scales-description').eq(0))
     }
 })

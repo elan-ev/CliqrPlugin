@@ -1,4 +1,5 @@
 import Backbone from 'backbone'
+import Radio from 'backbone.radio'
 import { View } from 'backbone.marionette'
 import _ from 'underscore'
 import template from '../hbs/assignment.hbs'
@@ -74,8 +75,7 @@ export default View.extend({
             this.enhanceChart(this.templateContext())
         }
 
-        const Hub = window.MathJax.Hub
-        this.$('.cliqr--mc-description, td.text').each((index, element) => Hub.Queue(['Typeset', Hub, element]))
+        Radio.channel('layout').request('apply:mathjax', this.$('.cliqr--mc-description, td.text, span.math-tex:not(:has(.MathJax))'))
     },
 
     enhanceChart(context) {

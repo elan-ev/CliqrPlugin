@@ -1,5 +1,6 @@
 import { View } from 'backbone.marionette'
 import Backbone from 'backbone'
+import Radio from 'backbone.radio'
 import _ from 'underscore'
 import template from '../hbs/poll.hbs'
 
@@ -45,8 +46,7 @@ export default View.extend({
     },
 
     onAttach() {
-        const Hub = window.MathJax.Hub
-        this.$('.description, .text').each((index, element) => Hub.Queue(['Typeset', Hub, element]))
+        Radio.channel('layout').request('apply:mathjax', this.$('.description, .text'))
 
         _.each(this.$('input[type="range"]'), range => {
             const $range = Backbone.$(range),
