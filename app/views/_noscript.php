@@ -1,8 +1,8 @@
     <noscript>
       <h1>
-      Um Cliqr verwenden zu können, aktivieren Sie in Ihrem Browser
-      bitte JavaScript. Wenn Sie dabei Hilfe benötigen,
+      Um Cliqr verwenden zu kÃ¶nnen, aktivieren Sie in Ihrem Browser
+      bitte JavaScript. Wenn Sie dabei Hilfe benÃ¶tigen,
       <a href="https://www.enable-javascript.com/de/"
-      target="_blank">können Sie diese Anleitung zu Rate ziehen.</a>
+      target="_blank">kÃ¶nnen Sie diese Anleitung zu Rate ziehen.</a>
       </h1>
     </noscript>
