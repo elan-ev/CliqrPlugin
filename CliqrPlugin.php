@@ -29,6 +29,15 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin
             : Request::option('cid');
     }
 
+    public function getPluginVersion()
+    {
+        static $manifest = null;
+        if ($manifest === null) {
+            $manifest = $this->getMetadata();
+        }
+        return $manifest['version'];
+    }
+
     /**
      * {@inheritdoc}
      *
