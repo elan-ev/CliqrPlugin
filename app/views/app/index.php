@@ -3,6 +3,7 @@ global $template_factory;
 $this->set_layout($template_factory->open('layouts/base'));
 
 $PLGNURL = $plugin->getPluginURL();
+$PLGNVRSN = studip_utf8encode($plugin->getPluginVersion());
 
 PageLayout::addHeadElement('script', array(), '
 var cliqr = {
@@ -12,14 +13,16 @@ var cliqr = {
   , ASSETS_URL : "' . htmlReady($PLGNURL) . '/"
   , CID        : "' . htmlReady($cid) . '"
   , SHORT_URL  : "' . htmlReady($short_url) . '"
-}};');
+  },
+  version: '.json_encode($PLGNVRSN).'
+};');
 ?>
 
 <!-- BEGIN CLIQR PAGE -->
 <div id="cliqr"></div>
 <?= $this->render_partial('_noscript') ?>
 
-<link charset="utf-8" href="<?= $PLGNURL ?>/dist/studip-cliqr.css" rel="stylesheet" media="screen, print">
+<link charset="utf-8" href="<?= $PLGNURL ?>/dist/studip-cliqr.css?v=<?= htmlReady($PLGNVRSN) ?>" rel="stylesheet" media="screen, print">
 <script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
-<script charset="utf-8" src="<?= $PLGNURL ?>/dist/studip-cliqr.js"></script>
+<script charset="utf-8" src="<?= $PLGNURL ?>/dist/studip-cliqr.js?v=<?= htmlReady($PLGNVRSN) ?>"></script>
 <!-- END CLIQR PAGE -->

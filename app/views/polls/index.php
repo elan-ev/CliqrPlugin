@@ -7,6 +7,7 @@
         <title>Stud.IP-Cliqr: <?= htmlReady($course->name) ?></title>
         <?
         $PLGNURL = $plugin->getPluginURL();
+        $PLGNVRSN = studip_utf8encode($plugin->getPluginVersion());
         $ASSETS = $PLGNURL . '/dist/';
 
         $cliqrConfig = array_map('htmlReady', [
@@ -15,7 +16,7 @@
             'CID' => $cid
         ]);
         ?>
-        <link rel="stylesheet" href="<?= $ASSETS ?>bulma/bulma.css">
+        <link rel="stylesheet" href="<?= $ASSETS ?>bulma/bulma.css?v=<?= htmlReady($PLGNVRSN) ?>">
         <link rel="stylesheet" href="<?= $ASSETS ?>rangeslider-2.3.2/rangeslider.min.css" />
 
         <script>
@@ -27,7 +28,8 @@
 
         var cliqr = {
             bootstrap: <?= json_encode(studip_utf8encode($json)) ?>,
-            config: <?= json_encode(studip_utf8encode($cliqrConfig)) ?>
+            config: <?= json_encode(studip_utf8encode($cliqrConfig)) ?>,
+            version: <?= json_encode($PLGNVRSN) ?>
         };
         </script>
     </head>
@@ -42,7 +44,7 @@
         <script src="<?= $ASSETS ?>rangeslider-2.3.2/rangeslider.min.js"></script>
         <script src="<?= $ASSETS ?>underscore-1.9.1/underscore-min.js"></script>
         <script src="<?= \Assets::javascript_path('mathjax/MathJax.js?config=TeX-AMS_HTML,default') ?>"></script>
-        <script charset="utf-8" src="<?= $PLGNURL ?>/dist/polls.js"></script>
+        <script charset="utf-8" src="<?= $PLGNURL ?>/dist/polls.js?v=<?= htmlReady($PLGNVRSN) ?>"></script>
 
     </body>
 </html>
