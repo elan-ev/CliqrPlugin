@@ -76,11 +76,14 @@ export default View.extend({
                 showError('Es ist ein Fehler aufgetreten.', error)
             })
 
+        // stop fetching
         if (this.interval) {
             clearInterval(this.interval)
+            this.interval = null
         }
 
-        if (this.model.isRunning() && !this.interval) {
+        // start fetching if voting is active
+        if (this.model.isRunning()) {
             this.interval = setInterval(() => {
                 this.model.fetch()
             }, 2000)
