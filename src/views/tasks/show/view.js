@@ -84,6 +84,13 @@ export default View.extend({
         event.preventDefault()
 
         const running = this.model.getVotings().find(a => a.isRunning())
+        if (!running) {
+            // something is wrong; user clicked a `stop` button though no voting was active
+            // just reload everything
+            window.location.reload(true)
+            return
+        }
+
         running
             .stop()
             .then(() => {
