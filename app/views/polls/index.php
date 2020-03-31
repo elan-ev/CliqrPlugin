@@ -44,7 +44,6 @@
         <script src="<?= $ASSETS ?>rangeslider-2.3.2/rangeslider.min.js"></script>
         <script src="<?= $ASSETS ?>underscore-1.9.1/underscore-min.js"></script>
         <script src="<?= \Assets::javascript_path('mathjax/MathJax.js?config=TeX-AMS_HTML,default') ?>"></script>
-        <script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
         <script charset="utf-8" src="<?= $PLGNURL ?>/dist/polls.js?v=<?= htmlReady($PLGNVRSN) ?>"></script>
 
     </body>
