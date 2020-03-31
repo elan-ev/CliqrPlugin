@@ -15,7 +15,7 @@ export default View.extend({
         this.addRegion('onAirRegion', { el: '#sidebar-navigation + div', replaceElement: true })
         if (userRole('lecturer')) {
             this.showChildView('navigation', new WidgetTaskGroups({ collection: store.taskGroups, store }))
-            this.showChildView('onAirRegion', new WidgetOnAir({ store }))
         }
+        this.showChildView('onAirRegion', new WidgetOnAir({ store }))
     }
 })
