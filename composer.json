@@ -4,7 +4,8 @@
         "pimple/pimple": "v1.0.1",
         "machuga/authority" : "dev-master",
         "stefk/jval": "dev-master",
-        "bacon/bacon-qr-code": "1.0.1"
+        "bacon/bacon-qr-code": "1.0.1",
+        "illuminate/events": "5.4.36"
     },
     "autoload": {
         "psr-4": {
