@@ -63,7 +63,7 @@ abstract class CliqrStudipController extends \StudipController
     public function render_json($data)
     {
         $this->response->add_header('Content-Type', 'application/json;charset=utf-8');
-        $this->render_text(json_encode(studip_utf8encode($data)));
+        $this->render_text(json_encode($data));
     }
 
     /**
@@ -102,7 +102,7 @@ abstract class CliqrStudipController extends \StudipController
     {
         $body = file_get_contents('php://input');
 
-        return studip_utf8decode(json_decode($body, true));
+        return json_decode($body, true);
     }
 
     /**

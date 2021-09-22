@@ -90,4 +90,4 @@ article{-webkit-column-width:31.25em;-moz-column-width:31.25em;column-width:31.2
     </ul>
 </article>
 
-<?= studip_utf8decode(ob_get_clean())  ?>
+<?= ob_get_clean() ?>

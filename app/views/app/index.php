@@ -3,11 +3,11 @@ global $template_factory;
 $this->set_layout($template_factory->open('layouts/base'));
 
 $PLGNURL = $plugin->getPluginURL();
-$PLGNVRSN = studip_utf8encode($plugin->getPluginVersion());
+$PLGNVRSN = $plugin->getPluginVersion();
 
 PageLayout::addHeadElement('script', array(), '
 var cliqr = {
-  bootstrap: ' . json_encode(studip_utf8encode($json))  . ',
+  bootstrap: ' . json_encode($json)  . ',
   config: {
     PLUGIN_URL : "' . htmlReady(current(explode('?', $controller->url_for('')))) . '"
   , ASSETS_URL : "' . htmlReady($PLGNURL) . '/"

@@ -264,9 +264,9 @@ class StudIPv34Migrator
                 'task' => json_encode(($task->toArray())),
                 'tests' => json_encode(($task->tests->toArray())),
                 'assignments' => json_encode(
-                    studip_utf8encode($task->tests[0]->assignments->toArray())
+                    $task->tests[0]->assignments->toArray()
                 ),
-                'responses' => json_encode(studip_utf8encode($task->responses->toArray())),
+                'responses' => json_encode($task->responses->toArray()),
             ]
         );
     }

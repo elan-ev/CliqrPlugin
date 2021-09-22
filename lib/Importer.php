@@ -21,7 +21,7 @@ class Importer
 
     public function importString($string, $debug = false)
     {
-        $this->import = studip_utf8decode(json_decode($string, true));
+        $this->import = json_decode($string, true);
 
         if (!isset($this->import['version']) || $this->import['version'] !== self::VERSION) {
             throw new \RuntimeException('Wrong version');
@@ -34,7 +34,7 @@ class Importer
 
         if ($debug) {
             foreach ($this->imported as $id => $sormObject) {
-                var_dump([$id, get_class($sormObject), $sormObject->id, json_encode(studip_utf8encode($sormObject->toArray()))]);
+                var_dump([$id, get_class($sormObject), $sormObject->id, json_encode($sormObject->toArray())]);
             }
         }
 
@@ -79,14 +79,11 @@ class Importer
                 $test = $this->imported[$entity['relationships']['test']];
                 $sormObject->test_id = $test->id;
                 $sormObject->store();
-                //var_dump("Verknüfung von task_group " . $sormObject->id . " zu test " . $entity['relationships']['test'] . " importiert als " . json_encode($this->imported[$entity['relationships']['test']]->toArray()));
                 break;
 
             case DB\Test::class:
                 foreach ($entity['relationships']['tasks'] as $task) {
                     $testTask = $sormObject->addTask($this->imported[$task]);
-                    //var_dump('neuer TestTask: ', json_encode(studip_utf8encode($testTask->toArray())));
-                    //var_dump("Verknüfung von test " . $sormObject->id . " zu task " . $task . " importiert als ", $this->imported[$task]->toArray());
                 }
                 break;
             }

@@ -7,7 +7,7 @@
         <title>Stud.IP-Cliqr: <?= htmlReady($course->name) ?></title>
         <?
         $PLGNURL = $plugin->getPluginURL();
-        $PLGNVRSN = studip_utf8encode($plugin->getPluginVersion());
+        $PLGNVRSN = $plugin->getPluginVersion();
         $ASSETS = $PLGNURL . '/dist/';
 
         $cliqrConfig = array_map('htmlReady', [
@@ -27,8 +27,8 @@
         };
 
         var cliqr = {
-            bootstrap: <?= json_encode(studip_utf8encode($json)) ?>,
-            config: <?= json_encode(studip_utf8encode($cliqrConfig)) ?>,
+            bootstrap: <?= json_encode($json) ?>,
+            config: <?= json_encode($cliqrConfig) ?>,
             version: <?= json_encode($PLGNVRSN) ?>
         };
         </script>

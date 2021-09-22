@@ -20,7 +20,7 @@ class Exporter
     {
         $this->encodeTaskGroup($taskGroup);
 
-        return json_encode(studip_utf8encode($this->export), JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES);
+        return json_encode($this->export, JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES);
     }
 
     private function encodeID(\SimpleORMap $sormObject)
