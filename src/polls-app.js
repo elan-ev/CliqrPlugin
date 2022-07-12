@@ -1,7 +1,6 @@
 import './public-path.js'
 import Backbone from 'backbone'
 import { Application, MnObject } from 'backbone.marionette'
-import Raven from 'raven-js'
 import PollsCollection from './models/polls'
 import setupHandlebars from './setupHandlebars.js'
 import PollsIndexView from './views/polls/view'
@@ -69,13 +68,8 @@ const PollsCliqrApplication = Application.extend({
     }
 })
 
-Raven.config('https://ef7d4098598b43c9958ea96398f826eb@sentry.virtuos.uos.de/2', {
-    release: window.cliqr.version
-}).install()
-Raven.context(function() {
-    const pollsApp = new PollsCliqrApplication()
+const pollsApp = new PollsCliqrApplication()
 
-    pollsApp.start({
-        data: {}
-    })
+pollsApp.start({
+    data: {}
 })

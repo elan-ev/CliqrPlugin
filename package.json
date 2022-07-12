@@ -1,6 +1,6 @@
 {
     "name": "studip-plugin-cliqr",
-    "version": "3.2.0",
+    "version": "3.2.1",
     "private": true,
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "scripts": {
@@ -31,10 +31,9 @@
         "handlebars": "^4.7.3",
         "handlebars-template-loader": "1.0.0",
         "mini-css-extract-plugin": "0.9.0",
-        "node-sass": "^4.13.1",
         "postcss-loader": "3.0.0",
-        "raven-js": "3.27.2",
-        "sass-loader": "8.0.2",
+        "sass": "^1.53.0",
+        "sass-loader": "^10.3.1",
         "style-loader": "1.1.3",
         "timeago.js": "3.0.2",
         "uglifyjs-webpack-plugin": "2.2.0",

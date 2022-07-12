@@ -1,9 +1,9 @@
 pluginname=Cliqr
 pluginclassname=CliqrPlugin
 origin=elan-ev
-version=3.2.0
+version=3.2.1
 studipMinVersion=4.5
-studipMaxVersion=5.0.99
+studipMaxVersion=5.1.99
 summary=Software-Clicker: interaktive Online-Fragen
 description=Software-Clicker Lösung: interaktive Online-Fragen in Veranstaltungen, die Lernende von ihrem Smartphone aus beantworten können.
 homepage=http://cliqr.de

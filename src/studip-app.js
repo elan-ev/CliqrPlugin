@@ -1,7 +1,6 @@
 import './public-path.js'
 import Backbone from 'backbone'
 import { Application, MnObject, View } from 'backbone.marionette'
-import Raven from 'raven-js'
 import './assets/scss/core.scss'
 import StudipRouter from './routers/studip'
 import setupHandlebars from './setupHandlebars.js'
@@ -138,13 +137,8 @@ const StudipCliqrApplication = Application.extend({
     }
 })
 
-Raven.config('https://ef7d4098598b43c9958ea96398f826eb@sentry.virtuos.uos.de/2', {
-    release: window.cliqr.version
-}).install()
-Raven.context(function() {
-    const myApp = new StudipCliqrApplication()
+const myApp = new StudipCliqrApplication()
 
-    myApp.start({
-        data: {}
-    })
+myApp.start({
+    data: {}
 })

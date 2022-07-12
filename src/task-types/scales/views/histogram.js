@@ -29,9 +29,9 @@ function _histogramView(d3, element, data, lrange, hrange, width, height, margin
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
 
-    const domain = [lrange, hrange]
     const domainExtent = hrange - lrange + 1
     const small = domainExtent <= 20
+    const domain = small ? [lrange, hrange + 1] : [lrange, hrange];
 
     const thresholds = small ? domainExtent : 10
     const d3histogram = d3
