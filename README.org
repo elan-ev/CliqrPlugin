@@ -65,7 +65,7 @@ Um /Stud.IP Cliqr/ selbst zu kompilieren, benötigt man:
 Sobald man /Stud.IP Cliqr/ ausgecheckt hat:
 
 #+BEGIN_SRC bash :dir /tmp :results silent
-git clone -q https://github.com/luniki/CliqrPlugin.git
+git clone -q https://github.com/elan-ev/CliqrPlugin.git
 cd CliqrPlugin
 #+END_SRC
 
