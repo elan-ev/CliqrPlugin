@@ -29,7 +29,7 @@ export default View.extend({
 
     onBeforeDestroy() {
         if (this.editor) {
-            this.editor.removeAllListeners()
+            this.editor.stopListening()
             this.editor = null
         }
     },
@@ -47,41 +47,27 @@ export default View.extend({
         if (!textarea || !window.STUDIP.wysiwyg || !window.STUDIP.wysiwyg.replace) {
             return
         }
-
-        const placeholder = textarea.placeholder || ''
-
         this.$el.addClass('loading')
-        window.STUDIP.wysiwyg.replace(textarea)
-        const element = window.CKEDITOR.dom.element.get(textarea)
-        if (element) {
-            this.editor = element.getEditor()
-            this.editor.config.placeholder = placeholder
-            this.editor.on('instanceReady', this.onEditorReady, this)
-            this.editor.on('change', this.onEditorChange, this)
-            this.editor.once('focus', this.onEditorFocus, this)
-
-            this.editor.on('required', this.onEditorInvalid, this)
-        }
+        const result = window.STUDIP.wysiwyg.replace(textarea)
+        $(textarea).on("load.wysiwyg", () => {
+            this.editor = window.STUDIP.wysiwyg.getEditor(textarea)
+            this.onEditorReady()
+            this.editor.model.document.on('change:data', this.onEditorChange.bind(this, textarea))
+            textarea.addEventListener("invalid", this.onEditorInvalid.bind(this))
+        })
     },
 
     onEditorReady() {
         this.$el.removeClass('loading')
     },
 
-    onEditorChange({ editor }) {
-        const data = window.STUDIP.wysiwyg.markAsHtml(editor.getData())
-        this.model.set(this.key, data)
+    onEditorChange(textarea) {
+        const data = this.editor.getData()
+        textarea.value = data;
+        this.model.set(this.key, window.STUDIP.wysiwyg.markAsHtml(data))
     },
 
-    onEditorFocus({ editor }) {
-        // expand toolbar on focus
-        if (this.$('.cke_toolbox_collapser_min').length) {
-            editor.execCommand('toolbarCollapse')
-        }
-    },
-
-    onEditorInvalid(evt) {
-        evt.cancel()
+    onEditorInvalid() {
         this.error = 'Dieses Feld darf nicht leer sein.'
         this.render()
         this.el.scrollIntoView({

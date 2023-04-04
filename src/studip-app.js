@@ -75,15 +75,15 @@ const MyBaseLayout = View.extend({
 
     regions: {
         content: '#cliqr',
-        pageTitle: '#current_page_title',
+        pageTitle: '#page-title',
         sidebar: {
-            el: '#layout-sidebar',
+            el: '#sidebar',
             replaceElement: false
         }
     },
 
     initialize() {
-        this.showChildView('sidebar', new SidebarView({ el: '#layout-sidebar', store }))
+        this.showChildView('sidebar', new SidebarView({ el: '#sidebar', store }))
         this.router = new StudipRouter({ selector: this.getRegion('content').$el, store })
 
         this.layoutNotificationHandler = new LayoutNotificationHandler({ layout: this })
@@ -96,7 +96,7 @@ const MyBaseLayout = View.extend({
 })
 
 const StudipCliqrApplication = Application.extend({
-    region: '#layout_page',
+    region: '#current-page-structure',
 
     initialize() {
         setupHandlebars()

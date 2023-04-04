@@ -1,18 +1,13 @@
 @media all and (display-mode: fullscreen) {
     body.cliqr--voting-show {
-        #layout_wrapper {
-            #flex-header,
-            .sticky-wrapper,
-            #tabs,
-            #layout_footer,
-            #layout-sidebar,
-            .helpbar-container {
-                display: none;
-            }
+        #main-header,
+        #main-footer,
+        #sidebar {
+            display: none;
+        }
 
-            #layout_page {
-                margin: 0;
-            }
+        #current-page-structure {
+            margin: 0;
         }
     }
 }
