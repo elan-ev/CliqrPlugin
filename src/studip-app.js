@@ -96,7 +96,7 @@ const MyBaseLayout = View.extend({
 })
 
 const StudipCliqrApplication = Application.extend({
-    region: '#current-page-structure',
+    region: '#cliqr',
 
     initialize() {
         setupHandlebars()
