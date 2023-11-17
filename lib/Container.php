@@ -55,8 +55,15 @@ class Container extends \Pimple
 
         $this['shortener'] = $this->share(
             function ($c) use ($base_path) {
-                require_once $base_path.$c['ini']['shortener']['file'];
-                $class = $c['ini']['shortener']['class'];
+                $cfg = \Config::getInstance();
+                if (!empty($cfg->getValue('CLIQR_URL_SHORTENER_CLASS'))) {
+                    $class = $cfg->getValue('CLIQR_URL_SHORTENER_CLASS');
+                    require_once "{$base_path}lib/$class.php";
+                    $class = "\\Cliqr\\$class";
+                } else {
+                    require_once $base_path.$c['ini']['shortener']['file'];
+                    $class = $c['ini']['shortener']['class'];
+                }
 
                 return new $class($c);
             }

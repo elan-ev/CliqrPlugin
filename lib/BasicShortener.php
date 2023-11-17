@@ -31,6 +31,12 @@ class BasicShortener implements Shortener
     public function __construct($container)
     {
         $this->config = $container['ini']['basicshortener'];
+
+        $cfg = \Config::getInstance();
+        // Global system configuration takes precedence over shortener url in config file
+        if (!empty($cfg->getValue('CLIQR_BASIC_SHORTENER_URL'))) {
+            $this->config['url'] = $cfg->getValue('CLIQR_BASIC_SHORTENER_URL');
+        }
     }
 
     public function shorten($url)
