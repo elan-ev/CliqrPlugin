@@ -18,6 +18,9 @@ class = \Cliqr\BasicShortener
 ;file = lib/YourlsShortener.php
 ;class = \Cliqr\YourlsShortener
 
+;file = lib/PolrShortener.php
+;class = \Cliqr\PolrShortener
+
 [basicshortener]
 url = https://vt.uos.de/shorten.php?longurl=%s
 
@@ -33,3 +36,7 @@ endpoint = https://<yourls-domain>/yourls-api.php
 username =
 password =
 api_key =
+
+[polr]
+api_url = https://<polr-domain>/api/v2
+api_key = <MY-POLR-KEY>
