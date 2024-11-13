@@ -129,10 +129,10 @@ class Assignment extends eAssignment
         $now = time();
 
         $test = new Test();
-        $test->title = $data['title'] ?: 'Cliqr-Fragen';
+        $test->title = $data['title'] ?? 'Cliqr-Fragen';
         $test->mkdate = $now;
         $test->chdate = $now;
-        $test->user_id = $data['user_id'] ?: $GLOBALS['user']->id;
+        $test->user_id = $data['user_id'] ?? $GLOBALS['user']->id;
         $test->options = ['task_group' => 1];
         $test->store();
 

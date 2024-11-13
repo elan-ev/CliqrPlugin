@@ -2,7 +2,7 @@
 
 use Cliqr\DB\Assignment;
 
-class CliqrPlugin extends StudIPPlugin implements StandardPlugin
+class CliqrPlugin extends StudIPPlugin implements StandardPlugin, SystemPlugin
 {
     public $config;
 
