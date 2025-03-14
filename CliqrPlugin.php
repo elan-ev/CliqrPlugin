@@ -1,6 +1,8 @@
 <?php
 
 use Cliqr\DB\Assignment;
+use Studip\Plugins\CustomPerformLegacyRouteStrategy;
+use Studip\Plugins\LegacyRouteStrategy;
 
 class CliqrPlugin extends StudIPPlugin implements StandardPlugin, SystemPlugin
 {
@@ -85,6 +87,9 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin, SystemPlugin
      */
     public function perform($unconsumedPath)
     {
+        if (!$this->config) {
+            $this->initialize();
+        }
         $trailsRoot = $this->getPluginPath().'/app';
         $dispatcher = new \Cliqr\Dispatcher(
             $trailsRoot,
@@ -96,6 +101,14 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $dispatcher->container = $this->config;
 
         $dispatcher->dispatch($unconsumedPath);
+    }
+
+    /**
+     * @SuppressWarnings(UnusedFormalParameter)
+     */
+    protected function getLegacyRouteStrategy(string $unconsumedPath): LegacyRouteStrategy
+    {
+        return app(CustomPerformLegacyRouteStrategy::class);
     }
 
     private function initializeCourse()
