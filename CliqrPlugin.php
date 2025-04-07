@@ -8,13 +8,6 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin, SystemPlugin
 {
     public $config;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        require_once __DIR__.'/vendor/autoload.php';
-    }
-
     public function initialize()
     {
         $this->config = new \Cliqr\Container();
@@ -87,6 +80,8 @@ class CliqrPlugin extends StudIPPlugin implements StandardPlugin, SystemPlugin
      */
     public function perform($unconsumedPath)
     {
+        require_once __DIR__.'/vendor/autoload.php';
+
         if (!$this->config) {
             $this->initialize();
         }
