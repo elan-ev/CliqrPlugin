@@ -1,12 +1,10 @@
-const strip_tags = function(html) {
+const strip_tags = function (html) {
     if (!html) {
-        return ''
+        return '';
     }
+    const cleaned = new DOMParser().parseFromString(html, 'text/html');
 
-    const div = window.document.createElement('div')
-    div.innerHTML = html
+    return cleaned.body.textContent || '';
+};
 
-    return div.textContent || div.innerText || ''
-}
-
-export default strip_tags
+export default strip_tags;

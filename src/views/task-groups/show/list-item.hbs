@@ -1,10 +1,10 @@
 <td class="cliqr--task-checkbox">
-    <i class="cliqr--icon-grip" data-tooltip="{{i18n "Drag-and-drop zum Sortieren"}}"></i>
+    {{ icon "grip" }}
 </td>
 
 <td class="cliqr--task-header">
     <a href="#task/show/{{id}}">
-        <i class="cliqr--icon cliqr--icon-{{./icon}}"></i>
+        {{ icon ./icon }}
         {{#if title}}{{title}}{{else}}{{strip_tags description_html}}{{/if}}
     </a>
     <div class="cliqr--task-last-assignment">

@@ -1,12 +1,14 @@
+@use 'mixins';
+
 .cliqr--component-task-edit {
     .cliqr--button-with-icon {
-        @include touch {
+        @include mixins.touch {
             display: none;
         }
     }
 
     .cliqr--button-fab {
-        @include desktop {
+        @include mixins.desktop {
             display: none;
         }
     }

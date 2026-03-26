@@ -1,3 +1,5 @@
+@use 'variables';
+
 .tabs {
     -webkit-overflow-scrolling: touch;
     align-items: stretch;
@@ -26,7 +28,7 @@
         border-bottom-color: #dbdbdb;
         border-bottom-style: solid;
         border-bottom-width: 1px;
-        color: $color-accent;
+        color: variables.$color-accent;
         display: flex;
         justify-content: center;
         margin-bottom: -1px;
@@ -45,7 +47,7 @@
     }
 
     li.is-active a {
-        border-bottom-color: $color-accent;
-        color: $color-accent;
+        border-bottom-color: variables.$color-accent;
+        color: variables.$color-accent;
     }
 }

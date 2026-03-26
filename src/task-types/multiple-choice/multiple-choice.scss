@@ -1,5 +1,5 @@
-@import "../../assets/scss/variables.scss";
-@import "../../assets/scss/mixins.scss";
+@use '../../assets/scss/variables.scss';
+@use '../../assets/scss/mixins.scss';
 
 $chartColor: #ffbd33;
 $chartColor2: #f26e00;
@@ -24,7 +24,6 @@ $color-diminished: #999999;
 
     .cliqr--multiple-choice-show-view,
     .cliqr--multiple-choice-assignment-view {
-
         header .cliqr--moment {
             margin-left: 0.5em;
         }
@@ -45,7 +44,7 @@ $color-diminished: #999999;
 
             td {
                 padding-top: 0.75em;
-                border-bottom: 2px solid $border;
+                border-bottom: 2px solid variables.$border;
             }
 
             .nominal {
@@ -65,18 +64,17 @@ $color-diminished: #999999;
             max-width: 45em;
             overflow-x: auto;
 
-            @include tablet {
-                font-size: $size-medium;
+            @include mixins.tablet {
+                font-size: variables.$size-medium;
             }
 
-            @include widescreen {
-                font-size: $size-large;
+            @include mixins.widescreen {
+                font-size: variables.$size-large;
             }
         }
     }
 
     .cliqr--multiple-choice-assignment-view {
-
         .chart {
             display: inline-block;
             background-color: $chartColor;
@@ -100,7 +98,7 @@ $color-diminished: #999999;
 
     .cliqr--multiple-choice-create-view,
     .cliqr--multiple-choice-edit-view {
-        @include desktop {
+        @include mixins.desktop {
             display: flex;
         }
 
@@ -114,7 +112,7 @@ $color-diminished: #999999;
                 margin-bottom: 0.5em;
             }
 
-            @include desktop {
+            @include mixins.desktop {
                 label:first-child > span {
                     margin-top: 0;
                 }
@@ -191,7 +189,7 @@ $color-diminished: #999999;
         .cliqr--mc-answer-templates {
             margin-top: 1.5ex;
             max-width: 100%;
-            text-indent: .25ex;
+            text-indent: 0.25ex;
             vertical-align: top;
 
             & > span:first-child {

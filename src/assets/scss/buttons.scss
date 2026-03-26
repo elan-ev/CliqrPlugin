@@ -1,19 +1,21 @@
+@use 'variables';
+
 button.cliqr--button-fab,
 button.cliqr--button {
     transition: background 0.3s ease-out;
     transition: color 0.3s ease-out;
 
-    i.cliqr--icon::before {
+    svg.cliqr--icon {
         transition: color 0.3s ease-in-out;
     }
 
-    background-color: $studip-white;
-    color: $studip-base-color;
+    background-color: variables.$studip-white;
+    color: variables.$studip-base-color;
 
     &:not(:disabled):hover {
-        background-color: $studip-brand-color-lighter;
-        i.cliqr--icon::before {
-            color: $studip-white !important;
+        background-color: variables.$studip-brand-color-lighter;
+        svg.cliqr--icon {
+            color: variables.$studip-white !important;
         }
     }
 }
@@ -21,20 +23,20 @@ button.cliqr--button {
 button.cliqr--button.active {
     outline: 0;
 
-    background-color: $studip-base-color;
-    color: $studip-white;
+    background-color: variables.$studip-base-color;
+    color: variables.$studip-white;
 
     /* TODO? */
     &:disabled:hover {
-        color: $studip-white;
+        color: variables.$studip-white;
     }
 
-    i.cliqr--icon::before {
-        color: $studip-white !important;
+    svg.cliqr--icon {
+        color: variables.$studip-white !important;
     }
 
     &:not(:disabled):hover {
-        background-color: $studip-brand-color-light;
+        background-color: variables.$studip-brand-color-light;
     }
 }
 
@@ -43,18 +45,26 @@ button.cliqr--button.cliqr--button-important {
 }
 
 button.cliqr--button-fab {
-    width: $button-size;
-    height: $button-size;
-    min-width: $button-size;
+    width: variables.$button-size;
+    height: variables.$button-size;
+    min-width: variables.$button-size;
     margin: 0;
     padding: 0;
 
     transition: box-shadow 0.3s;
-    box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0), inset 0 0 0 0px $color-accent;
+    box-shadow:
+        0 0 8px 0px rgba(0, 0, 0, 0),
+        inset 0 0 0 0px variables.$color-accent;
 
     &:not(:disabled):hover {
-        box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.7), inset 0 0 0 ($button-size/2) $color-accent;
+        box-shadow:
+            0 0 8px 0px rgba(0, 0, 0, 0.7),
+            inset 0 0 0 calc(variables.$button-size/2) variables.$color-accent;
         background-color: transparent;
+
+        svg.cliqr--icon {
+            color: variables.$studip-white !important;
+        }
     }
 
     &.cliqr--flat {
@@ -74,13 +84,13 @@ button.cliqr--button-fab {
 button.cliqr--button-fab,
 button.cliqr--button {
     &.loading {
-        i:before {
+        svg {
             content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSJibGFjayI+CiAgPHBhdGggb3BhY2l0eT0iLjI1IiBkPSJNMTYgMCBBMTYgMTYgMCAwIDAgMTYgMzIgQTE2IDE2IDAgMCAwIDE2IDAgTTE2IDQgQTEyIDEyIDAgMCAxIDE2IDI4IEExMiAxMiAwIDAgMSAxNiA0Ii8+CiAgPHBhdGggZD0iTTE2IDAgQTE2IDE2IDAgMCAxIDMyIDE2IEwyOCAxNiBBMTIgMTIgMCAwIDAgMTYgNHoiPgogICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIGZyb209IjAgMTYgMTYiIHRvPSIzNjAgMTYgMTYiIGR1cj0iMC44cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPC9wYXRoPgo8L3N2Zz4K);
         }
     }
 
     /* Hack to workaround bad icon */
-    i.cliqr--icon-edit {
+    .cliqr--icon-edit {
         position: relative;
         top: -2px;
     }

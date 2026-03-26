@@ -1,69 +1,69 @@
-import Backbone from 'backbone'
-import Handlebars from 'handlebars-template-loader/runtime'
-import _ from 'underscore'
-import scalesHeader from './hbs/scales_header.hbs'
-import ScalesResponse from './models/response'
-import ScalesTask from './models/task'
-import AssignmentView from './views/assignment'
-import CreateView from './views/create'
-import EditView from './views/edit'
-import PollView from './views/poll'
-import ShowView from './views/show'
+import Backbone from 'backbone';
+import Handlebars from 'handlebars-template-loader/runtime/index.js';
+import _ from 'underscore';
+import scalesHeader from './hbs/scales_header.hbs';
+import ScalesResponse from './models/response.js';
+import ScalesTask from './models/task.js';
+import AssignmentView from './views/assignment.js';
+import CreateView from './views/create.js';
+import EditView from './views/edit.js';
+import PollView from './views/poll.js';
+import ShowView from './views/show.js';
 
-import scalesCss from './scales.scss'
+import './scales.scss';
 
-Handlebars.registerPartial('scales_header', scalesHeader)
+Handlebars.registerPartial('scales_header', scalesHeader);
 
 class Scales {
     constructor(task) {
-        this.task = task
+        this.task = task;
     }
 
     // Ansicht eines Votings einer Frage
     getAssignmentView(voting) {
-        return new AssignmentView({ model: this.task, voting, type: this })
+        return new AssignmentView({ model: this.task, voting, type: this });
     }
 
     // Details einer Frage /tasks/show/{{id}}
     getShowView() {
-        return new ShowView({ model: this.task, type: this })
+        return new ShowView({ model: this.task, type: this });
     }
 
     // Formular zum Bearbeiten einer Frage /tasks/edit/{{id}}
     getEditView() {
-        return new EditView({ model: this.wrapTask(this.task), type: this })
+        return new EditView({ model: this.wrapTask(this.task), type: this });
     }
 
     // Formular zum Anlegen einer Frage
     getCreateView(taskGroup) {
-        return new CreateView({ model: this.createTask(), taskGroup, type: this })
+        return new CreateView({ model: this.createTask(), taskGroup, type: this });
     }
 
     // Formular zum Beantworten einer Frage
     getPollView(voting) {
-        return new PollView({ model: this.createResponse(voting), voting, type: this })
+        return new PollView({ model: this.createResponse(voting), voting, type: this });
     }
 
     createTask() {
-        const task = new ScalesTask()
+        const task = new ScalesTask();
         task.set({
             description: 'Bewerten Sie bitte die folgende(n) Aussage(n)',
-            description_html: 'Bewerten Sie bitte die folgende(n) Aussage(n)'
-        })
-        _.times(1, () => task.addStatement())
-        return task
+            description_html: 'Bewerten Sie bitte die folgende(n) Aussage(n)',
+        });
+        _.times(1, () => task.addStatement());
+        return task;
     }
 
     wrapTask(task) {
-        return new ScalesTask(task.attributes)
+        return new ScalesTask(task.attributes);
     }
 
     createResponse(voting) {
-        const response = new ScalesResponse({ voting_id: voting.id, task_id: voting.getTask().id })
-        return response
+        const response = new ScalesResponse({ voting_id: voting.id, task_id: voting.getTask().id });
+        return response;
     }
 }
 
-_.extend(Scales.prototype, Backbone.Events)
+_.extend(Scales.prototype, Backbone.Events);
 
-export default Scales
+export default Scales;

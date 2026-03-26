@@ -1,3 +1,5 @@
+@use 'variables';
+
 .cliqr--task-list {
     .cliqr--task-header {
         white-space: nowrap;
@@ -48,18 +50,18 @@
 
     .ui-sortable-handle {
         cursor: ns-resize;
-        i {
-            color: $studip-base-color-40;
+        svg {
+            color: variables.$studip-base-color-40;
         }
     }
 
-    tbody tr:only-child .ui-sortable-handle i {
+    tbody tr:only-child .ui-sortable-handle svg {
         visibility: hidden;
     }
 
     .ui-sortable-placeholder {
-        background-color: $studip-violet;
-        color: $studip-violet;
+        background-color: variables.$studip-violet;
+        color: variables.$studip-violet;
         visibility: visible !important;
         position: relative;
 
@@ -71,7 +73,7 @@
             border-radius: 50%;
             width: 8px;
             height: 8px;
-            background-color: $studip-violet;
+            background-color: variables.$studip-violet;
             content: '·';
             position: absolute;
             color: white;
@@ -83,10 +85,10 @@
     .ui-sortable-helper {
         display: table;
         border: 1px solid #bbbbbb;
-        border-left: 3px solid $studip-violet;
+        border-left: 3px solid variables.$studip-violet;
         box-shadow: 0 3px 4px rgba(116, 116, 116, 0.3);
         * {
-            background-color: $studip-white;
+            background-color: variables.$studip-white;
         }
     }
 

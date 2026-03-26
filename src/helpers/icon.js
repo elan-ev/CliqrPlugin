@@ -1,17 +1,17 @@
-import { SafeString, escapeExpression } from 'handlebars/runtime'
+import { SafeString, escapeExpression } from 'handlebars/runtime.js';
 
-const icon = function(icon, { hash }) {
-    let { color = 'blue', text = '' } = hash
+const icon = function (icon, { hash }) {
+    let { color = 'blue', text = '' } = hash;
 
-    color = escapeExpression(color)
-    icon = escapeExpression(icon)
-    text = escapeExpression(text)
+    color = escapeExpression(color);
+    icon = escapeExpression(icon);
+    text = escapeExpression(text);
 
-    const addClasses = escapeExpression(hash['class']) || ''
+    const addClasses = escapeExpression(hash['class']) || '';
 
     return new SafeString(
-        `<i class="cliqr--icon cliqr--icon-${icon} ${addClasses} cliqr--icon-color-${color}" alt="${text}" title="${text}"></i>`
-    )
-}
+        `<svg class="cliqr--icon cliqr--icon-${icon} cliqr--icon-color-${color} ${addClasses}" alt="${text}" title="${text}"><use xlink:href="#${icon}"></use></svg>`,
+    );
+};
 
-export default icon
+export default icon;

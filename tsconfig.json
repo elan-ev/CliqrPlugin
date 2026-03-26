@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "es2020",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "strict": true,
+        "target": "es2020"
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
+}

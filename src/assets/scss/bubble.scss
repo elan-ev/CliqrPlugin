@@ -1,14 +1,16 @@
+@use 'variables';
+
 .bubble {
     display: inline-block;
-    min-width: $bubble-min-size;
-    padding: $bubble-padding;
-    font-size: $bubble-font-size;
+    min-width: variables.$bubble-min-size;
+    padding: variables.$bubble-padding;
+    font-size: variables.$bubble-font-size;
     font-weight: 600;
-    color: $bubble-color;
+    color: variables.$bubble-color;
     line-height: 1;
     vertical-align: middle;
     white-space: nowrap;
     text-align: center;
-    background-color: $bubble-background;
-    border-radius: $bubble-min-size;
+    background-color: variables.$bubble-background;
+    border-radius: variables.$bubble-min-size;
 }

@@ -1,5 +1,5 @@
-import { View } from 'backbone.marionette'
-import template from './task-groups-item.hbs'
+import { View } from 'backbone.marionette';
+import template from './task-groups-item.hbs';
 
 const WidgetTaskGroupsItem = View.extend({
     tagName: 'li',
@@ -8,12 +8,12 @@ const WidgetTaskGroupsItem = View.extend({
 
     modelEvents: {
         select() {
-            this.$el.addClass('active')
+            this.$el.addClass('active');
         },
-        change: 'render'
+        change: 'render',
     },
 
-    template
-})
+    template,
+});
 
-export default WidgetTaskGroupsItem
+export default WidgetTaskGroupsItem;

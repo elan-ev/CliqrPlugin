@@ -1,3 +1,3 @@
-export { default as CreateView } from './create/view'
-export { default as EditView } from './edit/view'
-export { default as ShowView } from './show/view'
+export { default as CreateView } from './create/view.js';
+export { default as EditView } from './edit/view.js';
+export { default as ShowView } from './show/view.js';

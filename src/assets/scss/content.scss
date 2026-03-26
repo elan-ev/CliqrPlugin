@@ -1,25 +1,28 @@
-$content-heading-color: $text-strong !default;
-$content-heading-weight: $weight-normal !default;
+@use 'mixins';
+@use 'variables';
+
+$content-heading-color: variables.$text-strong !default;
+$content-heading-weight: variables.$weight-normal !default;
 $content-heading-line-height: 1.125 !default;
 
-$content-blockquote-background-color: $background !default;
-$content-blockquote-border-left: 5px solid $border !default;
+$content-blockquote-background-color: variables.$background !default;
+$content-blockquote-border-left: 5px solid variables.$border !default;
 $content-blockquote-padding: 1.25em 1.5em !default;
 
 $content-pre-padding: 1.25em 1.5em !default;
 
-$content-table-cell-border: 1px solid $border !default;
+$content-table-cell-border: 1px solid variables.$border !default;
 $content-table-cell-border-width: 0 0 1px !default;
 $content-table-cell-padding: 0.5em 0.75em !default;
-$content-table-cell-heading-color: $text-strong !default;
-$content-table-row-hover-background-color: $background !default;
+$content-table-cell-heading-color: variables.$text-strong !default;
+$content-table-row-hover-background-color: variables.$background !default;
 $content-table-head-cell-border-width: 0 0 2px !default;
-$content-table-head-cell-color: $text-strong !default;
+$content-table-head-cell-color: variables.$text-strong !default;
 $content-table-foot-cell-border-width: 2px 0 0 !default;
-$content-table-foot-cell-color: $text-strong !default;
+$content-table-foot-cell-color: variables.$text-strong !default;
 
 .cliqr--content {
-    @include block;
+    @include mixins.block;
 
     li + li {
         margin-top: 0.25em;
@@ -144,7 +147,7 @@ $content-table-foot-cell-color: $text-strong !default;
     }
 
     pre {
-        @include overflow-touch;
+        @include mixins.overflow-touch;
 
         overflow-x: auto;
         padding: $content-pre-padding;
@@ -208,18 +211,18 @@ $content-table-foot-cell-color: $text-strong !default;
     }
 
     &.is-small {
-        font-size: $size-small;
+        font-size: variables.$size-small;
     }
 
     &.is-medium {
-        font-size: $size-medium;
+        font-size: variables.$size-medium;
     }
 
     &.is-large {
-        font-size: $size-large;
+        font-size: variables.$size-large;
     }
 
     &.is-huge {
-        font-size: $size-huge;
+        font-size: variables.$size-huge;
     }
 }

@@ -1,7 +1,7 @@
-import Response from '../../../models/response'
+import Response from '../../../models/response.js';
 
 const MCResponse = Response.extend({
-    defaults: {}
-})
+    defaults: {},
+});
 
-export default MCResponse
+export default MCResponse;

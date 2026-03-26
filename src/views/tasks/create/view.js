@@ -1,10 +1,10 @@
-import Radio from 'backbone.radio'
-import { View } from 'backbone.marionette'
-import Backbone from 'backbone'
-import showError from '../../../error'
-import TaskCollection from '../../../models/tasks'
-import taskTypes from '../../../models/task_types'
-import template from './create.hbs'
+import Radio from 'backbone.radio';
+import { View } from 'backbone.marionette';
+import Backbone from 'backbone';
+import showError from '../../../error.js';
+import TaskCollection from '../../../models/tasks.js';
+import taskTypes from '../../../models/task_types.js';
+import template from './create.hbs';
 
 export default View.extend({
     tagName: 'article',
@@ -15,21 +15,21 @@ export default View.extend({
 
     ui: {
         add: '.js-add-question',
-        main: 'main'
+        main: 'main',
     },
 
     events: {
-        'click @ui.add': 'onClickAddQuestion'
+        'click @ui.add': 'onClickAddQuestion',
     },
 
     regions: {
-        mainRegion: '@ui.main'
+        mainRegion: '@ui.main',
     },
 
     initialize({ store }) {
-        this.tasks = new TaskCollection(this.model.get('tasks'))
-        store.trigger('navigation', 'task-group', this.model)
-        Radio.channel('layout').request('change:pagetitle', 'Neue Frage anlegen')
+        this.tasks = new TaskCollection(this.model.get('tasks'));
+        store.trigger('navigation', 'task-group', this.model);
+        Radio.channel('layout').request('change:pagetitle', 'Neue Frage anlegen');
     },
 
     template,
@@ -37,31 +37,31 @@ export default View.extend({
     templateContext() {
         return {
             STUDIP: window.STUDIP,
-            taskTypes: taskTypes.map(t => {
-                return { ...t.toJSON(), selected: t.id === this.$selectedType }
+            taskTypes: taskTypes.map((t) => {
+                return { ...t.toJSON(), selected: t.id === this.$selectedType };
             }),
             breadcrumb: {
                 task_group_id: this.model.id,
-                task_group_title: this.model.get('title')
-            }
-        }
+                task_group_title: this.model.get('title'),
+            },
+        };
     },
 
     selectTypeCreator(id) {
         if (this.$selectedType !== id) {
-            this.$selectedType = id
-            this.render()
+            this.$selectedType = id;
+            this.render();
             taskTypes
                 .fetchTaskType(this.$selectedType)
-                .then(taskType => {
-                    const view = taskType.getCreateView(this.model)
-                    this.listenTo(view, 'newTask', this.onNewTask)
-                    this.listenTo(view, 'cancel', this.onCancel)
-                    this.showChildView('mainRegion', view)
+                .then((taskType) => {
+                    const view = taskType.getCreateView(this.model);
+                    this.listenTo(view, 'newTask', this.onNewTask);
+                    this.listenTo(view, 'cancel', this.onCancel);
+                    this.showChildView('mainRegion', view);
                 })
-                .catch(error => {
-                    showError('Could not fetch task type', error)
-                })
+                .catch((error) => {
+                    showError('Could not fetch task type', error);
+                });
         }
     },
 
@@ -70,24 +70,22 @@ export default View.extend({
             { ...task.attributes, task_group_id: this.model.id },
             {
                 success(task) {
-                    Backbone.history.navigate(`task/show/${task.id}`, { trigger: true })
-                    return null
-                }
-            }
-        )
+                    Backbone.history.navigate(`task/show/${task.id}`, { trigger: true });
+                    return null;
+                },
+            },
+        );
     },
 
     onCancel() {
-        Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true })
+        Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true });
     },
 
     onClickAddQuestion(event) {
-        event.preventDefault()
+        event.preventDefault();
 
-        const id = Backbone.$(event.target)
-            .closest('.js-add-question')
-            .data('typeid')
+        const id = Backbone.$(event.target).closest('.js-add-question').data('typeid');
 
-        this.selectTypeCreator(id)
-    }
-})
+        this.selectTypeCreator(id);
+    },
+});

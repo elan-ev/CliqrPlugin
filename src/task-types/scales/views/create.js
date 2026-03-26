@@ -1,23 +1,23 @@
-import FormView from './form'
+import FormView from './form.js';
 
 export default FormView.extend({
     className: 'cliqr--scales-create-view',
 
     onSubmitForm(event) {
-        event.preventDefault()
+        event.preventDefault();
 
         this.model.set('task', {
             ...this.model.get('task'),
-            statements: this.statements.toJSON()
-        })
+            statements: this.statements.toJSON(),
+        });
 
         if (this.model.isValid()) {
-            this.trigger('newTask', this.model)
+            this.trigger('newTask', this.model);
         }
     },
 
     onClickCancel(event) {
-        event.preventDefault()
-        this.trigger('cancel')
-    }
-})
+        event.preventDefault();
+        this.trigger('cancel');
+    },
+});

@@ -1,6 +1,6 @@
-import Radio from 'backbone.radio'
-import { View } from 'backbone.marionette'
-import template from './create.hbs'
+import Radio from 'backbone.radio';
+import { View } from 'backbone.marionette';
+import template from './create.hbs';
 
 export default View.extend({
     tagName: 'article',
@@ -9,37 +9,37 @@ export default View.extend({
 
     events: {
         'submit form': 'onClickCreate',
-        'click .js-cancel': 'onClickCancel'
+        'click .js-cancel': 'onClickCancel',
     },
 
     initialize({ store }) {
-        store.trigger('navigation', 'task-groups')
-        Radio.channel('layout').request('change:pagetitle', 'Fragensammlung anlegen')
+        store.trigger('navigation', 'task-groups');
+        Radio.channel('layout').request('change:pagetitle', 'Fragensammlung anlegen');
     },
 
     template,
 
     onClickCreate(event) {
-        event.preventDefault()
+        event.preventDefault();
 
-        const title = this.$('form')[0].title.value.trim()
+        const title = this.$('form')[0].title.value.trim();
 
         if (!title.length) {
-            return
+            return;
         }
 
         this.collection.create(
             { title },
             {
-                success: taskGroup => {
-                    this.trigger('cancel', event, this)
-                }
-            }
-        )
+                success: (taskGroup) => {
+                    this.trigger('cancel', event, this);
+                },
+            },
+        );
     },
 
     onClickCancel(event) {
-        event.preventDefault()
-        this.trigger('cancel', event, this)
-    }
-})
+        event.preventDefault();
+        this.trigger('cancel', event, this);
+    },
+});

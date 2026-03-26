@@ -30,14 +30,8 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "text"
-            ]
+            "required": ["text"]
         }
     },
-    "required": [
-        "statements",
-        "lrange_value",
-        "hrange_value"
-    ]
+    "required": ["statements", "lrange_value", "hrange_value"]
 }

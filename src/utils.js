@@ -1,3 +1,3 @@
-const userRole = expected => expected === window.cliqr.bootstrap.userRole
+const userRole = (expected) => expected === window.cliqr.bootstrap.userRole;
 
-export { userRole }
+export { userRole };

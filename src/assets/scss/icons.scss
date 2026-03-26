@@ -1,7 +1,10 @@
-img.cliqr--icon {
-    width: $button-icon-size;
-    height: $button-icon-size;
+@use 'variables';
+
+svg.cliqr--icon {
+    width: variables.$button-icon-size;
+    height: variables.$button-icon-size;
     vertical-align: middle;
+    fill: currentColor;
 }
 
 a > .cliqr--icon {
@@ -9,38 +12,33 @@ a > .cliqr--icon {
 }
 
 h1 > img.cliqr--icon {
-    width: $button-icon-size-header;
-    height: $button-icon-size-header;
+    width: variables.$button-icon-size-header;
+    height: variables.$button-icon-size-header;
     vertical-align: bottom;
 }
 
-i.cliqr--icon {
-    font-size: $button-icon-size;
-    vertical-align: middle;
+a svg.cliqr--icon,
+a:hover svg.cliqr--icon {
+    color: variables.$studip-base-color;
 }
 
-a i.cliqr--icon::before,
-a:hover i.cliqr--icon::before {
-    color: $studip-base-color;
+.cliqr--icon-color-blue {
+    color: variables.$studip-base-color;
 }
 
-.cliqr--icon-color-blue::before {
-    color: $studip-base-color;
+.cliqr--icon-color-red {
+    color: variables.$studip-red !important;
 }
 
-.cliqr--icon-color-red::before {
-    color: $studip-red !important;
+.cliqr--icon-color-black {
+    color: variables.$studip-black !important;
 }
 
-.cliqr--icon-color-black::before {
-    color: $studip-black !important;
+.cliqr--icon-color-white {
+    color: variables.$studip-white !important;
 }
 
-.cliqr--icon-color-white::before {
-    color: $studip-white !important;
-}
-
-.cliqr--icon-color-gray::before,
-.cliqr--icon-color-grey::before {
-    color: $studip-base-gray !important;
+.cliqr--icon-color-gray,
+.cliqr--icon-color-grey {
+    color: variables.$studip-base-gray !important;
 }

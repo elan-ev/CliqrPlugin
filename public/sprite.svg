@@ -1,0 +1,142 @@
+<svg width="0" height="0" class="hidden">
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="accept">
+    <path d="M16 4.592l-2.807-2.809-6.819 6.82-3.571-3.568L0 7.841l6.377 6.376z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="add">
+    <path d="M9.819 14.978l-.004-5.16h5.163l.002-3.635-5.163-.001V1.02l-3.633.002.001 5.16H1.02l.001 3.638h5.164l-.001 5.159z"></path>
+  </symbol>
+  <symbol xmlnsDc="http://purl.org/dc/elements/1.1/" xmlnsCc="http://creativecommons.org/ns#" xmlnsRdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlnsSvg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" id="add-assessment" version="1.1" viewBox="0 0 16 16">
+    <metadata id="metadata3352">
+      <rdf:RDF>
+        <cc:Work rdfAbout="">
+          <dc:format>image/svg+xml</dc:format>
+          <dc:type rdfResource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+          <dc:title></dc:title>
+        </cc:Work>
+      </rdf:RDF>
+    </metadata>
+    <defs id="defs3350"></defs>
+    <path id="path3343" d="M 1.0175781 2.2617188 L 1.0175781 5.8652344 L 4.6210938 5.8652344 L 4.6210938 2.2617188 L 1.0175781 2.2617188 z M 1.5507812 2.7949219 L 4.0859375 2.7949219 L 4.0859375 5.3300781 L 1.5507812 5.3300781 L 1.5507812 2.7949219 z M 6.0410156 3.0507812 L 6.0410156 5.1875 L 11.21875 5.1875 L 11.21875 4.7792969 L 9 4.7792969 L 9 3.0507812 L 6.0410156 3.0507812 z M 1.0175781 6.1992188 L 1.0175781 9.8027344 L 4.6210938 9.8027344 L 4.6210938 7.5136719 L 5.2480469 6.8867188 L 4.6210938 6.2578125 L 4.6210938 6.1992188 L 1.0175781 6.1992188 z M 1.5507812 6.7304688 L 4.0859375 6.7304688 L 4.0859375 6.7929688 L 3.0976562 7.7792969 L 2.3007812 6.984375 L 1.6757812 7.609375 L 3.0996094 9.0332031 L 4.0859375 8.046875 L 4.0859375 9.2675781 L 1.5507812 9.2675781 L 1.5507812 6.7304688 z M 6.0410156 6.9433594 L 6.0410156 9.078125 L 14.982422 9.078125 L 14.982422 6.9433594 L 6.0410156 6.9433594 z M 1.0175781 10.134766 L 1.0175781 13.738281 L 4.6210938 13.738281 L 4.6210938 10.134766 L 1.0175781 10.134766 z M 1.5507812 10.669922 L 4.0859375 10.669922 L 4.0859375 13.203125 L 1.5507812 13.203125 L 1.5507812 10.669922 z M 6.0410156 10.855469 L 6.0410156 12.990234 L 14.982422 12.990234 L 14.982422 10.855469 L 6.0410156 10.855469 z "></path>
+    <path id="path11" d="m 16,2.217 -2.218,0 0,-2.217 -1.564,0 0,2.217 -2.218,0 0,1.563 2.218,0 0,2.221 1.564,0 0,-2.221 2.218,0 z"></path>
+  </symbol>
+  <symbol xmlnsDc="http://purl.org/dc/elements/1.1/" xmlnsCc="http://creativecommons.org/ns#" xmlnsRdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlnsSvg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" id="add-files" shape-rendering="geometricPrecision" viewBox="0 0 16 16">
+    <metadata id="metadata3500">
+      <rdf:RDF>
+        <cc:Work rdfAbout="">
+          <dc:format>image/svg+xml</dc:format>
+          <dc:type rdfResource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+          <dc:title></dc:title>
+        </cc:Work>
+      </rdf:RDF>
+    </metadata>
+    <defs id="defs3498"></defs>
+    <path id="rect3486" d="m 3.03125,0 0,1.0449219 8.185547,0 0,-1.0449219 z m -1.4648438,2.0878906 0,13.8828124 5.9707032,0 0,-4.441406 4.7734376,0 0,-4.5273439 c -0.41797,-0.0018 -0.835956,0.00101 -1.253906,0.00195 l 0,3.0468748 -4.791016,0 0,4.601563 -3.3261719,0 0,-11.3261721 6.0605469,0 0,-1.2382813 z m 11.7949218,4.9140625 0,3.2675779 1.072266,0 0,-3.2675779 z m -4.3808592,5.9667969 0,2.324219 2.5253902,-2.324219 z"></path>
+    <path id="roteskreuz" d="m 16,2.217 -2.218,0 0,-2.217 -1.564,0 0,2.217 -2.218,0 0,1.563 2.218,0 0,2.221 1.564,0 0,-2.221 2.218,0 z"></path>
+  </symbol>
+  <symbol xmlnsDc="http://purl.org/dc/elements/1.1/" xmlnsCc="http://creativecommons.org/ns#" xmlnsRdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlnsSvg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" id="aember" viewBox="0 0 30.599999 31">
+    <defs id="defs4"></defs>
+    <metadata id="metadata7">
+      <rdf:RDF>
+        <cc:Work rdfAbout="">
+          <dc:format>image/svg+xml</dc:format>
+          <dc:type rdfResource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+          <dc:title></dc:title>
+        </cc:Work>
+      </rdf:RDF>
+    </metadata>
+    <g transform="translate(-4.72,-25.953836)" id="layer1">
+      <g id="flowRoot4136">
+        <path id="path4145" d="m 34.16,49.313836 -11.8,7.64 0.92,-5.96 8.68,-5.96 2.2,4.28 z m -13.72,7.08 -9.88,-3.4 -1.64,-3.44 8.32,-1.4 4,3.52 -0.8,4.72 z m -2.16,-9.96 -4.88,-8.12 5.16,-7.56 2.36,-0.52 7.84,6.6 2.4,6.44 -9.32,6.36 -3.56,-3.2 z m -2.36,-0.08 -7.96,1.28 -1,-2 -1.76,-7.16 6.84,1.32 3.88,6.56 z m 10.92,-19.36 7.48,6.68 1,8.16 -0.76,3.96 -1.16,-2.16 -2.96,-7.8 -0.12,-0.28 -0.28,-0.16 -7.68,-6.48 1.96,-2.36 2.52,0.44 z m -12.04,-0.72 3.4,-0.32 3.76,0.44 -1.8,2.04 -2.76,0.6 -2.6,-2.76 z m -10.08,10.04 0.84,-2.76 5.68,-6.88 1.08,-0.12 3.92,4.12 -4.8,7 -6.72,-1.36 z"></path>
+      </g>
+    </g>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="archive3">
+    <circle cx="11.278" cy="12.205" r=".769"></circle>
+    <circle cx="11.278" cy="7.939" r=".769"></circle>
+    <path d="M2.042.948V14.93h11.939V.948H2.042zm10.812 12.854H3.171v-3.138h9.682v3.138zm0-4.323H3.171V6.397h9.682v3.082zM3.171 5.213V2.077h9.682v3.136H3.171z"></path>
+    <circle cx="11.278" cy="3.673" r=".769"></circle>
+  </symbol>
+  <symbol xmlnsDc="http://purl.org/dc/elements/1.1/" xmlnsCc="http://creativecommons.org/ns#" xmlnsRdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlnsSvg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" id="assessment" shape-rendering="geometricPrecision" viewBox="0 0 16 16">
+    <metadata id="metadata12">
+      <rdf:RDF>
+        <cc:Work rdfAbout="">
+          <dc:format>image/svg+xml</dc:format>
+          <dc:type rdfResource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+          <dc:title></dc:title>
+        </cc:Work>
+      </rdf:RDF>
+    </metadata>
+    <defs id="defs10"></defs>
+    <path id="path4" d="M 1.0175781 2.2617188 L 1.0175781 5.8652344 L 4.6210938 5.8652344 L 4.6210938 2.2617188 L 1.0175781 2.2617188 z M 1.5507812 2.7949219 L 4.0859375 2.7949219 L 4.0859375 5.3300781 L 1.5507812 5.3300781 L 1.5507812 2.7949219 z M 6.0410156 3.0507812 L 6.0410156 5.1875 L 14.982422 5.1875 L 14.982422 3.0507812 L 6.0410156 3.0507812 z M 1.0175781 6.1992188 L 1.0175781 9.8027344 L 4.6210938 9.8027344 L 4.6210938 7.5136719 L 5.2480469 6.8867188 L 4.6210938 6.2578125 L 4.6210938 6.1992188 L 1.0175781 6.1992188 z M 1.5507812 6.7304688 L 4.0859375 6.7304688 L 4.0859375 6.7929688 L 3.0976562 7.7792969 L 2.3007812 6.984375 L 1.6757812 7.609375 L 3.0996094 9.0332031 L 4.0859375 8.046875 L 4.0859375 9.2675781 L 1.5507812 9.2675781 L 1.5507812 6.7304688 z M 6.0410156 6.9433594 L 6.0410156 9.078125 L 14.982422 9.078125 L 14.982422 6.9433594 L 6.0410156 6.9433594 z M 1.0175781 10.134766 L 1.0175781 13.738281 L 4.6210938 13.738281 L 4.6210938 10.134766 L 1.0175781 10.134766 z M 1.5507812 10.669922 L 4.0859375 10.669922 L 4.0859375 13.203125 L 1.5507812 13.203125 L 1.5507812 10.669922 z M 6.0410156 10.855469 L 6.0410156 12.990234 L 14.982422 12.990234 L 14.982422 10.855469 L 6.0410156 10.855469 z "></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="code">
+    <path d="M9.284 2.017c-.438 0-.546.125-.735.747L5.67 12.038c-.168.554-.277.904-.277 1.108 0 .544.408.781.725.781.437 0 .546-.125.734-.747L9.73 3.907c.169-.555.277-.906.277-1.108.001-.545-.405-.782-.723-.782zM4.523 3.425a.66.66 0 0 0-.362-.826c-.333-.139-.446-.079-.742.335L.584 6.853a7.29 7.29 0 0 0-.397.599.674.674 0 0 0-.063.119c-.005.011-.019.03-.022.039-.005.018-.001.032-.006.049a.595.595 0 0 0-.019.166c0 .061.005.115.02.168.004.017 0 .03.005.047.003.01.017.027.021.038a.617.617 0 0 0 .065.122c.082.147.203.327.396.598l2.834 3.919c.296.413.41.475.742.337a.663.663 0 0 0 .362-.828c-.05-.152-.219-.387-.482-.756L1.405 7.825l2.636-3.643c.263-.369.432-.603.482-.757zm11.465 4.4a.656.656 0 0 0-.02-.168c-.004-.017 0-.03-.005-.047-.003-.01-.017-.027-.021-.038a.72.72 0 0 0-.064-.12 6.876 6.876 0 0 0-.397-.599l-2.835-3.919c-.296-.414-.411-.475-.742-.336a.66.66 0 0 0-.362.826c.05.154.219.389.481.758l2.637 3.643-2.637 3.645c-.263.368-.432.604-.481.756a.661.661 0 0 0 .362.828c.333.138.446.076.742-.337l2.835-3.919c.192-.27.313-.449.395-.597a.588.588 0 0 0 .066-.124c.004-.011.017-.027.02-.037.005-.017.001-.029.005-.045a.587.587 0 0 0 .021-.17z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="code-qr">
+    <path d="M7.045 11.946h.995v.995h-.995zm1.991 1.99h1.99v-.995h-.995v-.995h-.995zm.995-5.972v.997H8.04v-.997h1.991V6.97h-.995v-.995H7.045v.995H6.05v1.991h.995v.995h.995v.995h1.991v-.995h.995v.995h1.99v-.995h-.995V6.97h-.995v.994zm0 2.987h.995v.995h-.995zM1.075 6.97h.995v.994h-.995z"></path>
+    <path d="M3.065 5.975H6.05v-1.99h.995V2.99H6.05V1H1.075v4.974h.995v.996h.995v-.995zm-.995-3.98h2.985V4.98H2.07V1.995zm9.951 12.936h.995v-.995h.995v-.995h-.995v-.995h-.995zm.995-3.98h.995v.995h-.995zm.995-2.987h.995v.997h-.995zM3.065 11.946h.995v.995h-.995z"></path>
+    <path d="M6.05 10.951v-.995H4.06v-.995h.995V6.97H4.06v.994h-.995v1.992h-1.99v4.974H6.05v-.994h.995v-.995H6.05v-1.99zm-3.98 2.985v-2.985h2.985v2.985H2.07zM3.065 2.99h.995v.995h-.995zm8.956 0h.995v.995h-.995z"></path>
+    <path d="M14.011 1h-3.98v.995H8.04V4.98h.996V2.99h.995v3.98h.995v-.995h3.98V1h-.995zm0 3.98h-2.985V1.995h2.985V4.98z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="decline">
+    <path d="M14.778 11.974l-3.976-3.973 3.976-3.977-2.799-2.802-3.978 3.976-3.977-3.976-2.798 2.8 3.976 3.975-3.98 3.979 2.804 2.802L8.005 10.8l3.974 3.976z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="edit">
+    <path d="M5.971 12.849l1.54-.579-1.133-1.008-.407 1.587zm4.751-7.577V2.403H-.001V15.94h10.723V9.75l3.569-4.011-2.221-1.982-1.348 1.515zM9.618 6.514L6.74 9.748l2.221 1.983.657-.739v3.843H1.1V3.505h8.518v3.009zm5.884-4.373a1.488 1.488 0 0 0-2.096.113l-.792.889 2.222 1.985.796-.893-.002-.001a1.49 1.49 0 0 0-.128-2.093zM6.456 7.633H2.533v1.103h3.923V7.633zM4.863 5.291h-2.33v1.102h2.33V5.291z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="exclaim-circle">
+    <path d="M7.999.973a6.997 6.997 0 1 0 .002 13.994A6.997 6.997 0 0 0 8 .973zm0 12.579a5.589 5.589 0 0 1-5.581-5.579 5.59 5.59 0 0 1 5.581-5.585 5.591 5.591 0 0 1 5.582 5.585 5.59 5.59 0 0 1-5.582 5.579zm.006-3.426c-.683 0-1.16.49-1.16 1.175 0 .671.464 1.172 1.147 1.172h.013c.698 0 1.148-.501 1.148-1.172-.01-.685-.462-1.175-1.148-1.175zm.736-.646l.286-5.845H6.974L7.27 9.48h1.471z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="folder-full">
+    <path d="M13.125 5.495v8h-12v-8h12m1-1h-14v10h14v-10z"></path>
+    <path d="M7.175 2.995l-.299-1.49h-4l-.3 1.49H1.375v1h13.5v9.5l1-1v-9.5z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="folder-parent">
+    <path d="M4.628 7.063L3.381 8.311l3.648 3.651 3.652-3.651-1.246-1.248-2.404 2.402z"></path>
+    <path d="M13.125 5.495v8h-12v-8h12m1-1h-14v10h14v-10z"></path>
+    <path d="M7.175 2.995l-.299-1.49h-4l-.3 1.49H1.375v1h13.5v9.5l1-1v-9.5z"></path>
+  </symbol>
+  <symbol xmlnsDc="http://purl.org/dc/elements/1.1/" xmlnsCc="http://creativecommons.org/ns#" xmlnsRdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlnsSvg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" id="grip" shape-rendering="geometricPrecision" viewBox="0 0 16 16">
+    <metadata id="metadata20">
+      <rdf:RDF>
+        <cc:Work rdfAbout="">
+          <dc:format>image/svg+xml</dc:format>
+          <dc:type rdfResource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+          <dc:title></dc:title>
+        </cc:Work>
+      </rdf:RDF>
+    </metadata>
+    <defs id="defs18"></defs>
+    <path id="path4" d="M 3.75,1 C 3.33687,1 3,1.33656 3,1.75 l 0,2.5 C 3,4.66344 3.33687,5 3.75,5 l 2.5,0 C 6.66312,5 7,4.66344 7,4.25 L 7,1.75 C 7,1.33656 6.66312,1 6.25,1 Z"></path>
+    <path id="path6" d="M 3.75,6 C 3.33687,6 3,6.33656 3,6.75 l 0,2.5 C 3,9.66344 3.33687,10 3.75,10 l 2.5,0 C 6.66312,10 7,9.66344 7,9.25 L 7,6.75 C 7,6.33656 6.66312,6 6.25,6 Z"></path>
+    <path id="path8" d="M 3.75,11 C 3.33687,11 3,11.33656 3,11.75 l 0,2.5 C 3,14.66344 3.33687,15 3.75,15 l 2.5,0 C 6.66312,15 7,14.66344 7,14.25 l 0,-2.5 C 7,11.33656 6.66312,11 6.25,11 Z"></path>
+    <path id="path10" d="M 9.75,1 C 9.33687,1 9,1.33656 9,1.75 l 0,2.5 C 9,4.66344 9.33687,5 9.75,5 l 2.5,0 C 12.66312,5 13,4.66344 13,4.25 l 0,-2.5 C 13,1.33656 12.66312,1 12.25,1 Z"></path>
+    <path id="path12" d="M 9.75,6 C 9.33687,6 9,6.33656 9,6.75 l 0,2.5 C 9,9.66344 9.33687,10 9.75,10 l 2.5,0 C 12.66312,10 13,9.66344 13,9.25 l 0,-2.5 C 13,6.33656 12.66312,6 12.25,6 Z"></path>
+    <path id="path14" d="M 9.75,11 C 9.33687,11 9,11.33656 9,11.75 l 0,2.5 C 9,14.66344 9.33687,15 9.75,15 l 2.5,0 C 12.66312,15 13,14.66344 13,14.25 l 0,-2.5 C 13,11.33656 12.66312,11 12.25,11 Z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="pause">
+    <path d="M2.699 1.02h4.105v13.959H2.699zm6.497 0h4.105v13.959H9.196z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="play">
+    <path d="M5.033 14.814l6.816-6.817-6.814-6.811z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="refresh">
+    <path d="M8.41 6.155l6.188.002-.002-6.185h-2.114l-.002 2.695C9.548.404 5.354.555 2.69 3.217c-2.895 2.895-2.832 7.604.086 10.53 2.929 2.918 7.635 2.981 10.533.09a7.314 7.314 0 0 0 2.138-5.191l-2.094.002a5.215 5.215 0 0 1-1.525 3.709c-2.058 2.05-5.443 2.036-7.572-.089-2.125-2.128-2.137-5.515-.087-7.572 1.775-1.772 4.54-1.994 6.635-.654l-2.394.001v2.112z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="stop">
+    <path d="M1.981 1.015h12.07v13.93H1.981z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="test">
+    <path d="M9.833 3.709H7.666L8.75 4.791zM8.75 6.277L7.557 5.086v1.851l1.194 1.194 1.911-1.913V4.365zm1.912 1.427L9.494 8.873l-.743.742-.743-.742-.451-.45v4.298h3.105zm1.199-1.198v6.215h3.105V6.435h-3.034zM3.253 8.549h3.106v4.172H3.253z"></path>
+    <path d="M2.06 5.708H.958v9.298l.802-.002v.002h13.206v-1.103H2.059zm6.69.569L6.09 3.619l-.925.926 3.586 3.586 5.334-5.337-.925-.926z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="trash">
+    <path d="M9.759 2.438V1.03H6.24v1.408H2.717v1.917h10.565V2.438H9.759zM3.661 14.97h8.645V5.388H3.661v9.582zm6.163-8.075h1.016v6.567H9.824V6.895zm-2.35 0h1.017v6.567H7.474V6.895zm-2.349 0h1.016v6.567H5.125V6.895z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="upload2">
+    <path d="M13.237 5.237l-1.791 1.791-3.447-3.445-3.448 3.445-1.789-1.791L8.002 0zM1.041 8.334v6.636h13.958V8.334H1.041zm11.157 3.914a1.08 1.08 0 1 1 0-2.162 1.08 1.08 0 1 1 0 2.162z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" viewBox="0 0 16 16" id="vote">
+    <path d="M10.692 3.736H7.596v8.984h3.096V3.736zM6.403 8.562H3.305v4.158h3.098V8.562zm5.484-2.109v6.268h3.096V6.453h-3.096zM2.115 5.73H1.017V15l.799-.002V15h13.167v-1.1H2.114l.001-8.17z"></path>
+  </symbol>
+</svg>

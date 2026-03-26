@@ -1,75 +1,80 @@
-import './public-path.js'
-import Backbone from 'backbone'
-import { Application, MnObject } from 'backbone.marionette'
-import PollsCollection from './models/polls'
-import setupHandlebars from './setupHandlebars.js'
-import PollsIndexView from './views/polls/view'
+import './public-path.js';
+import Backbone from 'backbone';
+import { Application, MnObject } from 'backbone.marionette';
+import PollsCollection from './models/polls.js';
+import setupHandlebars from './setupHandlebars.js';
+import PollsIndexView from './views/polls/view.js';
 
 const LayoutNotificationHandler = MnObject.extend({
     channelName: 'layout',
 
     radioRequests: {
-        'apply:mathjax': 'onApplyMathjax'
+        'apply:mathjax': 'onApplyMathjax',
     },
 
     onApplyMathjax($selector) {
-        let mathjaxP
+        let mathjaxP;
 
         if (window.MathJax && window.MathJax.Hub) {
-            mathjaxP = Promise.resolve(window.MathJax)
+            mathjaxP = Promise.resolve(window.MathJax);
         } else if (window.STUDIP && window.STUDIP.loadChunk) {
-            mathjaxP = window.STUDIP.loadChunk('mathjax')
+            mathjaxP = window.STUDIP.loadChunk('mathjax');
         }
 
         mathjaxP
             .then(({ Hub }) => {
-                $selector.each((index, element) => Hub.Queue(['Typeset', Hub, element]))
+                $selector.each((index, element) => Hub.Queue(['Typeset', Hub, element]));
             })
             .catch(() => {
-                console.log('Warning: Could not load MathJax.')
-            })
-    }
-})
+                console.log('Warning: Could not load MathJax.');
+            });
+    },
+});
 
 const PollsCliqrApplication = Application.extend({
     region: '#cliqr-poll-container',
 
     initialize() {
-        setupHandlebars()
+        setupHandlebars();
         // @ts-ignore
-        Backbone.$ = window.jQuery
+        Backbone.$ = window.jQuery;
         // @ts-ignore
-        Backbone._ = window._
+        Backbone._ = window._;
 
         // @ts-ignore
-        Backbone.ajax = function() {
-            const xhr = Backbone.$.ajax.apply(Backbone.$, arguments)
-            return Promise.resolve(xhr)
-        }
+        Backbone.ajax = function () {
+            const xhr = Backbone.$.ajax.apply(Backbone.$, arguments);
+            return Promise.resolve(xhr);
+        };
 
-        this.layoutNotificationHandler = new LayoutNotificationHandler()
+        this.layoutNotificationHandler = new LayoutNotificationHandler();
     },
 
     onBeforeStart(app, options) {
         if (window.cliqr.bootstrap.polls) {
-            this.collection = new PollsCollection(window.cliqr.bootstrap.polls || [])
-            delete window.cliqr.bootstrap.polls
+            this.collection = new PollsCollection(window.cliqr.bootstrap.polls || []);
+            delete window.cliqr.bootstrap.polls;
         }
 
-        this.collection = new PollsCollection()
+        this.collection = new PollsCollection();
     },
 
     onStart(app, options) {
-        this.collection.fetch().then(() => {
-            const page = new PollsIndexView({ collection: this.collection })
-            this.showView(page)
-        })
-        Backbone.history.start()
-    }
-})
+        this.collection
+            .fetch()
+            .then(() => {
+                const page = new PollsIndexView({ collection: this.collection });
+                this.showView(page);
+            })
+            .catch((error) => {
+                console.error('Failed to fetch polls', error);
+            });
+        Backbone.history.start();
+    },
+});
 
-const pollsApp = new PollsCliqrApplication()
+const pollsApp = new PollsCliqrApplication();
 
 pollsApp.start({
-    data: {}
-})
+    data: {},
+});

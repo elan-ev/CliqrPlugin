@@ -10,6 +10,12 @@ Abstimmung:  {{title}}
  {{/inline}}
 {{/scales_header}}
 
+
+<label class="checkbox">
+    <input class="sorted" type="checkbox" {{#if sorted}}checked{{/if}} />
+    Nach Durchschnitt sortieren
+</label>
+
 <main{{#if isRunning}} class="cliqr--voting-is-running"{{/if}}>
     <ol class="cliqr--scales-statements"></ol>
 </main>

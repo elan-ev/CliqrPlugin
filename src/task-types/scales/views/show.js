@@ -1,9 +1,9 @@
-import Backbone from 'backbone'
-import Radio from 'backbone.radio'
-import { View } from 'backbone.marionette'
-import TaskEditComponent from '../../../components/component-task-edit'
-import template from '../hbs/show.hbs'
-import StatementsView from './show-statements'
+import Backbone from 'backbone';
+import Radio from 'backbone.radio';
+import { View } from 'backbone.marionette';
+import TaskEditComponent from '../../../components/component-task-edit.js';
+import template from '../hbs/show.hbs';
+import StatementsView from './show-statements.js';
 
 export default View.extend({
     tagName: 'section',
@@ -11,11 +11,11 @@ export default View.extend({
 
     regions: {
         editButton: 'span.cliqr--component-task-edit',
-        statements: 'main'
+        statements: 'main',
     },
 
     initialize() {
-        this.statements = new Backbone.Collection(this.model.get('task').statements)
+        this.statements = new Backbone.Collection(this.model.get('task').statements);
     },
 
     template,
@@ -24,16 +24,19 @@ export default View.extend({
         this.showChildView(
             'editButton',
             new TaskEditComponent({
-                model: this.model
-            })
-        )
+                model: this.model,
+            }),
+        );
         const statements = new StatementsView({
-            collection: this.statements
-        })
-        this.showChildView('statements', statements)
+            collection: this.statements,
+        });
+        this.showChildView('statements', statements);
     },
 
     onAttach() {
-        Radio.channel('layout').request('apply:mathjax', this.$('.cliqr--scales-description').eq(0))
-    }
-})
+        Radio.channel('layout').request(
+            'apply:mathjax',
+            this.$('.cliqr--scales-description').eq(0),
+        );
+    },
+});

@@ -1,17 +1,20 @@
+@use 'mixins';
+@use 'variables';
+
 @charset "utf-8";
 
-$breadcrumb-item-color: $studip-base-color !default;
-$breadcrumb-item-hover-color: $studip-yellow !default;
-$breadcrumb-disabled-item-color: $studip-base-gray !default;
+$breadcrumb-item-color: variables.$studip-base-color !default;
+$breadcrumb-item-hover-color: variables.$studip-yellow !default;
+$breadcrumb-disabled-item-color: variables.$studip-base-gray !default;
 
 $breadcrumb-item-padding-vertical: 0 !default;
 $breadcrumb-item-padding-horizontal: 0.5em !default;
 
-$breadcrumb-item-separator-color: $studip-base-gray !default;
+$breadcrumb-item-separator-color: variables.$studip-base-gray !default;
 
 nav.cliqr--breadcrumb {
-    @include block;
-    @include unselectable;
+    @include mixins.block;
+    @include mixins.unselectable;
 
     padding: 0 0 2em 0;
 

@@ -1,11 +1,11 @@
-import './public-path.js'
-import Backbone from 'backbone'
-import { Application, MnObject, View } from 'backbone.marionette'
-import './assets/scss/core.scss'
-import StudipRouter from './routers/studip'
-import setupHandlebars from './setupHandlebars.js'
-import store from './store/index'
-import SidebarView from './views/sidebar/view'
+import './public-path.js';
+import Backbone from 'backbone';
+import { Application, MnObject, View } from 'backbone.marionette';
+import './assets/scss/core.scss';
+import StudipRouter from './routers/studip.js';
+import setupHandlebars from './setupHandlebars.js';
+import store from './store/index.js';
+import SidebarView from './views/sidebar/view.js';
 
 const LayoutNotificationHandler = MnObject.extend({
     channelName: 'layout',
@@ -15,60 +15,63 @@ const LayoutNotificationHandler = MnObject.extend({
         'scroll:top': 'onScrollTop',
         'show:loading': 'onShowLoading',
         'hide:loading': 'onHideLoading',
-        'apply:mathjax': 'onApplyMathjax'
+        'apply:mathjax': 'onApplyMathjax',
     },
 
     initialize({ layout }) {
-        this.layout = layout
-        this.timeout = null
+        this.layout = layout;
+        this.timeout = null;
     },
 
     onChangePagetitle(newTitle) {
-        const title = document.head.querySelector('title')
-        const original = title && title.dataset.original
+        const title = document.head.querySelector('title');
+        const original = title && title.dataset.original;
         if (original) {
-            const prefix = original.substring(0, original.length - 5)
-            this.layout.triggerMethod('change:pagetitle', prefix + newTitle)
+            const prefix = original.substring(0, original.length - 5);
+            this.layout.triggerMethod('change:pagetitle', prefix + newTitle);
         }
     },
 
     onScrollTop() {
-        const { left, top } = this.layout.$el.offset()
-        Backbone.$('html, body').animate({ scrollLeft: left - 20, scrollTop: top - 20 })
+        const { left, top } = this.layout.$el.offset();
+        Backbone.$('html, body').animate({ scrollLeft: left - 20, scrollTop: top - 20 });
     },
 
     onShowLoading() {
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+        }
         this.timeout = setTimeout(() => {
-            Backbone.$(window.document.body).addClass('cliqr--loading')
-        }, 300)
+            Backbone.$(window.document.body).addClass('cliqr--loading');
+        }, 300);
     },
 
     onHideLoading() {
         if (this.timeout) {
-            clearTimeout(this.timeout)
-            this.timeout = null
+            clearTimeout(this.timeout);
+            this.timeout = null;
         }
-        Backbone.$(window.document.body).removeClass('cliqr--loading')
+        Backbone.$(window.document.body).removeClass('cliqr--loading');
     },
 
     onApplyMathjax($selector) {
-        let mathjaxP
+        let mathjaxP;
 
         if (window.MathJax && window.MathJax.Hub) {
-            mathjaxP = Promise.resolve(window.MathJax)
+            mathjaxP = Promise.resolve(window.MathJax);
         } else if (window.STUDIP && window.STUDIP.loadChunk) {
-            mathjaxP = window.STUDIP.loadChunk('mathjax')
+            mathjaxP = window.STUDIP.loadChunk('mathjax');
         }
 
         mathjaxP
             .then(({ Hub }) => {
-                $selector.each((index, element) => Hub.Queue(['Typeset', Hub, element]))
+                $selector.each((index, element) => Hub.Queue(['Typeset', Hub, element]));
             })
             .catch(() => {
-                console.log('Warning: Could not load MathJax.')
-            })
-    }
-})
+                console.log('Warning: Could not load MathJax.');
+            });
+    },
+});
 
 const MyBaseLayout = View.extend({
     template: false,
@@ -78,51 +81,52 @@ const MyBaseLayout = View.extend({
         pageTitle: '#page-title',
         sidebar: {
             el: '#sidebar',
-            replaceElement: false
-        }
+            replaceElement: false,
+        },
     },
 
     initialize() {
-        this.showChildView('sidebar', new SidebarView({ el: '#sidebar', store }))
-        this.router = new StudipRouter({ selector: this.getRegion('content').$el, store })
+        this.showChildView('sidebar', new SidebarView({ el: '#sidebar', store }));
+        this.router = new StudipRouter({ selector: this.getRegion('content').$el, store });
 
-        this.layoutNotificationHandler = new LayoutNotificationHandler({ layout: this })
+        this.layoutNotificationHandler = new LayoutNotificationHandler({ layout: this });
     },
 
     onChangePagetitle(title) {
-        document.title = title
-        this.getRegion('pageTitle').$el.text(title)
-    }
-})
+        document.title = title;
+        this.getRegion('pageTitle').$el.text(title);
+    },
+});
 
 const StudipCliqrApplication = Application.extend({
     region: '#cliqr',
 
     initialize() {
-        setupHandlebars()
+        setupHandlebars();
 
         // @ts-ignore
-        Backbone.$ = window.jQuery
+        Backbone.$ = window.jQuery;
         // @ts-ignore
-        Backbone._ = window._
+        Backbone._ = window._;
 
         // @ts-ignore
-        Backbone.ajax = function() {
-            const xhr = Backbone.$.ajax.apply(Backbone.$, arguments)
-            return Promise.resolve(xhr)
-        }
+        Backbone.ajax = function () {
+            const xhr = Backbone.$.ajax.apply(Backbone.$, arguments);
+            return Promise.resolve(xhr);
+        };
 
-        Backbone.$(document).on('click', '.cliqr--click-once', e => {
-            Backbone.$(e.target)
-                .closest('button')
-                .prop('disabled', true)
-                .addClass('loading')
-        })
+        Backbone.$(document).on('click', '.cliqr--click-once', (e) => {
+            Backbone.$(e.target).closest('button').prop('disabled', true).addClass('loading');
+        });
 
-        Backbone.$(document).on('mouseleave', '.cliqr--moment, .cliqr--button-fab, span.bubble', function(event) {
-            const { tooltipObject } = Backbone.$(this).data()
-            tooltipObject && tooltipObject.hide()
-        })
+        Backbone.$(document).on(
+            'mouseleave',
+            '.cliqr--moment, .cliqr--button-fab, span.bubble',
+            function (event) {
+                const { tooltipObject } = Backbone.$(this).data();
+                tooltipObject && tooltipObject.hide();
+            },
+        );
     },
 
     onBeforeStart(app, options) {
@@ -132,13 +136,13 @@ const StudipCliqrApplication = Application.extend({
 
     onStart(app, options) {
         // console.log('onStart', app, options)
-        this.showView(new MyBaseLayout({ el: '#layout_container' }))
-        Backbone.history.start()
-    }
-})
+        this.showView(new MyBaseLayout({ el: '#layout_container' }));
+        Backbone.history.start();
+    },
+});
 
-const myApp = new StudipCliqrApplication()
+const myApp = new StudipCliqrApplication();
 
 myApp.start({
-    data: {}
-})
+    data: {},
+});

@@ -1,6 +1,6 @@
-import { CollectionView, View } from 'backbone.marionette'
-import template from '../hbs/form-statements.hbs'
-import StatementView from './form-statement'
+import { CollectionView, View } from 'backbone.marionette';
+import template from '../hbs/form-statements.hbs';
+import StatementView from './form-statement.js';
 
 export default CollectionView.extend({
     tagName: 'label',
@@ -11,14 +11,14 @@ export default CollectionView.extend({
     childViewContainer: '.statements',
 
     childViewTriggers: {
-        'remove:statement': 'remove:statement'
+        'remove:statement': 'remove:statement',
     },
 
     ui: {
-        addStatement: '.js-add'
+        addStatement: '.js-add',
     },
 
     triggers: {
-        'click @ui.addStatement': 'add:statement'
-    }
-})
+        'click @ui.addStatement': 'add:statement',
+    },
+});

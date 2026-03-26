@@ -1,17 +1,17 @@
-import { View } from 'backbone.marionette'
-import template from '../hbs/component-switchable.hbs'
-import nonEditTemplate from '../hbs/component-switchable-noneditable.hbs'
-import WysiwygComponent from '../../../components/component-wysiwyg'
+import { View } from 'backbone.marionette';
+import template from '../hbs/component-switchable.hbs';
+import nonEditTemplate from '../hbs/component-switchable-noneditable.hbs';
+import WysiwygComponent from '../../../components/component-wysiwyg.js';
 
 const NonEditableView = View.extend({
     template: nonEditTemplate,
     templateContext() {
-        return { valueView: this.valueView }
+        return { valueView: this.valueView };
     },
     initialize({ valueView }) {
-        this.valueView = valueView
-    }
-})
+        this.valueView = valueView;
+    },
+});
 
 export default View.extend({
     tagName: 'span',
@@ -20,22 +20,22 @@ export default View.extend({
     template,
 
     regions: {
-        wysiwyg: '.cliqr--component-switchable-wysiwyg'
+        wysiwyg: '.cliqr--component-switchable-wysiwyg',
     },
 
     events: {
-        'click .js-edit': 'onClickEdit'
+        'click .js-edit': 'onClickEdit',
     },
 
     modelEvents() {
         return {
-            [`change:${this.keys.edit}`]: 'onModelChange'
-        }
+            [`change:${this.keys.edit}`]: 'onModelChange',
+        };
     },
 
     initialize({ keys }) {
-        this.editable = false
-        this.keys = keys
+        this.editable = false;
+        this.keys = keys;
     },
 
     onRender() {
@@ -44,22 +44,22 @@ export default View.extend({
             this.editable
                 ? new WysiwygComponent({
                       model: this.model,
-                      key: this.keys.edit
+                      key: this.keys.edit,
                   })
                 : new NonEditableView({
-                      valueView: this.model.get(this.keys.view)
-                  })
-        )
+                      valueView: this.model.get(this.keys.view),
+                  }),
+        );
     },
 
     onModelChange(model, change) {
-        this.model.set(this.keys.edit, change)
+        this.model.set(this.keys.edit, change);
     },
 
     onClickEdit(event) {
-        event.stopPropagation()
-        event.preventDefault()
-        this.editable = true
-        this.render()
-    }
-})
+        event.stopPropagation();
+        event.preventDefault();
+        this.editable = true;
+        this.render();
+    },
+});

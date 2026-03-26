@@ -1,8 +1,8 @@
-import Radio from 'backbone.radio'
-import Backbone from 'backbone'
-import { View } from 'backbone.marionette'
-import showError from '../../../error'
-import template from './edit.hbs'
+import Radio from 'backbone.radio';
+import Backbone from 'backbone';
+import { View } from 'backbone.marionette';
+import showError from '../../../error.js';
+import template from './edit.hbs';
 
 export default View.extend({
     tagName: 'article',
@@ -10,13 +10,13 @@ export default View.extend({
 
     events: {
         'submit form': 'onClickEditTaskGroup',
-        'click .js-cancel': 'onClickCancel'
+        'click .js-cancel': 'onClickCancel',
     },
 
     initialize({ store }) {
-        store.trigger('navigation', 'task-group', this.model)
-        const title = this.model.getTitle(40)
-        Radio.channel('layout').request('change:pagetitle', `Fragensammlung «${title}» bearbeiten`)
+        store.trigger('navigation', 'task-group', this.model);
+        const title = this.model.getTitle(40);
+        Radio.channel('layout').request('change:pagetitle', `Fragensammlung «${title}» bearbeiten`);
     },
 
     template,
@@ -25,31 +25,31 @@ export default View.extend({
         return {
             breadcrumb: {
                 task_group_id: this.model.id,
-                task_group_title: this.model.get('title')
-            }
-        }
+                task_group_title: this.model.get('title'),
+            },
+        };
     },
 
     onClickEditTaskGroup(event) {
-        event.preventDefault()
+        event.preventDefault();
 
-        const title = this.$('form')[0].title.value.trim()
+        const title = this.$('form')[0].title.value.trim();
 
         if (!title.length) {
-            return
+            return;
         }
 
         this.model
             .save({ title })
             .then(() => {
-                Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true })
+                Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true });
             })
-            .catch(error => {
-                showError('Could not edit task group', error)
-            })
+            .catch((error) => {
+                showError('Could not edit task group', error);
+            });
     },
 
     onClickCancel() {
-        Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true })
-    }
-})
+        Backbone.history.navigate(`task-groups/show/${this.model.id}`, { trigger: true });
+    },
+});

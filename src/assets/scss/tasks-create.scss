@@ -1,6 +1,8 @@
+@use 'mixins';
+
 .cliqr--tasks-create {
     .tabs {
-        @include tablet {
+        @include mixins.tablet {
             padding-bottom: 1.5em;
         }
 
@@ -18,7 +20,7 @@
     }
 }
 
-@include desktop {
+@include mixins.desktop {
     .cliqr--tasks-create .tabs li:first-child {
         flex-basis: auto;
     }

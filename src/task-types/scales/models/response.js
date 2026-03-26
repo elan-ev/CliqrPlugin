@@ -1,7 +1,7 @@
-import Response from '../../../models/response'
+import Response from '../../../models/response.js';
 
-const Scales = Response.extend({
-    defaults: {}
-})
+const ScalesResponse = Response.extend({
+    defaults: {},
+});
 
-export default Scales
+export default ScalesResponse;

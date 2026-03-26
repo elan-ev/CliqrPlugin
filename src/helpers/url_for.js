@@ -1,5 +1,5 @@
-const url_for = function(path) {
-    return [window.cliqr.config.PLUGIN_URL, path, '?cid=', window.cliqr.config.CID].join('')
-}
+const url_for = function (path) {
+    return [window.cliqr.config.PLUGIN_URL, path, '?cid=', window.cliqr.config.CID].join('');
+};
 
-export default url_for
+export default url_for;

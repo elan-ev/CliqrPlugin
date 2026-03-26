@@ -11,12 +11,12 @@
         {{#each statements}}
             <div class="field">
                 <label class="label">
+                    <div class="content text is-large">{{text}}</div>
                     <div class="control">
                         <input class="slider"
                                type="range"
                                min="{{../task.task.lrange_value}}"
-                               max="{{../task.task.hrange_value}}"
-                               value="{{../task.initialValue}}">
+                               max="{{../task.task.hrange_value}}">
                         {{#with ../task.task}}
                             <div class="rangeslider__ruler">
                                 <span>
@@ -39,7 +39,6 @@
 
                         <output></output>
                     </div>
-                    <div class="content text is-large">{{text}}</div>
                 </label>
             </div>
         {{/each}}

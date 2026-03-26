@@ -1,12 +1,13 @@
-@import 'variables.scss';
-@import 'mixins.scss';
+@use 'sass:color';
+@use 'sass:meta';
+@use 'variables.scss';
+@use 'mixins.scss';
+@use 'fullscreen.scss';
+@use 'loader.scss';
 
 article.studip header {
     align-items: center;
 }
-
-@import 'fullscreen.scss';
-@import 'loader.scss';
 
 #cliqr-poll-container,
 #cliqr {
@@ -15,50 +16,50 @@ article.studip header {
     }
 }
 
-@import 'icon-font.scss';
-@import 'icons.scss';
-@import 'buttons.scss';
+// @include meta.load-css('icon-font.scss');
+@include meta.load-css('icons.scss');
+@include meta.load-css('buttons.scss');
 
 #cliqr {
-    @import 'typography.scss';
-    @import 'bubble.scss';
-    @import 'breadcrumbs.scss';
-    @import 'page-headers.scss';
-    @import 'task-groups.scss';
-    @import 'dialogs.scss';
+    @include meta.load-css('typography.scss');
+    @include meta.load-css('bubble.scss');
+    @include meta.load-css('breadcrumbs.scss');
+    @include meta.load-css('page-headers.scss');
+    @include meta.load-css('task-groups.scss');
+    @include meta.load-css('dialogs.scss');
 
-    @import 'content.scss';
-    @import 'panel.scss';
+    @include meta.load-css('content.scss');
+    @include meta.load-css('panel.scss');
 
-    @import 'task-lists.scss';
-    @import 'tasks-create.scss';
-    @import 'votings-compare.scss';
-    @import 'tasks-show.scss';
-    @import 'archive.scss';
-    @import 'votings-show.scss';
+    @include meta.load-css('task-lists.scss');
+    @include meta.load-css('tasks-create.scss');
+    @include meta.load-css('votings-compare.scss');
+    @include meta.load-css('tasks-show.scss');
+    @include meta.load-css('archive.scss');
+    @include meta.load-css('votings-show.scss');
 }
 
-@import 'dialog-qr.scss';
+@include meta.load-css('dialog-qr.scss');
 
-@import 'component-card.scss';
-@import 'component-tabs.scss';
+@include meta.load-css('component-card.scss');
+@include meta.load-css('component-tabs.scss');
 
-@import 'component-task-edit.scss';
-@import 'component-wysiwyg.scss';
+@include meta.load-css('component-task-edit.scss');
+@include meta.load-css('component-wysiwyg.scss');
 
-@import 'component-sidebar.scss';
+@include meta.load-css('component-sidebar.scss');
 
 .cliqr--help {
     display: block;
     margin-top: 0.25em;
 
     &.cliqr--is-danger {
-        color: $studip-red;
+        color: variables.$studip-red;
     }
 }
 
 .cliqr--example {
-    border: 1px solid mix($studip-yellow, white, 20%);
+    border: 1px solid color.mix(variables.$studip-yellow, white, 20%);
     position: relative;
     padding: 1.5rem;
 
@@ -71,7 +72,7 @@ article.studip header {
     }
 
     &::before {
-        background: mix($studip-yellow, white, 60%);
+        background: color.mix(variables.$studip-yellow, white, 60%);
         border-radius: 2px 2px 0 0;
         bottom: 100%;
         color: rgba(0, 0, 0, 0.7);

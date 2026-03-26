@@ -1,28 +1,28 @@
-import { View } from 'backbone.marionette'
-import template from '../hbs/form-options.hbs'
+import { View } from 'backbone.marionette';
+import template from '../hbs/form-options.hbs';
 
 export default View.extend({
     template,
 
     templateContext() {
         return {
-            singleSelect: this.model.getSelectType() === 'single'
-        }
+            singleSelect: this.model.getSelectType() === 'single',
+        };
     },
 
     ui: {
-        selectType: 'input[name="select-type"]'
+        selectType: 'input[name="select-type"]',
     },
 
     events: {
-        'change @ui.selectType': 'onChangeMultiSingle'
+        'change @ui.selectType': 'onChangeMultiSingle',
     },
 
     modelEvents: {
-        change: 'render'
+        change: 'render',
     },
 
     onChangeMultiSingle({ target }) {
-        this.model.setSelectType(target.checked ? 'multiple' : 'single')
-    }
-})
+        this.model.setSelectType(target.checked ? 'multiple' : 'single');
+    },
+});

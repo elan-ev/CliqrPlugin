@@ -1,3 +1,6 @@
+@use 'sass:math';
+@use 'variables';
+
 @mixin right-arrow($width, $color, $margin) {
     position: relative;
     margin-right: $margin;
@@ -14,24 +17,29 @@
 
     &:before {
         border: $width solid rgba($color, 0);
-        border-left-width: floor($width * 0.66);
+        border-left-width: math.floor($width * 0.66);
         border-left-color: $color;
         margin-top: (-$width);
     }
 }
 
 ul.cliqr--navigation-task-groups > li.active {
-    background-color: $studip-base-color;
+    background-color: variables.$studip-base-color;
     margin-left: -4px;
 
-    @include right-arrow(14px, $studip-base-color, -5px);
+    @include right-arrow(14px, variables.$studip-base-color, -5px);
 
     a {
-        color: $studip-white;
+        color: variables.$studip-white;
         padding-left: 4px;
-        > i.cliqr--icon::before {
-            color: $studip-white !important;
+
+        > svg.cliqr--icon {
+            color: variables.$studip-white !important;
         }
+    }
+
+    &:hover a {
+        color: variables.$studip-white !important;
     }
 }
 
@@ -53,7 +61,8 @@ ul.cliqr--navigation-task-groups > li.active {
     line-height: 2em;
 }
 
-.cliqr--navigation-task-groups {
+#sidebar-navigation .cliqr--navigation-task-groups {
+    display: block;
     padding-left: 0;
     list-style: none;
 }
@@ -86,7 +95,7 @@ ul.cliqr--navigation-task-groups > li.active {
     }
 }
 
-#cliqr--on-air .sidebar-widget-header i {
+#cliqr--on-air .sidebar-widget-header svg {
     animation: heartbeat 2s infinite;
 }
 

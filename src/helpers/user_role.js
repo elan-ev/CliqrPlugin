@@ -1,7 +1,7 @@
-import { userRole } from '../utils'
+import { userRole } from '../utils.js';
 
-const user_role = function(expected, options) {
-    return userRole(expected) ? options.fn(this) : options.inverse(this)
-}
+const user_role = function (expected, options) {
+    return userRole(expected) ? options.fn(this) : options.inverse(this);
+};
 
-export default user_role
+export default user_role;

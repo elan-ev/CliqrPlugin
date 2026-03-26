@@ -1,19 +1,19 @@
-import showError from '../../error'
+import showError from '../../error.js';
 
-const loader = async function() {
+const loader = async function () {
     try {
-        const {
-            default: klass
-        } = await import(/* webpackChunkName: "task-type.multiple-choice" */ './multiple-choice.js')
-        return klass
+        const { default: klass } = await import(
+            /* webpackChunkName: "task-type.multiple-choice" */ './multiple-choice.js'
+        );
+        return klass;
     } catch (err) {
-        showError('Es ist ein Fehler aufgetreten.', err)
+        showError('Es ist ein Fehler aufgetreten.', err);
     }
-}
+};
 
 export default {
     id: 'multiple-choice',
     name: 'Multiple Choice',
     icon: 'assessment',
-    loader
-}
+    loader,
+};

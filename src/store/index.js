@@ -1,8 +1,8 @@
-import Backbone from 'backbone'
-import taskGroups from './task_groups'
+import Backbone from 'backbone';
+import taskGroups from './task_groups.js';
 
-const store = Object.create(Backbone.Events)
+const store = Object.create(Backbone.Events);
 
-store.taskGroups = taskGroups
+store.taskGroups = taskGroups;
 
-export default store
+export default store;
