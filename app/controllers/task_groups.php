@@ -146,7 +146,7 @@ class TaskGroupsController extends CliqrStudipController
 
         $exportString = $exporter->exportTaskGroup($taskGroup);
 
-        if ($_SERVER['HTTPS'] === 'on') {
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
             $this->response->add_header('Pragma', 'public');
             $this->response->add_header('Cache-Control', 'private');
         } else {
@@ -154,7 +154,8 @@ class TaskGroupsController extends CliqrStudipController
             $this->response->add_header('Cache-Control', 'no-store, no-cache, must-revalidate');
         }
         $filename = preg_replace(
-            '/[^a-zA-Z0-9-_.]+/', '-',
+            '/[^a-zA-Z0-9-_.]+/',
+            '-',
             sprintf(
                 'cliqr-tasks-%s.%s.json',
                 $taskGroup->test->title,
@@ -162,7 +163,7 @@ class TaskGroupsController extends CliqrStudipController
             )
         );
 
-        $this->response->add_header('Content-Disposition', 'attachment;filename="'.$filename.'"');
+        $this->response->add_header('Content-Disposition', 'attachment;filename="' . $filename . '"');
         $this->response->add_header('Content-Description', 'File Transfer');
         $this->response->add_header('Content-Transfer-Encoding', 'binary');
         $this->response->add_header('Content-Type', 'application/json;charset=utf-8');
@@ -209,7 +210,7 @@ class TaskGroupsController extends CliqrStudipController
 
         $duplicate = $taskGroup->duplicateTaskGroup();
 
-        $this->redirect('task_groups/show/'.$duplicate->id);
+        $this->redirect('task_groups/show/' . $duplicate->id);
     }
 
     /**
@@ -257,8 +258,10 @@ class TaskGroupsController extends CliqrStudipController
         $newPositions = array_map('intval', $positions);
         $oldPositions = array_map('intval', $taskGroup->test->testtasks->pluck('task_id'));
 
-        if (count($newPositions) !== count($oldPositions)
-            || count(array_diff($newPositions, $oldPositions))) {
+        if (
+            count($newPositions) !== count($oldPositions)
+            || count(array_diff($newPositions, $oldPositions))
+        ) {
             throw new \Trails_Exception(400);
         }
 
