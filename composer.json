@@ -1,5 +1,12 @@
 {
+    "name": "elanev/studip-plugin-cliqr",
     "license": "GPL-2.0+",
+    "description": "Software-Clicker Lösung: interaktive Online-Fragen in Veranstaltungen, die Lernende von ihrem Smartphone aus beantworten können.",
+    "config": {
+        "platform": {
+            "php": "8.1"
+        }
+    },
     "require": {
         "pimple/pimple": "v1.0.1",
         "machuga/authority": "dev-master",
