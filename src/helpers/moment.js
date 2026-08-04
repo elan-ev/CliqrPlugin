@@ -11,7 +11,7 @@ const moment_helper = function (n, { hash }) {
         taDate = label || ta.format(date, 'de_DE');
 
     return new SafeString(
-        `<span class="cliqr--moment" data-tooltip="${date.toLocaleString()}">${taDate}</span>`,
+        `<span class="cliqr--moment" title="${date.toLocaleString()}">${taDate}</span>`,
     );
 };
 
