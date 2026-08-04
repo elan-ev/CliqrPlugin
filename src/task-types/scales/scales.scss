@@ -7,7 +7,8 @@ $color-activity100: variables.$studip-orange;
 $color-detail: variables.$studip-black;
 $color-diminished: #999999;
 
-#cliqr-poll-container {
+#cliqr-poll-container,
+#cliqr-preview-container {
     .cliqr--scales-poll-view {
         li {
             padding: 0;

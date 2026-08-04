@@ -5,7 +5,8 @@ $chartColor: #ffbd33;
 $chartColor2: #f26e00;
 $color-diminished: #999999;
 
-#cliqr-poll-container {
+#cliqr-poll-container,
+#cliqr-preview-container {
     .cliqr--multiple-choice-poll-view {
         .has-addons .nominal {
             padding-right: 0.75rem;

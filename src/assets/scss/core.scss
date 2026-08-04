@@ -10,6 +10,7 @@ article.studip header {
 }
 
 #cliqr-poll-container,
+#cliqr-preview-container,
 #cliqr {
     .cliqr--moment {
         border-bottom: 1px dotted #ccc;
@@ -40,6 +41,7 @@ article.studip header {
 }
 
 @include meta.load-css('dialog-qr.scss');
+@include meta.load-css('dialog-preview.scss');
 
 @include meta.load-css('component-card.scss');
 @include meta.load-css('component-tabs.scss');

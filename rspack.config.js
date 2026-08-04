@@ -17,6 +17,7 @@ export default {
     context: path.join(__dirname, './src'),
     entry: {
         polls: './polls-app.js',
+        preview: './preview-app.js',
         'studip-cliqr': './studip-app.js',
     },
     output: {

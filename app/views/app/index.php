@@ -8,10 +8,10 @@ $PLGNVRSN = $plugin->getPluginVersion();
 $script = [
     'bootstrap' => $json,
     'config' => [
-        'PLUGIN_URL' => current(explode('?', $controller->url_for(''))),
         'ASSETS_URL' => $PLGNURL,
         'CID' => $cid,
-        'SHORT_URL' => $short_url
+        'PLUGIN_URL' => current(explode('?', $controller->url_for(''))),
+        'SHORT_URL' => $short_url,
     ],
     'version' => $PLGNVRSN,
 ];

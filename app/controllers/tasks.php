@@ -46,6 +46,22 @@ class TasksController extends CliqrStudipController
         $this->render_json($task->toJSON());
     }
 
+    public function preview_action($id)
+    {
+        $task = Task::find($id);
+
+        if (!$this->can('read', 'Task', $task)) {
+            throw new \Trails_Exception(403);
+        }
+
+        if (!$task) {
+            throw new \Cliqr\RecordNotFound();
+        }
+
+        $this->json = ['task' => $task->toJSON()];
+        $this->course = \Context::get();
+    }
+
     public function create_action()
     {
         if (!$this->can('create', 'Task')) {

@@ -16,6 +16,10 @@
             <div class="panel-block">
                 {{button "start" "Abstimmung starten" icon="play" once=true color="red" class="control"}}
             </div>
+
+            <div class="panel-block">
+                {{button "preview" "Vorschau öffnen" class="control"}}
+            </div>
         </nav>
     {{/unless}}
 
@@ -34,6 +38,9 @@
                 {{/if}}
             </div>
 
+            <div class="panel-block">
+                {{button "preview" "Vorschau öffnen" class="control"}}
+            </div>
 
             {{#each votings}}
                 <a class="panel-block cliqr--votings-list-item" href="#voting/{{id}}" data-votingid="{{id}}">

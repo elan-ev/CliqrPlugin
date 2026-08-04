@@ -1,10 +1,11 @@
 import Radio from 'backbone.radio';
 import Backbone from 'backbone';
 import { View } from 'backbone.marionette';
-import { showConfirmDialog } from '../../../dialog.js';
+import { showConfirmDialog, showDialog } from '../../../dialog.js';
 import showError from '../../../error.js';
 import taskTypes from '../../../models/task_types.js';
 import template from './show.hbs';
+import PreviewDialogView from '../preview/dialog.js';
 
 export default View.extend({
     tagName: 'article',
@@ -13,6 +14,7 @@ export default View.extend({
 
     ui: {
         main: 'main',
+        preview: '.js-preview',
         remove: '.js-remove',
         start: '.js-start',
         stop: '.js-stop',
@@ -26,6 +28,7 @@ export default View.extend({
         'click @ui.start': 'onClickStart',
         'click @ui.stop': 'onClickStop',
         'click @ui.remove': 'onClickRemoveVoting',
+        'click @ui.preview': 'onClickPreview',
     },
 
     initialize({ store }) {
@@ -122,5 +125,17 @@ export default View.extend({
                     showError('Could not remove voting', error);
                 });
         });
+    },
+
+    onClickPreview(event) {
+        event.preventDefault();
+
+        const previewDialog = new PreviewDialogView({ model: this.model });
+
+        showDialog(previewDialog.render(), { size: '410x800', title: 'Vorschau' })
+            .then((closer) => previewDialog.once('cancel', closer))
+            .catch((error) => {
+                showError('Could not preview task', error);
+            });
     },
 });

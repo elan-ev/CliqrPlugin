@@ -18,8 +18,9 @@ export default View.extend({
     template,
 
     templateContext() {
-        const task = this.voting.getTask(),
-            { lrange_value, hrange_value, statements } = task.get('task');
+        const task = this.voting.getTask();
+        const { statements } = task.get('task');
+
         return {
             response: this.model.toJSON(),
             voting: _.omit(this.voting.toJSON(), 'task'),

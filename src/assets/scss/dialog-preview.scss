@@ -1,0 +1,15 @@
+article.cliqr--tasks-preview {
+    section.container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+    }
+
+    section.container iframe {
+        width: 80%;
+        height: 80%;
+        border: none;
+    }
+}
