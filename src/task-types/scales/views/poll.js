@@ -11,17 +11,34 @@ export default View.extend({
         'submit form': 'onSubmitForm',
     },
 
-    initialize({ voting }) {
+    initialize({ voting, type }) {
         this.voting = voting;
+        this.type = type;
     },
 
     template,
 
     templateContext() {
-        const task = this.voting.getTask();
+        const task = this.type.wrapTask(this.voting.getTask());
         const { statements } = task.get('task');
+        const { lrange_value, hrange_value, lrange_label, hrange_label } = task.get('task');
+
+        const range_values = _.range(lrange_value, hrange_value + 1).map((value) => {
+            let text = value;
+            if (value === lrange_value && lrange_label) {
+                text = `${value} – ${lrange_label}`;
+            }
+            if (value === hrange_value && hrange_label) {
+                text = `${value} – ${hrange_label}`;
+            }
+            return { value, text };
+        });
+
+        const is_slider = task.getRealInputType() === 'slider';
 
         return {
+            is_slider,
+            range_values,
             response: this.model.toJSON(),
             voting: _.omit(this.voting.toJSON(), 'task'),
             task: { ...task.toJSON() },
@@ -52,7 +69,7 @@ export default View.extend({
 
     onSubmitForm(event) {
         event.preventDefault();
-        const answer = _.map(this.$('input'), (input) => parseInt(input.value, 10));
+        const answer = _.map(this.$('input, select'), (el) => parseInt(el.value, 10));
         this.model.set('response', { answer });
         this.voting.trigger('newResponse', this.model, this.voting);
     },

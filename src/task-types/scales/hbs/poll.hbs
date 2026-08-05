@@ -13,31 +13,48 @@
                 <label class="label">
                     <div class="content text is-large">{{text}}</div>
                     <div class="control">
-                        <input class="slider"
-                               type="range"
-                               min="{{../task.task.lrange_value}}"
-                               max="{{../task.task.hrange_value}}">
-                        {{#with ../task.task}}
-                            <div class="rangeslider__ruler">
-                                <span>
-                                    {{#if lrange_label}}
-                                        ({{lrange_value}}) {{lrange_label}}
-                                    {{else}}
-                                        {{lrange_value}}
-                                    {{/if}}
-                                </span>
+                        {{#if ../is_slider}}
 
-                                <span>
-                                    {{#if hrange_label}}
-                                        {{hrange_label}} ({{hrange_value}})
-                                    {{else}}
-                                        {{hrange_value}}
-                                    {{/if}}
-                                </span>
+                            <input class="slider"
+                                type="range"
+                                min="{{../task.task.lrange_value}}"
+                                max="{{../task.task.hrange_value}}">
+                            {{#with ../task.task}}
+                                <div class="rangeslider__ruler">
+                                    <span>
+                                        {{#if lrange_label}}
+                                            ({{lrange_value}}) {{lrange_label}}
+                                        {{else}}
+                                            {{lrange_value}}
+                                        {{/if}}
+                                    </span>
+
+                                    <span>
+                                        {{#if hrange_label}}
+                                            {{hrange_label}} ({{hrange_value}})
+                                        {{else}}
+                                            {{hrange_value}}
+                                        {{/if}}
+                                    </span>
+                                </div>
+                            {{/with}}
+
+                            <output></output>
+
+                        {{else}}
+
+                            <div class="cliqr--scales-select-wrapper select">
+                                <select required>
+                                    <option value="" disabled selected>
+                                        Bitte wählen
+                                    </option>
+                                    {{#each ../range_values}}
+                                        <option value="{{value}}">{{text}}</option>
+                                    {{/each}}
+                                </select>
                             </div>
-                        {{/with}}
 
-                        <output></output>
+                        {{/if}}
                     </div>
                 </label>
             </div>

@@ -2,6 +2,7 @@ import button from './button.js';
 import cliqr_short_url from './cliqr_short_url.js';
 import concat from './concat.js';
 import fab from './fab.js';
+import eq from './eq.js';
 import i18n from './i18n.js';
 import icon from './icon.js';
 import json from './json.js';
@@ -17,6 +18,7 @@ import user_role from './user_role.js';
 const helpers = {
     button,
     cliqr_short_url,
+    eq,
     concat,
     fab,
     i18n,

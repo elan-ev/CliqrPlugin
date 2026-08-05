@@ -20,6 +20,12 @@ export default View.extend({
 
     template,
 
+    templateContext() {
+        return {
+            input_type: this.model.getRealInputType(),
+        };
+    },
+
     onRender() {
         this.showChildView(
             'editButton',

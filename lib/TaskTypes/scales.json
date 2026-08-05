@@ -20,6 +20,9 @@
         },
         "hrange_label": {
             "type": ["string", "null"]
+        },
+        "input_type": {
+            "enum": ["slider", "select", null]
         }
     },
     "definitions": {

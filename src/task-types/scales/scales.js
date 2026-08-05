@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 import Handlebars from 'handlebars-template-loader/runtime/index.js';
 import _ from 'underscore';
 import scalesHeader from './hbs/scales_header.hbs';
+import inputType from './hbs/input_type.hbs';
 import ScalesResponse from './models/response.js';
 import ScalesTask from './models/task.js';
 import AssignmentView from './views/assignment.js';
@@ -13,6 +14,7 @@ import ShowView from './views/show.js';
 import './scales.scss';
 
 Handlebars.registerPartial('scales_header', scalesHeader);
+Handlebars.registerPartial('input_type', inputType);
 
 class Scales {
     constructor(task) {
@@ -21,12 +23,12 @@ class Scales {
 
     // Ansicht eines Votings einer Frage
     getAssignmentView(voting) {
-        return new AssignmentView({ model: this.task, voting, type: this });
+        return new AssignmentView({ model: this.wrapTask(this.task), voting, type: this });
     }
 
     // Details einer Frage /tasks/show/{{id}}
     getShowView() {
-        return new ShowView({ model: this.task, type: this });
+        return new ShowView({ model: this.wrapTask(this.task), type: this });
     }
 
     // Formular zum Bearbeiten einer Frage /tasks/edit/{{id}}

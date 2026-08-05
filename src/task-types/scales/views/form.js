@@ -4,6 +4,7 @@ import Radio from 'backbone.radio';
 import WysiwygComponent from '../../../components/component-wysiwyg.js';
 import template from '../hbs/form.hbs';
 import TextInputComponent from './component-text-input.js';
+import InputTypeView from './form-input-type.js';
 import RangeView from './form-range.js';
 import StatementsView from './form-statements.js';
 
@@ -19,6 +20,10 @@ export default View.extend({
         },
         range: {
             el: 'label.cliqr--scales-range',
+            replaceElement: true,
+        },
+        inputType: {
+            el: 'label.cliqr--scales-input-type',
             replaceElement: true,
         },
     },
@@ -74,6 +79,12 @@ export default View.extend({
         this.showChildView(
             'range',
             new RangeView({
+                model: this.model,
+            }),
+        );
+        this.showChildView(
+            'inputType',
+            new InputTypeView({
                 model: this.model,
             }),
         );

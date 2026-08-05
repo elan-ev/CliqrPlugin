@@ -11,14 +11,16 @@ export default View.extend({
         'submit form': 'onSubmitForm',
     },
 
-    initialize({ voting }) {
+    initialize({ voting, type }) {
         this.voting = voting;
+        this.type = type;
     },
 
     template,
 
     templateContext() {
-        const task = this.voting.getTask();
+        const task = this.type.wrapTask(this.voting.getTask());
+
         return {
             response: this.model.toJSON(),
             voting: _.omit(this.voting.toJSON(), 'task'),

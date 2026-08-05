@@ -25,9 +25,13 @@ export default View.extend({
     template,
 
     templateContext() {
+        const input_type = this.model.getRealInputType();
         return {
             start: this.voting.get('start'),
-            task: this.model.toJSON(),
+            task: {
+                ...this.model.toJSON(),
+                input_type,
+            },
             isRunning: this.voting.isRunning(),
             sorted: this.sorted,
         };

@@ -2,7 +2,6 @@
 
 namespace Cliqr\TaskTypes;
 
-use Cliqr\DB\Task;
 use Studip\Markup;
 
 class Scales extends TaskType
@@ -28,6 +27,10 @@ class Scales extends TaskType
 
         if ($task->task['lrange_value'] >= $task->task['hrange_value']) {
             return \Cliqr\i18n('Das Minimum muss kleiner als das Maximum sein.');
+        }
+
+        if (isset($task->task['input_type']) && !in_array($task->task['input_type'], ['slider', 'select'])) {
+            return \Cliqr\i18n('Der Eingabetyp darf nur leer, "slider" oder "select" sein.');
         }
 
         return null;

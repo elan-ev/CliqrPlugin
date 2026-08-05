@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import _ from 'underscore';
+import Task from '../models/task.js';
 
 export default function ($statementElement, data, lrange, hrange) {
     const element = $statementElement.find('svg')[0],
@@ -27,7 +28,7 @@ function _histogramView(d3, element, data, lrange, hrange, width, height, margin
         .attr('height', height + margin.top + margin.bottom);
 
     const domainExtent = hrange - lrange + 1;
-    const small = domainExtent <= 20;
+    const small = domainExtent <= Task.SMALL_RANGE;
     const domain = small ? [lrange, hrange + 1] : [lrange, hrange];
 
     const thresholds = small ? domainExtent : 10;

@@ -1,0 +1,29 @@
+<span>Eingabetyp</span>
+<div>
+    {{#if disabled}}
+    <label>
+        Es können {{count_values}} unterschiedliche Werte ausgewählt werden.
+        Der Wertebereich ist so groß, dass nur die Eingabe über einen Schieberegler sinnvoll ist.
+    </label>
+    {{/if}}
+    <div>
+        <label {{#if disabled}}inert{{/if}}>
+            <input
+                type="radio"
+                name="input-type"
+                value="slider"
+                {{#if disabled}} disabled{{/if}}
+                {{#if is_slider}} checked{{/if}}>
+            Schieberegler
+        </label>
+        <label {{#if disabled}}inert{{/if}}>
+            <input
+                type="radio"
+                name="input-type"
+                value="select"
+                {{#if disabled}} disabled{{/if}}
+                {{#unless is_slider}} checked{{/unless}}>
+            Auswahlliste
+        </label>
+    </div>
+</div>

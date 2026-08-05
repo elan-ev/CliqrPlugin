@@ -232,6 +232,12 @@ $color-diminished: #999999;
                 }
             }
         }
+
+        .cliqr--scales-input-type {
+            label[inert] {
+                opacity: 0.5;
+            }
+        }
     }
 
     .cliqr--component-switchable {
