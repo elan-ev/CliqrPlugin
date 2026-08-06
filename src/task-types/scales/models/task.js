@@ -108,9 +108,9 @@ const ScalesTask = Task.extend(
         },
 
         getRealInputType() {
-            const task = this.get('task');
+            const { input_type } = this.get('task');
 
-            return this.isSmallRange() ? task.input_type : 'slider';
+            return this.isSmallRange() ? (input_type ?? 'slider') : 'slider';
         },
 
         getCountValues() {
