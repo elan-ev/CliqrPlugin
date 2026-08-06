@@ -132,7 +132,7 @@ export default View.extend({
 
         const previewDialog = new PreviewDialogView({ model: this.model });
 
-        showDialog(previewDialog.render(), { size: '410x800', title: 'Vorschau' })
+        showDialog(previewDialog.render(), { size: 'big', title: 'Vorschau' })
             .then((closer) => previewDialog.once('cancel', closer))
             .catch((error) => {
                 showError('Could not preview task', error);
