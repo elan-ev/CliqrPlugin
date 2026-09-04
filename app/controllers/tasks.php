@@ -182,7 +182,27 @@ class TasksController extends CliqrStudipController
 
         $duplicate = $task->duplicateInTaskGroup();
 
-        $this->redirect('tasks/show/'.$duplicate->id);
+        $this->redirect('tasks/show/' . $duplicate->id);
+    }
+
+    public function votings_action($id)
+    {
+        $task = Task::find($id);
+
+        if (!$this->can('read', 'Task', $task)) {
+            throw new \Trails_Exception(403);
+        }
+
+        $taskType = $this->getTaskType($task['type']);
+
+        $this->render_csv(
+            $taskType->exportResponses($task),
+            sprintf(
+                'cliqr-task-votings.%d.%s.csv',
+                $task->id,
+                date('Y-m-d_H-i-s'),
+            ),
+        );
     }
 
     private function validateTask($type, $task)

@@ -21,4 +21,6 @@ abstract class TaskType
     }
 
     abstract protected function validateResponse(\Cliqr\DB\Response $response);
+
+    abstract public function exportResponses($task): array;
 }

@@ -81,4 +81,27 @@ class Scales extends TaskType
 
         return null;
     }
+
+    public function exportResponses($task): array
+    {
+        $votings = $task->getVotings();
+
+        $headers = [
+            'voting',
+            ... array_map(
+                fn($statement) => $statement['text'],
+                $task->task['statements']->getArrayCopy(),
+            ),
+        ];
+
+        $rows = [];
+        foreach ($votings as $voting) {
+            foreach ($voting->responses as $response) {
+                $answer = $response->response['answer'];
+                $rows[] = [date('c', $voting->start), ...$answer];
+            }
+        }
+
+        return [$headers, ...$rows];
+    }
 }

@@ -18,6 +18,7 @@ export default View.extend({
         remove: '.js-remove',
         start: '.js-start',
         stop: '.js-stop',
+        exportVotings: '.js-export-votings',
     },
 
     regions: {
@@ -29,6 +30,7 @@ export default View.extend({
         'click @ui.stop': 'onClickStop',
         'click @ui.remove': 'onClickRemoveVoting',
         'click @ui.preview': 'onClickPreview',
+        'click @ui.exportVotings': 'onClickExportVotings',
     },
 
     initialize({ store }) {
@@ -137,5 +139,10 @@ export default View.extend({
             .catch((error) => {
                 showError('Could not preview task', error);
             });
+    },
+
+    onClickExportVotings(event) {
+        event.preventDefault();
+        window.location = this.model.url('votings');
     },
 });

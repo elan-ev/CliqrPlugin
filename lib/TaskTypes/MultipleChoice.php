@@ -70,4 +70,31 @@ class MultipleChoice extends TaskType
 
         return null;
     }
+
+    public function exportResponses($task): array
+    {
+        $votings = $task->getVotings();
+        $answers = $task->task['answers']->getArrayCopy();
+
+        $headers = [
+            'voting',
+            ... array_map(
+                fn($statement) => $statement['text'],
+                $answers,
+            ),
+        ];
+
+        $rows = [];
+        foreach ($votings as $voting) {
+            foreach ($voting->responses as $response) {
+                $counts = array_fill(0, count($answers), 0);
+                foreach ($response->response['answer'] as $index) {
+                    $counts[$index]++;
+                }
+                $rows[] = [date('c', $voting->start), ...$counts];
+            }
+        }
+
+        return [$headers, ...$rows];
+    }
 }

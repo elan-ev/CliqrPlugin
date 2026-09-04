@@ -41,6 +41,9 @@
             <div class="panel-block">
                 {{button "preview" "Vorschau öffnen" class="control"}}
             </div>
+            <div class="panel-block">
+                {{button "export-votings" "Abstimmungen exportieren" class="control"}}
+            </div>
 
             {{#each votings}}
                 <a class="panel-block cliqr--votings-list-item" href="#voting/{{id}}" data-votingid="{{id}}">
